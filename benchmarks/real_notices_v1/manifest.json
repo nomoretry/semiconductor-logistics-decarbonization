@@ -1,0 +1,64 @@
+{
+  "schema_version": "real-notice-manifest-v1",
+  "dataset_id": "real_notices_v1",
+  "synthetic": false,
+  "exploratory": true,
+  "annotation_status": "assistant_reference_pending_human_review",
+  "human_review_pending": true,
+  "usable_as_frozen_gold": false,
+  "collection_date": "2026-10-30",
+  "audit_date": "2026-10-30",
+  "audit_timezone": "Asia/Shanghai",
+  "source_count": 16,
+  "announcement_count": 16,
+  "event_group_count": 12,
+  "correlation_group_count": 9,
+  "split_counts": {
+    "test": 16
+  },
+  "status_counts": {
+    "test": {
+      "needs_clarification": 16
+    }
+  },
+  "broad_event_kind_counts": {
+    "blank_sailings": 1,
+    "contingency_withdrawal": 1,
+    "inbound_vessel_delay_target": 1,
+    "intermittent_network_delay": 1,
+    "journey_extension_range": 1,
+    "network_delay": 1,
+    "partial_recovery_with_congestion": 1,
+    "port_call_unavailable": 1,
+    "port_congestion": 1,
+    "port_rotation_change": 1,
+    "route_distance_extension": 1,
+    "strike_announcement": 1,
+    "transit_time_improvement": 2,
+    "voyage_slide": 2
+  },
+  "positive_add_lead_case_count": 0,
+  "model_api_calls": 0,
+  "human_annotation_count": 0,
+  "assistant_reference_annotation_count": 16,
+  "full_source_snapshot_count": 0,
+  "exact_excerpt_count": 16,
+  "maximum_excerpt_words": 23,
+  "dataset_sha256": "83e9d5cd5a33b33987e50861249a025decfcfd843ea67f56847cf06e84c682ad",
+  "file_sha256": {
+    "dataset.json": "0da836e056dab52ee545ca209ffdc3c331f55dad8e36b52b5881127cf3ff3541",
+    "test.jsonl": "8ec2af8d71b20fba4c83e99656a65e849712cea73442759b1c73517185b92db2",
+    "source_review.json": "106f5b45a77d0c20d2d79c74a46db95b932e0865724a7ad1e27ca2056c93799b",
+    "annotations.jsonl": "1d6cf8df66c32db199574bf9a9b26e2218bb51708f0a7805df892f56cc2ee9f8",
+    "second_assistant_review.json": "4d096544ef900228b4fcf113921b594f82d56b6f586e4a27ead457151a57d720"
+  },
+  "limitations": [
+    "All narrow references need clarification; always-clarify scores perfectly and therefore narrow accuracy measures abstention only.",
+    "No nontrivial real positive NL_ocean extraction or representative performance claim is supported.",
+    "Broader factual candidate references are assistant annotations, pending independent human review.",
+    "Fullpage context is reviewed but excluded from inference and broad labels unless present in the chosen exact excerpt.",
+    "Live pages can change; exact excerpt replay is possible but fullpage exact replay is unavailable."
+  ],
+  "second_assistant_review_file": "second_assistant_review.json",
+  "second_assistant_review_count": 16
+}

@@ -40,6 +40,9 @@ class CommandLineTests(unittest.TestCase):
             "verify-run": "notice_benchmark.verify_offline",
             "workflow-audit": "notice_benchmark.run_workflow_audit",
             "score-api": "scripts.score_notice_api",
+            "compare-api": "scripts.compare_notice_api",
+            "real-notices": "real_notice_eval",
+            "decision-audit": "decision_benchmark.audit",
             "report": "scripts.create_reports",
             "download-data": "scripts.download_source_data",
         }

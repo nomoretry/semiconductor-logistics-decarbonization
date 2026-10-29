@@ -13,11 +13,11 @@
 | 库存与运输 | 整数发货、在途库存、到仓库存、积压守恒 | 60 份合成订单实例、360 次策略求解 |
 | 成本与碳预算 | 运费、资金占用、仓储成本和物流排放；三档碳约束 | 成本—排放对照、339 份可行计划、不可行实例 |
 | 公告抽取 | 固定提示词、JSON Schema、冻结规则和固定模型配置 | 120 条开发文本、400 条合成留出文本 |
-| LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 20 条开发文本实测，20/20 抽取一致 |
+| LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 400 条合成留出文本，主运行与复测均 400/400 |
 | 多步工具环境 | 检查公告、抽取、校验、读取状态、求解、审计和提交 | 200 组开发任务，逐步轨迹与确定性重放 |
 | 结果验证 | 输入与源码哈希、逐条预测复算、物流计划重放 | 离线验证命令与自动测试 |
 
-工具环境当前采用固定工作流。开发任务中，规则工作流完成了 127 份可行计划和 73 次正确澄清交接；尚未建立需要学习工具选择的决策取舍，BC/PPO 尚未训练。
+原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
 
 详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
 
@@ -67,16 +67,21 @@ Python 脚本生成 [Markdown 实验报告](reports/study_report.md)、CSV/JSON 
 | 冻结规则 | 合成留出集 | 400 | 51.0%（204/400） |
 | 总是请求澄清 | 合成留出集 | 400 | 44.0% |
 | 忽略公告 | 合成留出集 | 400 | 16.5% |
-| GPT-6 Luna | 开发集连接测试 | 20 | 100%（20/20） |
+| GPT-6 Luna | 合成留出集，主运行 | 400 | 100%（400/400） |
+| GPT-6 Luna | 同一留出集复测 | 400 | 100%（400/400） |
 
-LLM 的 20 条结果只用于验证开发集上的调用和抽取流程；400 条留出文本的 LLM 对照尚未运行。13 份真实公告来源已登记，仍需人工标注。模型配置与逐条响应见 [API 实测记录](docs/results/api_smoke.md)。
+主运行相对冻结规则提高 49.0 个百分点，复测的解析输出全部一致；两轮仍为同一批 400 条案例。逐条结果、分组区间及原始响应见[正式对照](docs/results/api_test.md)，20 条开发样本另存为[连接测试](docs/results/api_smoke.md)。
+
+[真实公告语料](docs/data/real_notices.md)包含 16 份官方公告短摘录，经两次助手审核。它们均缺少直接更新内部 `NL_ocean` 的映射或数值条件，因此目前只能评估是否正确请求澄清。人工复核和真实文本 API 运行仍待完成，不能把这组结果解释为真实更新抽取能力。
 
 ```bash
 semiconductor-logistics evaluate
 semiconductor-logistics verify-run
 semiconductor-logistics workflow-audit
 semiconductor-logistics workflow-audit --verify
-semiconductor-logistics score-api --run benchmark_results/api_smoke
+semiconductor-logistics compare-api --run benchmark_results/api_test --repeat-run benchmark_results/api_repeat
+semiconductor-logistics real-notices offline --dataset benchmarks/real_notices_v1/dataset.json --output artifacts/real_notices
+semiconductor-logistics decision-audit --tasks 200 --output artifacts/decision_audit
 ```
 
 API 命令默认只估算费用：
@@ -96,6 +101,9 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `evaluate` | 评测冻结规则与诊断基线 |
 | `api` | 估算或执行固定模型 API 抽取 |
 | `score-api` | 校验请求记录并复算 API 指标 |
+| `compare-api` | 复算固定模型与冻结规则的成对差值及复测 |
+| `real-notices` | 校验真实语料、运行离线基线、导出输入和复算响应 |
+| `decision-audit` | 检验信息成本、规划选择和强适应性基线 |
 | `workflow-audit` | 运行或重放多步工具任务 |
 | `verify-run` | 校验离线数据、预测、指标和源码身份 |
 | `sensitivity` | 运行参数及排放边界敏感性实验 |
@@ -109,7 +117,9 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 |---|---|
 | `semiconductor_logistics/` | Python 命令行入口 |
 | `shared/` | 库存守恒、MILP 求解与实验调度 |
-| `notice_benchmark/` | 公告数据、规则、API、指标和工具环境 |
+| `notice_benchmark/` | 冻结合成公告、规则、API、指标和原工具环境 |
+| `real_notice_eval/` | 真实公告来源校验与探索性评测 |
+| `decision_benchmark/` | 查询成本、物理物流结果与决策基线 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |

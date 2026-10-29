@@ -1,0 +1,1547 @@
+{
+  "schema_version": "real-notice-eval-v1",
+  "dataset_id": "real_notices_v1",
+  "synthetic": false,
+  "annotation_status": "assistant_reference_pending_human_review",
+  "human_review_pending": true,
+  "exploratory": true,
+  "usable_as_frozen_gold": false,
+  "claim_scope": "Exact official-notice excerpt exploratory abstention audit for the original NL_ocean schema; broader factual candidate annotation is a separate task.",
+  "collection_date": "2026-10-30",
+  "audit_date": "2026-10-30",
+  "audit_timezone": "Asia/Shanghai",
+  "selection_method": "Purposive assistant selection from the existing 13-source registry plus three official quantitative notices; not a random or representative sample.",
+  "source_count": 16,
+  "event_group_count": 12,
+  "correlation_group_count": 9,
+  "independence_warning": "Sources, announcements, operational event groups and correlation groups are not interchangeable independent samples. All records are exploratory; shared wider disruptions can cross declared correlation groups.",
+  "split_policy": "One exploratory test collection. No development partition, frozen holdout or generalization inference. Keep amendments, translations and operational updates together in any future split.",
+  "text_policy": "Sources.text and model_input.text are identical exact <=25-word body excerpts. Titles and other provenance metadata are not inference input. Full readable article bodies were reviewed but are not redistributed; full-article replay is unavailable. Hashes cover exact excerpts only. Assistant paraphrases are separate audit material, never original text or model input.",
+  "broader_task_policy": "annotation.broad_reference is draft factual extraction from model_input.text only. Full-page-only facts occur solely in source_review.json and are not labels for these inputs. The broader task uses calendar dates, day ranges, averages, event types and availability changes; it is not the original integer-week add_lead task. No broad model score or human-gold claim is reported.",
+  "sources": [
+    {
+      "source_id": "R001",
+      "url": "https://www.maersk.com/news/articles/2024/06/05/capacity-adjustment-changes-far-east-asia-to-europe-services",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Capacity Adjustment Changes Far East Asia to Europe Services",
+      "published_date": "2024-06-05",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+      "text": "across the Asia-North Europe network have contributed to an accumulation of delays on our services which resulted in a slide of AE55.",
+      "sha256": "aaa994b2ca546ce2160f067720f64fd04ad2c0cbae7e6b1ceb9ec4c0340c1314",
+      "text_sha256": "aaa994b2ca546ce2160f067720f64fd04ad2c0cbae7e6b1ceb9ec4c0340c1314",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L21",
+      "evidence_location": "L8",
+      "web_reference_ids": [
+        "turn30view0"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2024-06-05",
+      "excerpt_word_count": 22,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R002",
+      "url": "https://www.maersk.com/news/articles/2024/06/03/blanking-far-east-asia-to-med-services",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Blanking Far East Asia to Med Services",
+      "published_date": "2024-06-03",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+      "text": "As a result, the following blank voyages will be introduced in the upcoming weeks.",
+      "sha256": "22978ec37c359ad7903a5778509750ab102b809249655bee8a4ba60b55264084",
+      "text_sha256": "22978ec37c359ad7903a5778509750ab102b809249655bee8a4ba60b55264084",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L3-L20",
+      "evidence_location": "L9",
+      "web_reference_ids": [
+        "turn30view1"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2024-06-03",
+      "excerpt_word_count": 14,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R003",
+      "url": "https://www.maersk.com/news/articles/2024/07/25/voyage-slide-far-east-asia-to-med-services",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Voyage Slide - Far East Asia to Med Services",
+      "published_date": "2024-07-25",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+      "text": "As a result, the following voyage slide will be introduced.",
+      "sha256": "568dfe93d18191c28f0f6a2e39a979907957ddcaf34c365b4e6215423e30f2e5",
+      "text_sha256": "568dfe93d18191c28f0f6a2e39a979907957ddcaf34c365b4e6215423e30f2e5",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L20",
+      "evidence_location": "L10",
+      "web_reference_ids": [
+        "turn30view2"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2024-07-25",
+      "excerpt_word_count": 10,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R004",
+      "url": "https://www.maersk.com/news/articles/2025/04/17/north-europe-port-update",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "North Europe Port Update",
+      "published_date": "2025-04-17",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "north_europe_terminal_congestion_easter_2025",
+      "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+      "text": "the increasing congestion levels and operational disruptions at several ports across Northern Europe, specifically Antwerp and Bremerhaven.",
+      "sha256": "bc3495a452af6dfafe836b392986f5e40ae84dce7ed4fbfc53c3315f503b7958",
+      "text_sha256": "bc3495a452af6dfafe836b392986f5e40ae84dce7ed4fbfc53c3315f503b7958",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L3-L12",
+      "evidence_location": "L6",
+      "web_reference_ids": [
+        "turn30view3"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-04-17",
+      "excerpt_word_count": 17,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R005",
+      "url": "https://www.maersk.com/news/articles/2025/02/11/slow-operations-at-hutchinson-port-delta-in-rotterdam",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Slow Operations at Hutchinson Port Delta II in Rotterdam",
+      "published_date": "2025-02-11",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "rotterdam_delta_ii_labour_disruption_2025febmar",
+      "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+      "text": "contingency plans for week 13 and onward will not be implemented",
+      "sha256": "d67b59b80bd8f0a5651448cb45ab910f9e5907cd449bab19d395c53e3f0ccba4",
+      "text_sha256": "d67b59b80bd8f0a5651448cb45ab910f9e5907cd449bab19d395c53e3f0ccba4",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L32",
+      "evidence_location": "L11",
+      "web_reference_ids": [
+        "turn31view0"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-03-12",
+      "excerpt_word_count": 11,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R006",
+      "url": "https://www.maersk.com/news/articles/2025/10/08/strike-action-of-lashing-companies-in-rotterdam",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Customer advisory: Strike action of lashing companies in Rotterdam",
+      "published_date": "2025-10-08",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "rotterdam_lashers_strike_2025oct",
+      "correlation_group_id": "benelux_industrial_actions_2025oct",
+      "text": "strike action by lashing companies in the Port of Rotterdam is expected to start, Wednesday, 8 October 2025.",
+      "sha256": "d54a09e416594d674d1ff4167e09cc2dcc03ce45727cd8cc07f9b3bee5c59579",
+      "text_sha256": "d54a09e416594d674d1ff4167e09cc2dcc03ce45727cd8cc07f9b3bee5c59579",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L34",
+      "evidence_location": "L23",
+      "web_reference_ids": [
+        "turn31view1"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-10-08",
+      "excerpt_word_count": 18,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R007",
+      "url": "https://www.maersk.com/news/articles/2025/09/18/ca-ae12-voyage-slide",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Customer Advisory – AE12 Voyage Slide",
+      "published_date": "2025-09-18",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "gemini_adriatic_schedule_disruption_2025q3q4",
+      "correlation_group_id": "adriatic_port_congestion_2025q3q4",
+      "text": "challenges through the Adriatic Sea have caused delays across the network and impacted our ability to maintain regular schedules for the AE12 service.",
+      "sha256": "ce28e5a6911c83106a64db974bedc10e4e9c8ad93668f070d3c90f7754b014cc",
+      "text_sha256": "ce28e5a6911c83106a64db974bedc10e4e9c8ad93668f070d3c90f7754b014cc",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L20",
+      "evidence_location": "L8",
+      "web_reference_ids": [
+        "turn31view2"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-09-18",
+      "excerpt_word_count": 23,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R008",
+      "url": "https://www.hapag-lloyd.com/en/services-information/news/2025/09/shipping-between-asia-and-the-south-europe--here-s-an-important-.html",
+      "publisher": "Hapag-Lloyd",
+      "title": "Shipping between Asia and the South Europe? Here’s an important service update",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "gemini_adriatic_schedule_disruption_2025q3q4",
+      "correlation_group_id": "adriatic_port_congestion_2025q3q4",
+      "text": "In South Europe the Rijeka call will be scheduled ahead of Koper.",
+      "sha256": "7ef14e1c17e11c861e23ac98da6eb3092e0e63c635f9e72499f904cbc08d1c5c",
+      "text_sha256": "7ef14e1c17e11c861e23ac98da6eb3092e0e63c635f9e72499f904cbc08d1c5c",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L17-L37",
+      "evidence_location": "L24",
+      "web_reference_ids": [
+        "turn31view3"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": null,
+      "excerpt_word_count": 12,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R009",
+      "url": "https://www.maersk.com/news/articles/2024/06/12/navigating-challenges-in-red-sea-and-beyond",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Maersk Asia Pacific Market Update - June 2024",
+      "published_date": "2024-06-12",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "red_sea_cape_diversion_2024",
+      "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+      "text": "adding approximately 4,000 miles to the total voyage length, resulting in longer voyage times and higher operational expenses.",
+      "sha256": "e16c7324426d7b8a7872274531b43440a11ee8e2ae2008d55604feff63e8141c",
+      "text_sha256": "e16c7324426d7b8a7872274531b43440a11ee8e2ae2008d55604feff63e8141c",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L48",
+      "evidence_location": "L18",
+      "web_reference_ids": [
+        "turn32view0"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2024-06-12",
+      "excerpt_word_count": 18,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R010",
+      "url": "https://www.maersk.com/news/articles/2021/03/24/vessel-blockage-in-the-suez-canal",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Update to Vessel blockage in the Suez Canal",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "suez_canal_blockage_2021marapr",
+      "correlation_group_id": "suez_canal_blockage_2021marapr",
+      "text": "As new inbound vessels reach the canal, our aim is that these vessels will only experience a 1-2-day delay",
+      "sha256": "2dcfdcae257f4b689a43f47ff0930734c240949348dc8704d7304cc9c4d53929",
+      "text_sha256": "2dcfdcae257f4b689a43f47ff0930734c240949348dc8704d7304cc9c4d53929",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L3-L473",
+      "evidence_location": "L32",
+      "web_reference_ids": [
+        "turn32view1"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2021-04-05",
+      "excerpt_word_count": 19,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R011",
+      "url": "https://www.cma-cgm.com/local/netherlands/news/711/customer-advisory-nemo-service-change-of-rotation-in-north-europe",
+      "publisher": "CMA CGM",
+      "title": "CUSTOMER ADVISORY –NEMO SERVICE – Change of rotation in North Europe",
+      "published_date": "2025-03-20",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "nemo_rotterdam_omission_2025spring",
+      "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+      "text": "Rotterdam call is not anymore available in our schedule",
+      "sha256": "a73950d3da25ae25e632dcca83bb4223fd577283288de91060fb17503f28679a",
+      "text_sha256": "a73950d3da25ae25e632dcca83bb4223fd577283288de91060fb17503f28679a",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L16-L28",
+      "evidence_location": "L22",
+      "web_reference_ids": [
+        "turn32view2"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-03-20",
+      "excerpt_word_count": 9,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R012",
+      "url": "https://www.hapag-lloyd.com/en/services-information/offices-localinfo/local-news/2025/11/belgian-national-strike-disrupts-port-operations-and-logistics-c.html",
+      "publisher": "Hapag-Lloyd",
+      "title": "Belgian National Strike Disrupts Port Operations and Logistics Chain",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "antwerp_national_strike_2025nov",
+      "correlation_group_id": "belgian_national_strike_2025nov",
+      "text": "Vessel traffic has now resumed, and port operations are gradually stabilizing. However, congestion remains significant at this time.",
+      "sha256": "6e51ace683b0e52b980d79ed8f391551adde416742573c4f6d95c8fc0b262569",
+      "text_sha256": "6e51ace683b0e52b980d79ed8f391551adde416742573c4f6d95c8fc0b262569",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L17-L35",
+      "evidence_location": "L24",
+      "web_reference_ids": [
+        "turn32view3"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2025-11-27",
+      "excerpt_word_count": 18,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R013",
+      "url": "https://www.maersk.com/news/articles/2026/10/20/east-asia-network-recovery-update-3",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "East Asia network recovery: Update 3",
+      "published_date": "2026-10-20",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "east_asia_typhoon_network_recovery_2026",
+      "correlation_group_id": "east_asia_typhoon_network_recovery_2026",
+      "text": "customers may continue to experience intermittent delays in certain trade lanes as conditions across the wider regional network continue to normalize.",
+      "sha256": "213189c0886edaea8df923b38f4ed25d72b739c15be31ec00e991a417963d7c8",
+      "text_sha256": "213189c0886edaea8df923b38f4ed25d72b739c15be31ec00e991a417963d7c8",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L22",
+      "evidence_location": "L18",
+      "web_reference_ids": [
+        "turn32view4"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2026-10-20",
+      "excerpt_word_count": 21,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R014",
+      "url": "https://www.hapag-lloyd.com/en/services-information/news/2023/12/faq-for-the-suez-canal-situation.html",
+      "publisher": "Hapag-Lloyd",
+      "title": "FAQ for the Red Sea situation",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "red_sea_cape_diversion_2024",
+      "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+      "text": "passage via Cape of Good Hope adds between 7 to 14 days to your shipment’s journey",
+      "sha256": "8763ed9e21a14e6f174d5345f22b9d0a9783e2f5570225c9a450c70a10968a4e",
+      "text_sha256": "8763ed9e21a14e6f174d5345f22b9d0a9783e2f5570225c9a450c70a10968a4e",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L17-L105",
+      "evidence_location": "L68",
+      "web_reference_ids": [
+        "turn37view0"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2023-12-20",
+      "excerpt_word_count": 16,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R015",
+      "url": "https://www.maersk.com/news/articles/2026/07/09/structural-changes-to-mecl",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Structural changes to MECL",
+      "published_date": "2026-07-09",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "mecl_trans_suez_return_2026jul",
+      "correlation_group_id": "red_sea_route_changes_2026",
+      "text": "On eastbound sailings, transit times will improve by an average of 14 days.",
+      "sha256": "cfdea75db20660e9c4bd58296b6dd378300329d39002d49fbfd6e4c4daccae11",
+      "text_sha256": "cfdea75db20660e9c4bd58296b6dd378300329d39002d49fbfd6e4c4daccae11",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L33",
+      "evidence_location": "L14",
+      "web_reference_ids": [
+        "turn38view0"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2026-07-09",
+      "excerpt_word_count": 13,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    },
+    {
+      "source_id": "R016",
+      "url": "https://www.maersk.com/news/articles/2024/04/19/maersk-enhances-me2-service-between-india-and-north-europe",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Maersk enhances ME2 service between India and North Europe ensuring shorter transit times",
+      "published_date": "2024-04-19",
+      "accessed_date": "2026-10-29",
+      "accessed_date_timezone": "Etc/UTC",
+      "audit_date": "2026-10-30",
+      "audit_timezone": "Asia/Shanghai",
+      "source_type": "official_notice",
+      "event_group_id": "me2_india_north_europe_rotation_upgrade_2024apr",
+      "correlation_group_id": "india_north_europe_service_redesign_2024",
+      "text": "The transit times for ocean transports between Mumbai ports and North Europe will be shortened by five to seven days.",
+      "sha256": "4fe8afea68e2b027cdd27af770d33ead117d97f0bd045db266d16dfe5f5c97a6",
+      "text_sha256": "4fe8afea68e2b027cdd27af770d33ead117d97f0bd045db266d16dfe5f5c97a6",
+      "text_kind": "verbatim_excerpt",
+      "full_notice_reviewed": true,
+      "full_text_redistributed": false,
+      "body_lines_reviewed": "L4-L28",
+      "evidence_location": "L17",
+      "web_reference_ids": [
+        "turn38view1"
+      ],
+      "review_method": "Assistant opened and read complete readable article body through web open; long Suez page read in overlapping sections.",
+      "selected_version_date": "2024-04-19",
+      "excerpt_word_count": 20,
+      "annotation_status": "assistant_reference_pending_human_review",
+      "human_review_pending": true
+    }
+  ],
+  "splits": {
+    "test": [
+      {
+        "id": "real_r001",
+        "source_id": "R001",
+        "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+        "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+        "synthetic": false,
+        "excerpt_sha256": "aaa994b2ca546ce2160f067720f64fd04ad2c0cbae7e6b1ceb9ec4c0340c1314",
+        "model_input": {
+          "text": "across the Asia-North Europe network have contributed to an accumulation of delays on our services which resulted in a slide of AE55.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "A voyage-number slide is not an announced transit-time increment; the service, internal route and dispatch calendar are not linked.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "voyage_slide",
+            "named_services": [
+              "AE55"
+            ],
+            "locations": [
+              "Asia",
+              "North Europe"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "An accumulation of network delays caused an AE55 voyage slide.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r002",
+        "source_id": "R002",
+        "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+        "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+        "synthetic": false,
+        "excerpt_sha256": "22978ec37c359ad7903a5778509750ab102b809249655bee8a4ba60b55264084",
+        "model_input": {
+          "text": "As a result, the following blank voyages will be introduced in the upcoming weeks.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Blank sailings concern availability and possible rebooking; neither their shipment-level duration nor an NL_ocean bridge is supplied.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "blank_sailings",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [
+              {
+                "text": "in the upcoming weeks",
+                "role": "relative_effective_period",
+                "normalized_date": null
+              }
+            ],
+            "quantities": [],
+            "factual_summary": "Blank voyages are announced for an unspecified upcoming period.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r003",
+        "source_id": "R003",
+        "event_group_id": "asia_europe_congestion_schedule_changes_2024q2q3",
+        "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+        "synthetic": false,
+        "excerpt_sha256": "568dfe93d18191c28f0f6a2e39a979907957ddcaf34c365b4e6215423e30f2e5",
+        "model_input": {
+          "text": "As a result, the following voyage slide will be introduced.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "The excerpt announces a voyage slide without a numerical lead extension, route mapping or dispatch interval.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "voyage_slide",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "A voyage slide is announced.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r004",
+        "source_id": "R004",
+        "event_group_id": "north_europe_terminal_congestion_easter_2025",
+        "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+        "synthetic": false,
+        "excerpt_sha256": "bc3495a452af6dfafe836b392986f5e40ae84dce7ed4fbfc53c3315f503b7958",
+        "model_input": {
+          "text": "the increasing congestion levels and operational disruptions at several ports across Northern Europe, specifically Antwerp and Bremerhaven.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Named ports and congestion do not establish the internal lane, a duration or the affected dispatch weeks.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "port_congestion",
+            "named_services": [],
+            "locations": [
+              "Northern Europe",
+              "Antwerp",
+              "Bremerhaven"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "Congestion and operational disruptions affect named Northern European ports.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r005",
+        "source_id": "R005",
+        "event_group_id": "rotterdam_delta_ii_labour_disruption_2025febmar",
+        "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+        "synthetic": false,
+        "excerpt_sha256": "d67b59b80bd8f0a5651448cb45ab910f9e5907cd449bab19d395c53e3f0ccba4",
+        "model_input": {
+          "text": "contingency plans for week 13 and onward will not be implemented",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Withdrawal of contingency plans is not a quantified lead reduction; carrier week numbers are not the model planning horizon.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "contingency_withdrawal",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [
+              {
+                "text": "week 13 and onward",
+                "role": "contingency_start_week",
+                "normalized_date": null
+              }
+            ],
+            "quantities": [],
+            "factual_summary": "Contingency plans for week 13 onward will not be implemented.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r006",
+        "source_id": "R006",
+        "event_group_id": "rotterdam_lashers_strike_2025oct",
+        "correlation_group_id": "benelux_industrial_actions_2025oct",
+        "synthetic": false,
+        "excerpt_sha256": "d54a09e416594d674d1ff4167e09cc2dcc03ce45727cd8cc07f9b3bee5c59579",
+        "model_input": {
+          "text": "strike action by lashing companies in the Port of Rotterdam is expected to start, Wednesday, 8 October 2025.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "A strike start date is not an affected dispatch interval or an exact shipment delay; the excerpt is from the original update.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "strike_announcement",
+            "named_services": [],
+            "locations": [
+              "Port of Rotterdam"
+            ],
+            "temporal_qualifiers": [
+              {
+                "text": "Wednesday, 8 October 2025",
+                "role": "expected_strike_start",
+                "normalized_date": "2025-10-08"
+              }
+            ],
+            "quantities": [],
+            "factual_summary": "A Rotterdam lashing strike is expected to start on 8 October 2025.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r007",
+        "source_id": "R007",
+        "event_group_id": "gemini_adriatic_schedule_disruption_2025q3q4",
+        "correlation_group_id": "adriatic_port_congestion_2025q3q4",
+        "synthetic": false,
+        "excerpt_sha256": "ce28e5a6911c83106a64db974bedc10e4e9c8ad93668f070d3c90f7754b014cc",
+        "model_input": {
+          "text": "challenges through the Adriatic Sea have caused delays across the network and impacted our ability to maintain regular schedules for the AE12 service.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "The service is named but has no catalog mapping, dispatch calendar or deterministic additional duration.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "network_delay",
+            "named_services": [
+              "AE12"
+            ],
+            "locations": [
+              "Adriatic Sea"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "Adriatic challenges cause network delays and disrupt AE12 schedules.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r008",
+        "source_id": "R008",
+        "event_group_id": "gemini_adriatic_schedule_disruption_2025q3q4",
+        "correlation_group_id": "adriatic_port_congestion_2025q3q4",
+        "synthetic": false,
+        "excerpt_sha256": "7ef14e1c17e11c861e23ac98da6eb3092e0e63c635f9e72499f904cbc08d1c5c",
+        "model_input": {
+          "text": "In South Europe the Rijeka call will be scheduled ahead of Koper.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Changing port order is not a lane-level lead increment; the excerpt does not quantify shipment impact or map the service.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "port_rotation_change",
+            "named_services": [],
+            "locations": [
+              "South Europe",
+              "Rijeka",
+              "Koper"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "The Rijeka port call is to precede Koper.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r009",
+        "source_id": "R009",
+        "event_group_id": "red_sea_cape_diversion_2024",
+        "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+        "synthetic": false,
+        "excerpt_sha256": "e16c7324426d7b8a7872274531b43440a11ee8e2ae2008d55604feff63e8141c",
+        "model_input": {
+          "text": "adding approximately 4,000 miles to the total voyage length, resulting in longer voyage times and higher operational expenses.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Distance is not duration; no sailing speed, exact transit increment, route bridge or dispatch interval is provided.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "route_distance_extension",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [],
+            "quantities": [
+              {
+                "value": 4000,
+                "minimum": null,
+                "maximum": null,
+                "unit": "mile",
+                "semantic_type": "additional_voyage_distance",
+                "qualifier": "approximately"
+              }
+            ],
+            "factual_summary": "Voyage distance increases by approximately 4,000 miles and voyage times are longer.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r010",
+        "source_id": "R010",
+        "event_group_id": "suez_canal_blockage_2021marapr",
+        "correlation_group_id": "suez_canal_blockage_2021marapr",
+        "synthetic": false,
+        "excerpt_sha256": "2dcfdcae257f4b689a43f47ff0930734c240949348dc8704d7304cc9c4d53929",
+        "model_input": {
+          "text": "As new inbound vessels reach the canal, our aim is that these vessels will only experience a 1-2-day delay",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "This is an aim and interval for inbound vessels, not an exact lane increment; one to two days cannot be rounded into weekly lead changes.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "inbound_vessel_delay_target",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [],
+            "quantities": [
+              {
+                "value": null,
+                "minimum": 1,
+                "maximum": 2,
+                "unit": "day",
+                "semantic_type": "delay",
+                "qualifier": "aim_for_new_inbound_vessels"
+              }
+            ],
+            "factual_summary": "New inbound vessels are targeted to experience a delay of one to two days.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r011",
+        "source_id": "R011",
+        "event_group_id": "nemo_rotterdam_omission_2025spring",
+        "correlation_group_id": "north_europe_terminal_congestion_2025h1",
+        "synthetic": false,
+        "excerpt_sha256": "a73950d3da25ae25e632dcca83bb4223fd577283288de91060fb17503f28679a",
+        "model_input": {
+          "text": "Rotterdam call is not anymore available in our schedule",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Port-call unavailability requires a routing or availability decision outside the delay-only schema, with unknown cargo mapping and duration.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "port_call_unavailable",
+            "named_services": [],
+            "locations": [
+              "Rotterdam"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "The Rotterdam port call is unavailable.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r012",
+        "source_id": "R012",
+        "event_group_id": "antwerp_national_strike_2025nov",
+        "correlation_group_id": "belgian_national_strike_2025nov",
+        "synthetic": false,
+        "excerpt_sha256": "6e51ace683b0e52b980d79ed8f391551adde416742573c4f6d95c8fc0b262569",
+        "model_input": {
+          "text": "Vessel traffic has now resumed, and port operations are gradually stabilizing. However, congestion remains significant at this time.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "Resumption does not establish zero shipment delay; congestion recovery, booking applicability and planning dates remain unresolved.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "partial_recovery_with_congestion",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [
+              {
+                "text": "now",
+                "role": "relative_resumption_time",
+                "normalized_date": null
+              }
+            ],
+            "quantities": [],
+            "factual_summary": "Vessel traffic resumes while significant congestion persists.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r013",
+        "source_id": "R013",
+        "event_group_id": "east_asia_typhoon_network_recovery_2026",
+        "correlation_group_id": "east_asia_typhoon_network_recovery_2026",
+        "synthetic": false,
+        "excerpt_sha256": "213189c0886edaea8df923b38f4ed25d72b739c15be31ec00e991a417963d7c8",
+        "model_input": {
+          "text": "customers may continue to experience intermittent delays in certain trade lanes as conditions across the wider regional network continue to normalize.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "The statement is conditional and identifies neither the relevant lane nor a delay amount or dispatch window.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "intermittent_network_delay",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [],
+            "quantities": [],
+            "factual_summary": "Intermittent delays may persist in some trade lanes during network normalization.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r014",
+        "source_id": "R014",
+        "event_group_id": "red_sea_cape_diversion_2024",
+        "correlation_group_id": "red_sea_diversion_and_asian_european_congestion_2024",
+        "synthetic": false,
+        "excerpt_sha256": "8763ed9e21a14e6f174d5345f22b9d0a9783e2f5570225c9a450c70a10968a4e",
+        "model_input": {
+          "text": "passage via Cape of Good Hope adds between 7 to 14 days to your shipment’s journey",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "A seven-to-fourteen-day range is not an approved point estimate; booking-specific mapping and dispatch calendar are also absent.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "journey_extension_range",
+            "named_services": [],
+            "locations": [
+              "Cape of Good Hope"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [
+              {
+                "value": null,
+                "minimum": 7,
+                "maximum": 14,
+                "unit": "day",
+                "semantic_type": "additional_journey_duration",
+                "qualifier": "range"
+              }
+            ],
+            "factual_summary": "Cape routing adds a journey-duration range of seven to fourteen days.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r015",
+        "source_id": "R015",
+        "event_group_id": "mecl_trans_suez_return_2026jul",
+        "correlation_group_id": "red_sea_route_changes_2026",
+        "synthetic": false,
+        "excerpt_sha256": "cfdea75db20660e9c4bd58296b6dd378300329d39002d49fbfd6e4c4daccae11",
+        "model_input": {
+          "text": "On eastbound sailings, transit times will improve by an average of 14 days.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "An average improvement is neither a deterministic positive add_lead increment nor an NL_ocean mapping or dispatch interval.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "transit_time_improvement",
+            "named_services": [],
+            "locations": [],
+            "temporal_qualifiers": [],
+            "quantities": [
+              {
+                "value": 14,
+                "minimum": null,
+                "maximum": null,
+                "unit": "day",
+                "semantic_type": "transit_time_reduction",
+                "qualifier": "average_eastbound"
+              }
+            ],
+            "factual_summary": "Eastbound transit times improve by fourteen days on average.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      },
+      {
+        "id": "real_r016",
+        "source_id": "R016",
+        "event_group_id": "me2_india_north_europe_rotation_upgrade_2024apr",
+        "correlation_group_id": "india_north_europe_service_redesign_2024",
+        "synthetic": false,
+        "excerpt_sha256": "4fe8afea68e2b027cdd27af770d33ead117d97f0bd045db266d16dfe5f5c97a6",
+        "model_input": {
+          "text": "The transit times for ocean transports between Mumbai ports and North Europe will be shortened by five to seven days.",
+          "context": {
+            "routes": [
+              {
+                "name": "NL_air",
+                "lead": 1
+              },
+              {
+                "name": "NL_ocean",
+                "lead": 5
+              }
+            ],
+            "horizon": 16,
+            "scope_route": "NL_ocean",
+            "period": "week",
+            "window_semantics": "dispatch_weeks_one_based_inclusive",
+            "scope_policy": "Update NL_ocean only; explicit other known routes are no-ops. Unresolved route aliases require clarification.",
+            "conversion_policy": "One fortnight is two weeks. Convert days only when divisible by seven; do not round. Missing, conflicting, or interval-valued critical parameters require clarification."
+          }
+        },
+        "reference": {
+          "status": "needs_clarification",
+          "changes": []
+        },
+        "annotation": {
+          "status": "assistant_reference_pending_human_review",
+          "human_review_pending": true,
+          "annotator_type": "assistant",
+          "rationale": "The notice gives a duration-reduction range for a different trade, not a deterministic NL_ocean delay or dispatch-window mapping.",
+          "missing_information": [
+            "service_to_internal_route_mapping",
+            "affected_dispatch_calendar",
+            "exact_incremental_lead_weeks"
+          ],
+          "broad_reference": {
+            "schema_version": "real-notice-facts-v1",
+            "evidence_scope": "model_input.text_only",
+            "event_kind": "transit_time_improvement",
+            "named_services": [],
+            "locations": [
+              "Mumbai",
+              "North Europe"
+            ],
+            "temporal_qualifiers": [],
+            "quantities": [
+              {
+                "value": null,
+                "minimum": 5,
+                "maximum": 7,
+                "unit": "day",
+                "semantic_type": "transit_time_reduction",
+                "qualifier": "range"
+              }
+            ],
+            "factual_summary": "Ocean transit between Mumbai ports and North Europe shortens by five to seven days.",
+            "unsupported_inferences": [
+              "No service-to-NL_ocean mapping may be inferred.",
+              "No calendar week or voyage number may be treated as a planning-horizon dispatch week.",
+              "No approximate, range, average, port-waiting or voyage-distance quantity may become a deterministic add_lead operation."
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "excluded_sources": []
+}

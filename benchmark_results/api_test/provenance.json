@@ -1,0 +1,28 @@
+{
+  "api_runner_source_sha256": "ad4606cc6fb26a7b3d01e57fdf7ce3e69d32646e61b82968884d89f3f297329b",
+  "archive_sha256": "94ad551fa30c21ceb1ca481a94d0b73ee78b45b186552221ceb06b9dcd2ee499",
+  "artifact_id": 12936629568,
+  "calls": 400,
+  "dataset_path": "benchmarks/notices_v1/dataset.json",
+  "distinct_cases": 400,
+  "files_sha256": {
+    "estimate.json": "4a3bdf01026819bceef59f65c258254173eabeecc5586a5b51909959caf18fe3",
+    "evaluation.json": "73adc09978a5d85b5547f90588396d61f228feb63c1b2f194c3ae3dfc8b01c7f",
+    "evaluation.md": "82b503d75d93310353f2ede2966a03eaf86311ba82d8f4688d622cb209016a2a",
+    "inputs.jsonl": "993c19c9caa775ce80bb0707b97817983be73a5f51e817ee99d4bbb73d6f37b9",
+    "ledger-anchor.json": "09a56bcf648a30f107cbb60f6403c6999a0040bf11233b1afc22e5cc98d681f0",
+    "manifest.json": "a3bbc848b94cb8b35e5f633beba4858fe809ee6d6153310226f7f52478ca282f",
+    "prompt.txt": "fe6aba02e1e7dce233a3e61ae2bf15d82925a842ccfcff6f9cf530d87729167b",
+    "records.jsonl": "9bc152fe7c1eb9b11f01a8087e0e74e53fff33c43a9cb4fe8152ceaabe20b94d",
+    "schema.json": "d5541166515dc4aed1078d1e7d42e1dd5d997a7c268dcd0ea0ae6c26771aa518",
+    "summary.json": "7dab9e6e38e31477b88bbbf40a6c8225a5224199bf0d132095d3133ca38bf88b"
+  },
+  "model": "gpt-6-luna",
+  "role": "primary",
+  "schema_version": "notice-api-provenance-v1",
+  "source_commit": "4cacb43e071e8a8911247a2cdd7c10ddbc92d4d3",
+  "split": "test",
+  "timestamp_policy": "Original ledger timestamps, provider metadata, and recorded pricing date are retained without modification.",
+  "workflow_run_id": 40962758214,
+  "workflow_run_url": "https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40962758214"
+}
