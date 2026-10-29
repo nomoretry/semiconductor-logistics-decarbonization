@@ -299,6 +299,12 @@ class ApiRunnerTests(unittest.TestCase):
         self.assertEqual(caught.exception.status, 302)
         self.assertEqual(caught.exception.error_code, 'redirect_rejected')
 
+    def test_completely_truncated_ledger_cannot_repeat_billed_attempts(self):
+        self.execute()
+        (self.output / 'records.jsonl').write_text('')
+        with self.assertRaisesRegex(runner.RunnerError, 'resume_empty_ledger_but_anchor_exists'):
+            self.execute(transport=lambda *args: self.fail('must not send duplicate calls'))
+
     def test_default_transport_uses_only_fixed_endpoint(self):
         calls = []
         class Response:

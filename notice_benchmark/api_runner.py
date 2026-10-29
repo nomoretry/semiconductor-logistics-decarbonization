@@ -357,6 +357,8 @@ def _read_log(path: Path) -> tuple[list[dict[str, Any]], str]:
             records.append(record)
     except (OSError, ValueError, KeyError, TypeError):
         raise RunnerError('resume_log_invalid') from None
+    if not records and anchor_path.exists():
+        raise RunnerError('resume_empty_ledger_but_anchor_exists')
     if records:
         try:
             if anchor_path.is_symlink():

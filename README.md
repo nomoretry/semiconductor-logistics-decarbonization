@@ -10,6 +10,8 @@
 
 多步工具环境已在200组开发订单场景上执行规则／参考输入两组工作流，共400次运行，并区分127份可行计划与73次正确澄清交接。固定流程已能处理当前工具顺序，故尚未满足训练BC／PPO的研究条件。API评测程序已完成模拟传输测试与费用预估，未进行真实LLM API推理；没有LLM对照成绩、训练权重或千任务最终实验。
 
+无需在聊天中提供API密钥：[安全连接与手动运行说明](docs/secure_api_connection.md)介绍如何使用仓库Secret和GitHub Actions。工作流只允许手动触发，默认20条开发文本、USD 0.05程序预算；文件须合并到`main`后才会显示运行入口。
+
 ```bash
 python -m notice_benchmark.data --output benchmarks/notices_v1
 python -m notice_benchmark.run_offline --freeze-rules
