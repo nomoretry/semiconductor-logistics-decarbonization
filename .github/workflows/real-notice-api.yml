@@ -1,0 +1,72 @@
+name: Real notice audit (manual)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: real-notice-evaluation
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out reviewed source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - name: Validate sources and export inference inputs
+        run: |
+          python -m real_notice_eval validate --dataset benchmarks/real_notices_v1/dataset.json
+          python -m real_notice_eval export-api \
+            --dataset benchmarks/real_notices_v1/dataset.json \
+            --output artifacts/real_notice/input_dataset.json
+      - name: Estimate API budget
+        run: |
+          python -m notice_benchmark.api_runner \
+            --dataset artifacts/real_notice/input_dataset.json \
+            --split test --output artifacts/real_notice/api
+      - name: Run the fixed model with a USD 0.05 reservation cap
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          if not os.environ.get('OPENAI_API_KEY', '').strip():
+              raise SystemExit('Missing OPENAI_API_KEY repository secret. No request sent.')
+          PY
+          python -m notice_benchmark.api_runner \
+            --dataset artifacts/real_notice/input_dataset.json \
+            --split test --output artifacts/real_notice/api \
+            --execute --max-usd 0.05
+      - name: Verify responses and score the exploratory abstention audit
+        if: always()
+        run: |
+          python -m real_notice_eval score-api \
+            --dataset benchmarks/real_notices_v1/dataset.json \
+            --input-dataset artifacts/real_notice/input_dataset.json \
+            --run-dir artifacts/real_notice/api \
+            --output artifacts/real_notice/assessment.json \
+            --github-summary "$GITHUB_STEP_SUMMARY"
+      - name: Save the evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: real-notice-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/real_notice/
+          include-hidden-files: false
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,49 @@
+{
+  "schema_version": "real-notice-assistant-second-review-v1",
+  "review_type": "second_assistant_review",
+  "reported_by": "second assistant reviewer directly and root coordinator",
+  "reviewer_type": "assistant",
+  "human_reviewed": false,
+  "human_review_pending": true,
+  "audit_date": "2026-10-30",
+  "audit_timezone": "Asia/Shanghai",
+  "review_status": "completed_with_minor_text_scope_corrections",
+  "reviewed_source_ids": [
+    "R001",
+    "R002",
+    "R003",
+    "R004",
+    "R005",
+    "R006",
+    "R007",
+    "R008",
+    "R009",
+    "R010",
+    "R011",
+    "R012",
+    "R013",
+    "R014",
+    "R015",
+    "R016"
+  ],
+  "review_scope": [
+    "Exact source excerpts checked against opened official pages.",
+    "Narrow candidate references checked.",
+    "Broad candidate labels checked for excerpt-only entailment."
+  ],
+  "findings": [
+    {
+      "source_id": "R010",
+      "finding": "Queue is not stated in the excerpt.",
+      "resolution": "Changed event_kind to inbound_vessel_delay_target."
+    },
+    {
+      "source_id": "R005",
+      "finding": "Carrier is not stated in the excerpt.",
+      "resolution": "Changed temporal role to contingency_start_week and removed carrier from factual summary."
+    }
+  ],
+  "scope_limit": "This is a second assistant review, not independent human gold annotation. It verified the 16 selected excerpts and surrounding version context on the actual official pages; it did not repeat a full 500-line Suez audit.",
+  "reviewer_agent": "independent_real_review",
+  "selected_historical_version_review": "Verified selected-version context for R005, R006, R010, R012 and R014; no source or version corrections required. R008 null publication date is defensible."
+}
