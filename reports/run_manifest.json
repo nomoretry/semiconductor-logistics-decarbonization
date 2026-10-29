@@ -1,0 +1,56 @@
+{
+  "experiment": "committed orders + announced disruptions, integer planning",
+  "date": "2026-10-30",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "synthetic_seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109
+  ],
+  "cases": [
+    "normal",
+    "ocean_delay",
+    "capacity_restriction"
+  ],
+  "total_solves": 400,
+  "status_counts": {
+    "0": 375,
+    "2": 25
+  },
+  "service": "zero end-period backlog every period; final inventory >= same initial inventory",
+  "risk_excluded": "cargo damage; manufacturing, wafer yields, product embodied carbon",
+  "business_data": "synthetic scenario assumptions, not proprietary company data",
+  "budget_reference": "10/25/50% below SAME instance cost-only logistics emissions",
+  "air_kgco2e_per_tonne_km": 0.66646,
+  "ocean_kgco2e_per_tonne_km": 0.01977,
+  "road_kgco2e_per_tonne_km": 0.12715,
+  "source_sha256": {
+    "scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/create_reports.py": "fd07751ef261c931f9efec9f9d616cf086f4d12f1a6ab0db3b9479dcb56e5a12",
+    "scripts/evaluate_notice_pilot.py": "14c90d08ce8045d0bf592f47fc847f43afd7dab5a0a1a89533504d6e4dbca5e1",
+    "scripts/run_experiments.py": "795a23bd7d8023eeb8b9d3b55f0555f54bca3581f9aadb3618f6325b97787113",
+    "scripts/run_sensitivity.py": "e82251f8a29701516e506d0b1b77f3f410e043f28e4af85e1f4704c677615389",
+    "shared/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "shared/experiments.py": "1966769fe54cbcb73420207c1e048f410338e9e1da2bb6dd84bbfc16bf7ecac4",
+    "shared/optimization.py": "786f35191c301c149a13c7972772e923925ec6e3a1f6e95764a5a7ed5c641570",
+    "tests/test_experiments.py": "7ba0f6467969ee981ca726d3bd11092e5bc854b19419e9f517d6e967f8040ef5",
+    "tests/test_optimization.py": "9df7994b380bfea7bd1eaabd0c408b844946748d758537997078b4b3402ca8da"
+  },
+  "input_sha256": {
+    "asml/config.json": "bc7748568cba654316c9220c136c51d9f42eae6abef5ab9c80b5cbe8dfe26330",
+    "marvell/config.json": "54d0860792b212de095ecf799cb539563aaef64fb15dbb848fb3dc954e0611c0",
+    "data_sources/raw/car_parts_dataset_with_missing_values.zip": "80557703397c7dca6c007bd28930b0e213e529f428afd02e5af87804fdc38ee1",
+    "data_sources/raw/ghg_factors_2026_flat_revised.xlsx": "a9a455ab396dae226d510c7be6233748416d490c41a5d20f3dc7a0c45feecd5e"
+  },
+  "seconds": 17.91784833800193,
+  "llm": "Separate saved in-session extraction pilot; no external API inference in numerical grid"
+}

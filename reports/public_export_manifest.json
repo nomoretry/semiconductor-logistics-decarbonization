@@ -1,0 +1,21 @@
+{
+  "detail_scope": "synthetic_weekly only",
+  "excluded_detail_scope": "real_carparts_monthly; no observed demand arrays or selected series identifiers published",
+  "archived_aggregate_solves": 400,
+  "public_detail_counts": {
+    "reports/episodes.json": 360,
+    "reports/instances.json": 60,
+    "reports/plans.json": 339,
+    "asml/results/episodes.json": 180,
+    "asml/results/instances.json": 30,
+    "asml/results/plans.json": 162,
+    "marvell/results/episodes.json": 180,
+    "marvell/results/instances.json": 30,
+    "marvell/results/plans.json": 177
+  },
+  "external_reproduction": [
+    "python scripts/download_source_data.py",
+    "python scripts/run_experiments.py --project both"
+  ],
+  "original_data_files": "retrieved from attributed public sources with SHA256 verification; not redistributed"
+}

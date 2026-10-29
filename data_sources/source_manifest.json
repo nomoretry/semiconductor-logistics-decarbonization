@@ -1,0 +1,50 @@
+{
+  "retrieved_on": "2026-10-30",
+  "raw_files": [
+    {
+      "path": "raw/ghg_factors_2026_flat_revised.xlsx",
+      "title": "UK DESNZ 2026 conversion factors, revised flat format",
+      "download_url": "https://assets.publishing.service.gov.uk/media/6a6c9748862aaf18d9c62ac9/ghg-conversion-factors-2026-flat-format-revised.xlsx",
+      "retrieved_on": "2026-10-30",
+      "size_bytes": 515426,
+      "sha256": "a9a455ab396dae226d510c7be6233748416d490c41a5d20f3dc7a0c45feecd5e",
+      "license": "Open Government Licence v3.0"
+    },
+    {
+      "path": "raw/car_parts_dataset_with_missing_values.zip",
+      "title": "Monash Car Parts dataset with missing values, version 2",
+      "download_url": "https://zenodo.org/api/records/4656022/files/car_parts_dataset_with_missing_values.zip/content",
+      "retrieved_on": "2026-10-30",
+      "size_bytes": 39656,
+      "sha256": "80557703397c7dca6c007bd28930b0e213e529f428afd02e5af87804fdc38ee1",
+      "license": "CC BY 4.0"
+    }
+  ],
+  "selected_factors_file": "selected_emission_factors.json",
+  "airport_coordinates_file": "airport_coordinates.json",
+  "corporate_data_status": "Bounded search found public business descriptions and aggregate disclosures, but no directly downloadable joint SKU demand/inventory/lead-time/freight-price panel for the reviewed firms. This does not establish that such public data never exist.",
+  "warehouse_emissions_status": "No verified warehouse energy or CO2e-per-unit-week company data. Root scenario coefficient 0.04 kgCO2e per unit-week, if used, is an unverified experimental assumption, not an EMA or company measurement.",
+  "sea_routes": {
+    "source": "Port of Rotterdam Authority, 3 January 2024",
+    "url": "https://www.portofrotterdam.com/en/news-and-press-releases/impact-of-red-sea-unrest-on-rotterdam-throughput-expected-to-be-slight",
+    "independent_source": "https://www.suezcanal.gov.eg/English/About/Pages/WhySuezCanal.aspx",
+    "suez": {
+      "nautical_miles": 8288,
+      "distance_km_published": 15349
+    },
+    "cape": {
+      "nautical_miles": 11755,
+      "distance_km_published": 21770
+    },
+    "reported_container_delay_days": [
+      8,
+      12
+    ],
+    "interpretation": "Historical published corridor geometry/delay evidence used for scenario design. Not a live 2026 sailing schedule or company-specific route record."
+  },
+  "validation_notes": [
+    "Do not infer SKU demand, shipment weights, freight tariffs, or service costs from annual-report totals.",
+    "Public car-parts demand is a real analogue, not a semiconductor dataset; its original monthly frequency must be retained or any resampling explicitly labelled synthetic.",
+    "ASML cargo damage excluded by user instruction; no loss/damage scenario should be attributed to source company."
+  ]
+}

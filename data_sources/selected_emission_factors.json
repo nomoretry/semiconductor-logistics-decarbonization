@@ -1,0 +1,239 @@
+{
+  "title": "Selected UK DESNZ 2026 freight emission factors",
+  "landing_page": "https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026",
+  "full_set_url": "https://assets.publishing.service.gov.uk/media/6a29392bade52dc0882218a8/ghg-conversion-factors-2026-full-set.xlsx",
+  "flat_file": "raw/ghg_factors_2026_flat_revised.xlsx",
+  "published_on": "2026-06-11",
+  "flat_file_updated_on": "2026-07-31",
+  "retrieved_on": "2026-10-30",
+  "unit": "kg CO2e per tonne.km",
+  "records": [
+    {
+      "factor_id": "27_317_3158_14_1",
+      "scope": "Scope 3",
+      "level_1": "Freighting goods",
+      "level_2": "Freight flights",
+      "level_3": "International, to/from non-UK",
+      "level_4": null,
+      "column_label": "With RF",
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.89939,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 6833,
+      "source_cells_in_order": [
+        "27_317_3158_14_1",
+        "Scope 3",
+        "Freighting goods",
+        "Freight flights",
+        "International, to/from non-UK",
+        null,
+        "With RF",
+        "tonne.km",
+        "kg CO2e",
+        0.89939
+      ]
+    },
+    {
+      "factor_id": "27_317_3159_14_1",
+      "scope": "Scope 3",
+      "level_1": "Freighting goods",
+      "level_2": "Freight flights",
+      "level_3": "International, to/from non-UK",
+      "level_4": null,
+      "column_label": "Without RF",
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.5313,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 6837,
+      "source_cells_in_order": [
+        "27_317_3159_14_1",
+        "Scope 3",
+        "Freighting goods",
+        "Freight flights",
+        "International, to/from non-UK",
+        null,
+        "Without RF",
+        "tonne.km",
+        "kg CO2e",
+        0.5313
+      ]
+    },
+    {
+      "factor_id": "27_320_3235_14_1",
+      "scope": "Scope 3",
+      "level_1": "Freighting goods",
+      "level_2": "Cargo ship",
+      "level_3": "Container ship",
+      "level_4": "Average",
+      "column_label": null,
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.01612,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 7021,
+      "source_cells_in_order": [
+        "27_320_3235_14_1",
+        "Scope 3",
+        "Freighting goods",
+        "Cargo ship",
+        "Container ship",
+        "Average",
+        null,
+        "tonne.km",
+        "kg CO2e",
+        0.01612
+      ]
+    },
+    {
+      "factor_id": "28_913_3158_14_1",
+      "scope": "Scope 3",
+      "level_1": "WTT- delivery vehs & freight",
+      "level_2": "WTT- freight flights",
+      "level_3": "International, to/from non-UK",
+      "level_4": null,
+      "column_label": "With RF",
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.13516,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 7339,
+      "source_cells_in_order": [
+        "28_913_3158_14_1",
+        "Scope 3",
+        "WTT- delivery vehs & freight",
+        "WTT- freight flights",
+        "International, to/from non-UK",
+        null,
+        "With RF",
+        "tonne.km",
+        "kg CO2e",
+        0.13516
+      ]
+    },
+    {
+      "factor_id": "28_913_3159_14_1",
+      "scope": "Scope 3",
+      "level_1": "WTT- delivery vehs & freight",
+      "level_2": "WTT- freight flights",
+      "level_3": "International, to/from non-UK",
+      "level_4": null,
+      "column_label": "Without RF",
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.13516,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 7340,
+      "source_cells_in_order": [
+        "28_913_3159_14_1",
+        "Scope 3",
+        "WTT- delivery vehs & freight",
+        "WTT- freight flights",
+        "International, to/from non-UK",
+        null,
+        "Without RF",
+        "tonne.km",
+        "kg CO2e",
+        0.13516
+      ]
+    },
+    {
+      "factor_id": "28_916_3235_14_1",
+      "scope": "Scope 3",
+      "level_1": "WTT- delivery vehs & freight",
+      "level_2": "WTT- cargo ship",
+      "level_3": "Container ship",
+      "level_4": "Average",
+      "column_label": null,
+      "activity_unit": "tonne.km",
+      "emission_unit": "kg CO2e",
+      "value": 0.00365,
+      "source_sheet": "Factors by Category",
+      "source_row_1_based": 7386,
+      "source_cells_in_order": [
+        "28_916_3235_14_1",
+        "Scope 3",
+        "WTT- delivery vehs & freight",
+        "WTT- cargo ship",
+        "Container ship",
+        "Average",
+        null,
+        "tonne.km",
+        "kg CO2e",
+        0.00365
+      ]
+    }
+  ],
+  "combined_factors": {
+    "air_without_rf": {
+      "direct_factor_id": "27_317_3159_14_1",
+      "wtt_factor_id": "28_913_3159_14_1",
+      "direct": 0.5313,
+      "wtt": 0.13516,
+      "combined": 0.66646,
+      "interpretation": "Aviation direct CO2/CH4/N2O effects plus upstream fuel WTT; excludes indirect non-CO2 aviation climate effects."
+    },
+    "air_with_rf_sensitivity": {
+      "direct_factor_id": "27_317_3158_14_1",
+      "wtt_factor_id": "28_913_3158_14_1",
+      "direct": 0.89939,
+      "wtt": 0.13516,
+      "combined": 1.03455,
+      "interpretation": "Adds the official aviation RF/non-CO2 indirect climate effect treatment; sensitivity case, not interchangeable with direct-GHG-only totals."
+    },
+    "container_ship_average": {
+      "direct_factor_id": "27_320_3235_14_1",
+      "wtt_factor_id": "28_916_3235_14_1",
+      "direct": 0.01612,
+      "wtt": 0.00365,
+      "combined": 0.01977,
+      "interpretation": "Average container ship operational factor plus upstream fuel WTT."
+    }
+  },
+  "formula": "emissions_kg_CO2e = shipped_units * assumed_gross_mass_kg_per_unit / 1000 * route_distance_km * combined_factor_kg_CO2e_per_tonne_km",
+  "notes": [
+    "Aviation factors already include 8% distance uplift. Use airport great-circle distance without multiplying by 1.08 again. Source: full-set Freighting goods worksheet, FAQ row 172.",
+    "WTT means well-to-tank fuel-supply emissions. Add the matched WTT row once to the operational factor; do not add it again when using the combined factor.",
+    "UK reporting averages are scenario proxies for non-UK/Netherlands-Singapore routes, not measured ASML or Marvell emissions.",
+    "Without-RF results exclude indirect non-CO2 aviation effects; the official guidance recommends reporting indirect effects as well, noting scientific uncertainty. Include the RF sensitivity.",
+    "Physical shipment mass is in tonnes; synthetic SKU masses and warehousing coefficients are separate declared scenario assumptions.",
+    "These transport factors do not include semiconductor manufacturing emissions or warehouse electricity."
+  ],
+  "road_factor_extension": {
+    "raw_rows": [
+      {
+        "row": 6389,
+        "values": [
+          "27_304_3140_14_1",
+          "Scope 3",
+          "Freighting goods",
+          "HGV (non-refrigerated, all diesel)",
+          "Average non-refrigerated HGVs",
+          null,
+          "Average laden",
+          "tonne.km",
+          "kg CO2e",
+          0.10356
+        ]
+      },
+      {
+        "row": 7228,
+        "values": [
+          "28_907_3140_14_1",
+          "Scope 3",
+          "WTT- delivery vehs & freight",
+          "WTT- HGV (non-refrigerated, all diesel)",
+          "Average non-refrigerated HGVs",
+          null,
+          "Average laden",
+          "tonne.km",
+          "kg CO2e",
+          0.02359
+        ]
+      }
+    ],
+    "combined_kgco2e_per_tonne_km": 0.12714999999999999,
+    "geography_note": "UK average non-refrigerated diesel HGV proxy, not Malaysia fleet measurement"
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "A01": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "add_lead",
+        "route": "NL_ocean",
+        "start_week": 5,
+        "end_week": 9,
+        "value": 2
+      },
+      {
+        "op": "set_distance",
+        "route": "NL_ocean",
+        "start_week": 5,
+        "end_week": 9,
+        "value": 21770
+      }
+    ]
+  },
+  "A02": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "set_capacity",
+        "route": "NL_air",
+        "start_week": 7,
+        "end_week": 9,
+        "value": 8
+      }
+    ]
+  },
+  "A03": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "multiply_freight",
+        "route": "NL_air",
+        "start_week": 4,
+        "end_week": 6,
+        "value": 1.2
+      }
+    ]
+  },
+  "A04": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "carbon_reduction_fraction",
+        "value": 0.2
+      }
+    ]
+  },
+  "A05": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "multiply_origin_capacity",
+        "origin": "NL",
+        "start_week": 6,
+        "end_week": 7,
+        "value": 0.7
+      }
+    ]
+  },
+  "A06": {
+    "status": "needs_clarification",
+    "changes": []
+  },
+  "M01": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "add_lead",
+        "route": "TW_ocean",
+        "start_week": 5,
+        "end_week": 9,
+        "value": 1
+      },
+      {
+        "op": "add_lead",
+        "route": "MY_road",
+        "start_week": 5,
+        "end_week": 9,
+        "value": 1
+      }
+    ]
+  },
+  "M02": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "set_capacity",
+        "route": "TW_air",
+        "start_week": 7,
+        "end_week": 9,
+        "value": 12
+      },
+      {
+        "op": "set_capacity",
+        "route": "MY_road",
+        "start_week": 7,
+        "end_week": 9,
+        "value": 10
+      }
+    ]
+  },
+  "M03": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "multiply_origin_capacity",
+        "origin": "TW",
+        "start_week": 6,
+        "end_week": 8,
+        "value": 0.5
+      }
+    ]
+  },
+  "M04": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "carbon_reduction_fraction",
+        "value": 0.3
+      }
+    ]
+  },
+  "M05": {
+    "status": "ready",
+    "changes": [
+      {
+        "op": "multiply_freight",
+        "route": "MY_road",
+        "start_week": 3,
+        "end_week": 5,
+        "value": 1.1
+      }
+    ]
+  },
+  "M06": {
+    "status": "needs_clarification",
+    "changes": []
+  }
+}

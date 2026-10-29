@@ -1,0 +1,56 @@
+{
+  "source": "OurAirports original open data",
+  "source_page": "https://ourairports.com/data/",
+  "download_url": "https://davidmegginson.github.io/ourairports-data/airports.csv",
+  "retrieved_on": "2026-10-30",
+  "license": "Public Domain",
+  "upstream_csv_sha256": "f508467c19122ea549200daa215ea477eae2dc5375f339fd4e8226736c5981ea",
+  "coordinates": [
+    {
+      "iata": "AMS",
+      "icao": "EHAM",
+      "name": "Amsterdam Airport Schiphol",
+      "latitude_deg": 52.308601,
+      "longitude_deg": 4.76389,
+      "country": "NL",
+      "source_airport_id": "2513"
+    },
+    {
+      "iata": "SIN",
+      "icao": "WSSS",
+      "name": "Singapore Changi Airport",
+      "latitude_deg": 1.35019,
+      "longitude_deg": 103.994003,
+      "country": "SG",
+      "source_airport_id": "26887"
+    },
+    {
+      "iata": "TPE",
+      "icao": "RCTP",
+      "name": "Taiwan Taoyuan International Airport",
+      "latitude_deg": 25.0777,
+      "longitude_deg": 121.233002,
+      "country": "TW",
+      "source_airport_id": "5528"
+    },
+    {
+      "iata": "KUL",
+      "icao": "WMKK",
+      "name": "Kuala Lumpur International Airport",
+      "latitude_deg": 2.74558,
+      "longitude_deg": 101.709999,
+      "country": "MY",
+      "source_airport_id": "26874"
+    }
+  ],
+  "distance_method": {
+    "method": "Haversine on airport coordinates",
+    "earth_radius_km": 6371.0,
+    "interpretation": "Derived great-circle distance, not actual aircraft track. DESNZ aviation factors already include 8% distance uplift; do not multiply these distances by 1.08 again."
+  },
+  "great_circle_km": {
+    "AMS-SIN": 10513.913470946381,
+    "TPE-SIN": 3222.3828837296046,
+    "KUL-SIN": 297.4722329865703
+  }
+}

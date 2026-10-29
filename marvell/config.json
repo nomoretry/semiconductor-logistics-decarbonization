@@ -1,0 +1,112 @@
+{
+  "company": "Marvell-inspired fabless logistics",
+  "sku_names": [
+    "switch_carton",
+    "network_controller_carton",
+    "storage_controller_carton",
+    "custom_silicon_carton"
+  ],
+  "mass_kg": [
+    1.5,
+    2.0,
+    1.2,
+    2.5
+  ],
+  "unit_value_usd": [
+    15000,
+    22000,
+    18000,
+    30000
+  ],
+  "mean_order_units": [
+    30,
+    20,
+    25,
+    15
+  ],
+  "zero_demand_probability": 0.05,
+  "origin_capacity": [
+    160,
+    160
+  ],
+  "route_origin": [
+    "TW",
+    "TW",
+    "MY",
+    "MY"
+  ],
+  "eligibility": [
+    [
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1
+    ]
+  ],
+  "routes": [
+    {
+      "name": "TW_air",
+      "origin": "TW",
+      "mode": "air",
+      "lead": 1,
+      "distance_km": 3222.382881582126,
+      "distance_source": "OurAirports-derived TPE-SIN great circle",
+      "freight_usd_per_kg": 5.5,
+      "capacity": 140
+    },
+    {
+      "name": "TW_ocean",
+      "origin": "TW",
+      "mode": "ocean",
+      "lead": 3,
+      "distance_km": 4000,
+      "distance_source": "Illustrative sea distance assumption; not a verified company route",
+      "freight_usd_per_kg": 0.6,
+      "capacity": 140
+    },
+    {
+      "name": "MY_air",
+      "origin": "MY",
+      "mode": "air",
+      "lead": 1,
+      "distance_km": 297.4722330303445,
+      "distance_source": "OurAirports-derived KUL-SIN great circle; international-average EF proxy",
+      "freight_usd_per_kg": 5.5,
+      "capacity": 140
+    },
+    {
+      "name": "MY_road",
+      "origin": "MY",
+      "mode": "road",
+      "lead": 1,
+      "distance_km": 400,
+      "distance_source": "Illustrative Malaysia-Singapore road corridor assumption",
+      "freight_usd_per_kg": 0.7,
+      "capacity": 140
+    }
+  ],
+  "period": "week",
+  "horizon": 16,
+  "annual_carry_rate": 0.2,
+  "warehouse_usd_per_unit_period": 0.4,
+  "warehouse_kgco2e_per_unit_period": 0.04,
+  "assumptions": "All SKU identities, masses, values, orders, prices, capacities, warehouse coefficients and weekly lead times are synthetic scenario parameters. Networks are company-inspired, not actual company shipping records. Production and product-embodied carbon are excluded. Cargo damage is excluded."
+}

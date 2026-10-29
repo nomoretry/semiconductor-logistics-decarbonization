@@ -1,0 +1,62 @@
+[
+  {
+    "id": "A01",
+    "project": "asml",
+    "text": "For NL_ocean dispatches in weeks 5 through 9 inclusive, add two weeks to normal transit time. The detour distance is 21,770 km. Other routes are unchanged."
+  },
+  {
+    "id": "A02",
+    "project": "asml",
+    "text": "NL_air can accept at most 8 units in total per week during weeks 7–9 inclusive. This replaces normal route capacity, not a per-SKU limit."
+  },
+  {
+    "id": "A03",
+    "project": "asml",
+    "text": "Apply a 20 percent increase to NL_air freight prices for dispatch weeks 4 to 6 inclusive. Transit times and capacities are unchanged."
+  },
+  {
+    "id": "A04",
+    "project": "asml",
+    "text": "For the next planning run, require logistics emissions at least 20% below the cost-only reference, using exactly the same order book and service constraints."
+  },
+  {
+    "id": "A05",
+    "project": "asml",
+    "text": "Capacity of the NL supply pool, shared by air and ocean, is reduced to 70% of normal in weeks 6 and 7. Do not apply the reduction twice to the two routes."
+  },
+  {
+    "id": "A06",
+    "project": "asml",
+    "text": "Ocean deliveries will be late for a while. Please adjust the shipping plan. No dates or revised transit times are available."
+  },
+  {
+    "id": "M01",
+    "project": "marvell",
+    "text": "TW_ocean departures in weeks 5–9 inclusive require one extra week in transit. During the same weeks MY_road transit time increases by one week. Capacities and distances are unchanged."
+  },
+  {
+    "id": "M02",
+    "project": "marvell",
+    "text": "In weeks 7 through 9 inclusive, TW_air capacity is capped at 12 cartons per week and MY_road capacity at 10 cartons per week. Both are totals over eligible products."
+  },
+  {
+    "id": "M03",
+    "project": "marvell",
+    "text": "The Taiwanese OSAT release pool is limited to 50% of normal total release capacity in weeks 6–8 inclusive. This limit is shared by TW_air and TW_ocean. Malaysian releases are unchanged."
+  },
+  {
+    "id": "M04",
+    "project": "marvell",
+    "text": "Reduce logistics carbon by at least 30% relative to the cost-only reference, keeping demand and service unchanged. No change in foundry or assembly emissions is claimed."
+  },
+  {
+    "id": "M05",
+    "project": "marvell",
+    "text": "MY_road freight charges rise by 10% for weeks 3, 4 and 5 inclusive. This changes prices only and reports no capacity restriction."
+  },
+  {
+    "id": "M06",
+    "project": "marvell",
+    "text": "One Malaysian shipment route will have lower capacity soon. The route, amount and dates are not confirmed."
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "record_url": "https://zenodo.org/records/4656022",
+  "doi": "10.5281/zenodo.4656022",
+  "creators": [
+    "Rakshitha Godahewa",
+    "Christoph Bergmeir",
+    "Geoff Webb",
+    "Rob Hyndman",
+    "Pablo Montero-Manso"
+  ],
+  "license": "CC BY 4.0",
+  "frequency": "monthly",
+  "start": "1998-01",
+  "end": "2002-03",
+  "periods": 51,
+  "series_total": 2674,
+  "complete_series_count": 2509,
+  "complete_series_pooled_mean": 0.5073187505372815,
+  "complete_series_zero_fraction": 0.7490758758664885,
+  "missing_marker": "?",
+  "not_semiconductor_data": true,
+  "not_joint_inventory_freight_data": true,
+  "raw_sha256": "80557703397c7dca6c007bd28930b0e213e529f428afd02e5af87804fdc38ee1"
+}
