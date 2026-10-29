@@ -1,0 +1,24 @@
+{
+  "archive_sha256": "ff0f6a5aaad5e3f7226391b3da4100bb30cc7052ac5d241f817dc7759d23a339",
+  "artifact_id": 12935336677,
+  "calls": 20,
+  "dataset_path": "benchmarks/notices_v1/dataset.json",
+  "files_sha256": {
+    "estimate.json": "98aa52d38657e9ae07e7c3b7b60539960004cfe505f85f66aeb40cd41f4b925d",
+    "evaluation.json": "9b3daea577934311dad9e606288e6b36a4c28473f2f75239bc417acccd692c2a",
+    "evaluation.md": "342d0d897b2a3e53eba130ff830e247f1ca5fc542aa8daf4ae9f0586aba47847",
+    "inputs.jsonl": "d1d2e9c726745b92154be45cc5dcd374b5f1a409ed11f46ff7f93575db524daa",
+    "ledger-anchor.json": "24854cc3a60506fe43216709c988e5a42e6ab8633049a54fb2ab1eb260bd3121",
+    "manifest.json": "842e60edec6dcdbd284bda45a488c7f9b98c98f2217ee2f191d3550f9739d93c",
+    "prompt.txt": "fe6aba02e1e7dce233a3e61ae2bf15d82925a842ccfcff6f9cf530d87729167b",
+    "records.jsonl": "13d8576dfa7b83820b32a818f82186695ad7b54dad32b0d62cfabbb1dc9266b2",
+    "schema.json": "d5541166515dc4aed1078d1e7d42e1dd5d997a7c268dcd0ea0ae6c26771aa518",
+    "summary.json": "d098d05dc4011da0dbaaad670657212015852c3e4a88c0dfa5c0c0f9706341d1"
+  },
+  "model": "gpt-6-luna",
+  "schema_version": "notice-api-provenance-v1",
+  "source_commit": "4cacb43e071e8a8911247a2cdd7c10ddbc92d4d3",
+  "split": "development",
+  "workflow_run_id": 40959872843,
+  "workflow_run_url": "https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40959872843"
+}

@@ -1,79 +1,124 @@
-# Semiconductor logistics decarbonization — two distinct subprojects
+# Semiconductor Logistics Decarbonization
 
-第一版可复现实验，2026-10-30。包含独立的[ASML子项目](asml/README.md)与[Marvell子项目](marvell/README.md)，共享库存守恒、运输模式及碳预算MILP实现。
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
 
-**这是企业业务背景启发的仿真，不能当作企业实际经营结果或减排承诺。**第一版使用已知的承诺订单簿与已公告扰动，未运行需求预测或未知未来扰动的滚动控制。ASML不考虑货损；Marvell仅研究物流环节，制造、良率及产品隐含碳不在可优化边界内。
+面向半导体备件与成品物流的库存—运输联合优化框架。使用 SciPy/HiGHS 求解带交付、运输容量和碳预算约束的整数规划；提供固定 LLM 公告抽取评测、多步工具环境、逐期计划和结果复算。
 
-## 独立文本与多步工具环境：阶段一
+两个案例共享求解器，分别保留业务约束：[ASML 备件物流](asml/README.md)与 [Marvell 成品物流](marvell/README.md)。
 
-新增[阶段一报告与复现说明](docs/notice_benchmark_stage1.md)：120条开发文本、400条合成留出文本，冻结规则提取正确204/400（51.0%），保留全部预测、分层指标与复算程序。13份官方运输公告仅登记为待人工审核来源，尚未作为真实标注测试集。
+## 设计与实验
 
-多步工具环境已在200组开发订单场景上执行规则／参考输入两组工作流，共400次运行，并区分127份可行计划与73次正确澄清交接。固定流程已能处理当前工具顺序，故尚未满足训练BC／PPO的研究条件。API评测程序已完成模拟传输测试与费用预估，未进行真实LLM API推理；没有LLM对照成绩、训练权重或千任务最终实验。
+| 模块 | 实现 | 实验与输出 |
+|---|---|---|
+| 库存与运输 | 整数发货、在途库存、到仓库存、积压守恒 | 60 份合成订单实例、360 次策略求解 |
+| 成本与碳预算 | 运费、资金占用、仓储成本和物流排放；三档碳约束 | 成本—排放对照、339 份可行计划、不可行实例 |
+| 公告抽取 | 固定提示词、JSON Schema、冻结规则和固定模型配置 | 120 条开发文本、400 条合成留出文本 |
+| LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 20 条开发文本实测，20/20 抽取一致 |
+| 多步工具环境 | 检查公告、抽取、校验、读取状态、求解、审计和提交 | 200 组开发任务，逐步轨迹与确定性重放 |
+| 结果验证 | 输入与源码哈希、逐条预测复算、物流计划重放 | 离线验证命令与自动测试 |
 
-无需在聊天中提供API密钥：[安全连接与手动运行说明](docs/secure_api_connection.md)介绍如何使用仓库Secret和GitHub Actions。工作流只允许手动触发，默认20条开发文本、USD 0.05程序预算；文件须合并到`main`后才会显示运行入口。
+工具环境当前采用固定工作流。开发任务中，规则工作流完成了 127 份可行计划和 73 次正确澄清交接；尚未建立需要学习工具选择的决策取舍，BC/PPO 尚未训练。
+
+详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
+
+## 快速开始
+
+推荐 Python 3.12。`constraints.txt` 固定已验证的数值计算依赖，供实验重放与 CI 使用。
 
 ```bash
-python -m notice_benchmark.data --output benchmarks/notices_v1
-python -m notice_benchmark.run_offline --freeze-rules
-python -m notice_benchmark.verify_offline
-python -m notice_benchmark.api_runner --dataset benchmarks/notices_v1/dataset.json --split test --output benchmark_results/api_dry_run_v1
-python -m notice_benchmark.run_workflow_audit
-python -m notice_benchmark.run_workflow_audit --verify
+git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
+cd semiconductor-logistics-decarbonization
+python -m pip install -c constraints.txt -e ".[dev]"
+make test
+make smoke
 ```
 
-## 可复现命令
-
-Python3.10+，无需训练神经网络、API密钥或商业优化器。
+Windows 没有 Make 时可直接使用 Python：
 
 ```bash
-python -m pip install -r requirements.txt
-python scripts/download_source_data.py
-python -m unittest discover -s tests -v
-python scripts/run_experiments.py --project asml
-python scripts/run_experiments.py --project marvell
-# 同时生成两个项目的完整主实验：
-python scripts/run_experiments.py --project both
-python scripts/evaluate_notice_pilot.py --project both
-python scripts/run_sensitivity.py --project both
-python scripts/create_reports.py
+python -m unittest discover -s tests
+python -m semiconductor_logistics --help
+python -m semiconductor_logistics evaluate --output artifacts/rules
+python -m semiconductor_logistics verify-run --output artifacts/rules
 ```
 
-公开仓库以来源链接和SHA-256校验值提供两份第三方原始数据，不重新分发ZIP／XLSX。首次运行测试或完整实验前执行上述下载命令；脚本按`data_sources/source_manifest.json`下载至实验使用的原路径，校验内容后才原子替换，已有匹配文件保持不变。下载失败或校验不符会报错并保留已有文件。
+默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境和重放校验。
 
-单项目包将`--project both`替换为对应项目名；不传项目时自动检测可用配置。主结果写入`reports/`；单独重跑一个项目会覆盖该目录中主实验汇总，完整包可用`--project both`重新生成双方结果。
+## 运行优化实验
 
-## 模型
+```bash
+semiconductor-logistics download-data
+semiconductor-logistics optimize --project asml --smoke
+semiconductor-logistics optimize --project marvell --smoke
+semiconductor-logistics optimize --project both
+semiconductor-logistics sensitivity --project both
+semiconductor-logistics report
+```
 
-- 每期决策：各SKU、各已合格路线的整数发货量。
-- 状态：仓库现货、未满足订单及按派发期提前期计算的在途货物。
-- 成本：运费＋在途资金占用＋到仓后资金与仓储持有成本。
-- 排放：运输质量×距离×模式因子＋库存相关的仓储分配排放。
-- 服务：每期期末积压为0，期末库存至少恢复至共同初始库存。周末无积压不等于24小时交付KPI。
-- 容量：每条运输路线容量及同一供货池跨路线共享的释放容量。
-- 碳预算：分别要求比同一实例成本最优参照低10%、25%、50%；不可行则明确报告，不自动松弛。
+`download-data` 根据来源清单下载并校验第三方原始文件。完整优化实验包含外部汽车备件月度需求压力测试，因此需先下载数据。主实验会写入 `reports/`；单独运行一个案例会替换该目录的主实验汇总。公开仓库中的合成明细与外部压力测试汇总范围见[数据与评测](docs/benchmark.md)。
 
-SKU名称、需求、价值、质量、运价、容量、时间粒度、仓储边际排放均为可修改的仿真假设。官方排放因子、路线几何和类比需求来源单独保存于`data_sources/`。航空因子已包含8%距离修正，代码不重复增加。
+Python 脚本生成 [Markdown 实验报告](reports/study_report.md)、CSV/JSON 结果和 Matplotlib 图表。
 
-## 实验与LLM边界
+## 公告抽取评测
 
-主实验包含两个项目×3类已公告情景×10个订单种子×6类策略，另加10组真实汽车备件月度需求压力测试，共400次求解。真实月度数据保留月份，未冒充半导体周需求。另运行24次参数敏感性和40个数值实例的信息处理对照。
+| 方法 | 数据划分 | 文本数 | 整条公告抽取正确率 |
+|---|---|---:|---:|
+| 冻结规则 | 开发集 | 120 | 100% |
+| 冻结规则 | 合成留出集 | 400 | 51.0%（204/400） |
+| 总是请求澄清 | 合成留出集 | 400 | 44.0% |
+| 忽略公告 | 合成留出集 | 400 | 16.5% |
+| GPT-6 Luna | 开发集连接测试 | 20 | 100%（20/20） |
 
-公开仓库的逐次结果、订单实例及逐期计划仅发布`demand_set=synthetic_weekly`的合成实验：360条求解记录、60份实例和339份可行计划。`summary.json`、运行清单及完整报告保留原400次实验的汇总，因此包含外部汽车备件压力测试的聚合统计；外部实测需求序列、选中序列ID和逐实例结果不在公开明细中。下载原始公开数据后执行`python scripts/run_experiments.py --project both`，可在本地重新生成含外部压力测试的完整明细。
+LLM 的 20 条结果只用于验证开发集上的调用和抽取流程；400 条留出文本的 LLM 对照尚未运行。13 份真实公告来源已登记，仍需人工标注。模型配置与逐条响应见 [API 实测记录](docs/results/api_smoke.md)。
 
-LLM示例由会话中的独立助手根据`llm/extraction_prompt.txt`读取12条合成通知，未读取参考标签，输出保存在`llm/extracted_notices.json`。本代码重放保存的抽取结果，不调用外部API，也不把规则解析器输出标成LLM推理。该小样本示例不构成模型泛化、延迟或费用评测；后续应接入固定模型API并扩展留出文本集。
+```bash
+semiconductor-logistics evaluate
+semiconductor-logistics verify-run
+semiconductor-logistics workflow-audit
+semiconductor-logistics workflow-audit --verify
+semiconductor-logistics score-api --run benchmark_results/api_smoke
+```
 
-## 输出
+API 命令默认只估算费用：
 
-- `reports/episodes.json/csv`：360次合成实验求解的成本、排放、服务、可行性和最优间隙。
-- `reports/instances.json`：60份可重放的合成订单、参数与扰动实例，不包含外部实测需求或选中序列ID。
-- `reports/plans.json`：339份合成实验可行计划的未压缩整数发货、库存及积压轨迹；从原压缩结果解压后，仅保留合成实验记录。重跑脚本仍输出`reports/plans.json.gz`，不会自动更新发布的`plans.json`。
-- `reports/summary.json`、`reports/run_manifest.json`：原400次实验的归档聚合结果及运行来源，包含外部压力测试统计；与公开合成明细的范围不同。
-- `reports/notice_pilot.json`：保存LLM输出的抽取校验及数值重放。
-- `reports/sensitivity.json`：资金占用、仓储参数及航空RF边界敏感性。
-- `reports/study_report.html`：可直接在浏览器阅读的原始完整实验报告，外部压力测试仅展示汇总。
+```bash
+semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split test --max-calls 400 --output artifacts/notice_api
+```
 
-详见[数据审计：ASML](data_sources/data_audit_asml.md)、[数据审计：Marvell](data_sources/data_audit_marvell.md)。有界检索未发现完整商业联合记录，不代表所有企业都不存在公开数据。
+实际调用通过 GitHub Actions 手动运行，密钥保存在仓库 Secret。`smoke20` 使用开发集，`test400` 使用冻结留出集，设置步骤见 [API 配置](docs/secure_api_connection.md)。
 
-第三方数据分别适用其原许可证：Monash Car Parts为CC BY4.0；UK Government因子按原发布页的Open Government Licence归属声明；机场坐标为OurAirports公开数据。公开仓库保留来源链接和哈希，原ZIP／XLSX由下载脚本按需获取。未加入任何账户凭据。
+## 常用命令
 
-第三方数据的署名、许可证链接及处理说明见[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+| 命令 | 用途 |
+|---|---|
+| `generate` | 生成公告开发集、留出集及校验信息 |
+| `optimize` | 运行 ASML、Marvell 的库存与运输策略 |
+| `evaluate` | 评测冻结规则与诊断基线 |
+| `api` | 估算或执行固定模型 API 抽取 |
+| `score-api` | 校验请求记录并复算 API 指标 |
+| `workflow-audit` | 运行或重放多步工具任务 |
+| `verify-run` | 校验离线数据、预测、指标和源码身份 |
+| `sensitivity` | 运行参数及排放边界敏感性实验 |
+| `report` | 生成 Markdown 报告、表格和图表 |
+
+安装后的命令也可通过 `python -m semiconductor_logistics` 调用。离开仓库目录运行实验时，使用 `--workspace /path/to/repository` 指定数据与配置所在的工作目录。
+
+## 仓库结构
+
+| 路径 | 内容 |
+|---|---|
+| `semiconductor_logistics/` | Python 命令行入口 |
+| `shared/` | 库存守恒、MILP 求解与实验调度 |
+| `notice_benchmark/` | 公告数据、规则、API、指标和工具环境 |
+| `asml/`、`marvell/` | 两个案例的参数配置 |
+| `benchmarks/` | 冻结公告集、规则身份及来源登记 |
+| `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |
+| `scripts/` | 数据获取、实验、报告与打包检查 |
+| `tests/` | 求解、抽取、重放与命令行测试 |
+| `docs/` | 架构、方法、评测和结果说明 |
+
+## 数据与适用范围
+
+订单、价格、质量、容量和仓储参数为仿真假设。排放因子、路线几何和类比需求保存来源与校验值，详见 [ASML 数据说明](data_sources/data_audit_asml.md)、[Marvell 数据说明](data_sources/data_audit_marvell.md)和[第三方数据声明](THIRD_PARTY_NOTICES.md)。
+
+当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；未知需求、预测误差和滚动决策尚未加入。
