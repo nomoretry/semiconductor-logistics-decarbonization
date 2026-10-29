@@ -1,0 +1,105 @@
+name: Notice API evaluation (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "smoke20: 20 development calls / USD 0.05; test400: 400 heldout calls / USD 0.50"
+        required: true
+        default: smoke20
+        type: choice
+        options:
+          - smoke20
+          - test400
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notice-api-evaluation
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    # Only reviewed code on the default main branch can receive the API secret.
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Check out reviewed workflow commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.12'
+
+      - name: Select a bounded evaluation profile
+        env:
+          PROFILE: ${{ inputs.profile }}
+        run: |
+          case "$PROFILE" in
+            smoke20)
+              echo 'NOTICE_SPLIT=development' >> "$GITHUB_ENV"
+              echo 'NOTICE_CALLS=20' >> "$GITHUB_ENV"
+              echo 'NOTICE_BUDGET_USD=0.05' >> "$GITHUB_ENV"
+              ;;
+            test400)
+              echo 'NOTICE_SPLIT=test' >> "$GITHUB_ENV"
+              echo 'NOTICE_CALLS=400' >> "$GITHUB_ENV"
+              echo 'NOTICE_BUDGET_USD=0.50' >> "$GITHUB_ENV"
+              ;;
+            *)
+              echo 'Unsupported evaluation profile.'
+              exit 1
+              ;;
+          esac
+
+      - name: Estimate before sending requests
+        run: |
+          python -m notice_benchmark.api_runner \
+            --dataset benchmarks/notices_v1/dataset.json \
+            --split "$NOTICE_SPLIT" \
+            --max-calls "$NOTICE_CALLS" \
+            --output artifacts/notice_api
+
+      - name: Run the bounded API evaluation
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          if not os.environ.get('OPENAI_API_KEY', '').strip():
+              raise SystemExit('Missing OPENAI_API_KEY repository secret. No request sent.')
+          PY
+          python -m notice_benchmark.api_runner \
+            --dataset benchmarks/notices_v1/dataset.json \
+            --split "$NOTICE_SPLIT" \
+            --max-calls "$NOTICE_CALLS" \
+            --output artifacts/notice_api \
+            --execute \
+            --max-usd "$NOTICE_BUDGET_USD"
+
+      - name: Score completed responses and show connection status
+        if: always()
+        run: |
+          python -m scripts.score_notice_api \
+            --dataset benchmarks/notices_v1/dataset.json \
+            --run artifacts/notice_api \
+            --github-summary "$GITHUB_STEP_SUMMARY"
+
+      - name: Save evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: notice-api-${{ inputs.profile }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/notice_api/
+          include-hidden-files: false
+          if-no-files-found: warn
+          retention-days: 14

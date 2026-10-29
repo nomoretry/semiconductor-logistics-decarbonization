@@ -4,6 +4,23 @@
 
 **这是企业业务背景启发的仿真，不能当作企业实际经营结果或减排承诺。**第一版使用已知的承诺订单簿与已公告扰动，未运行需求预测或未知未来扰动的滚动控制。ASML不考虑货损；Marvell仅研究物流环节，制造、良率及产品隐含碳不在可优化边界内。
 
+## 独立文本与多步工具环境：阶段一
+
+新增[阶段一报告与复现说明](docs/notice_benchmark_stage1.md)：120条开发文本、400条合成留出文本，冻结规则提取正确204/400（51.0%），保留全部预测、分层指标与复算程序。13份官方运输公告仅登记为待人工审核来源，尚未作为真实标注测试集。
+
+多步工具环境已在200组开发订单场景上执行规则／参考输入两组工作流，共400次运行，并区分127份可行计划与73次正确澄清交接。固定流程已能处理当前工具顺序，故尚未满足训练BC／PPO的研究条件。API评测程序已完成模拟传输测试与费用预估，未进行真实LLM API推理；没有LLM对照成绩、训练权重或千任务最终实验。
+
+无需在聊天中提供API密钥：[安全连接与手动运行说明](docs/secure_api_connection.md)介绍如何使用仓库Secret和GitHub Actions。工作流只允许手动触发，默认20条开发文本、USD 0.05程序预算；文件须合并到`main`后才会显示运行入口。
+
+```bash
+python -m notice_benchmark.data --output benchmarks/notices_v1
+python -m notice_benchmark.run_offline --freeze-rules
+python -m notice_benchmark.verify_offline
+python -m notice_benchmark.api_runner --dataset benchmarks/notices_v1/dataset.json --split test --output benchmark_results/api_dry_run_v1
+python -m notice_benchmark.run_workflow_audit
+python -m notice_benchmark.run_workflow_audit --verify
+```
+
 ## 可复现命令
 
 Python3.10+，无需训练神经网络、API密钥或商业优化器。
