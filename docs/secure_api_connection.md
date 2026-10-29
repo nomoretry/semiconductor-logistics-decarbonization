@@ -1,47 +1,44 @@
-# Secure API evaluation through GitHub Actions
+# API 配置
 
-For this project the API key can stay in a GitHub repository Secret. GitHub's runner reads it only during the manual API step. The ChatGPT conversation, project files and assistant do not need the plaintext key. This route is independent of the OpenAI Developers connector that previously rejected key creation.
+项目通过 OpenAI Responses API 抽取物流公告。模型、提示词、Schema 和调用预算写入运行清单；结果按实际响应复算。
 
-## One-time setup
+## GitHub Actions
 
-1. Revoke any key previously exposed in chat at https://platform.openai.com/api-keys and create a replacement on the official Platform. Do not send the replacement to the conversation.
-2. Review and merge the project pull request that contains `.github/workflows/notice-api.yml`. If the PR is Draft, first use **Ready for review**, then **Merge pull request** and confirm. Do not delete or overwrite `main` to do this.
-3. Open https://github.com/nomoretry/semiconductor-logistics-decarbonization/settings/secrets/actions . Use **Secrets → New repository secret**.
-4. Enter `OPENAI_API_KEY` in **Name**, paste the new key into **Secret**, then choose **Add secret**. Use a Secret, not a Variable or a committed file. This action saves the secret; it does not call the model.
+1. 打开仓库的 [Actions Secrets](https://github.com/nomoretry/semiconductor-logistics-decarbonization/settings/secrets/actions)。
+2. 在 **Secrets → New repository secret** 中添加 `OPENAI_API_KEY`，值为项目 API 密钥。
+3. 打开 [Actions](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions)，选择 **Notice API evaluation (manual)**。
+4. 点击 **Run workflow**，选择 `main` 和评测配置。
 
-Repository owners can perform these operations. If a required button is unavailable, report the page and button state without including a key screenshot or value.
+| 配置 | 数据 | 最大请求数 | 程序预算 |
+|---|---|---:|---:|
+| `smoke20` | 开发集前 20 条 | 20 | USD 0.05 |
+| `test400` | 冻结合成留出集 | 400 | USD 0.50 |
 
-## First connection test
+预算根据记录单价和请求上界预留，不是账户级消费硬限制。API 使用单独计费；仓库提交、离线测试和费用估算不发起模型请求。
 
-Open the repository's **Actions** tab, choose **Notice API evaluation (manual)**, then **Run workflow**. Select branch **main** and profile **smoke20**, then click **Run workflow**.
+工作流仅支持手动触发，并检出触发时的提交。代码更新后应新建 **Run workflow**；旧运行的 **Re-run jobs** 仍检出旧提交。密钥只注入调用步骤，结果文件保存在该次运行的 Artifact。
 
-This explicitly authorizes that one run to evaluate at most 20 development texts using the recorded candidate model and a USD 0.05 program reservation cap. It never silently switches models. Actual API billing is separate from ChatGPT usage. The reservation uses recorded model rates and conservative request/output bounds; it is not an OpenAI account-wide hard spending limit.
+## 本地命令
 
-The workflow has no push, pull-request or schedule trigger. Uploading code and adding the Secret do not start API requests. A second manual run is a new batch and can incur new charges, so inspect a failed run before choosing to rerun it.
+在运行环境中配置 `OPENAI_API_KEY` 后，先估算：
 
-After completion, open the run's **Summary** and the **notice-api-smoke20-...** artifact. The summary distinguishes completed model responses, API/transport errors, unattempted requests, mock-test transport and unavailable results. No completed responses means no model-accuracy result, not zero model accuracy. A successful 20-item development test is not a held-out performance claim.
+```bash
+semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split development --max-calls 20 --output artifacts/notice_api
+```
 
-If the first run succeeds, the separate **test400** profile evaluates the 400 frozen synthetic test texts once, with a USD 0.50 program reservation cap. Account credits, model availability and endpoint permissions are checked by the actual request. No guarantee of availability is made before this test. The candidate model ID currently lacks a published dated snapshot, so the manifest records that backend-version limitation.
+执行同一配置时，显式提供执行参数和预算：
 
-## Sharing the outcome
+```bash
+semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split development --max-calls 20 --output artifacts/notice_api --execute --max-usd 0.05
+semiconductor-logistics score-api --run artifacts/notice_api
+```
 
-Send the workflow-run URL back to the conversation. The assistant can inspect job status/logs and download the resulting artifact through the GitHub connection without receiving your key. A repository Secret is not installed into the assistant's separate filesystem and does not repair the OpenAI Developers connector itself.
+相同目录的已记录请求不会自动重复发送。程序不自动重试、不切换模型，首次错误后停止并保存已完成结果。新建目录或新建工作流运行会产生新的请求。
 
-The workflow uses read-only repository permissions, pinned official Actions, no persisted checkout credentials, and step-scoped injection of the key. Artifacts are limited to the evaluation directory, never the repository root or `.env` files. Logs must not be used to print credentials. Only trusted repository maintainers should be allowed to change code that can receive the Secret.
+## 结果检查
 
-## Nullable response error correction
+`manifest.json` 保存模型、输入、提示词、Schema 和程序身份；`records.jsonl` 保存请求预留、响应、解析输出和用量；`evaluation.json` 保存复算指标。
 
-The first manual run, https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40958506319 , stopped after one request. Its artifact records `api_error` with no HTTP status or specific error code. The original runner incorrectly treated the presence of `error` as a failure, even when its value was `null`. Normal successful Responses objects include `error: null`; the corrected runner rejects only non-null errors and still validates response status, model identity and output schema.
+先检查完成数、错误数和未调用数，再读取正确率。开发集连接测试和留出集评测分别呈现。[已保存的连接测试](results/api_smoke.md)可以离线复算，无需密钥。
 
-This defect reproduces the recorded failure shape. The original response was discarded, so that first run cannot prove a completed inference or provide recoverable accuracy/usage. Its zero reported cost is not evidence that the provider charged nothing. The frozen notice data, prompt, model, prices and rules remain unchanged.
-
-After merging this correction, start a **new Run workflow** on **main** with **smoke20**. Do not use **Re-run jobs** on the old run: the workflow checks out the triggering commit, which still contains the defect. The existing repository Secret can be reused; this parsing defect does not itself require a new key. A new run sends new requests and remains subject to the USD 0.05 program reservation cap.
-
-## Official references
-
-- OpenAI API authentication: https://developers.openai.com/api/reference/overview
-- OpenAI nullable response-error example: https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat
-- GitHub repository Secrets: https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets
-- Manual workflows and the default-branch requirement: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow
-
-The workflow file must exist in the default branch before GitHub exposes its manual-dispatch entry. It is not ready to run merely because a feature-branch file or a repository Secret exists.
+官方说明：[API 认证](https://developers.openai.com/api/reference/overview)、[GitHub Secrets](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets)、[手动工作流](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow)。

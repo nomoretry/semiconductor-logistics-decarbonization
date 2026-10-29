@@ -1,123 +1,317 @@
-"""Build self-contained research HTML and exact paired comparison tables."""
-from pathlib import Path
-import base64
+"""Generate the Markdown study report, paired tables, and Matplotlib figures."""
+
+import argparse
 import csv
-import html
 import json
+from pathlib import Path
 import sys
-import numpy as np
+
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from shared.experiments import ROOT,write_json
+import numpy as np
 
-CASES={"normal":"正常运输","ocean_delay":"已公告运输延误","capacity_restriction":"已公告容量限制"}
-POLICIES={"cost_only":"成本最优参照","fast_only":"仅空运（库存仍优化）","slow_only":"仅海运／公路（库存仍优化）","carbon_minus10":"碳预算−10%","carbon_minus25":"碳预算−25%","carbon_minus50":"碳预算−50%"}
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from shared.experiments import ROOT, summarize, write_json
 
-def main():
-    rows=json.loads((ROOT/"reports/episodes.json").read_text())
-    summaries=json.loads((ROOT/"reports/summary.json").read_text())
-    projects=sorted({r["project"] for r in rows})
-    rng=np.random.default_rng(20261030)
-    comparisons=[]
-    for project in projects:
+CASES = {
+    "normal": "正常运输",
+    "ocean_delay": "已公告运输延误",
+    "capacity_restriction": "已公告容量限制",
+}
+POLICIES = {
+    "cost_only": "成本最优参照",
+    "fast_only": "仅空运",
+    "slow_only": "仅海运／公路",
+    "carbon_minus10": "碳预算−10%",
+    "carbon_minus25": "碳预算−25%",
+    "carbon_minus50": "碳预算−50%",
+}
+TRADEOFF_FIELDS = [
+    "project", "case", "n", "cost_reference", "cost_budget25",
+    "emissions_reference", "emissions_budget25", "cost_increase_pct",
+    "emissions_reduction_pct", "cost_increase_ci95", "emissions_reduction_ci95",
+]
+
+
+def synthetic_rows(rows):
+    """Keep the published weekly experiment separate from external demand."""
+    return [row for row in rows if row["demand_set"] == "synthetic_weekly"]
+
+
+def paired_tradeoffs(rows, bootstrap_samples=10_000):
+    """Compare feasible 25% budgets with the same project/case/seed baseline."""
+    rows = synthetic_rows(rows)
+    rng = np.random.default_rng(20261030)
+    comparisons = []
+    for project in sorted({row["project"] for row in rows}):
         for case in CASES:
-            group=[r for r in rows if r["project"]==project and r["case"]==case and r["demand_set"]=="synthetic_weekly"]
-            base={r["seed"]:r for r in group if r["policy"]=="cost_only" and r["feasible"]}
-            target=[r for r in group if r["policy"]=="carbon_minus25" and r["feasible"] and r["seed"] in base]
-            if not target:continue
-            c0=np.array([base[r["seed"]]["total_cost"] for r in target]);c1=np.array([r["total_cost"] for r in target])
-            e0=np.array([base[r["seed"]]["total_emissions"] for r in target]);e1=np.array([r["total_emissions"] for r in target])
-            idx=rng.integers(0,len(target),size=(10000,len(target)))
-            cost_boot=100*(c1[idx].mean(axis=1)/c0[idx].mean(axis=1)-1)
-            emission_boot=100*(1-e1[idx].mean(axis=1)/e0[idx].mean(axis=1))
-            comparisons.append(dict(project=project,case=case,n=len(target),cost_reference=float(c0.mean()),cost_budget25=float(c1.mean()),
-                emissions_reference=float(e0.mean()),emissions_budget25=float(e1.mean()),
-                cost_increase_pct=float(100*(c1.mean()/c0.mean()-1)),emissions_reduction_pct=float(100*(1-e1.mean()/e0.mean())),
-                cost_increase_ci95=np.percentile(cost_boot,[2.5,97.5]).tolist(),emissions_reduction_ci95=np.percentile(emission_boot,[2.5,97.5]).tolist()))
-    write_json(ROOT/"reports/paired_tradeoffs.json",comparisons)
-    with (ROOT/"reports/paired_tradeoffs.csv").open("w",newline="") as f:
-        w=csv.DictWriter(f,fieldnames=list(comparisons[0]),lineterminator="\n");w.writeheader();w.writerows(comparisons)
-    plt.rcParams.update({"font.size":10,"axes.spines.top":False,"axes.spines.right":False,"figure.facecolor":"#ffffff"})
-    fig,axes=plt.subplots(1,len(projects),figsize=(6*len(projects),4.4),squeeze=False)
-    for ax,project in zip(axes[0],projects):
-        for case,color in zip(CASES,["#126782","#d97706","#7c3aed"]):
-            group=[r for r in rows if r["project"]==project and r["case"]==case and r["demand_set"]=="synthetic_weekly"]
-            policies=["cost_only","carbon_minus10","carbon_minus25","carbon_minus50"]
-            maps={p:{r["seed"]:r for r in group if r["policy"]==p and r["feasible"]} for p in policies}
-            paired=set.intersection(*(set(maps[p]) for p in policies))
-            xs,ys=[],[]
-            for p in policies:
-                c0=np.mean([maps["cost_only"][s]["total_cost"] for s in paired]);cp=np.mean([maps[p][s]["total_cost"] for s in paired])
-                e0=np.mean([maps["cost_only"][s]["total_emissions"] for s in paired]);ep=np.mean([maps[p][s]["total_emissions"] for s in paired])
-                xs.append(100*(1-ep/e0));ys.append(100*(cp/c0-1))
-            label={"normal":"Normal","ocean_delay":"Announced delay","capacity_restriction":"Announced capacity"}[case]
-            ax.plot(xs,ys,"o-",color=color,label=f"{label} (paired n={len(paired)})",linewidth=2,markersize=5)
-        ax.set_title(project.upper()+"-inspired simulation",loc="left",fontweight="bold")
-        ax.set_xlabel("Logistics emissions reduction vs cost-only (%)")
-        ax.set_ylabel("Planning cost increase (%)")
-        ax.grid(alpha=.18);ax.legend(fontsize=8,loc="upper left")
-    fig.suptitle("Cost-carbon trade-offs with identical service and terminal stock",fontsize=13,fontweight="bold")
-    fig.text(.5,.01,"Scenario assumptions, not company estimates. Complete matched frontiers only; infeasible targets are reported separately.",ha="center",fontsize=8,color="#555")
-    fig.tight_layout(rect=(0,.04,1,.94))
-    fig.savefig(ROOT/"reports/cost_carbon_frontier.png",dpi=180)
-    fig.savefig(ROOT/"reports/cost_carbon_frontier.svg")
-    plt.close(fig)
-    pilot=json.loads((ROOT/"reports/notice_pilot.json").read_text())
-    manifest=json.loads((ROOT/"reports/run_manifest.json").read_text())
-    def num(x):return "—" if x is None else f"{x:,.2f}"
-    main_table="".join(f"<tr><td>{r['project'].upper()}</td><td>{CASES[r['case']]}</td><td>{r['n']}</td><td>{num(r['cost_reference'])}</td><td>{num(r['cost_budget25'])}</td><td>+{r['cost_increase_pct']:.2f}%</td><td>{num(r['emissions_reference'])}</td><td>{num(r['emissions_budget25'])}</td><td>{r['emissions_reduction_pct']:.2f}%</td></tr>" for r in comparisons)
-    complete_tables=""
+            group = [row for row in rows
+                     if row["project"] == project and row["case"] == case]
+            base = {row["seed"]: row for row in group
+                    if row["policy"] == "cost_only" and row["feasible"]}
+            target = sorted(
+                (row for row in group if row["policy"] == "carbon_minus25"
+                 and row["feasible"] and row["seed"] in base),
+                key=lambda row: row["seed"],
+            )
+            if not target:
+                continue
+            c0 = np.array([base[row["seed"]]["total_cost"] for row in target])
+            c1 = np.array([row["total_cost"] for row in target])
+            e0 = np.array([base[row["seed"]]["total_emissions"] for row in target])
+            e1 = np.array([row["total_emissions"] for row in target])
+            indices = rng.integers(0, len(target), size=(bootstrap_samples, len(target)))
+            cost_boot = 100 * (c1[indices].mean(axis=1) / c0[indices].mean(axis=1) - 1)
+            emissions_boot = 100 * (1 - e1[indices].mean(axis=1) / e0[indices].mean(axis=1))
+            comparisons.append(dict(
+                project=project, case=case, n=len(target),
+                cost_reference=float(c0.mean()), cost_budget25=float(c1.mean()),
+                emissions_reference=float(e0.mean()), emissions_budget25=float(e1.mean()),
+                cost_increase_pct=float(100 * (c1.mean() / c0.mean() - 1)),
+                emissions_reduction_pct=float(100 * (1 - e1.mean() / e0.mean())),
+                cost_increase_ci95=np.percentile(cost_boot, [2.5, 97.5]).tolist(),
+                emissions_reduction_ci95=np.percentile(emissions_boot, [2.5, 97.5]).tolist(),
+            ))
+    return comparisons
+
+
+def create_frontier_plot(rows, report_dir):
+    """Plot only seeds feasible at every point on each cost-carbon frontier."""
+    rows = synthetic_rows(rows)
+    projects = sorted({row["project"] for row in rows})
+    if not projects:
+        raise ValueError("The report needs at least one synthetic weekly episode")
+    plt.rcParams.update({
+        "font.size": 10, "axes.spines.top": False, "axes.spines.right": False,
+        "figure.facecolor": "#ffffff",
+    })
+    fig, axes = plt.subplots(1, len(projects), figsize=(6 * len(projects), 4.4), squeeze=False)
+    counts = []
+    try:
+        for ax, project in zip(axes[0], projects):
+            for case, color in zip(CASES, ["#126782", "#d97706", "#7c3aed"]):
+                group = [row for row in rows
+                         if row["project"] == project and row["case"] == case]
+                policies = ["cost_only", "carbon_minus10", "carbon_minus25", "carbon_minus50"]
+                maps = {policy: {row["seed"]: row for row in group
+                                 if row["policy"] == policy and row["feasible"]}
+                        for policy in policies}
+                paired = sorted(set.intersection(*(set(maps[policy]) for policy in policies)))
+                counts.append((project, case, len(paired)))
+                if not paired:
+                    continue
+                c0 = np.mean([maps["cost_only"][seed]["total_cost"] for seed in paired])
+                e0 = np.mean([maps["cost_only"][seed]["total_emissions"] for seed in paired])
+                xs, ys = [], []
+                for policy in policies:
+                    cost = np.mean([maps[policy][seed]["total_cost"] for seed in paired])
+                    emissions = np.mean([maps[policy][seed]["total_emissions"] for seed in paired])
+                    xs.append(100 * (1 - emissions / e0))
+                    ys.append(100 * (cost / c0 - 1))
+                label = {"normal": "Normal", "ocean_delay": "Announced delay",
+                         "capacity_restriction": "Announced capacity"}[case]
+                ax.plot(xs, ys, "o-", color=color, label=f"{label} (paired n={len(paired)})",
+                        linewidth=2, markersize=5)
+            ax.set_title(project.upper() + "-inspired simulation", loc="left", fontweight="bold")
+            ax.set_xlabel("Logistics emissions reduction vs cost-only (%)")
+            ax.set_ylabel("Planning cost increase (%)")
+            ax.grid(alpha=.18)
+            if ax.lines:
+                ax.legend(fontsize=8, loc="upper left")
+        fig.suptitle("Cost-carbon trade-offs with identical service and terminal stock",
+                     fontsize=13, fontweight="bold")
+        fig.tight_layout(rect=(0, 0, 1, .94))
+        fig.savefig(report_dir / "cost_carbon_frontier.png", dpi=180)
+        fig.savefig(report_dir / "cost_carbon_frontier.svg")
+    finally:
+        plt.close(fig)
+    return counts
+
+
+def number(value):
+    return "—" if value is None else f"{value:,.2f}"
+
+
+def markdown_table(headers, rows):
+    def line(values):
+        return "| " + " | ".join(str(value).replace("|", "\\|") for value in values) + " |"
+    return "\n".join([line(headers), line(["---"] * len(headers)), *(line(row) for row in rows)])
+
+
+def render_report(rows, archived_summary, manifest, pilot, comparisons, frontier_counts,
+                  sensitivity_count):
+    """Render populations explicitly; archived monthly means are never paired."""
+    weekly = synthetic_rows(rows)
+    summaries = summarize(weekly)
+    projects = sorted({row["project"] for row in weekly})
+    feasible = sum(row["feasible"] for row in weekly)
+    optimal = sum(row["optimal"] for row in weekly)
+    external = [row for row in archived_summary if row["demand_set"] == "real_carparts_monthly"]
+    archived_n = sum(row["n"] for row in archived_summary)
+    external_n = sum(row["n"] for row in external)
+    external_detail_n = sum(row["demand_set"] == "real_carparts_monthly" for row in rows)
+    cost_range = [row["cost_increase_pct"] for row in comparisons]
+    if cost_range:
+        finding = (f"25%物流碳预算在{len(comparisons)}组配对情景中均有可行结果，"
+                   f"成本均值增幅为{min(cost_range):.2f}%–{max(cost_range):.2f}%。")
+    else:
+        finding = "当前结果中没有可供比较的25%碳预算配对样本。"
+    main_table = markdown_table(
+        ["项目", "情景", "配对数", "参照成本 USD", "碳预算成本 USD", "成本增幅",
+         "参照排放 kgCO₂e", "碳预算排放 kgCO₂e", "排放降幅"],
+        [[row["project"].upper(), CASES[row["case"]], row["n"], number(row["cost_reference"]),
+          number(row["cost_budget25"]), f"{row['cost_increase_pct']:+.2f}%",
+          number(row["emissions_reference"]), number(row["emissions_budget25"]),
+          f"{row['emissions_reduction_pct']:.2f}%"] for row in comparisons],
+    )
+    policy_tables = []
     for project in projects:
-        complete_tables+=f"<h3>{project.upper()}全部策略</h3><table><thead><tr><th>情景</th><th>策略</th><th>可行/总数</th><th>可行方案平均成本USD</th><th>平均kgCO₂e</th><th>空运质量占比</th></tr></thead><tbody>"
-        for r in summaries:
-            if r["project"]!=project or r["demand_set"]!="synthetic_weekly":continue
-            complete_tables+=f"<tr><td>{CASES[r['case']]}</td><td>{POLICIES[r['policy']]}</td><td>{r['feasible_n']}/{r['n']}</td><td>{num(r['total_cost'])}</td><td>{num(r['total_emissions'])}</td><td>{num(None if r['air_mass_share'] is None else 100*r['air_mass_share'])}%</td></tr>"
-        complete_tables+="</tbody></table>"
-    pilot_rows=""
+        table = markdown_table(
+            ["情景", "策略", "可行/总数", "可行均值成本 USD", "可行均值 kgCO₂e", "空运质量占比"],
+            [[CASES[row["case"]], POLICIES[row["policy"]], f"{row['feasible_n']}/{row['n']}",
+              number(row["total_cost"]), number(row["total_emissions"]),
+              "—" if row["air_mass_share"] is None else f"{100 * row['air_mass_share']:.2f}%"]
+             for row in summaries if row["project"] == project],
+        )
+        policy_tables.append(f"### {project.upper()}\n\n{table}")
+    frontier_table = markdown_table(
+        ["项目", *CASES.values()],
+        [[project.upper(), *(next(n for p, c, n in frontier_counts if p == project and c == case)
+                               for case in CASES)] for project in projects],
+    )
+    analogue_table = markdown_table(
+        ["项目", "策略", "可行/总数", "可行均值成本 USD", "可行均值 kgCO₂e"],
+        [[row["project"].upper(), POLICIES[row["policy"]], f"{row['feasible_n']}/{row['n']}",
+          number(row["total_cost"]), number(row["total_emissions"])] for row in external],
+    )
+    replay_rows = []
+    replays = pilot["numerical_replays"]
     for project in projects:
-        for method,label in [("correct_structured_input","人工正确结构化输入＋优化器"),("saved_LLM_extraction","保存的会话内LLM抽取＋优化器"),("ignore_notice","忽略公告、沿用旧参数")]:
-            group=[r for r in pilot["numerical_replays"] if r["project"]==project and r["method"]==method]
-            count=sum(r.get("all_constraints_satisfied",False) for r in group)
-            pilot_rows+=f"<tr><td>{project.upper()}</td><td>{label}</td><td>{count}/{len(group)}</td></tr>"
-    analogy="".join(f"<tr><td>{POLICIES[r['policy']]}</td><td>{r['feasible_n']}/{r['n']}</td><td>{num(r['total_cost'])}</td><td>{num(r['total_emissions'])}</td></tr>" for r in summaries if r["demand_set"]=="real_carparts_monthly")
-    image64=base64.b64encode((ROOT/"reports/cost_carbon_frontier.png").read_bytes()).decode()
-    source_links=[("ASML 2025年报：物流、空运转海运", "https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm"),
-        ("Marvell FY2026 10-K：fabless及OSAT背景","https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-26-000011/mrvl-20260131.htm"),
-        ("Marvell供应链碳边界","https://www.marvell.com/company/sustainability/responsible-supply-chain.html"),
-        ("UK Government 2026排放因子","https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026"),
-        ("鹿特丹港：苏伊士及绕好望角历史距离","https://www.portofrotterdam.com/en/news-and-press-releases/impact-of-red-sea-unrest-on-rotterdam-throughput-expected-to-be-slight"),
-        ("真实汽车备件月度需求，Monash/Zenodo，CC BY4.0","https://zenodo.org/records/4656022"),
-        ("OurAirports原始公开坐标","https://ourairports.com/data/")]
-    links="".join(f'<li><a href="{url}">{html.escape(label)}</a></li>' for label,url in source_links)
-    body=f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ASML与Marvell：低碳库存与运输联合优化</title>
-<style>body{{font:16px/1.75 system-ui,"Microsoft YaHei",sans-serif;color:#18303d;background:#f2f5f7;margin:0}}main{{max-width:1180px;margin:30px auto;background:white;padding:40px 48px;border-radius:14px}}h1{{line-height:1.3;font-size:30px}}h2{{margin-top:36px;border-bottom:2px solid #dce7eb;padding-bottom:8px}}h3{{margin-top:25px}}.tag{{color:#126782;font-weight:700;letter-spacing:.06em}}.note{{background:#edf6f8;border-left:4px solid #126782;padding:14px 18px}}.limit{{background:#fff7e9;padding:14px 18px}}table{{border-collapse:collapse;width:100%;font-size:13px;margin:15px 0}}td,th{{border-bottom:1px solid #dfe7ec;padding:8px;text-align:right}}td:first-child,th:first-child,td:nth-child(2),th:nth-child(2){{text-align:left}}th{{background:#edf3f6}}img{{max-width:100%;height:auto}}code{{background:#edf3f6;padding:2px 4px}}pre{{background:#132e3c;color:#eef6fa;padding:18px;overflow:auto}}a{{color:#126782}}small{{color:#5d6f7a}}@media(max-width:700px){{main{{padding:20px;margin:8px}}table{{font-size:11px;display:block;overflow:auto}}}}</style>
-<main><div class="tag">REPRODUCIBLE PILOT · 2026-10-30</div><h1>低碳半导体物流：<br>ASML与Marvell两个子项目的第一轮实测</h1>
-<p class="note"><b>结论：</b>两个可独立运行的企业背景仿真已经建立。25%物流碳预算收紧，在六组情景中均10/10可行；成本增幅与库存资金占用、提前期和容量有关。所有金额是情景假设下的计算结果，<b>不是企业实测、预测或减排承诺</b>。</p>
-<h2>1. 本轮实际做了什么</h2><p>主实验<b>{len(rows)}次MILP求解</b>：两个项目各3类公告情景、10个合成订单簿、6类策略，共360次；另有40次真实汽车备件月度需求压力测试。{sum(r['feasible'] for r in rows)}次可行且在指定最优间隙内求得最优，{sum(not r['feasible'] for r in rows)}次明确不可行。另运行24次敏感性求解，以及40个信息处理实例的160次数值求解。独立测试共24项通过，核心模型还通过36个小规模穷举案例对照。</p>
-<p>第一阶段是<b>完整承诺订单簿＋已公告扰动的计划模型</b>：各组知道相同的客户订单。它不是未知需求预测、在线学习或未知未来扰动的滚动控制。ASML第一版不考虑货损；Marvell只优化物流，不改变晶圆制造、封测工艺或产品隐含碳。</p>
-<h2>2. 两个项目与数据边界</h2><table><tr><th>项目</th><th>假设网络</th><th>决策</th><th>公开事实与合成假设</th></tr><tr><td>ASML</td><td>荷兰供货池→新加坡区域仓</td><td>空运/海运发货与库存</td><td>业务及历史路线有依据；4个SKU、价格、质量、需求和容量均为假设</td></tr><tr><td>Marvell</td><td>台湾/马来西亚OSAT供货池→新加坡仓</td><td>台湾空/海运、马来西亚空/公路与库存</td><td>fabless/OSAT布局有依据；具体网络、SKU及商业参数不是公司记录</td></tr></table>
-<p>检查了ASML、Applied Materials、Lam、SKF、KLA及Marvell、NXP、TI、Infineon、DigiKey、Mouser等来源。找到了企业流程、财务库存及目录信息；在本轮有界检索中，没有找到可直接匹配的SKU需求＋库存＋运费联合历史记录。完整检索和适配表在两个数据审计文件中，不能扩大为“所有企业都没有数据”。</p>
-<h2>3. 同服务与同终端库存的主结果</h2><p>每个项目4类假设SKU，16个周度期间，种子100–109。每期期末积压必须为0，期末库存至少回到所有策略共同的初始库存。以下每行均配对同一组10个订单簿。成本增幅为两组均值之比减1；碳减幅为1减两组排放均值之比。成本单位USD，排放单位kgCO₂e。</p>
-<table><thead><tr><th>项目</th><th>情景</th><th>配对数</th><th>参照成本</th><th>碳预算成本</th><th>成本增幅</th><th>参照排放</th><th>碳预算排放</th><th>排放降幅</th></tr></thead><tbody>{main_table}</tbody></table>
-<img alt="Matched cost-carbon frontiers" src="data:image/png;base64,{image64}"><p><small>图只保留整条前沿都可行的共同种子，ASML每条线9组，Marvell10组。表中25%预算使用全部10组。成本及排放的配对bootstrap区间保存在paired_tradeoffs.json，反映少量随机订单簿差异，不包含商业参数和模型结构的不确定性。</small></p>
-<h2>4. 库存与碳核算模型</h2><p><code>本期净库存 = 上期净库存 + 初始在途到货 + 以前派发而本期到货 − 本期需求</code>。发货数量为整数，按<b>派发期</b>的提前期决定到货时间。各SKU只能走合格路线；同一供货池的空/海运还共享释放容量。</p>
-<p>最小化：运费＋在途资金占用＋到仓后资金与仓储成本。约束运输及库存相关仓储排放不超过预算。质量先由kg除以1000转为吨，再乘km与模式因子。主因子：空运0.66646、集装箱船0.01977、普通柴油货车0.12715 kgCO₂e/吨·km，含相应燃料WTT；它们是英国官方均值的跨地域代理，不是企业或承运商实测。航空因子已内含8%距离修正，代码未再加一次。</p>
-<p>ASML海运基准采用历史苏伊士8,288海里（15,349km），扰动采用绕好望角约21,770km和合成的额外2周。航空为公开机场坐标的大圆距离。Marvell台湾海路4,000km、马来西亚公路400km是明确假设；不能称为真实公司轨迹。仓储边际排放0.04 kgCO₂e/单位·周为假设，并做0与5倍敏感性。资金持有成本与碳排放分开核算。</p>
-<h2>5. 全部策略与不可行性</h2><p>固定模式参照本身也优化发货与库存，区别只是限制可用运输方式。不可行结果保持空值，不用虚构应急动作或放松碳约束补齐。下表成本均值仅针对可行实例；样本数不同时不能直接当成全样本公平比较。</p>{complete_tables}
-<h2>6. 真实相似业务数据压力测试</h2><p>Monash Car Parts原始开放数据有2,674条汽车备件月度序列、每条51个月，并非半导体订单。只从无缺失且前39个月足够活跃的序列中选择40条，构成10组4SKU实例；使用最后12个月，月份保持月份，提前期按周转换为月后向上取整。筛选不使用测试段是否活跃。物流路线和商业成本仍是示例假设。</p><table><tr><th>策略</th><th>可行/总数</th><th>可行平均成本</th><th>可行平均kgCO₂e</th></tr>{analogy}</table><p>这证明代码能接入真实间歇需求，不证明ASML或Marvell的成本/需求已经校准。25%碳预算9/10可行；与成本参照比较时必须使用同一9个实例，详细序列编号保存在instances.json。</p>
-<h2>7. LLM到底做了什么</h2><p>一次会话内独立LLM抽取：根据保存的提示、路线目录和12条<b>合成</b>通知生成JSON，未读取参考标签。10条完整通知的结构与标签一致；A06/M06缺少关键路线、日期或幅度，均输出需要澄清、不猜参数。输入、提示、输出与哈希均保留。</p>
-<p>数值对照只使用A01/A02/M01/M02，两类公告各10个订单簿。每个实例用人工正确输入、保存的LLM抽取及忽略公告三组重放；按真实公告条件独立检查容量、服务、期末库存和碳预算：</p><table><tr><th>项目</th><th>信息处理组</th><th>全部约束满足</th></tr>{pilot_rows}</table>
-<p class="limit"><b>正确解释：</b>保存的LLM抽取与人工正确结构化输入给出相同参数，因此得到同等可行的优化结果。相对忽略公告组的改善来自信息更新；不能解释为LLM胜过优化器。没有外部API调用、多模型对比、隐藏文本测试、token/延迟/费用评测。12个简单合成示例不支持泛化结论。代码只能自动重放输出，重新生成文本抽取需要新的LLM运行。</p>
-<h2>8. 复现与下一阶段</h2><pre>python -m pip install -r requirements.txt
+        for method, label in [
+            ("correct_structured_input", "人工正确结构化输入＋优化器"),
+            ("saved_LLM_extraction", "保存的会话内LLM抽取＋优化器"),
+            ("ignore_notice", "忽略公告、沿用旧参数"),
+        ]:
+            group = [row for row in replays if row["project"] == project and row["method"] == method]
+            count = sum(row.get("all_constraints_satisfied", False) for row in group)
+            replay_rows.append([project.upper(), label, f"{count}/{len(group)}"])
+    replay_table = markdown_table(["项目", "信息处理组", "全部约束满足"], replay_rows)
+    instance_count = len({(row["project"], row["case"], row["seed"]) for row in replays})
+    policies = "\n\n".join(policy_tables)
+    return f"""# 低碳半导体物流：库存与运输联合优化
+
+{finding}比较使用同一订单簿、逐期零积压和共同终端库存要求。企业背景来自公开资料，SKU、需求、价格和容量采用情景假设；结果用于分析物流规划权衡，不代表企业经营数据。
+
+## 实验范围与数据口径
+
+- **当前合成实验明细**：`episodes.json`含{len(weekly)}次周度求解，其中{feasible}次可行、{optimal}次达到设定最优间隙，{len(weekly) - feasible}次不可行。下文主表、全部策略表与前沿图均由这些明细计算。
+- **归档汇总**：`summary.json`合计{archived_n}次求解，`run_manifest.json`记录{manifest['total_solves']}次；其中{external_n}次来自汽车备件月度需求压力测试。该部分单独列出，不计入合成实验配对结果。当前明细含{external_detail_n}条外部月度求解记录；公开导出不含这些需求序列或所选序列ID。
+- **独立实验**：参数敏感性保存{sensitivity_count}条求解记录；通知输入试验保存{instance_count}个场景的{len(replays)}条重放记录。它们不计入上述主实验样本量。
+
+模型面向完整承诺订单簿与已公告扰动：各策略知道相同订单，不涉及未知需求预测或在线控制。两个网络均以新加坡为仓储终点：ASML背景为荷兰供货池的空／海运；Marvell背景为台湾OSAT供货池的空／海运和马来西亚供货池的空运／公路。具体网络及商业参数见[项目配置](../asml/config.json)与[Marvell配置](../marvell/config.json)。数据适配过程见[ASML审计](../data_sources/data_audit_asml.md)和[Marvell审计](../data_sources/data_audit_marvell.md)。
+
+## 同服务水平下的25%碳预算结果
+
+各项目4类SKU、16个周度期间，种子100–109。每期期末积压为0，终端库存不低于各策略共同的初始库存。每行只比较同项目、同情景、同种子的可行方案。成本增幅为“预算组成本均值／参照组成本均值−1”；排放降幅为“1−预算组排放均值／参照组排放均值”。
+
+{main_table}
+
+![相同服务和终端库存要求下的成本—排放前沿](cost_carbon_frontier.png)
+
+图中各条前沿使用在0%、10%、25%、50%预算收紧下均可行的共同种子，其样本数为：
+
+{frontier_table}
+
+因此，前沿图与25%主表可能采用不同样本。配对bootstrap的95%区间保存在[JSON](paired_tradeoffs.json)，完整精度另见[CSV](paired_tradeoffs.csv)。区间只反映订单簿抽样差异，不覆盖成本参数或模型结构的不确定性。
+
+## 规划与碳核算
+
+净库存按“上期净库存＋初始在途到货＋以前派发而本期到货−本期需求”递推。发货量为整数，到货期由派发时生效的提前期决定。SKU受路线资格限制，同一供货池的运输方式共享释放容量。
+
+目标最小化运费、在途资金占用及到仓后资金与仓储成本。碳预算约束运输及库存相关仓储排放；质量由kg除以1000转为吨，再乘距离km与模式因子。空运、集装箱船和普通柴油货车的因子分别为0.66646、0.01977、0.12715 kgCO₂e／吨·km，包含相应燃料WTT。航空因子已含8%距离修正，代码不重复加成。仓储边际因子假设为0.04 kgCO₂e／单位·周，另测试0与5倍取值。
+
+ASML海运基准使用历史苏伊士距离15,349km，扰动改用绕好望角约21,770km并额外增加2周；航空使用公开机场坐标的大圆距离。Marvell台湾海路4,000km与马来西亚公路400km为假设。模型不含货损、制造／封测工艺及产品隐含碳。排放因子原始行与组合方式见[因子记录](../data_sources/selected_emission_factors.json)。
+
+## 全部策略与不可行性
+
+固定运输模式的参照仍优化发货与库存。不可行结果保持空值；下表均值仅使用可行实例，样本数不同的行不能直接作为全样本成本比较。
+
+{policies}
+
+## 外部月度需求：归档压力测试
+
+Monash Car Parts提供汽车备件月度需求，原始数据有2,674条、每条51个月。从无缺失且前39个月足够活跃的序列中选择40条，构成10组4SKU实例，使用最后12个月；筛选不看测试段活跃度。时间单位保留为月，周提前期转为月后向上取整。物流路线和成本仍沿用示例假设。
+
+以下仅转录归档汇总的{external_n}次求解，未从公开合成明细重算：
+
+{analogue_table}
+
+各行均值对应各自可行子集。缺少外部逐实例明细时，不能从这些均值计算配对成本变化；下载原始数据并重跑后才能逐实例核对。数据说明见[Car Parts说明](../data_sources/carpartsREADME.md)。
+
+## 保存的通知抽取与优化器重放
+
+会话内一次LLM抽取保存了{pilot['notices']}条合成通知的JSON，结构匹配{pilot['exact_matches']}条，其中{pilot['ambiguity_abstentions']}条缺少关键字段并要求澄清。输入、提示、输出与哈希均保留在[llm目录](../llm/)。数值重放只使用A01/A02/M01/M02，并在公告实际生效的容量、服务、库存和碳条件下检查计划。
+
+{replay_table}
+
+保存的抽取与人工输入产生相同参数；相对忽略公告组的差异来自参数更新。这组小型合成试验说明已保存输出可重放，不能据此判断模型的留出泛化能力。后续冻结通知基准与外部API推理采用独立样本和指标，见[通知评测](../docs/notice_benchmark_stage1.md)与[API小样本结果](../docs/results/api_smoke.md)；其样本量与准确率不并入物流优化结果。
+
+## 复现
+
+从仓库根目录运行：
+
+```bash
+python -m pip install -r requirements.txt
+python scripts/create_reports.py
 python -m unittest discover -s tests -v
+```
+
+报告生成器只读取已保存结果，用Matplotlib输出图片和Markdown表格，不发起API调用。重新求解时先执行`python scripts/download_source_data.py`，再运行：
+
+```bash
 python scripts/run_experiments.py --project both
 python scripts/evaluate_notice_pilot.py --project both
 python scripts/run_sensitivity.py --project both
-python scripts/create_reports.py</pre><p>主实验记录耗时{manifest['seconds']:.2f}秒，硬件与负载会影响时间，不构成算法优越性。下一阶段优先：固定模型与提示的真实/合成留出通知集；预测误差下的滚动MPC；期末缓冲和容量/运价/因子不确定性；真实企业数据替换接口。ASML周度服务条件不能冒充其24小时零件支持指标；Marvell采购承诺的26/52周也不等于运输提前期。</p>
-<h2>主要原始来源与数据许可证</h2><ul>{links}</ul><p><small>完整出处、原始因子行号、数据审计、哈希及第三方许可在data_sources/。Monash数据CC BY4.0，英国因子按原发布页OGL归属，机场坐标为OurAirports公开数据。未包含任何账户凭据。</small></p></main></html>'''
-    (ROOT/"reports/study_report.html").write_text(body,encoding="utf-8")
-    print("Created report, paired comparisons and publication figures")
+python scripts/create_reports.py
+```
 
-if __name__=="__main__":main()
+[原始运行清单](run_manifest.json)保留原实验的环境、输入与源码哈希，报告重新排版不会更新该历史记录。[公开导出清单](public_export_manifest.json)记录发布明细的范围。后续可检验预测误差下的滚动规划、终端缓冲和成本／容量／排放因子不确定性，再通过真实企业数据接口校准。
+
+## 原始来源与许可
+
+- [ASML 2025年报：物流、空运转海运](https://www.sec.gov/Archives/edgar/data/937966/000162828026011377/asml-2025xannualxreportx.htm)
+- [Marvell FY2026 10-K：fabless及OSAT背景](https://investor.marvell.com/sec-filings/all-sec-filings/content/0001835632-26-000011/mrvl-20260131.htm)；[供应链碳边界](https://www.marvell.com/company/sustainability/responsible-supply-chain.html)
+- [英国政府2026排放因子](https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026)，按原发布页OGL归属。
+- [鹿特丹港：苏伊士及绕好望角历史距离](https://www.portofrotterdam.com/en/news-and-press-releases/impact-of-red-sea-unrest-on-rotterdam-throughput-expected-to-be-slight)
+- [Monash／Zenodo汽车备件月度需求](https://zenodo.org/records/4656022)，CC BY4.0。
+- [OurAirports公开机场坐标](https://ourairports.com/data/)。完整出处与下载哈希见[来源清单](../data_sources/source_manifest.json)。
+"""
+
+
+def main(argv=()):
+    parser = argparse.ArgumentParser(
+        description="Generate the Markdown study report and Matplotlib figures from saved results."
+    )
+    parser.parse_args(argv)
+    report_dir = ROOT / "reports"
+    rows = json.loads((report_dir / "episodes.json").read_text(encoding="utf-8"))
+    archived_summary = json.loads((report_dir / "summary.json").read_text(encoding="utf-8"))
+    pilot = json.loads((report_dir / "notice_pilot.json").read_text(encoding="utf-8"))
+    manifest = json.loads((report_dir / "run_manifest.json").read_text(encoding="utf-8"))
+    sensitivity = json.loads((report_dir / "sensitivity.json").read_text(encoding="utf-8"))
+    comparisons = paired_tradeoffs(rows)
+    write_json(report_dir / "paired_tradeoffs.json", comparisons)
+    with (report_dir / "paired_tradeoffs.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=TRADEOFF_FIELDS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(comparisons)
+    counts = create_frontier_plot(rows, report_dir)
+    report = render_report(rows, archived_summary, manifest, pilot, comparisons, counts, len(sensitivity))
+    (report_dir / "study_report.md").write_text(report, encoding="utf-8")
+    print("Created reports/study_report.md, paired comparisons and Matplotlib figures")
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

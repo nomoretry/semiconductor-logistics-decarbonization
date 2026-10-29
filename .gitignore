@@ -5,3 +5,7 @@ __pycache__/
 .env.*
 data_sources/raw/
 *.json.gz
+*.egg-info/
+build/
+dist/
+artifacts/
