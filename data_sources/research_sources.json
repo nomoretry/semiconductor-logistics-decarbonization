@@ -1,0 +1,112 @@
+{
+  "schema_version": "research-source-register-v1",
+  "numerical_model_calibrated_to_company_data": false,
+  "sources": [
+    {
+      "id": "P01",
+      "title": "Inventory Control in a Spare Parts Distribution System with Emergency Stocks and Pipeline Information",
+      "authors": [
+        "C. Howard",
+        "Johan Marklund",
+        "T. Tan",
+        "Ingrid Reijnen"
+      ],
+      "year": 2015,
+      "doi": "10.1287/msom.2014.0508",
+      "discovery": "Undermind How15",
+      "read_scope": "abstract_and_metadata",
+      "use": "Pipeline information and emergency-shipment baseline motivation",
+      "not_used_as": "empirical calibration or reproduced algorithm"
+    },
+    {
+      "id": "P02",
+      "title": "Operational level planning of a multi-item two-echelon spare parts inventory system with reactive and proactive interventions",
+      "authors": [
+        "Engin Topan",
+        "Matthieu van der Heijden"
+      ],
+      "year": 2020,
+      "doi": "10.1016/j.ejor.2019.12.022",
+      "url": "https://research.utwente.nl/en/publications/operational-level-planning-of-a-multi-item-two-echelon-spare-part/",
+      "discovery": "Undermind Top20; author institution page verified",
+      "read_scope": "abstract_and_metadata; full-text download returned 403",
+      "use": "Multi-item joint interventions and strong optimization baseline",
+      "not_used_as": "company data or reproduction of complete two-echelon model"
+    },
+    {
+      "id": "P03",
+      "title": "Budgeted Optimization with Constrained Experiments",
+      "authors": [
+        "Javad Azimi",
+        "Xiaoli Z. Fern",
+        "Alan Fern"
+      ],
+      "year": 2016,
+      "doi": "10.1613/jair.4896",
+      "discovery": "Undermind Azi16",
+      "read_scope": "full_text_targeted_read",
+      "locators": [
+        "Section 3, printed pp.123-124",
+        "Sections 5.2-5.3, pp.130-134",
+        "Section 6.2.2, p.141"
+      ],
+      "use": "Known query costs, sequential observations and finite shared budgets",
+      "not_used_as": "proof of complementarity or RL advantage in logistics"
+    },
+    {
+      "id": "C01",
+      "publisher": "ASML",
+      "title": "2024 Annual Report, Logistics",
+      "url": "https://www.sec.gov/Archives/edgar/data/937966/000093796625000011/a2024annualreportbasedon.htm",
+      "locator": "printed pp.208-209",
+      "read_scope": "official issuer filing section",
+      "facts": [
+        {
+          "claim": "Air-to-ocean shift offers potential cost and emissions reductions while increasing transit-time and cargo-risk concerns",
+          "kind": "company_aggregate_qualitative_context"
+        }
+      ],
+      "use": "Transport cost/service/carbon tradeoff; parameter values remain synthetic"
+    },
+    {
+      "id": "C02",
+      "publisher": "Maersk",
+      "title": "Asia-Pacific customer update, 15 April 2024",
+      "url": "https://www.maersk.com/~/media_sc9/maersk/news/news/files/2024/maersk-asia-pacific-customer-update-15-april-issue.pdf?h=576&hash=7AF808C675485A5D042FC0B0E4C586DF&w=1024",
+      "locator": "PDF pp.2-3",
+      "read_scope": "official PDF text",
+      "facts": [
+        {
+          "claim": "Diversion affects transit times and container turnaround; capacity and alternative transport modes are discussed",
+          "kind": "network_context"
+        }
+      ],
+      "use": "Motivates coupled capacity, not customer-specific capacity calibration"
+    },
+    {
+      "id": "C03",
+      "publisher": "Maersk",
+      "title": "Structural changes to MECL",
+      "url": "https://www.maersk.com/news/articles/2026/07/09/structural-changes-to-mecl",
+      "locator": "The MECL returns to the trans-Suez route; first eastbound/westbound sailings",
+      "read_scope": "official full page",
+      "facts": [
+        {
+          "direction": "westbound",
+          "quantity": 7,
+          "unit": "day",
+          "effect": "transit_time_reduction",
+          "qualifier": "average"
+        },
+        {
+          "direction": "eastbound",
+          "quantity": 14,
+          "unit": "day",
+          "effect": "transit_time_reduction",
+          "qualifier": "average"
+        }
+      ],
+      "use": "Source-level qualifier-preserving extraction; does not map to internal NL_ocean"
+    }
+  ]
+}

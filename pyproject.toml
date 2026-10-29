@@ -23,7 +23,7 @@ semiconductor-logistics = "semiconductor_logistics.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["semiconductor_logistics*", "notice_benchmark*", "real_notice_eval*", "decision_benchmark*", "shared*", "scripts*"]
+include = ["semiconductor_logistics*", "notice_benchmark*", "real_notice_eval*", "decision_benchmark*", "coupled_decision*", "shared*", "scripts*"]
 exclude = ["tests*"]
 
 [tool.setuptools]

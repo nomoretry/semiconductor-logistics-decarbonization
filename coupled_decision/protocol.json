@@ -1,0 +1,11 @@
+{
+  "schema_version": "coupled-development-v1",
+  "split": "development_only",
+  "seed": 61803,
+  "contexts": 120,
+  "families": ["three_sku", "four_sku", "route_eligibility", "carbon_tradeoff"],
+  "methods": ["no_query_bayes", "no_query_robust", "entropy_per_cost", "myopic_voi", "lookahead_two", "exact_dp"],
+  "minimum_best_adaptive_mean_normalized_regret_for_further_learning_study": 0.01,
+  "minimum_capacity_and_budget_effect_fraction": 0.1,
+  "claim": "Finite synthetic known-order development audit; no training or final heldout claim. Numerical parameters are assumptions, not company measurements."
+}
