@@ -582,7 +582,9 @@ def run_benchmark(dataset_path: str | Path, output_dir: str | Path, *, split: st
                 response = perform(item['body'], key_value, timeout)
                 if not isinstance(response, dict):
                     raise TransportError(None, 'invalid_response', 'invalid_response')
-                if 'error' in response:
+                # Successful Responses objects include the nullable field error.
+                # Reject a non-null error, including malformed empty values.
+                if response.get('error') is not None:
                     metadata = response['error'] if isinstance(response['error'], dict) else {}
                     raise TransportError(None, metadata.get('type', 'api_error'), metadata.get('code'))
                 response = _redact(response, key_value)

@@ -23,7 +23,7 @@ OUTPUT = {'status': 'ready', 'changes': [{'op': 'add_lead', 'route': 'NL_ocean',
 
 
 def response(output=None, model='gpt-6-luna', *, input_tokens=150, output_tokens=40):
-    return {'id': 'resp_offline_mock', 'model': model, 'status': 'completed',
+    return {'id': 'resp_offline_mock', 'model': model, 'status': 'completed', 'error': None,
             'usage': {'input_tokens': input_tokens, 'output_tokens': output_tokens,
                       'total_tokens': input_tokens + output_tokens},
             'output': [{'type': 'message', 'content': [{'type': 'output_text',
@@ -95,6 +95,58 @@ class ApiRunnerTests(unittest.TestCase):
         self.assertEqual(result['injected_transport_calls'], 2)
         self.assertEqual(result['completed_requests'], 2)
         self.assertLessEqual(float(result['usage_reported_usd']), float(result['reserved_usd']))
+
+    def test_null_error_response_retains_output_usage_and_resumes_without_a_call(self):
+        first = self.execute()
+        self.assertTrue(first['complete'])
+        record = self.read_results()[0]
+        self.assertEqual(record['status'], 'completed')
+        self.assertEqual(record['parsed_output'], OUTPUT)
+        self.assertEqual(record['usage']['input_tokens'], 150)
+        self.assertGreater(float(record['usage_cost_usd']), 0)
+        self.assertIsNone(record['raw_response']['error'])
+        second = self.execute(transport=lambda *args: self.fail('successful call repeated'))
+        self.assertTrue(second['complete'])
+        self.assertEqual(second['executed_requests'], 0)
+
+    def test_response_without_error_field_remains_supported(self):
+        payload = response()
+        del payload['error']
+        self.assertTrue(self.execute(transport=lambda *args: payload)['complete'])
+
+    def test_non_null_errors_stop_without_persisting_free_text(self):
+        for error_value in [
+            {'type': 'server_error', 'code': 'server_error',
+             'message': 'PRIVATE_ERROR_MESSAGE ' + FAKE_KEY},
+            {}, '', False, 0, [],
+        ]:
+            with self.subTest(error_value=type(error_value).__name__):
+                target = self.root / ('error-run-' + str(len(list(self.root.iterdir()))))
+                payload = response()
+                payload['error'] = error_value
+                result = runner.run_benchmark(self.dataset_path, target,
+                    execute=True, max_usd='1', api_key=FAKE_KEY,
+                    transport=lambda *args: payload)
+                self.assertEqual(result['executed_requests'], 1)
+                self.assertEqual(result['completed_requests'], 0)
+                self.assertEqual(result['remaining_unattempted_requests'], 1)
+                records = [json.loads(line) for line in (target / 'records.jsonl').read_text().splitlines()]
+                record = records[-1]
+                self.assertEqual(record['status'], 'api_error')
+                self.assertNotIn('raw_response', record)
+                if isinstance(error_value, dict) and error_value:
+                    self.assertEqual(record['error_code'], 'server_error')
+                for path in target.iterdir():
+                    if path.is_file():
+                        self.assertNotIn('PRIVATE_ERROR_MESSAGE', path.read_text())
+                        self.assertNotIn(FAKE_KEY, path.read_text())
+
+    def test_failed_response_with_null_error_is_not_completed(self):
+        payload = response()
+        payload['status'] = 'failed'
+        result = self.execute(transport=lambda *args: payload)
+        self.assertEqual(result['completed_requests'], 0)
+        self.assertEqual(self.read_results()[0]['status'], 'incomplete_response')
 
     def test_positive_budget_is_mandatory_before_key_access(self):
         for cap in [None, 0, -1, 'NaN', 'Infinity']:

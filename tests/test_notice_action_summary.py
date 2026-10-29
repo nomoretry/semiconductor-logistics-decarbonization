@@ -30,7 +30,7 @@ class ActionSummaryTests(unittest.TestCase):
     def response(self, body, *, provider_text="private-provider-text https://untrusted.invalid SECRET_SENTINEL"):
         payload = json.loads(body["input"][1]["content"][0]["text"])
         answer = self.answers[runner.sha256(runner.canonical_bytes(payload))]
-        return {"id": provider_text, "model": provider_text, "status": "completed",
+        return {"id": provider_text, "model": provider_text, "status": "completed", "error": None,
             "usage": {"input_tokens": 100, "output_tokens": 20},
             "output": [{"type": "message", "content": [{"type": "output_text", "text": json.dumps(answer)}]}]}
 

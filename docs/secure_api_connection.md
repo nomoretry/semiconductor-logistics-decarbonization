@@ -29,9 +29,18 @@ Send the workflow-run URL back to the conversation. The assistant can inspect jo
 
 The workflow uses read-only repository permissions, pinned official Actions, no persisted checkout credentials, and step-scoped injection of the key. Artifacts are limited to the evaluation directory, never the repository root or `.env` files. Logs must not be used to print credentials. Only trusted repository maintainers should be allowed to change code that can receive the Secret.
 
+## Nullable response error correction
+
+The first manual run, https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40958506319 , stopped after one request. Its artifact records `api_error` with no HTTP status or specific error code. The original runner incorrectly treated the presence of `error` as a failure, even when its value was `null`. Normal successful Responses objects include `error: null`; the corrected runner rejects only non-null errors and still validates response status, model identity and output schema.
+
+This defect reproduces the recorded failure shape. The original response was discarded, so that first run cannot prove a completed inference or provide recoverable accuracy/usage. Its zero reported cost is not evidence that the provider charged nothing. The frozen notice data, prompt, model, prices and rules remain unchanged.
+
+After merging this correction, start a **new Run workflow** on **main** with **smoke20**. Do not use **Re-run jobs** on the old run: the workflow checks out the triggering commit, which still contains the defect. The existing repository Secret can be reused; this parsing defect does not itself require a new key. A new run sends new requests and remains subject to the USD 0.05 program reservation cap.
+
 ## Official references
 
 - OpenAI API authentication: https://developers.openai.com/api/reference/overview
+- OpenAI nullable response-error example: https://developers.openai.com/api/docs/guides/structured-outputs?api-mode=chat
 - GitHub repository Secrets: https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets
 - Manual workflows and the default-branch requirement: https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow
 
