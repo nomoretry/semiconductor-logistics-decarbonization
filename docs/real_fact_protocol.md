@@ -51,4 +51,4 @@ python -m semiconductor_logistics notice-facts api --split exploratory --output 
 
 最后一条仅估算，不读取密钥、不发请求。新工作流`Real fact extraction (manual)`只在main手动运行，沿用已有Secret。默认8条，按声明费率预留约USD 0.00807180；提交前总预留不得超过USD 0.05。此数值不是账单保证或账户级硬限额。模型名固定为`gpt-6-luna`，返回模型身份逐次保存，但别名不等于不可变快照。请求不含参考答案、来源ID或URL；原始响应、提示词、Schema、请求身份、预留日志与复算结果一起导出。
 
-探索集API已经完成，详见[结果与E06分歧](results/notice_facts_api.md)，不用重跑。操作与人工复核见[手动步骤](manual_steps.md)及[审核表](../reviews/notice_facts_v1/review.md)。后续人工意见另存，当前数据和结果不覆盖；若需修正标签，发布新版本并对原响应离线重评分。
+探索集API已经完成，详见[结果与E06分歧](results/notice_facts_api.md)，不用重跑。维护者选择不填写人工意见，见[当前操作说明](manual_steps.md)。[旧审核表](../reviews/notice_facts_v1/review.md)、数据和原始响应不覆盖，也不代填；这些结果不作为人工金标准。未来若有新标注，发布新版本并对原响应离线重评分。

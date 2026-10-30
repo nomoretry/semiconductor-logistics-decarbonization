@@ -1,0 +1,1 @@
+{"batch_size":128,"delay_bits":[2,4,6],"epochs":80,"hidden":32,"learning_rate":0.003,"positive_tolerance":1e-07,"schema":"query-bc-pilot-v1","sku_counts":[4,8,12],"splits":{"dev":[2001,2002],"pilot":[3001,3002,3003,3004],"train":[1001,1002,1003,1004,1005,1006,1007,1008]},"training_seed":17}
