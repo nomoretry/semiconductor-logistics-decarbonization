@@ -31,7 +31,7 @@
 
 BC已完成生成→训练→评估→检查点重放，见[协议](query_policy_protocol.md)和[结果](query_policy_results.md)。本轮再完成同一起点PPO、GAE、完整采样和更新重执行，见[PPO结果](query_ppo_results.md)；保留全部比较方法。只借鉴接口划分与研究方法，新的 NumPy 实现没有复制对方源文件。
 
-BC误差诊断和[同起点PPO](query_ppo_results.md)已完成首轮开发运行。[五种子开发检查](query_study_development_results.md)已记录稳定条件失败；[冻结千题协议](query_study_protocol.md)固定主要方法和配对统计。[掩码与成本势函数开发对照](query_components_results.md)已补齐；分发锁与Release仍待完成，下一研究阶段为未知需求和滚动决策。每一步以代码、实际运行和复算为准，不用仓库数量、徽章或README长度表示完成度。
+BC误差诊断和[同起点PPO](query_ppo_results.md)已完成首轮开发运行。[五种子开发检查](query_study_development_results.md)已记录稳定条件失败；[冻结千题协议](query_study_protocol.md)固定主要方法和配对统计。[掩码与成本势函数开发对照](query_components_results.md)已补齐；分发锁与Release仍待完成，未知需求滚动环境及三因素敏感性实验已完成，滚动策略学习尚未启动。每一步以代码、实际运行和复算为准，不用仓库数量、徽章或README长度表示完成度。
 
 ## GitHub 页面差异
 
@@ -44,3 +44,7 @@ BC误差诊断和[同起点PPO](query_ppo_results.md)已完成首轮开发运行
 [滚动环境](rolling_inventory_results.md)现已实现未知需求、历史信息预测、在途状态和四类强基线，保留成本/服务/排放取舍；尚未进行滚动策略训练或查询耦合。
 
 The [rolling environment](rolling_inventory_results.md) now implements unknown demand, history-only forecasting, pipeline state and four strong baselines, retaining cost/service/emissions tradeoffs. Rolling-policy training and query coupling remain unimplemented.
+
+[敏感性实验](rolling_sensitivity_results.md)补齐24条新开发路径、三因素全组合及期末价值的记账/行为分解；7至21条情景的收益跨采样种子不稳定，暂不训练滚动BC/PPO。
+
+The [sensitivity study](rolling_sensitivity_results.md) adds 24 new development paths, the full three-factor comparison and an accounting/behavior decomposition of final-stock credit. The benefit of 21 over seven scenarios changes sign across sampling seeds; rolling BC/PPO remains deferred.

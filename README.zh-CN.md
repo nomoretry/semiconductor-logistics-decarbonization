@@ -161,6 +161,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `query_policy/` | 公开特征、NumPy BC、教师生成和检查点绑定验证 |
 | `query_ppo/` | 轨迹隔离GAE、成本PPO、验证选模与完整训练复算 |
 | `query_study/` | 多种子训练、无损证据、任务/模型冻结及配对统计 |
+| `rolling_inventory/`、`rolling_sensitivity/` | 未知需求库存仿真、强基线规划及敏感性复算 |
 | `query_components/` | 掩码与成本势函数对照、拒绝语义、完整开发训练重放 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
@@ -173,8 +174,12 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 
 订单、价格、质量、容量和仓储参数为仿真假设。排放因子、路线几何和类比需求保存来源与校验值，详见 [ASML 数据说明](data_sources/data_audit_asml.md)、[Marvell 数据说明](data_sources/data_audit_marvell.md)和[第三方数据声明](THIRD_PARTY_NOTICES.md)。
 
-当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；未知需求、预测误差和滚动决策尚未加入。
+当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；独立滚动环境现已加入未知需求、预测误差和在途库存演化，与原固定订单研究分开报告。
 
 ## 未知需求滚动环境
 
 [滚动库存实验](docs/rolling_inventory_results.md)已完成：12个校准、32个开发需求路径，4个可部署基线及预知需求下界。情景MPC平均成本282.2406，base-stock为330.6219；服务改善伴随排放增加。均值MPC未在总体胜过补货规则，未训练新RL。复算：`python -m semiconductor_logistics rolling-inventory verify`。
+
+[滚动敏感性实验](docs/rolling_sensitivity_results.md)新增24条开发路径、3个采样种子和2,304条轨迹，量化碳分配、期末库存价值和情景数量。1→7情景成本降37.48%，7→21仅降0.36%且种子方向不一致；期末价值主要改变账面净成本。先验证预测分布及同信息教师，暂不训练滚动BC/PPO。复算：`python -m semiconductor_logistics rolling-sensitivity verify`。
+
+敏感性证据包已补齐，覆盖全部2,304条轨迹，详见[文件身份与验收](docs/rolling_sensitivity_publication.md)。合并以前须确认PR当前提交的CI通过。

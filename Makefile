@@ -1,7 +1,7 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m semiconductor_logistics
 
-.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-strict-training package-check download-data real-notices decision-audit
+.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit
 
 sync:
 	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
@@ -32,6 +32,7 @@ smoke:
 	$(CLI) query-study smoke-check
 	$(CLI) query-components smoke-check
 	$(CLI) rolling-inventory smoke-check
+	$(CLI) rolling-sensitivity smoke-check
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -89,4 +90,7 @@ verify-rolling:
 
 ci-foundation: test smoke verify-core package-check
 
-ci: ci-core verify-components verify-rolling
+verify-sensitivity:
+	$(CLI) rolling-sensitivity verify
+
+ci: ci-core verify-components verify-rolling verify-sensitivity

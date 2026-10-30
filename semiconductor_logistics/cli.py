@@ -35,6 +35,7 @@ COMMANDS = {
     "query-bc": ("query_policy.experiment", "Train and replay the development query-policy BC experiment"),
     "query-ppo": ("query_ppo.experiment", "Train and replay cost-based PPO from the frozen BC checkpoint"),
     "query-study": ("query_study", "Run paired multi-seed ablations, freeze final tasks and replay final evidence"),
+    "rolling-sensitivity": ("rolling_sensitivity", "Quantify carbon pacing, final stock credit and scenario count"),
     "rolling-inventory": ("rolling_inventory", "Run and replay unknown-demand rolling inventory baselines"),
     "query-components": ("query_components", "Audit policy masks and train-only cost-potential rewards on development data"),
     "notice-facts": ("notice_facts", "Evaluate source quantities without inferring internal routes"),
