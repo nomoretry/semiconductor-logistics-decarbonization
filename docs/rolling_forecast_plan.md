@@ -5,7 +5,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**状态：研究设计待固定并执行，没有新增结果。** [敏感性实验](rolling_sensitivity_results.md)已显示，7至21条情景的成本收益跨采样种子不稳定，而下降过程仍有过量库存。因此下一项检查历史信息预测和需求分布设定，再判断是否有适合BC计算替代的教师。
+**状态：已按[固定协议](rolling_forecast_protocol.md)执行，见[352轨迹结果](rolling_forecast_results.md)。以下保留执行前的研究思路。** [敏感性实验](rolling_sensitivity_results.md)已显示，7至21条情景的成本收益跨采样种子不稳定，而下降过程仍有过量库存。因此下一项检查历史信息预测和需求分布设定，再判断是否有适合BC计算替代的教师。
 
 执行前固定预测器及参数选择方式。比较历史EWMA、对变化响应更快的EWMA及季节调整后的短窗预测；如加入过度离散或共同冲击情景，须先写明如何仅从已观察历史估计，不能使用隐藏过程标签或未来需求。现有开发路径可以诊断错误，但不能重新称为未查看的测试集；新比较应另行登记需求种子，保持校准与评估分离。
 
@@ -15,7 +15,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## English
 
-**Status: design to be fixed and executed; no new results.** The [sensitivity study](rolling_sensitivity_results.md) shows that the cost benefit of 21 over seven scenarios changes sign across sampling seeds, while downward shifts retain overstocking. The next study should examine history-only forecasts and demand-distribution assumptions before selecting a teacher for BC computation substitution.
+**Status: executed under the [fixed protocol](rolling_forecast_protocol.md); see the [352-trajectory results](rolling_forecast_results.md). The original research rationale follows.** The [sensitivity study](rolling_sensitivity_results.md) shows that the cost benefit of 21 over seven scenarios changes sign across sampling seeds, while downward shifts retain overstocking. The next study should examine history-only forecasts and demand-distribution assumptions before selecting a teacher for BC computation substitution.
 
 Fix predictors and parameter-selection rules before execution. Compare historical EWMA, a faster-response EWMA and a short-window seasonally adjusted forecast. Any overdispersion or common-shock model must specify estimation from observed history only; hidden process labels and future demand are prohibited. Existing development paths may diagnose errors but cannot be relabeled as unseen tests. Register new demand seeds separately and keep calibration and evaluation apart.
 

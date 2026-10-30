@@ -1,0 +1,25 @@
+{
+  "scope": "synthetic_history_only_forecast_development",
+  "protocol_commit": "a0089c5dda6541fa3ca62f8a3d77098113a4976b",
+  "parent_main_commit": "ebd87a4d9843442b0914d737e910a099660002f1",
+  "protocol_committed_before_calibration_and_development": true,
+  "calibration_paths": 12,
+  "development_paths": 32,
+  "trajectories": 352,
+  "period_records": 4224,
+  "new_llm_api_requests": 0,
+  "rolling_rl_trained": false,
+  "archive_format": "plain_JSON_and_JSONL",
+  "sources": [
+    {
+      "url": "https://stat.uw.edu/research/tech-reports/strictly-proper-scoring-rules-prediction-and-estimation",
+      "use": "proper marginal probability scoring principle",
+      "read_scope": "institutional search abstract; full text not read"
+    },
+    {
+      "url": "https://dspace.mit.edu/entities/publication/a7a1f90f-cb44-498d-ba81-bda4d028f608",
+      "use": "evaluate predictions through decision outcomes",
+      "read_scope": "institutional abstract; algorithm not reproduced"
+    }
+  ]
+}

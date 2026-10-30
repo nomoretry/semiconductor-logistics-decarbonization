@@ -27,6 +27,7 @@ Two company-inspired case studies share the solver while retaining separate oper
 | Mask and cost-potential audit | Shared BC starts; 2×2 design; train-only frozen potential | Five seeds, 20 PPO runs, 1,332 development evaluations; masking reduces rejection, no stable masked-shaping benefit |
 | Rolling sensitivity | Carbon pacing, final-stock credit and 1/7/21 scenarios | 24 new paths, three sampling seeds, 2,304 trajectories; 21 vs seven scenarios has no consistent seed-level benefit |
 | Unknown-demand rolling inventory | Dated pipeline, history-only forecasts, shared capacities and cumulative carbon | 12 calibration + 32 development paths; four baselines; scenario MPC improves cost/service with higher emissions |
+| Forecast comparison | Calibration-only parameter selection; the same scenario MPC for all predictors | 12 calibration + 32 new development paths, 352 trajectories; fast EWMA and seasonal-window costs rise 7.19%/8.48% versus original EWMA |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
 The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
@@ -43,9 +44,11 @@ The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archi
 
 See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). New detailed research documents provide Chinese first and English afterward. Historical pages will receive complete English explanations at final delivery; see the [documentation plan](docs/documentation_plan.md).
 
-The sensitivity archive is complete. [File identities and verification](docs/rolling_sensitivity_publication.md) cover all 2,304 trajectories; merge acceptance uses the current PR commit's CI results.
+The sensitivity archive is complete and PR #15 is merged after all five checks passed. [File identities and verification](docs/rolling_sensitivity_publication.md) cover all 2,304 trajectories.
 
-The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. Rolling BC/PPO is deferred pending forecast and same-information teacher validation.
+The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. The [forecast comparison](docs/rolling_forecast_results.md) is now complete: both calibration-selected alternatives have higher mean cost and worse marginal prediction scores than original EWMA on 32 new paths. Three paths improve forecast NLL while worsening decision cost. No new teacher passes the fixed descriptive screen; rolling BC/PPO remains deferred.
+
+The forecast experiment is complete locally, but 73 evidence files still require explicit public-upload authorization after automatic approval review. The PR remains a draft; see the [file identities and publication status](docs/rolling_forecast_publication.md).
 
 ## Quick start
 
@@ -120,6 +123,7 @@ semiconductor-logistics query-study verify-final
 semiconductor-logistics query-components verify
 semiconductor-logistics rolling-inventory verify
 semiconductor-logistics rolling-sensitivity verify
+semiconductor-logistics rolling-forecast verify
 ```
 
 The API command estimates cost by default:
@@ -134,6 +138,7 @@ Live calls use a manual GitHub Actions workflow and a repository Secret. The `sm
 
 | Command | Purpose |
 |---|---|
+| `rolling-forecast` | Compare history-only predictors and replay forecasts, calibration and rolling decisions |
 | `generate` | Generate notice development/test splits and verification metadata |
 | `optimize` | Run the ASML and Marvell inventory–transport experiments |
 | `evaluate` | Evaluate frozen rules and diagnostic baselines |

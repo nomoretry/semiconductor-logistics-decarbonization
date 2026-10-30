@@ -25,6 +25,8 @@ def main():
                                          'ppo_training_runs', 'policy_evaluations', 'new_final_test'],
         'rolling_inventory_development': ['distinct_development_contexts', 'rl_trained', 'scope'],
         'rolling_sensitivity_development': ['distinct_demand_paths', 'trajectories', 'learning', 'scope'],
+        'rolling_forecast_development': ['calibration_paths', 'distinct_development_paths', 'trajectories',
+                                         'period_records', 'learning', 'scope'],
     }
     results = {}
     errors = []
@@ -52,6 +54,26 @@ def main():
     from rolling_sensitivity.experiment import identity
     if manifest['sources'] != identity():
         errors.append('changed_sensitivity_sources')
+    forecast = ROOT / 'benchmark_results/rolling_forecast_development'
+    forecast_checked = 0
+    forecast_expected = 0
+    if not (forecast / 'manifest.json').is_file():
+        errors.append('missing_forecast_manifest')
+    else:
+        fm = json.loads((forecast / 'manifest.json').read_text())
+        forecast_expected = len(fm['files'])
+        for name, expected in fm['files'].items():
+            if Path(name).name != name:
+                errors.append('invalid_forecast_path:' + name)
+                continue
+            path = forecast / name
+            if not path.is_file() or path.is_symlink() or digest(path) != expected:
+                errors.append('missing_or_changed_forecast_artifact:' + name)
+            else:
+                forecast_checked += 1
+        from rolling_forecast.experiment import identity as forecast_identity
+        if fm['sources'] != forecast_identity():
+            errors.append('changed_forecast_sources')
     print(json.dumps({
         'scope': 'local_saved_result_inventory_and_file_integrity_only',
         'new_experiments_executed': False,
@@ -59,6 +81,8 @@ def main():
         'results': results,
         'sensitivity_artifact_files_verified': checked,
         'sensitivity_artifact_files_expected': len(manifest['files']),
+        'forecast_artifact_files_verified': forecast_checked,
+        'forecast_artifact_files_expected': forecast_expected,
         'errors': errors,
         'checkout_check_passed': not errors,
     }, ensure_ascii=False, indent=2))

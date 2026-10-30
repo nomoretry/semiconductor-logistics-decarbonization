@@ -19,6 +19,7 @@ from . import __version__
 
 
 COMMANDS = {
+    "rolling-forecast": ("rolling_forecast", "Compare history-only forecasts and replay paired rolling decisions"),
     "optimize": ("scripts.run_experiments", "Run the company-inspired MILP grids"),
     "generate": ("notice_benchmark.data", "Generate synthetic development and test notices"),
     "evaluate": ("notice_benchmark.run_offline", "Evaluate frozen offline notice rules"),
