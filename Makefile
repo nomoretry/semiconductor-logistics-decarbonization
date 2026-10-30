@@ -49,9 +49,14 @@ verify:
 	$(PYTHON) -m scripts.diagnose_query_budget --verify
 	$(CLI) query-bc --verify --output benchmark_results/query_bc_development
 	$(PYTHON) -m scripts.diagnose_query_policy --verify
+	$(PYTHON) -m scripts.verify_training_portable
+	$(CLI) query-study verify-final
+
+# Byte-identical checkpoint hashes require the original numerical dispatch.
+# The default verifier binds those hashes to stored full coefficient arrays.
+verify-strict-training:
 	$(CLI) query-ppo --verify --output benchmark_results/query_ppo_development
 	$(CLI) query-study verify-development
-	$(CLI) query-study verify-final
 
 report:
 	$(CLI) report

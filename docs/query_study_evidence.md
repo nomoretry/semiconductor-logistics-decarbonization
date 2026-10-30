@@ -48,6 +48,21 @@ python -m semiconductor_logistics query-study verify-final
 
 所有命令均为本地数值实验，不调用模型API。程序拒绝覆盖非空输出目录。当前复算重跑全部训练与评测，不支持中断续训；墙钟时间只作诊断。源码身份变化会阻止重放，旧归档应配合产生它的源码提交使用。
 
+### 跨平台训练重放
+
+云端验收出现过一次BLAS分派差异：同一NumPy/SciPy版本下，中间检查点参数的舍入差异改变了SHA256，原严格验证器因此拒绝重放。兼容的另一台云端runner完整通过。这个问题不改变冻结模型、训练轨迹、任务或千题结果。
+
+[检查点配套证据](../benchmark_results/training_replay_checkpoints.json)在原严格重放通过后生成，保存训练日志中每个检查点哈希对应的完整参数，并绑定旧单种子和五种子训练manifest。它是输出后的复现补充，不是重新冻结或新实验。
+
+```bash
+python -m scripts.verify_training_portable
+make verify-strict-training
+```
+
+第一个命令完整重训旧实验和五种子实验。它先按原SHA核验配套参数，再把重新生成的参数按原比较器容差（绝对1e-6、相对1e-10）逐元素比较。只有`checkpoint_sha256`和`bc_start_sha256`这两个字段允许在参数验证成功后存在字节差异；动作、奖励、优化更新、选模、文件覆盖和原归档哈希继续核验。第二个命令保留原字节哈希重放，要求兼容的数值实现。`make ci`使用第一种验证，再执行全部千题重放。
+
+该机制验证数值重现，不承诺所有CPU/BLAS产生完全相同的字节。超过原数值容差、改变动作/选模或缺少可绑定参数时仍失败。最初失败的[云端记录](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/41044133718)保留。
+
 ## English
 
 See the [multi-seed protocol](query_study_protocol.md). Development training, frozen tasks and final results are separate bundles. Newly trained outputs must not replace frozen models.
@@ -92,3 +107,18 @@ python -m semiconductor_logistics query-study verify-final
 ```
 
 All commands run local numerical experiments without model API calls. Nonempty output directories are rejected. Verification reruns all training and evaluation; interrupted-training resume is not implemented. Wall-clock times are diagnostic. Source-identity changes prevent replay, so historical bundles should be used with the source commit that produced them.
+
+### Cross-platform training replay
+
+One cloud check exposed BLAS-dispatch sensitivity: rounding differences in intermediate coefficients changed SHA256 values despite matching NumPy/SciPy versions, so the original strict verifier rejected replay. Another compatible cloud runner passed in full. Frozen models, trajectories, tasks and final results are unchanged.
+
+The [checkpoint companion](../benchmark_results/training_replay_checkpoints.json) was recorded only after the original strict replay passed. It stores full coefficients behind every checkpoint hash in the training logs and binds the old pilot and five-seed training manifests. It is a post-result reproducibility supplement, not a new freeze or experiment.
+
+```bash
+python -m scripts.verify_training_portable
+make verify-strict-training
+```
+
+The first command completely retrains both studies. It verifies companion coefficients against their original SHA identities, then compares regenerated coefficients elementwise with the original comparator (absolute tolerance 1e-6, relative tolerance 1e-10). Only `checkpoint_sha256` and `bc_start_sha256` may differ after bound coefficients pass. Actions, rewards, updates, selection, file coverage and original archive hashes remain checked. The second command retains the original byte-hash replay and requires compatible numerical dispatch. `make ci` uses the first verifier, followed by the complete frozen evaluation replay.
+
+This establishes numerical reproduction, not identical bytes on every CPU/BLAS. Exceeding the original tolerance, changing actions/selection or omitting bound coefficients still fails. The initial [failed cloud run](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/41044133718) remains available.
