@@ -9,7 +9,7 @@ This document is available in Chinese and English; the English version follows t
 
 ## 合并本轮代码
 
-1. 打开仓库的`Pull requests`，进入本轮同起点PPO与双语研究说明的PR。
+1. 打开仓库的`Pull requests`，进入本轮五种子消融与冻结评测的PR。
 2. 查看`Files changed`和实验结果；等待`Python offline checks`成功。
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
@@ -35,7 +35,7 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Merge the current change
 
-1. Open the repository's `Pull requests` and select the shared-start PPO and bilingual-documentation PR.
+1. Open the repository's `Pull requests` and select the multi-seed ablation and frozen-evaluation PR.
 2. Review `Files changed` and the experiment results; wait for `Python offline checks` to succeed.
 3. Click `Merge pull request`, then `Confirm merge`.
 

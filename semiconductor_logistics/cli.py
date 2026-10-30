@@ -34,6 +34,7 @@ COMMANDS = {
     "query-budget": ("budgeted_decision.audit", "Audit planners under the same per-decision MILP call caps"),
     "query-bc": ("query_policy.experiment", "Train and replay the development query-policy BC experiment"),
     "query-ppo": ("query_ppo.experiment", "Train and replay cost-based PPO from the frozen BC checkpoint"),
+    "query-study": ("query_study", "Run paired multi-seed ablations, freeze final tasks and replay final evidence"),
     "notice-facts": ("notice_facts", "Evaluate source quantities without inferring internal routes"),
     "report": ("scripts.create_reports", "Generate Markdown research reports from saved results"),
     "sensitivity": ("scripts.run_sensitivity", "Run the separate assumption sensitivity study"),
