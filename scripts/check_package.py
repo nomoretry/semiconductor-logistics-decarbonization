@@ -18,7 +18,7 @@ import venv
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGES = ("semiconductor_logistics", "notice_benchmark", "real_notice_eval", "decision_benchmark", "shared", "scripts")
+PACKAGES = ("semiconductor_logistics", "notice_benchmark", "real_notice_eval", "decision_benchmark", "coupled_decision", "shared", "scripts")
 
 
 def run(command: list[str], cwd: Path, *, expected: int = 0) -> str:
@@ -58,6 +58,7 @@ def main() -> int:
                            [str(command), "api", "--help"],
                            [str(command), "real-notices", "--help"],
                            [str(command), "decision-audit", "--help"],
+                           [str(command), "coupled-audit", "--help"],
                            [str(command), "generate", "--help"]):
             output = run(invocation, outside)
             if "usage:" not in output:

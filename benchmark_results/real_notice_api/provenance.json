@@ -1,0 +1,22 @@
+{
+  "artifact_id": 12940897713,
+  "artifact_zip_sha256": "8506d4be2008d651ea4b82ea83c32c081c22709e4b0e151e2d6920c51e996253",
+  "claim_limit": "Exploratory abstention audit against assistant references pending human review; all 16 references require clarification; no positive-update extraction evidence.",
+  "original_files_sha256": {
+    "api/estimate.json": "93c9816e178e38eec304a8f5bc24ff1886813b4ef6d199dab18de1fe6ab813f8",
+    "api/inputs.jsonl": "54bc90f358a15a23416d9b05d790156c6d67f74fb39c7401ecb98d5ac66f48ef",
+    "api/ledger-anchor.json": "fc85785c733814f396f0fc658a8283946e3b3a324b860617d6c7187dc1cc5eff",
+    "api/manifest.json": "97ec97abd0b594f2446765553f9da412e23f7a1e4fd39c5576afc54f709345cf",
+    "api/prompt.txt": "fe6aba02e1e7dce233a3e61ae2bf15d82925a842ccfcff6f9cf530d87729167b",
+    "api/records.jsonl": "2f9812d8f4a0817d64ed1be25a9b6ce4f8a3940b258023d3c696f9713ab26619",
+    "api/schema.json": "d5541166515dc4aed1078d1e7d42e1dd5d997a7c268dcd0ea0ae6c26771aa518",
+    "api/summary.json": "ebaea0b27798e898444391a3d220f1fac2dafc2c89ba713dd18cda4f93d5d593",
+    "assessment.json": "34c46dfe1feb52bd1a9cea1377be001fda2c821cb41612acbbe1fca87be618f9",
+    "assessment.md": "95d51e70b26aa79fae8a96713841dee91af924b54129aedad9298b86857e2e64",
+    "input_dataset.json": "c5907d4a1217132492134956282e7235f496d355531656b913222b7d340b724d"
+  },
+  "repository": "nomoretry/semiconductor-logistics-decarbonization",
+  "run_url": "https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40972525977",
+  "source_commit": "f9ffcdfb935f895aa14fbf7fc5d21a197bace3c1",
+  "workflow_run_id": 40972525977
+}

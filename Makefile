@@ -20,6 +20,8 @@ smoke:
 	$(CLI) decision-audit --tasks 3 --output artifacts/smoke/decision
 	$(CLI) decision-audit --verify --output artifacts/smoke/decision
 	$(CLI) real-notices offline --dataset benchmarks/real_notices_v1/dataset.json --output artifacts/smoke/real_notices
+	$(CLI) coupled-audit --contexts 3 --output artifacts/smoke/coupled
+	$(CLI) coupled-audit --verify --output artifacts/smoke/coupled
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -31,6 +33,8 @@ verify:
 	$(CLI) score-api --run benchmark_results/api_smoke
 	$(CLI) compare-api --run benchmark_results/api_test --repeat-run benchmark_results/api_repeat --output artifacts/comparison_replay
 	$(CLI) decision-audit --verify --output benchmark_results/decision_development
+	$(PYTHON) -m scripts.verify_real_notice_archive
+	$(CLI) coupled-audit --verify --output benchmark_results/coupled_development
 
 report:
 	$(CLI) report

@@ -32,4 +32,8 @@ semiconductor-logistics real-notices offline --dataset benchmarks/real_notices_v
 
 固定模型运行使用GitHub Actions的`Real notice audit (manual)`，选择`main`，复用仓库`OPENAI_API_KEY` Secret。16条输入的保守费用预留估算为USD0.01721410，程序预算为USD0.05；该预算不是账户级消费硬限制。
 
-API输入导出与响应复算均有独立命令。工作流在结束后输出参考一致率、始终澄清基线、完成数和错误数；无完成输出时分数为空。目前尚未执行这一批真实摘录的模型调用。
+API输入导出与响应复算均有独立命令。已完成[正式运行](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/40972525977)：16次请求全部完成，错误0，与助手参考一致16/16。始终澄清基线同为16/16；真实更新正例仍为0。
+
+[归档](../../benchmark_results/real_notice_api/provenance.json)保留下载包SHA256、来源提交和11个原始文件的校验值。按声明单价与返回用量计算费用为USD0.00095190，不是账单。模型配置固定，但底层权重版本并未完全固定。无需重跑API，离线执行`python -m scripts.verify_real_notice_archive`即可核对原始响应与评分。
+
+下一版按[真实事实评测协议](../real_fact_protocol.md)补充来源字段抽取；不会修改这批窄任务标签来制造正例。

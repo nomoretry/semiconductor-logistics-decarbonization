@@ -15,9 +15,12 @@
 | 公告抽取 | 固定提示词、JSON Schema、冻结规则和固定模型配置 | 120 条开发文本、400 条合成留出文本 |
 | LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 400 条合成留出文本，主运行与复测均 400/400 |
 | 多步工具环境 | 检查公告、抽取、校验、读取状态、求解、审计和提交 | 200 组开发任务，逐步轨迹与确定性重放 |
+| 共享容量与查询 | 3–4个SKU、空海运分配、联合扰动先验、共用查询预算 | 120组开发情境、6种方法、720条运行及重放 |
 | 结果验证 | 输入与源码哈希、逐条预测复算、物流计划重放 | 离线验证命令与自动测试 |
 
 原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
+
+[多SKU环境](docs/coupled_environment.md)已经加入共享路线容量和查询预算。两步前瞻在当前120个开发情境达到精确规划结果，尚未训练BC/PPO。[研究记录](docs/research_log.md)逐项保存改动与验证，[文献与资料依据](docs/research_basis.md)说明每项资料如何影响设计。
 
 详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
 
@@ -72,7 +75,7 @@ Python 脚本生成 [Markdown 实验报告](reports/study_report.md)、CSV/JSON 
 
 主运行相对冻结规则提高 49.0 个百分点，复测的解析输出全部一致；两轮仍为同一批 400 条案例。逐条结果、分组区间及原始响应见[正式对照](docs/results/api_test.md)，20 条开发样本另存为[连接测试](docs/results/api_smoke.md)。
 
-[真实公告语料](docs/data/real_notices.md)包含 16 份官方公告短摘录，经两次助手审核。它们均缺少直接更新内部 `NL_ocean` 的映射或数值条件，因此目前只能评估是否正确请求澄清。人工复核和真实文本 API 运行仍待完成，不能把这组结果解释为真实更新抽取能力。
+[真实公告语料](docs/data/real_notices.md)包含16份官方运输材料短摘录，经两次助手审核。固定模型已完成16次调用，与助手参考一致率100%，始终澄清基线也是100%。原始记录已归档，人工复核未完成；这组全澄清结果不能证明真实更新抽取能力。[下一版协议](docs/real_fact_protocol.md)将来源事实抽取与内部路线更新分别评测。
 
 ```bash
 semiconductor-logistics evaluate
@@ -82,6 +85,8 @@ semiconductor-logistics workflow-audit --verify
 semiconductor-logistics compare-api --run benchmark_results/api_test --repeat-run benchmark_results/api_repeat
 semiconductor-logistics real-notices offline --dataset benchmarks/real_notices_v1/dataset.json --output artifacts/real_notices
 semiconductor-logistics decision-audit --tasks 200 --output artifacts/decision_audit
+semiconductor-logistics coupled-audit --contexts 120 --output artifacts/coupled_development
+python -m scripts.verify_real_notice_archive
 ```
 
 API 命令默认只估算费用：
@@ -104,6 +109,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `compare-api` | 复算固定模型与冻结规则的成对差值及复测 |
 | `real-notices` | 校验真实语料、运行离线基线、导出输入和复算响应 |
 | `decision-audit` | 检验信息成本、规划选择和强适应性基线 |
+| `coupled-audit` | 检验多SKU共享容量、查询预算、精确规划与前瞻基线 |
 | `workflow-audit` | 运行或重放多步工具任务 |
 | `verify-run` | 校验离线数据、预测、指标和源码身份 |
 | `sensitivity` | 运行参数及排放边界敏感性实验 |
@@ -120,6 +126,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `notice_benchmark/` | 冻结合成公告、规则、API、指标和原工具环境 |
 | `real_notice_eval/` | 真实公告来源校验与探索性评测 |
 | `decision_benchmark/` | 查询成本、物理物流结果与决策基线 |
+| `coupled_decision/` | 多SKU整数分配、共享容量、预算查询及完整重放 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |

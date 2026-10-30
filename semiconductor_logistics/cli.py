@@ -29,6 +29,7 @@ COMMANDS = {
     "compare-api": ("scripts.compare_notice_api", "Compare a verified heldout API run with frozen rules"),
     "real-notices": ("real_notice_eval", "Review and evaluate official notice excerpts"),
     "decision-audit": ("decision_benchmark.audit", "Audit information costs and logistics decisions"),
+    "coupled-audit": ("coupled_decision.audit", "Audit shared freight capacities and information budgets"),
     "report": ("scripts.create_reports", "Generate Markdown research reports from saved results"),
     "sensitivity": ("scripts.run_sensitivity", "Run the separate assumption sensitivity study"),
     "download-data": ("scripts.download_source_data", "Download and hash-check the two public source datasets"),
