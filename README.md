@@ -24,11 +24,14 @@ Two company-inspired case studies share the solver while retaining separate oper
 | Query-policy BC | Public candidate features, multi-positive imitation, validation-based checkpoint selection and policy re-execution | 72/18/36 training/validation/development-evaluation contexts; 2.0833% mean regret with one final MILP per task |
 | Query-policy PPO | Shared BC initialization, cost rewards, GAE, clipped policy/value updates and validation selection | One training seed; 36 new development contexts; BC/PPO mean regret 2.6486%/1.9416% |
 | Five-seed frozen evaluation | Independently trained BC starts; PPO, entropy and GAE-decay ablations; paired seed/context intervals | 1,000 frozen contexts; 27,000 evaluations; BC/PPO regret 3.1179%/3.1477%; no demonstrated stable PPO benefit |
+| Mask and cost-potential audit | Shared BC starts; 2×2 design; train-only frozen potential | Five seeds, 20 PPO runs, 1,332 development evaluations; masking reduces rejection, no stable masked-shaping benefit |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
 The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
 
 The [query-policy BC experiment](docs/query_policy_results.md) is complete at development scale. BC uses one final transport solve per task with 2.0833% mean cost regret; two-step search with a per-decision budget of 13 uses about 16.15 solves per task with 0.3140% regret. BC reduces online solver calls but does not yet match strong search on decision quality. The next [shared-start PPO experiment](docs/query_ppo_results.md) is also complete at development scale: on 36 new contexts, mean regret falls from BC’s 2.6486% to 1.9416%, with one final MILP per path. Six contexts improve and 30 tie; this single-seed result still falls short of strong search. The subsequent [five-seed, frozen 1,000-context evaluation](docs/query_final_results.md) is now complete: BC/PPO mean regret is 3.1179%/3.1477%. The PPO−BC difference is +0.0298 percentage points, with approximate paired 95% interval [−0.1817, +0.2540]. It does not establish a stable PPO benefit. Both strong search baselines remain better on cost; all negative results are retained.
+
+The [component audit](docs/query_components_results.md) is complete on 36 already inspected development contexts. Removing masks raises penalty-inclusive regret from 2.5362% to 4.6288%, with 14.3215% rejection probability. Masked potential shaping yields 2.7956% regret, without a stable benefit. This does not reevaluate or replace the frozen final results.
 
 The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [framework comparison](docs/framework_comparison.md) maps the implementation and remaining gaps against Agentic Tool RL; the [research log](docs/research_log.md) records each change and its evidence.
 
@@ -106,6 +109,7 @@ semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_de
 semiconductor-logistics query-ppo --verify --output benchmark_results/query_ppo_development
 semiconductor-logistics query-study verify-development
 semiconductor-logistics query-study verify-final
+semiconductor-logistics query-components verify
 ```
 
 The API command estimates cost by default:
@@ -157,6 +161,7 @@ All installed commands are also available through `python -m semiconductor_logis
 | `query_policy/` | Public features, NumPy BC, teacher generation and checkpoint-bound verification |
 | `query_ppo/` | Episode-safe GAE, cost-based PPO, validation selection and complete training replay |
 | `query_study/` | Multi-seed training, lossless evidence records, task/model freezing and paired statistics |
+| `query_components/` | Mask/potential factorial, rejection semantics and complete development replay |
 | `asml/`, `marvell/` | Case-study configurations |
 | `benchmarks/` | Frozen notice datasets, rule identities and source records |
 | `benchmark_results/` | Per-case predictions, API responses, tool traces and verification manifests |

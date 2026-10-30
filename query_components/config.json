@@ -1,0 +1,16 @@
+{
+  "schema": "query-components-development-v1",
+  "training_seeds": [17, 29, 43, 71, 97],
+  "variants": {
+    "masked_cost": {"action_mask": true, "shaping": false},
+    "unmasked_cost": {"action_mask": false, "shaping": false},
+    "masked_potential": {"action_mask": true, "shaping": true},
+    "unmasked_potential": {"action_mask": false, "shaping": true}
+  },
+  "invalid_action_penalty": 25.0,
+  "potential_ridge": 0.001,
+  "potential_clip_training_max_multiplier": 2.0,
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 13013,
+  "scope": "reused_development_not_new_final_test"
+}

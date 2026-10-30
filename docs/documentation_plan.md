@@ -11,7 +11,7 @@ This document is available in Chinese and English; the English version follows t
 
 | 文档范围 | 当前安排 | 最终验收 |
 |---|---|---|
-| PPO、多种子与冻结评测协议/结果 | 新增双语正文及复现说明 | 配置、指标和命令一致 |
+| PPO、多种子、冻结评测与组件对照协议/结果 | 新增双语正文及复现说明 | 配置、指标和命令一致 |
 | 优化模型、来源与假设 | 历史中文文档保留；定稿后补英文 | 符号、参数单位和公司启发范围一致 |
 | 文本与真实材料评估 | 历史证据与中文说明保留 | 区分合成、助手参考、未人工复核和内部路线更新限制 |
 | 查询环境、预算、BC 与最终消融 | 定稿后补双语研究说明 | 保留失败门槛和负结果 |
@@ -30,7 +30,7 @@ The repository keeps an English `README.md` and a separate `README.zh-CN.md` wit
 
 | Scope | Current arrangement | Final check |
 |---|---|---|
-| PPO, multi-seed and frozen-evaluation protocols/results | Bilingual text and reproduction notes | Matching settings, metrics and commands |
+| PPO, multi-seed, frozen-evaluation and component protocols/results | Bilingual text and reproduction notes | Matching settings, metrics and commands |
 | Optimization, sources and assumptions | Preserve historical Chinese documents; translate after finalization | Consistent notation, units and company-inspired scope |
 | Text and real-source evaluations | Preserve historical evidence and explanations | Distinguish synthetic data, assistant references, absent human review and internal-route limitations |
 | Query environments, budgets, BC and final ablations | Add bilingual explanations after finalization | Retain failed gates and negative results |
