@@ -30,6 +30,8 @@ COMMANDS = {
     "real-notices": ("real_notice_eval", "Review and evaluate official notice excerpts"),
     "decision-audit": ("decision_benchmark.audit", "Audit information costs and logistics decisions"),
     "coupled-audit": ("coupled_decision.audit", "Audit shared freight capacities and information budgets"),
+    "scale-audit": ("scripts.audit_decision_scale", "Measure MILP and query planning at larger development sizes"),
+    "notice-facts": ("notice_facts", "Evaluate source quantities without inferring internal routes"),
     "report": ("scripts.create_reports", "Generate Markdown research reports from saved results"),
     "sensitivity": ("scripts.run_sensitivity", "Run the separate assumption sensitivity study"),
     "download-data": ("scripts.download_source_data", "Download and hash-check the two public source datasets"),

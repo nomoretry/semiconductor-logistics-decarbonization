@@ -1,0 +1,523 @@
+{
+  "dataset_sha256": "1ae4b8e79810e9615213806e0041689608e8ec0113bc809316f85f5a6c48e97b",
+  "scope": "assistant_reference_agreement_not_human_gold",
+  "live_api_calls": 0,
+  "splits": {
+    "development": {
+      "frozen_rules": {
+        "cases": 16,
+        "completed_outputs": 16,
+        "invalid_outputs": 0,
+        "missing_outputs": 0,
+        "positive_cases": 5,
+        "negative_cases": 11,
+        "exact_match_planned": 1.0,
+        "positive_exact_match": 1.0,
+        "negative_exact_match": 1.0,
+        "fact_precision": 1.0,
+        "fact_recall": 1.0,
+        "tp": 5,
+        "fp": 0,
+        "fn": 0,
+        "evidence_substring_rate": 1.0,
+        "evidence_note": "Substring support is a necessary syntactic check, not semantic entailment or route grounding.",
+        "per_case": [
+          {
+            "id": "dev_real_r001",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r002",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r003",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r004",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r005",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r006",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r007",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r008",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r009",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r010",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r011",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r012",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r013",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r014",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r015",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r016",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        ]
+      },
+      "always_empty": {
+        "cases": 16,
+        "completed_outputs": 16,
+        "invalid_outputs": 0,
+        "missing_outputs": 0,
+        "positive_cases": 5,
+        "negative_cases": 11,
+        "exact_match_planned": 0.6875,
+        "positive_exact_match": 0.0,
+        "negative_exact_match": 1.0,
+        "fact_precision": null,
+        "fact_recall": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 5,
+        "evidence_substring_rate": null,
+        "evidence_note": "Substring support is a necessary syntactic check, not semantic entailment or route grounding.",
+        "per_case": [
+          {
+            "id": "dev_real_r001",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r002",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r003",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r004",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r005",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r006",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r007",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r008",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r009",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "dev_real_r010",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "dev_real_r011",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r012",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r013",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "dev_real_r014",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "dev_real_r015",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "dev_real_r016",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        ]
+      }
+    },
+    "exploratory": {
+      "frozen_rules": {
+        "cases": 8,
+        "completed_outputs": 8,
+        "invalid_outputs": 0,
+        "missing_outputs": 0,
+        "positive_cases": 6,
+        "negative_cases": 2,
+        "exact_match_planned": 0.75,
+        "positive_exact_match": 0.8333333333333334,
+        "negative_exact_match": 0.5,
+        "fact_precision": 0.7777777777777778,
+        "fact_recall": 0.875,
+        "tp": 7,
+        "fp": 2,
+        "fn": 1,
+        "evidence_substring_rate": 1.0,
+        "evidence_note": "Substring support is a necessary syntactic check, not semantic entailment or route grounding.",
+        "per_case": [
+          {
+            "id": "E01",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 1,
+            "fn": 1
+          },
+          {
+            "id": "E02",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E03",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E04",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E05",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 2,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E06",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 1,
+            "fn": 0
+          },
+          {
+            "id": "E07",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E08",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 1,
+            "fp": 0,
+            "fn": 0
+          }
+        ]
+      },
+      "always_empty": {
+        "cases": 8,
+        "completed_outputs": 8,
+        "invalid_outputs": 0,
+        "missing_outputs": 0,
+        "positive_cases": 6,
+        "negative_cases": 2,
+        "exact_match_planned": 0.25,
+        "positive_exact_match": 0.0,
+        "negative_exact_match": 1.0,
+        "fact_precision": null,
+        "fact_recall": 0.0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 8,
+        "evidence_substring_rate": null,
+        "evidence_note": "Substring support is a necessary syntactic check, not semantic entailment or route grounding.",
+        "per_case": [
+          {
+            "id": "E01",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "E02",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "E03",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          {
+            "id": "E04",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          },
+          {
+            "id": "E05",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 2
+          },
+          {
+            "id": "E06",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E07",
+            "valid": true,
+            "present": true,
+            "exact": true,
+            "tp": 0,
+            "fp": 0,
+            "fn": 0
+          },
+          {
+            "id": "E08",
+            "valid": true,
+            "present": true,
+            "exact": false,
+            "tp": 0,
+            "fp": 0,
+            "fn": 1
+          }
+        ]
+      }
+    }
+  }
+}
