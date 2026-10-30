@@ -1,0 +1,116 @@
+{
+  "repository": "Iams4kura/agentic-tool-rl",
+  "commit": "f5357240e66e969a50fe0be126a65c95f77d9e44",
+  "release_reviewed": "v0.1.0",
+  "scope": "Framework review of documentation and core implementations; not independent reproduction of the reference's training or release.",
+  "files": [
+    {
+      "path": "README.md",
+      "blob_sha": "6fdbe2a09715219fe9cb8942a9006889286a3964",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/README.md",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "docs/architecture.md",
+      "blob_sha": "8d12afc01f8faccec336859096a24abe2d131557",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/docs/architecture.md",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "docs/methodology.md",
+      "blob_sha": "5ce776e6aa5c1e975c9487d35ceac17723c3b084",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/docs/methodology.md",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "docs/results/posthoc-v1.3-public-ready.md",
+      "blob_sha": "7024b275f73da9ae2bc2513c3b4b7b59497b2238",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/docs/results/posthoc-v1.3-public-ready.md",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "docs/protocol/benchmark-v1.4-development.md",
+      "blob_sha": "12fd3618ee8b399f05015bc47cc241f41b500b10",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/docs/protocol/benchmark-v1.4-development.md",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/algorithms/bc.py",
+      "blob_sha": "a4da0b1a1b77fd875f7f62c02c3c1ef9bb04be3d",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/algorithms/bc.py",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/algorithms/ppo.py",
+      "blob_sha": "8a95b47f88d9a8ac19dcd86b2f1832ffe189fc93",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/algorithms/ppo.py",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/algorithms/gae.py",
+      "blob_sha": "0080ac67f5ab6110ad5f70021fc30007c83c7b1b",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/algorithms/gae.py",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/policy_input.py",
+      "blob_sha": "90b2164adc0748385f3bed7b1cb5c8b4868ee892",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/policy_input.py",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/models/actor_critic.py",
+      "blob_sha": "1f746560815d73d8b34c8b34baa0838c3466bad2",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/models/actor_critic.py",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "src/agentic_tool_rl/evaluation/integrity.py",
+      "blob_sha": "0305ba10bbd0e05d0120ca76a61a4f88129f754b",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/evaluation/integrity.py",
+      "extent": "structure_and_selected_sections"
+    },
+    {
+      "path": "src/agentic_tool_rl/evaluation/trace_store.py",
+      "blob_sha": "16f1dded05f5b4a59a323e54ccd35ced575ec7cc",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/evaluation/trace_store.py",
+      "extent": "structure_and_selected_sections"
+    },
+    {
+      "path": "src/agentic_tool_rl/tools/registry.py",
+      "blob_sha": "09f62a6a4da5c08a5aa022c5870b1f08a2e0789c",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/tools/registry.py",
+      "extent": "structure_and_selected_sections"
+    },
+    {
+      "path": "src/agentic_tool_rl/training.py",
+      "blob_sha": "85659b14e8d01bb87e898e1ebf2ff6af94ee7643",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/training.py",
+      "extent": "structure_and_selected_sections"
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "blob_sha": "c05a8df6f71ef836c273239a0ddf93d18125e9b4",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/.github/workflows/ci.yml",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "pyproject.toml",
+      "blob_sha": "7fd6a805262b45018a3ee4443d06d80b6e644f0e",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/pyproject.toml",
+      "extent": "document_or_core_module"
+    },
+    {
+      "path": "scripts/check_distribution.py",
+      "blob_sha": "a7177d2866d5b5a5e3099d9ec1ccaf3e7cd1234b",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/scripts/check_distribution.py",
+      "extent": "structure_and_selected_sections"
+    },
+    {
+      "path": "src/agentic_tool_rl/envs/benchmark_v14.py",
+      "blob_sha": "080397df6b4504c7c412974a8040e9a4dd06dc6f",
+      "url": "https://github.com/Iams4kura/agentic-tool-rl/blob/f5357240e66e969a50fe0be126a65c95f77d9e44/src/agentic_tool_rl/envs/benchmark_v14.py",
+      "extent": "structure_and_selected_sections"
+    }
+  ]
+}
