@@ -7,9 +7,13 @@ This document is available in Chinese and English; the English version follows t
 
 当前不需要填写人工意见、重新运行API、发送密钥或租用GPU。8条真实数量抽取和16条真实澄清审核均已完成并归档。
 
+## 本轮先批准归档，暂不合并
+
+本地实验已完成，但自动审批要求明确批准4份纯合成证据文件的公开上传，见[文件清单](rolling_sensitivity_publication.md)。当前PR保持草稿；批准后由助手补齐文件、检查CI，再按下述步骤合并。
+
 ## 合并本轮代码
 
-1. 打开仓库的`Pull requests`，进入本轮未知需求滚动环境与基线的PR。
+1. 打开仓库的`Pull requests`，进入本轮碳分配、期末库存价值和情景数量敏感性实验的PR。
 2. 查看`Files changed`和实验结果；等待`Python offline checks`成功。
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
@@ -33,9 +37,13 @@ This document is available in Chinese and English; the English version follows t
 
 No human-review form, API rerun, key transfer or rented GPU is required. The eight real-quantity cases and 16 real-notice clarification cases are already archived.
 
+### Approve the archive first; do not merge yet
+
+The local experiment is complete, but automatic approval review requires explicit approval to publish four synthetic evidence files. See the [exact file list](rolling_sensitivity_publication.md). The PR remains a draft; after approval, the assistant must upload them and check CI before the following merge steps.
+
 ### Merge the current change
 
-1. Open the repository's `Pull requests` and select the unknown-demand rolling inventory baseline PR.
+1. Open the repository's `Pull requests` and select the rolling carbon/value/scenario sensitivity PR.
 2. Review `Files changed` and the experiment results; wait for `Python offline checks` to succeed.
 3. Click `Merge pull request`, then `Confirm merge`.
 

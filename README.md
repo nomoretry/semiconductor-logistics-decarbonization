@@ -25,6 +25,7 @@ Two company-inspired case studies share the solver while retaining separate oper
 | Query-policy PPO | Shared BC initialization, cost rewards, GAE, clipped policy/value updates and validation selection | One training seed; 36 new development contexts; BC/PPO mean regret 2.6486%/1.9416% |
 | Five-seed frozen evaluation | Independently trained BC starts; PPO, entropy and GAE-decay ablations; paired seed/context intervals | 1,000 frozen contexts; 27,000 evaluations; BC/PPO regret 3.1179%/3.1477%; no demonstrated stable PPO benefit |
 | Mask and cost-potential audit | Shared BC starts; 2×2 design; train-only frozen potential | Five seeds, 20 PPO runs, 1,332 development evaluations; masking reduces rejection, no stable masked-shaping benefit |
+| Rolling sensitivity | Carbon pacing, final-stock credit and 1/7/21 scenarios | 24 new paths, three sampling seeds, 2,304 trajectories; 21 vs seven scenarios has no consistent seed-level benefit |
 | Unknown-demand rolling inventory | Dated pipeline, history-only forecasts, shared capacities and cumulative carbon | 12 calibration + 32 development paths; four baselines; scenario MPC improves cost/service with higher emissions |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
@@ -41,6 +42,10 @@ The failed screening result from the [equal-budget experiment](docs/query_budget
 The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archived: model outputs agree with assistant references on 7/8 cases, compared with 6/8 for frozen rules. These results remain exploratory and have not undergone independent human review. They do not block environment research or require another API run. Any necessary user actions are listed in the [manual steps](docs/manual_steps.md).
 
 See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). New detailed research documents provide Chinese first and English afterward. Historical pages will receive complete English explanations at final delivery; see the [documentation plan](docs/documentation_plan.md).
+
+**Draft archive status:** Four sensitivity trace/timing files await explicit public-upload approval. [File identities and status](docs/rolling_sensitivity_publication.md). Do not merge this draft until the bundle and CI are complete.
+
+The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. Rolling BC/PPO is deferred pending forecast and same-information teacher validation.
 
 ## Quick start
 
@@ -114,6 +119,7 @@ semiconductor-logistics query-study verify-development
 semiconductor-logistics query-study verify-final
 semiconductor-logistics query-components verify
 semiconductor-logistics rolling-inventory verify
+semiconductor-logistics rolling-sensitivity verify
 ```
 
 The API command estimates cost by default:
@@ -143,6 +149,8 @@ Live calls use a manual GitHub Actions workflow and a repository Secret. The `sm
 | `query-bc` | Generate query teachers, train BC, compare strong search and re-execute checkpoints |
 | `query-ppo` | Train PPO from the frozen BC actor and replay trajectories, updates and checkpoints |
 | `query-study` | Retrain paired seeds, run ablations, freeze new tasks and verify the final study |
+| `rolling-inventory` | Run and replay history-based inventory planning under unknown demand |
+| `rolling-sensitivity` | Quantify carbon allocation, final-stock value and scenario count; replay all factorial trajectories |
 | `workflow-audit` | Run or replay multi-step tool tasks |
 | `verify-run` | Verify offline data, predictions, metrics and source identity |
 | `sensitivity` | Run parameter and emissions-boundary sensitivity experiments |
@@ -165,6 +173,7 @@ All installed commands are also available through `python -m semiconductor_logis
 | `query_policy/` | Public features, NumPy BC, teacher generation and checkpoint-bound verification |
 | `query_ppo/` | Episode-safe GAE, cost-based PPO, validation selection and complete training replay |
 | `query_study/` | Multi-seed training, lossless evidence records, task/model freezing and paired statistics |
+| `rolling_inventory/`, `rolling_sensitivity/` | Unknown-demand inventory simulation, baseline planning and sensitivity replay |
 | `query_components/` | Mask/potential factorial, rejection semantics and complete development replay |
 | `asml/`, `marvell/` | Case-study configurations |
 | `benchmarks/` | Frozen notice datasets, rule identities and source records |
@@ -177,4 +186,4 @@ All installed commands are also available through `python -m semiconductor_logis
 
 Orders, prices, shipment weights, capacities and storage parameters are simulation assumptions. Emission factors, route geometry and demand analogues have recorded sources and checksums. See the [ASML data audit](data_sources/data_audit_asml.md), [Marvell data audit](data_sources/data_audit_marvell.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
 
-The base optimization uses known committed orders and announced disruptions. The query-policy experiments add uncertain route states with disclosed priors while retaining known orders. Results compare policies under these simulation assumptions; they are not measurements of company operations or emissions reductions, and they do not establish broad LLM generalization. Unknown demand, forecast error and rolling decisions have not yet been implemented.
+The base optimization uses known committed orders and announced disruptions. The query-policy experiments add uncertain route states with disclosed priors while retaining known orders. Results compare policies under these simulation assumptions; they are not measurements of company operations or emissions reductions, and they do not establish broad LLM generalization. A separate rolling environment now studies unknown demand, forecast error and pipeline evolution; these results are kept separate from the original known-order experiments.

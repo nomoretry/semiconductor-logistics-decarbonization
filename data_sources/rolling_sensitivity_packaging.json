@@ -1,0 +1,27 @@
+{
+  "files": [
+    {
+      "byte_identical_after_decompression": true,
+      "compressed_bytes": 37782,
+      "compressed_sha256": "5ad908b769bbcc3fbaa50b37653d311cf507c5d49785bdeb899ebe8ea1501e83",
+      "new_path": "benchmark_results/rolling_sensitivity_development/outcomes.jsonl.gz",
+      "old_path": "benchmark_results/rolling_sensitivity_development/outcomes.jsonl",
+      "raw_bytes": 1184748,
+      "uncompressed_sha256": "2fda7b3826d967032a956bc4c42c27d26b7910b5cec172bd580973a4d2854c7c"
+    },
+    {
+      "byte_identical_after_decompression": true,
+      "compressed_bytes": 263584,
+      "compressed_sha256": "fe7698ad698fff44a7b8e4c4118e6b39e707006b36357d3a40db122181165d63",
+      "new_path": "benchmark_results/rolling_sensitivity_development/timing.jsonl.gz",
+      "old_path": "benchmark_results/rolling_sensitivity_development/timing.jsonl",
+      "raw_bytes": 1111506,
+      "uncompressed_sha256": "35751658af557cda572169516129d6505fa83ef2043feca1938b6a98a6e54313"
+    }
+  ],
+  "new_experiment_source_sha256": "ca948931b6958f347dc3c801920864ea61780bf1e0e8e08992b06fe53940889f",
+  "numerical_settings_or_results_changed": false,
+  "old_experiment_source_sha256": "7352711b93fae9588a0ca3c07416f6e4cd49f51cec4144bc3f00579681763588",
+  "original_manifest_sha256": "d1ba3064242e99a26b6741d02b98a0acfcf7b33cabdd8d30fc1509257f4eb682",
+  "reason": "lossless_packaging_after_large_text_upload_did_not_complete"
+}
