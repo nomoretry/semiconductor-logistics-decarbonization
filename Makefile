@@ -51,6 +51,7 @@ verify:
 	$(PYTHON) -m scripts.diagnose_query_policy --verify
 	$(CLI) query-ppo --verify --output benchmark_results/query_ppo_development
 	$(CLI) query-study verify-development
+	$(CLI) query-study verify-final
 
 report:
 	$(CLI) report
