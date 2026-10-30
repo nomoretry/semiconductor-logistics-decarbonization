@@ -1,12 +1,14 @@
 # 需要你操作的部分
 
-代码、离线实验、测试和证据复算由研究仓库提供。现在需要你完成仓库合并、新任务的手动API运行，以及来源标签审核；不需要在本地安装Python，也不用重新发送API密钥。
+PR #6合并和8条真实数量API运行已完成，[原始结果](results/notice_facts_api.md)已复算。现在需要你审核E01–E08；不用重新运行API，不需要在本地安装Python，也不用重新发送API密钥。
 
-## 1. 合并本轮PR
+## 1. 保存归档更新
 
-打开仓库的`Pull requests`，进入标题包含“真实数量抽取与查询规模审计”的PR。查看`Files changed`和检查结果；`Python offline checks`成功后，点击`Merge pull request` → `Confirm merge`。合并后新的手动工作流才会出现在main。
+打开仓库的`Pull requests`，进入标题包含“归档真实数量评测”的PR。查看`Files changed`和检查结果；`Python offline checks`成功后，点击`Merge pull request` → `Confirm merge`。本次只归档已有结果，不触发模型调用。人工审核可以在合并前进行。
 
-## 2. 运行新的8条真实数量评测
+## 2. 已完成的运行与复现入口
+
+本次运行[41017440309](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/41017440309)已经成功：8次完成、0错误；模型7/8、冻结规则6/8与当前参考一致。以下是保留的复现步骤，现在无需再做。
 
 1. 打开仓库`Actions`。
 2. 左侧选择 **Real fact extraction (manual)**。不要选择已完成的`Notice API evaluation`或`Real notice audit`。

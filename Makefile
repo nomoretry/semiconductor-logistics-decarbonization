@@ -38,6 +38,7 @@ verify:
 	$(CLI) compare-api --run benchmark_results/api_test --repeat-run benchmark_results/api_repeat --output artifacts/comparison_replay
 	$(CLI) decision-audit --verify --output benchmark_results/decision_development
 	$(PYTHON) -m scripts.verify_real_notice_archive
+	$(PYTHON) -m scripts.verify_notice_facts_archive
 	$(CLI) coupled-audit --verify --output benchmark_results/coupled_development
 	$(CLI) scale-audit --verify --output benchmark_results/decision_scale
 
