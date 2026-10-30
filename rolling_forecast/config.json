@@ -1,0 +1,16 @@
+{
+  "schema": "rolling-forecast-development-v1",
+  "calibration_seeds": [3001, 3109, 3203],
+  "development_seeds": [4001, 4103, 4201, 4303, 4409, 4507, 4603, 4703],
+  "fast_alpha_candidates": [0.55, 0.7, 0.85],
+  "window_candidates": [2, 4, 6],
+  "sampler_seeds": [901337, 902347, 903359],
+  "scenarios": 7,
+  "horizon": 6,
+  "allocation": "uniform",
+  "terminal_fraction": 0.0,
+  "base_stock_z": 1.0,
+  "bootstrap_seed": 81173,
+  "bootstrap_replicates": 2000,
+  "scope": "new_synthetic_development_paths_not_final_test"
+}
