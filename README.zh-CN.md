@@ -24,11 +24,14 @@
 | 查询策略BC | 公开候选特征、多正例模仿、验证集选模、检查点重执行 | 72/18/36个训练/验证/开发评估情境；BC平均遗憾2.0833%，每任务一次最终MILP |
 | 查询策略PPO | 同一BC起点、成本奖励、GAE、策略/价值裁剪与验证选模 | 1训练种子、36个新开发情境；BC/PPO平均遗憾2.6486%/1.9416% |
 | 五种子冻结评测 | 独立训练BC起点；PPO、熵项和GAE衰减消融；种子/情境配对区间 | 1,000冻结情境、27,000评估；BC/PPO遗憾3.1179%/3.1477%，未证实稳定PPO增益 |
+| 掩码与成本势函数 | 同一BC起点、2×2设计、仅训练集拟合并冻结势函数 | 五种子、20组PPO、1,332开发评估；去掩码增加拒绝，有掩码时塑形未见稳定收益 |
 | 结果验证 | 输入与源码哈希、逐条预测复算、物流计划与训练重放 | 离线验证命令与自动测试 |
 
 原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
 
 [查询策略BC](docs/query_policy_results.md)已完成训练与开发评估：只用一次最终运输求解，平均成本遗憾2.0833%；预算13的两步搜索约需16.15次求解，遗憾0.3140%。模型降低了在线求解量，但尚未达到强搜索的决策质量。随后完成了[同起点PPO开发实验](docs/query_ppo_results.md)：36个新情境上，平均遗憾从BC的2.6486%降到1.9416%，每条路径仍只需一次最终MILP。6个情境改善、30个持平；单种子结果仍未达到强搜索质量。随后完成[五种子、冻结千题评测](docs/query_final_results.md)：BC/PPO平均遗憾3.1179%/3.1477%，PPO−BC差值+0.0298个百分点，近似95%配对区间[−0.1817,+0.2540]，未证实稳定PPO增益。两种强搜索的成本仍更低，负结果完整保留。
+
+[组件对照](docs/query_components_results.md)已完成：在36个已查看开发情境上，去掩码使含拒绝惩罚的遗憾从2.5362%升至4.6288%，拒绝概率14.3215%；有掩码时成本势函数为2.7956%，未见稳定收益。本轮不重评或改写千题结果。
 
 [同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[框架对照](docs/framework_comparison.md)逐项说明与Agentic Tool RL的结构对应和剩余工作；[研究记录](docs/research_log.md)保存每轮实现与证据。
 
@@ -106,6 +109,7 @@ semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_de
 semiconductor-logistics query-ppo --verify --output benchmark_results/query_ppo_development
 semiconductor-logistics query-study verify-development
 semiconductor-logistics query-study verify-final
+semiconductor-logistics query-components verify
 ```
 
 API 命令默认只估算费用：
@@ -157,6 +161,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `query_policy/` | 公开特征、NumPy BC、教师生成和检查点绑定验证 |
 | `query_ppo/` | 轨迹隔离GAE、成本PPO、验证选模与完整训练复算 |
 | `query_study/` | 多种子训练、无损证据、任务/模型冻结及配对统计 |
+| `query_components/` | 掩码与成本势函数对照、拒绝语义、完整开发训练重放 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |
