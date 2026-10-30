@@ -9,7 +9,7 @@ This document is available in Chinese and English; the English version follows t
 
 ## 本轮先批准归档，暂不合并
 
-本地实验已完成，但自动审批要求明确批准4份纯合成证据文件的公开上传，见[文件清单](rolling_sensitivity_publication.md)。当前PR保持草稿；批准后由助手补齐文件、检查CI，再按下述步骤合并。
+本地实验已完成，但自动审批要求明确批准3份纯合成证据文件的公开上传，见[文件清单](rolling_sensitivity_publication.md)。当前PR保持草稿；批准后由助手补齐文件、检查CI，再按下述步骤合并。
 
 ## 合并本轮代码
 
@@ -18,6 +18,10 @@ This document is available in Chinese and English; the English version follows t
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
 普通CI会运行本地合成实验、重新训练小型BC/PPO并复算已保存的证据，不调用OpenAI API。没有额外的手动Actions任务需要启动。
+
+## 自查实验进度
+
+在仓库目录运行`python -m scripts.check_research_progress`。这会核对保存的计数、文件和源码身份，不启动训练或API调用；完整实验重执行另用`make verify-sensitivity`。
 
 ## 人工意见的处理
 
@@ -39,7 +43,7 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Approve the archive first; do not merge yet
 
-The local experiment is complete, but automatic approval review requires explicit approval to publish four synthetic evidence files. See the [exact file list](rolling_sensitivity_publication.md). The PR remains a draft; after approval, the assistant must upload them and check CI before the following merge steps.
+The local experiment is complete, but automatic approval review requires explicit approval to publish three synthetic evidence files. See the [exact file list](rolling_sensitivity_publication.md). The PR remains a draft; after approval, the assistant must upload them and check CI before the following merge steps.
 
 ### Merge the current change
 
@@ -48,6 +52,10 @@ The local experiment is complete, but automatic approval review requires explici
 3. Click `Merge pull request`, then `Confirm merge`.
 
 CI runs local synthetic experiments, retrains the small BC/PPO policies and verifies saved evidence. It makes no OpenAI API calls, and there is no additional manual Actions workflow to start.
+
+### Check saved progress
+
+Run `python -m scripts.check_research_progress` from the checkout. It checks saved counts, files and source identity without training or API calls. Use `make verify-sensitivity` for full reexecution.
 
 ### Human review
 

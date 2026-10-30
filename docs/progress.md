@@ -49,4 +49,14 @@
 
 新增[敏感性协议](rolling_sensitivity_protocol.md)、[双语结果](rolling_sensitivity_results.md)及[全组合证据](../benchmark_results/rolling_sensitivity_development)。24条不同路径、3个采样重复、2,304轨迹，不能称为72条独立路径。
 
-**公开归档待补齐：**本地敏感性实验和重执行已通过；自动审批要求对4份纯合成文件明确批准，当前草稿PR暂不合并，详见[状态](rolling_sensitivity_publication.md)。
+**公开归档待补齐：**本地敏感性实验和重执行已通过；自动审批要求对3份纯合成文件明确批准，当前草稿PR暂不合并，详见[状态](rolling_sensitivity_publication.md)。
+
+## 进度核查与下一步
+
+运行 `python -m scripts.check_research_progress` 可核对已保存实验计数、15份敏感性归档的摘要和源码身份。它不会重新训练或调用API，也不代表已检查远端CI。缺文件返回失败；完整策略重执行仍使用 `make verify-sensitivity`。
+
+本轮确认GitHub连接正常、PR #15尚未合并；已补交traces-05。此前CI的敏感性失败为`artifact_coverage`，另三份文件仍待明确上传批准。调整CI为主分支Push及PR触发，避免同一分支提交重复运行两套验收；五项检查均保留。
+
+下一研究项见[预测与同信息基线计划](rolling_forecast_plan.md)，目前仅完成设计说明，尚未执行新的预测实验或滚动策略训练。
+
+已核对提交`eafab85`的[远端检查](https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/41121901750)：offline、component-study、rolling-study、frozen-final四项成功；sensitivity-study因缺归档文件失败。后续提交须使用自己的CI结果验收，不沿用旧提交的成功状态。

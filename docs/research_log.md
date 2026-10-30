@@ -37,6 +37,8 @@
 
 | R25 | 碳分配、期末库存价值和情景数是否改变滚动结论 | [事前协议](rolling_sensitivity_protocol.md)、[双语结果](rolling_sensitivity_results.md)、[全组合证据](../benchmark_results/rolling_sensitivity_development)；24条新路径、3采样种子、2,304轨迹、27,648期 | 碳分配影响小；ρ=0.9净成本−13.5955中记账−15.2656、行为+1.6701；7→21情景成本−0.36%但方向跨种子不稳，暂不训练滚动BC/PPO |
 
+| R26 | 自查执行进度并恢复GitHub同步 | [进度核查命令](../scripts/check_research_progress.py)核对15/15本地文件及源码；远端缺归档错误已定位；补交traces-05并保留剩余三份审批状态 | 新增[预测研究计划](rolling_forecast_plan.md)，未新增实验结果；CI仅主分支Push和PR触发，保留五项检查 |
+
 ## 本轮检查与下一项
 
 BC的15项学习验证保留。此前281项测试保留；本轮新增9项统计与冻结验证，共290项测试（另新增6项跨平台验证测试后为296项）。PPO新增13项测试覆盖clipped policy/value有限差分、终态GAE隔离、实际成本反馈、共享BC起点、真实更新、划分隔离和重算哈希后的篡改拒绝。CI继续重放旧证据，并新增PPO完整采样/重训、180条策略评估及打包检查。
