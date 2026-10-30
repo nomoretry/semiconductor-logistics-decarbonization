@@ -1,40 +1,42 @@
 # Semiconductor Logistics Decarbonization
 
+English | [简体中文](README.zh-CN.md)
+
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
 
-面向半导体备件与成品物流的库存—运输联合优化框架。使用 SciPy/HiGHS 求解带交付、运输容量和碳预算约束的整数规划；提供固定 LLM 公告抽取评测、多步工具环境、查询策略行为克隆（BC）和结果复算。
+A research framework for joint inventory and transport optimization in semiconductor spare-parts and finished-goods logistics. It uses SciPy/HiGHS to solve mixed-integer models with delivery, transport-capacity and carbon-budget constraints, and includes fixed-configuration LLM notice extraction, multi-step tool environments, query-policy behavior cloning (BC), and reproducible evaluation.
 
-两个案例共享求解器，分别保留业务约束：[ASML 备件物流](asml/README.md)与 [Marvell 成品物流](marvell/README.md)。
+Two company-inspired case studies share the solver while retaining separate operating assumptions: [ASML spare-parts logistics](asml/README.md) and [Marvell finished-goods logistics](marvell/README.md).
 
-## 设计与实验
+## Design and experiments
 
-| 模块 | 实现 | 实验与输出 |
+| Module | Implementation | Experiments and evidence |
 |---|---|---|
-| 库存与运输 | 整数发货、在途库存、到仓库存、积压守恒 | 60 份合成订单实例、360 次策略求解 |
-| 成本与碳预算 | 运费、资金占用、仓储成本和物流排放；三档碳约束 | 成本—排放对照、339 份可行计划、不可行实例 |
-| 公告抽取 | 固定提示词、JSON Schema、冻结规则和固定模型配置 | 120 条开发文本、400 条合成留出文本 |
-| LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 400 条合成留出文本，主运行与复测均 400/400 |
-| 多步工具环境 | 检查公告、抽取、校验、读取状态、求解、审计和提交 | 200 组开发任务，逐步轨迹与确定性重放 |
-| 共享容量与查询 | 3–4个SKU、空海运分配、联合扰动先验、共用查询预算 | 120组开发情境、6种方法、720条运行及重放 |
-| 真实数量抽取 | 总时长/增减量、原单位、区间与限定语、原文证据 | 16条开发、8份新来源；模型7/8、规则6/8，未进行人工复核 |
-| 查询规模审计 | 4–12个SKU、2–6个扰动、跨路线容量池、整数规划 | 18个开发任务、72条运行；单步/两步平均成本差距0.5378%/0.0811% |
-| 同计算预算对照 | 每次决策MILP限额、中断回退、分支缓存隔离、完整路径记账 | 54个开发情境、1,080条运行；主预算最强方法平均差距0.6253%，尾部15.9217% |
-| 查询策略BC | 公开候选特征、多正例模仿、验证集选模、检查点重执行 | 72/18/36个训练/验证/开发评估情境；BC平均遗憾2.0833%，每任务一次最终MILP |
-| 结果验证 | 输入与源码哈希、逐条预测复算、物流计划与训练重放 | 离线验证命令与自动测试 |
+| Inventory and transport | Integer shipments; conservation of in-transit inventory, on-hand inventory and backlog | 60 synthetic order instances; 360 policy solves |
+| Cost and carbon budgets | Freight, capital, storage and logistics emissions; three carbon-budget settings | Cost–emissions comparisons; 339 feasible plans and recorded infeasible cases |
+| Notice extraction | Fixed prompts, JSON Schema, frozen rules and fixed model settings | 120 development texts; 400 synthetic held-out texts |
+| LLM API evaluation | Responses API, request budgets, caching and raw response records | 400/400 on both the main run and a repeat of the same 400 cases |
+| Multi-step tool environment | Inspect notices, extract and validate facts, read state, solve, audit and commit | 200 development tasks with step-level traces and deterministic replay |
+| Shared capacity and queries | 3–4 SKUs, air/ocean allocation, joint disruption priors and a shared query budget | 120 development contexts; six methods; 720 runs and replay |
+| Real-source quantity extraction | Transit durations and changes, original units, ranges, qualifiers and supporting text | 16 development excerpts; eight new source documents; model 7/8 and rules 6/8 against assistant references; no human review |
+| Query-planning scale study | 4–12 SKUs, 2–6 disruptions, a shared capacity pool across routes and integer allocation | 18 development tasks; 72 runs; one-step/two-step mean cost gaps of 0.5378%/0.0811% |
+| Equal computation budgets | Per-decision MILP limits, interruption fallback, branch-local caches and full-path accounting | 54 development contexts; 1,080 runs; best method at the primary budget: 0.6253% mean regret and 15.9217% worst-case regret |
+| Query-policy BC | Public candidate features, multi-positive imitation, validation-based checkpoint selection and policy re-execution | 72/18/36 training/validation/development-evaluation contexts; 2.0833% mean regret with one final MILP per task |
+| Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
-原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
+The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
 
-[查询策略BC](docs/query_policy_results.md)已完成训练与开发评估：只用一次最终运输求解，平均成本遗憾2.0833%；预算13的两步搜索约需16.15次求解，遗憾0.3140%。模型降低了在线求解量，但尚未达到强搜索的决策质量。PPO与正式千题评测仍未完成。
+The [query-policy BC experiment](docs/query_policy_results.md) is complete at development scale. BC uses one final transport solve per task with 2.0833% mean cost regret; two-step search with a per-decision budget of 13 uses about 16.15 solves per task with 0.3140% regret. BC reduces online solver calls but does not yet match strong search on decision quality. PPO and the final 1,000-task evaluation remain unfinished.
 
-[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[框架对照](docs/framework_comparison.md)逐项说明与Agentic Tool RL的结构对应和剩余工作；[研究记录](docs/research_log.md)保存每轮实现与证据。
+The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [framework comparison](docs/framework_comparison.md) maps the implementation and remaining gaps against Agentic Tool RL; the [research log](docs/research_log.md) records each change and its evidence.
 
-[真实数量评测](docs/results/notice_facts_api.md)已归档：模型7/8、规则6/8与助手参考一致。维护者选择不填写人工意见，结果保留为未进行人工复核的探索证据，不阻塞环境研究，也不重复调用API。需要手动操作的内容见[操作说明](docs/manual_steps.md)。
+The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archived: model outputs agree with assistant references on 7/8 cases, compared with 6/8 for frozen rules. These results remain exploratory and have not undergone independent human review. They do not block environment research or require another API run. Any necessary user actions are listed in the [manual steps](docs/manual_steps.md).
 
-详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
+See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). The detailed documentation and case-study pages are currently in Chinese.
 
-## 快速开始
+## Quick start
 
-推荐 Python 3.12。`constraints.txt` 固定已验证的数值计算依赖，供实验重放与 CI 使用。
+Python 3.12 is recommended. `constraints.txt` pins the numerical dependencies used for validation, replay and CI.
 
 ```bash
 git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
@@ -44,7 +46,7 @@ make test
 make smoke
 ```
 
-Windows 没有 Make 时可直接使用 Python：
+On Windows without Make, use the Python entry points:
 
 ```bash
 python -m unittest discover -s tests
@@ -53,9 +55,9 @@ python -m semiconductor_logistics evaluate --output artifacts/rules
 python -m semiconductor_logistics verify-run --output artifacts/rules
 ```
 
-默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境和重放校验。
+Default checks use local synthetic data and do not call the API. `make smoke` exercises rule evaluation, tool environments, a small BC training run and replay verification.
 
-## 运行优化实验
+## Optimization experiments
 
 ```bash
 semiconductor-logistics download-data
@@ -66,24 +68,24 @@ semiconductor-logistics sensitivity --project both
 semiconductor-logistics report
 ```
 
-`download-data` 根据来源清单下载并校验第三方原始文件。完整优化实验包含外部汽车备件月度需求压力测试，因此需先下载数据。主实验会写入 `reports/`；单独运行一个案例会替换该目录的主实验汇总。公开仓库中的合成明细与外部压力测试汇总范围见[数据与评测](docs/benchmark.md)。
+`download-data` downloads and verifies third-party source files against the source manifest. The full optimization grid includes an external automotive spare-parts monthly-demand stress test, so its source data must be downloaded first. Main experiments write to `reports/`; running a single case study also replaces the main summaries in that directory. See [data and benchmarks](docs/benchmark.md) for the scope of the published synthetic records and external stress-test summaries.
 
-Python 脚本生成 [Markdown 实验报告](reports/study_report.md)、CSV/JSON 结果和 Matplotlib 图表。
+Python scripts produce the [Markdown study report](reports/study_report.md), CSV/JSON results and Matplotlib figures.
 
-## 公告抽取评测
+## Notice extraction evaluation
 
-| 方法 | 数据划分 | 文本数 | 整条公告抽取正确率 |
+| Method | Split | Texts | Whole-notice extraction accuracy |
 |---|---|---:|---:|
-| 冻结规则 | 开发集 | 120 | 100% |
-| 冻结规则 | 合成留出集 | 400 | 51.0%（204/400） |
-| 总是请求澄清 | 合成留出集 | 400 | 44.0% |
-| 忽略公告 | 合成留出集 | 400 | 16.5% |
-| GPT-6 Luna | 合成留出集，主运行 | 400 | 100%（400/400） |
-| GPT-6 Luna | 同一留出集复测 | 400 | 100%（400/400） |
+| Frozen rules | Development | 120 | 100% |
+| Frozen rules | Synthetic held-out | 400 | 51.0% (204/400) |
+| Always clarify | Synthetic held-out | 400 | 44.0% |
+| Ignore notice | Synthetic held-out | 400 | 16.5% |
+| GPT-6 Luna | Synthetic held-out, main run | 400 | 100% (400/400) |
+| GPT-6 Luna | Repeat of the same held-out set | 400 | 100% (400/400) |
 
-主运行相对冻结规则提高 49.0 个百分点，复测的解析输出全部一致；两轮仍为同一批 400 条案例。逐条结果、分组区间及原始响应见[正式对照](docs/results/api_test.md)，20 条开发样本另存为[连接测试](docs/results/api_smoke.md)。
+The main run exceeds frozen rules by 49.0 percentage points. Parsed outputs match across the main and repeat runs; both use the same 400 distinct cases. Per-case results, grouped intervals and raw responses are in the [evaluation report](docs/results/api_test.md). The separate 20-case development run is documented as a [connection smoke test](docs/results/api_smoke.md).
 
-[真实公告语料](docs/data/real_notices.md)包含16份官方运输材料短摘录，经两次助手审核。固定模型已完成16次调用，与助手参考一致率100%，始终澄清基线也是100%。原始记录已归档，人工复核未完成；这组全澄清结果不能证明真实更新抽取能力。[下一版协议](docs/real_fact_protocol.md)将来源事实抽取与内部路线更新分别评测。
+The [real-notice corpus](docs/data/real_notices.md) contains short excerpts from 16 official transport documents, checked in two assistant reviews. The fixed model completed all 16 calls and agreed with assistant references on every case; the always-clarify baseline also scored 100%. Raw records are archived, and human review has not been performed. Because every reference requires clarification, this audit does not establish extraction skill for real operational updates. The [source-fact protocol](docs/real_fact_protocol.md) evaluates source quantities separately from internal-route updates.
 
 ```bash
 semiconductor-logistics evaluate
@@ -101,60 +103,60 @@ semiconductor-logistics query-budget --verify --output benchmark_results/query_b
 semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_development
 ```
 
-API 命令默认只估算费用：
+The API command estimates cost by default:
 
 ```bash
 semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split test --max-calls 400 --output artifacts/notice_api
 ```
 
-实际调用通过 GitHub Actions 手动运行，密钥保存在仓库 Secret。`smoke20` 使用开发集，`test400` 使用冻结留出集，设置步骤见 [API 配置](docs/secure_api_connection.md)。
+Live calls use a manual GitHub Actions workflow and a repository Secret. The `smoke20` profile uses development data; `test400` uses the frozen held-out set. See [API setup](docs/secure_api_connection.md).
 
-## 常用命令
+## CLI reference
 
-| 命令 | 用途 |
+| Command | Purpose |
 |---|---|
-| `generate` | 生成公告开发集、留出集及校验信息 |
-| `optimize` | 运行 ASML、Marvell 的库存与运输策略 |
-| `evaluate` | 评测冻结规则与诊断基线 |
-| `api` | 估算或执行固定模型 API 抽取 |
-| `score-api` | 校验请求记录并复算 API 指标 |
-| `compare-api` | 复算固定模型与冻结规则的成对差值及复测 |
-| `real-notices` | 校验真实语料、运行离线基线、导出输入和复算响应 |
-| `decision-audit` | 检验信息成本、规划选择和强适应性基线 |
-| `coupled-audit` | 检验多SKU共享容量、查询预算、精确规划与前瞻基线 |
-| `notice-facts` | 验证真实数量数据、评分规则、估算/执行新字段API并复算 |
-| `scale-audit` | 重放较大SKU/扰动开发网格，核对期望成本、轨迹与整数计划 |
-| `query-budget` | 在同MILP调用上限下比较查询规划，复算完整策略树和计算台账 |
-| `query-bc` | 生成查询教师、训练BC、比较强搜索并重执行检查点 |
-| `workflow-audit` | 运行或重放多步工具任务 |
-| `verify-run` | 校验离线数据、预测、指标和源码身份 |
-| `sensitivity` | 运行参数及排放边界敏感性实验 |
-| `report` | 生成 Markdown 报告、表格和图表 |
+| `generate` | Generate notice development/test splits and verification metadata |
+| `optimize` | Run the ASML and Marvell inventory–transport experiments |
+| `evaluate` | Evaluate frozen rules and diagnostic baselines |
+| `api` | Estimate or execute fixed-configuration model extraction |
+| `score-api` | Verify request records and recompute API metrics |
+| `compare-api` | Recompute paired model–rule differences and repeat-run agreement |
+| `real-notices` | Validate real-source data, run offline baselines, export inputs and rescore responses |
+| `decision-audit` | Audit information costs, planning choices and strong adaptive baselines |
+| `coupled-audit` | Audit multi-SKU shared capacity, query budgets, exact planning and lookahead baselines |
+| `notice-facts` | Validate quantity data, score rules, estimate/execute API requests and rescore outputs |
+| `scale-audit` | Replay larger SKU/disruption grids and verify expected costs, traces and integer plans |
+| `query-budget` | Compare query planners under equal MILP-call limits and replay policy trees and call ledgers |
+| `query-bc` | Generate query teachers, train BC, compare strong search and re-execute checkpoints |
+| `workflow-audit` | Run or replay multi-step tool tasks |
+| `verify-run` | Verify offline data, predictions, metrics and source identity |
+| `sensitivity` | Run parameter and emissions-boundary sensitivity experiments |
+| `report` | Generate Markdown reports, tables and figures |
 
-安装后的命令也可通过 `python -m semiconductor_logistics` 调用。离开仓库目录运行实验时，使用 `--workspace /path/to/repository` 指定数据与配置所在的工作目录。
+All installed commands are also available through `python -m semiconductor_logistics`. Outside the repository, pass `--workspace /path/to/repository` to select the checkout containing the required data and configurations.
 
-## 仓库结构
+## Repository structure
 
-| 路径 | 内容 |
+| Path | Contents |
 |---|---|
-| `semiconductor_logistics/` | Python 命令行入口 |
-| `shared/` | 库存守恒、MILP 求解与实验调度 |
-| `notice_benchmark/` | 冻结合成公告、规则、API、指标和原工具环境 |
-| `real_notice_eval/` | 真实公告来源校验与探索性评测 |
-| `notice_facts/` | 单独的真实数量合同、冻结规则、预算API与原始响应复算 |
-| `decision_benchmark/` | 查询成本、物理物流结果与决策基线 |
-| `coupled_decision/` | 多SKU整数分配、共享容量、预算查询及完整重放 |
-| `budgeted_decision/` | 有限计算预算的查询规划、中断处理及逐分支复算 |
-| `query_policy/` | 公开特征、NumPy BC、教师生成和检查点绑定验证 |
-| `asml/`、`marvell/` | 两个案例的参数配置 |
-| `benchmarks/` | 冻结公告集、规则身份及来源登记 |
-| `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |
-| `scripts/` | 数据获取、实验、报告与打包检查 |
-| `tests/` | 求解、抽取、重放与命令行测试 |
-| `docs/` | 架构、方法、评测和结果说明 |
+| `semiconductor_logistics/` | Python CLI |
+| `shared/` | Inventory conservation, MILP solver and experiment orchestration |
+| `notice_benchmark/` | Frozen synthetic notices, rules, API evaluation, metrics and the original tool environment |
+| `real_notice_eval/` | Real-notice source validation and exploratory evaluation |
+| `notice_facts/` | Quantity-extraction schema, frozen rules, budgeted API evaluation and raw-response rescoring |
+| `decision_benchmark/` | Query costs, physical logistics outcomes and decision baselines |
+| `coupled_decision/` | Multi-SKU integer allocation, shared capacity, budgeted queries and full replay |
+| `budgeted_decision/` | Query planning under computation limits, interruption handling and branch-level verification |
+| `query_policy/` | Public features, NumPy BC, teacher generation and checkpoint-bound verification |
+| `asml/`, `marvell/` | Case-study configurations |
+| `benchmarks/` | Frozen notice datasets, rule identities and source records |
+| `benchmark_results/` | Per-case predictions, API responses, tool traces and verification manifests |
+| `scripts/` | Data acquisition, experiments, reporting and package checks |
+| `tests/` | Optimization, extraction, replay and CLI tests |
+| `docs/` | Architecture, methods, benchmarks and results |
 
-## 数据与适用范围
+## Data and scope
 
-订单、价格、质量、容量和仓储参数为仿真假设。排放因子、路线几何和类比需求保存来源与校验值，详见 [ASML 数据说明](data_sources/data_audit_asml.md)、[Marvell 数据说明](data_sources/data_audit_marvell.md)和[第三方数据声明](THIRD_PARTY_NOTICES.md)。
+Orders, prices, shipment weights, capacities and storage parameters are simulation assumptions. Emission factors, route geometry and demand analogues have recorded sources and checksums. See the [ASML data audit](data_sources/data_audit_asml.md), [Marvell data audit](data_sources/data_audit_marvell.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
 
-当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；未知需求、预测误差和滚动决策尚未加入。
+The base optimization uses known committed orders and announced disruptions. The query-policy experiments add uncertain route states with disclosed priors while retaining known orders. Results compare policies under these simulation assumptions; they are not measurements of company operations or emissions reductions, and they do not establish broad LLM generalization. Unknown demand, forecast error and rolling decisions have not yet been implemented.

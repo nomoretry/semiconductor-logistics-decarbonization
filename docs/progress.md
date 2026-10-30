@@ -27,3 +27,7 @@
 - [研究记录](research_log.md)、[资料依据](research_basis.md)、[框架阅读来源](../data_sources/framework_reference.json)。
 
 当前只需按[操作说明](manual_steps.md)合并通过检查的代码，不需重跑API或填写人工意见。
+
+## 文档语言
+
+仓库首页[README](../README.md)使用英文，保留[简体中文版本](../README.zh-CN.md)及双向切换链接。此次只更新文档语言；实验代码、原始证据及上述五步状态不变。详细研究文档目前仍为中文。
