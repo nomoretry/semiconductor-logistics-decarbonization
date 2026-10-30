@@ -31,6 +31,7 @@ COMMANDS = {
     "decision-audit": ("decision_benchmark.audit", "Audit information costs and logistics decisions"),
     "coupled-audit": ("coupled_decision.audit", "Audit shared freight capacities and information budgets"),
     "scale-audit": ("scripts.audit_decision_scale", "Measure MILP and query planning at larger development sizes"),
+    "query-budget": ("budgeted_decision.audit", "Audit planners under the same per-decision MILP call caps"),
     "notice-facts": ("notice_facts", "Evaluate source quantities without inferring internal routes"),
     "report": ("scripts.create_reports", "Generate Markdown research reports from saved results"),
     "sensitivity": ("scripts.run_sensitivity", "Run the separate assumption sensitivity study"),

@@ -18,6 +18,7 @@
 | 共享容量与查询 | 3–4个SKU、空海运分配、联合扰动先验、共用查询预算 | 120组开发情境、6种方法、720条运行及重放 |
 | 真实数量抽取 | 总时长/增减量、原单位、区间与限定语、原文证据 | 16条开发、8份新来源；模型7/8、规则6/8，人工审核待完成 |
 | 查询规模审计 | 4–12个SKU、2–6个扰动、跨路线容量池、整数规划 | 18个开发任务、72条运行；单步/两步平均成本差距0.5378%/0.0811% |
+| 同计算预算对照 | 每次决策MILP限额、中断回退、分支缓存隔离、完整路径记账 | 54个开发情境、1,080条运行；主预算最强方法平均差距0.6253%，尾部15.9217% |
 | 结果验证 | 输入与源码哈希、逐条预测复算、物流计划重放 | 离线验证命令与自动测试 |
 
 原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
@@ -27,6 +28,8 @@
 [规模审计](docs/decision_scale.md)进一步增加独立扰动与容量池，保存成本差距和求解次数；两步前瞻仍接近精确DP。[真实数量评测](docs/real_fact_protocol.md)已具备单独的Python实现、离线对照和手动API入口。需要人工完成的合并、运行与标签核对见[操作说明](docs/manual_steps.md)。
 
 新数量任务的[8次API运行与原始证据](docs/results/notice_facts_api.md)已归档：模型7/8与当前参考一致，唯一分歧是把停航持续时间抽成运输延误。当前先完成人工复核，无需重复调用。
+
+[同求解预算对照](docs/query_budget_results.md)已完成。预算65的逐层查询DP将平均差距降至0.0118%；主预算13下的整体差距未通过事前BC筛选。本轮保留了一个15.9217%差距的分支诊断，展示昂贵查询与后续信息预算的实际取舍，未开始BC/PPO训练。
 
 详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
 
@@ -95,6 +98,7 @@ semiconductor-logistics coupled-audit --contexts 120 --output artifacts/coupled_
 python -m scripts.verify_real_notice_archive
 semiconductor-logistics notice-facts offline --output artifacts/notice_facts
 semiconductor-logistics scale-audit --verify --output benchmark_results/decision_scale
+semiconductor-logistics query-budget --verify --output benchmark_results/query_budget_development
 ```
 
 API 命令默认只估算费用：
@@ -120,6 +124,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `coupled-audit` | 检验多SKU共享容量、查询预算、精确规划与前瞻基线 |
 | `notice-facts` | 验证真实数量数据、评分规则、估算/执行新字段API并复算 |
 | `scale-audit` | 重放较大SKU/扰动开发网格，核对期望成本、轨迹与整数计划 |
+| `query-budget` | 在同MILP调用上限下比较查询规划，复算完整策略树和计算台账 |
 | `workflow-audit` | 运行或重放多步工具任务 |
 | `verify-run` | 校验离线数据、预测、指标和源码身份 |
 | `sensitivity` | 运行参数及排放边界敏感性实验 |
@@ -138,6 +143,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `notice_facts/` | 单独的真实数量合同、冻结规则、预算API与原始响应复算 |
 | `decision_benchmark/` | 查询成本、物理物流结果与决策基线 |
 | `coupled_decision/` | 多SKU整数分配、共享容量、预算查询及完整重放 |
+| `budgeted_decision/` | 有限计算预算的查询规划、中断处理及逐分支复算 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |
