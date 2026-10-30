@@ -4,7 +4,7 @@ English | [简体中文](README.zh-CN.md)
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
 
-A research framework for joint inventory and transport optimization in semiconductor spare-parts and finished-goods logistics. It uses SciPy/HiGHS to solve mixed-integer models with delivery, transport-capacity and carbon-budget constraints, and includes fixed-configuration LLM notice extraction, multi-step tool environments, query-policy behavior cloning (BC), and reproducible evaluation.
+A research framework for joint inventory and transport optimization in semiconductor spare-parts and finished-goods logistics. It uses SciPy/HiGHS to solve mixed-integer models with delivery, transport-capacity and carbon-budget constraints, and includes fixed-configuration LLM notice extraction, multi-step tool environments, query-policy behavior cloning (BC), cost-based PPO, and reproducible evaluation.
 
 Two company-inspired case studies share the solver while retaining separate operating assumptions: [ASML spare-parts logistics](asml/README.md) and [Marvell finished-goods logistics](marvell/README.md).
 
@@ -22,17 +22,18 @@ Two company-inspired case studies share the solver while retaining separate oper
 | Query-planning scale study | 4–12 SKUs, 2–6 disruptions, a shared capacity pool across routes and integer allocation | 18 development tasks; 72 runs; one-step/two-step mean cost gaps of 0.5378%/0.0811% |
 | Equal computation budgets | Per-decision MILP limits, interruption fallback, branch-local caches and full-path accounting | 54 development contexts; 1,080 runs; best method at the primary budget: 0.6253% mean regret and 15.9217% worst-case regret |
 | Query-policy BC | Public candidate features, multi-positive imitation, validation-based checkpoint selection and policy re-execution | 72/18/36 training/validation/development-evaluation contexts; 2.0833% mean regret with one final MILP per task |
+| Query-policy PPO | Shared BC initialization, cost rewards, GAE, clipped policy/value updates and validation selection | One training seed; 36 new development contexts; BC/PPO mean regret 2.6486%/1.9416% |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
 The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
 
-The [query-policy BC experiment](docs/query_policy_results.md) is complete at development scale. BC uses one final transport solve per task with 2.0833% mean cost regret; two-step search with a per-decision budget of 13 uses about 16.15 solves per task with 0.3140% regret. BC reduces online solver calls but does not yet match strong search on decision quality. PPO and the final 1,000-task evaluation remain unfinished.
+The [query-policy BC experiment](docs/query_policy_results.md) is complete at development scale. BC uses one final transport solve per task with 2.0833% mean cost regret; two-step search with a per-decision budget of 13 uses about 16.15 solves per task with 0.3140% regret. BC reduces online solver calls but does not yet match strong search on decision quality. The next [shared-start PPO experiment](docs/query_ppo_results.md) is also complete at development scale: on 36 new contexts, mean regret falls from BC’s 2.6486% to 1.9416%, with one final MILP per path. Six contexts improve and 30 tie; this single-seed result still falls short of strong search. The final 1,000-task, five-seed evaluation remains unfinished.
 
 The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [framework comparison](docs/framework_comparison.md) maps the implementation and remaining gaps against Agentic Tool RL; the [research log](docs/research_log.md) records each change and its evidence.
 
 The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archived: model outputs agree with assistant references on 7/8 cases, compared with 6/8 for frozen rules. These results remain exploratory and have not undergone independent human review. They do not block environment research or require another API run. Any necessary user actions are listed in the [manual steps](docs/manual_steps.md).
 
-See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). The detailed documentation and case-study pages are currently in Chinese.
+See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). New detailed research documents provide Chinese first and English afterward. Historical pages will receive complete English explanations at final delivery; see the [documentation plan](docs/documentation_plan.md).
 
 ## Quick start
 
@@ -55,7 +56,7 @@ python -m semiconductor_logistics evaluate --output artifacts/rules
 python -m semiconductor_logistics verify-run --output artifacts/rules
 ```
 
-Default checks use local synthetic data and do not call the API. `make smoke` exercises rule evaluation, tool environments, a small BC training run and replay verification.
+Default checks use local synthetic data and do not call the API. `make smoke` exercises rule evaluation, tool environments, small BC/PPO training runs and replay verification.
 
 ## Optimization experiments
 
@@ -101,6 +102,7 @@ semiconductor-logistics notice-facts offline --output artifacts/notice_facts
 semiconductor-logistics scale-audit --verify --output benchmark_results/decision_scale
 semiconductor-logistics query-budget --verify --output benchmark_results/query_budget_development
 semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_development
+semiconductor-logistics query-ppo --verify --output benchmark_results/query_ppo_development
 ```
 
 The API command estimates cost by default:
@@ -128,6 +130,7 @@ Live calls use a manual GitHub Actions workflow and a repository Secret. The `sm
 | `scale-audit` | Replay larger SKU/disruption grids and verify expected costs, traces and integer plans |
 | `query-budget` | Compare query planners under equal MILP-call limits and replay policy trees and call ledgers |
 | `query-bc` | Generate query teachers, train BC, compare strong search and re-execute checkpoints |
+| `query-ppo` | Train PPO from the frozen BC actor and replay trajectories, updates and checkpoints |
 | `workflow-audit` | Run or replay multi-step tool tasks |
 | `verify-run` | Verify offline data, predictions, metrics and source identity |
 | `sensitivity` | Run parameter and emissions-boundary sensitivity experiments |
@@ -148,6 +151,7 @@ All installed commands are also available through `python -m semiconductor_logis
 | `coupled_decision/` | Multi-SKU integer allocation, shared capacity, budgeted queries and full replay |
 | `budgeted_decision/` | Query planning under computation limits, interruption handling and branch-level verification |
 | `query_policy/` | Public features, NumPy BC, teacher generation and checkpoint-bound verification |
+| `query_ppo/` | Episode-safe GAE, cost-based PPO, validation selection and complete training replay |
 | `asml/`, `marvell/` | Case-study configurations |
 | `benchmarks/` | Frozen notice datasets, rule identities and source records |
 | `benchmark_results/` | Per-case predictions, API responses, tool traces and verification manifests |

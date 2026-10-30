@@ -13,3 +13,5 @@ For each substantive research change:
 7. Train BC/PPO only after strong adaptive and optimization baselines leave a measurable quality or computation tradeoff. Task count alone does not satisfy this condition.
 
 Documentation should state the problem, implementation, measured result and next acceptance condition. Avoid date headings, promotional claims and claims of enterprise deployment or broad LLM generalization.
+
+Detailed research documents must have Chinese and English versions by final project delivery. Begin each bilingual document with a language notice, place Chinese first and English after it, and keep numbers, limitations, commands and evidence links consistent. New research documents should use this structure now. Do not silently edit source-bound frozen protocols to add translations: provide a bilingual companion and retain the original hash-bound record. Track remaining translations in `docs/documentation_plan.md`.

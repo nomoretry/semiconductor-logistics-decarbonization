@@ -1,0 +1,1 @@
+{"evaluation_seconds":7.795334162990912,"numpy":"2.3.5","offline_terminal_milp_calls":{"dev":80,"train":882},"python":"3.12.14","reference_milp_calls":1948,"scipy":"1.17.0","training_seconds":6.011505589005537}

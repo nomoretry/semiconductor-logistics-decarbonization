@@ -22,17 +22,18 @@
 | 查询规模审计 | 4–12个SKU、2–6个扰动、跨路线容量池、整数规划 | 18个开发任务、72条运行；单步/两步平均成本差距0.5378%/0.0811% |
 | 同计算预算对照 | 每次决策MILP限额、中断回退、分支缓存隔离、完整路径记账 | 54个开发情境、1,080条运行；主预算最强方法平均差距0.6253%，尾部15.9217% |
 | 查询策略BC | 公开候选特征、多正例模仿、验证集选模、检查点重执行 | 72/18/36个训练/验证/开发评估情境；BC平均遗憾2.0833%，每任务一次最终MILP |
+| 查询策略PPO | 同一BC起点、成本奖励、GAE、策略/价值裁剪与验证选模 | 1训练种子、36个新开发情境；BC/PPO平均遗憾2.6486%/1.9416% |
 | 结果验证 | 输入与源码哈希、逐条预测复算、物流计划与训练重放 | 离线验证命令与自动测试 |
 
 原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
 
-[查询策略BC](docs/query_policy_results.md)已完成训练与开发评估：只用一次最终运输求解，平均成本遗憾2.0833%；预算13的两步搜索约需16.15次求解，遗憾0.3140%。模型降低了在线求解量，但尚未达到强搜索的决策质量。PPO与正式千题评测仍未完成。
+[查询策略BC](docs/query_policy_results.md)已完成训练与开发评估：只用一次最终运输求解，平均成本遗憾2.0833%；预算13的两步搜索约需16.15次求解，遗憾0.3140%。模型降低了在线求解量，但尚未达到强搜索的决策质量。随后完成了[同起点PPO开发实验](docs/query_ppo_results.md)：36个新情境上，平均遗憾从BC的2.6486%降到1.9416%，每条路径仍只需一次最终MILP。6个情境改善、30个持平；单种子结果仍未达到强搜索质量。正式千题、五种子评测尚未完成。
 
 [同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[框架对照](docs/framework_comparison.md)逐项说明与Agentic Tool RL的结构对应和剩余工作；[研究记录](docs/research_log.md)保存每轮实现与证据。
 
 [真实数量评测](docs/results/notice_facts_api.md)已归档：模型7/8、规则6/8与助手参考一致。维护者选择不填写人工意见，结果保留为未进行人工复核的探索证据，不阻塞环境研究，也不重复调用API。需要手动操作的内容见[操作说明](docs/manual_steps.md)。
 
-详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。
+详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。新增详细研究说明采用中文在前、英文在后的双语格式；历史说明在最终交付时补齐，见[文档计划](docs/documentation_plan.md)。
 
 ## 快速开始
 
@@ -55,7 +56,7 @@ python -m semiconductor_logistics evaluate --output artifacts/rules
 python -m semiconductor_logistics verify-run --output artifacts/rules
 ```
 
-默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境和重放校验。
+默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境、小型BC/PPO训练和重放校验。
 
 ## 运行优化实验
 
@@ -101,6 +102,7 @@ semiconductor-logistics notice-facts offline --output artifacts/notice_facts
 semiconductor-logistics scale-audit --verify --output benchmark_results/decision_scale
 semiconductor-logistics query-budget --verify --output benchmark_results/query_budget_development
 semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_development
+semiconductor-logistics query-ppo --verify --output benchmark_results/query_ppo_development
 ```
 
 API 命令默认只估算费用：
@@ -128,6 +130,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `scale-audit` | 重放较大SKU/扰动开发网格，核对期望成本、轨迹与整数计划 |
 | `query-budget` | 在同MILP调用上限下比较查询规划，复算完整策略树和计算台账 |
 | `query-bc` | 生成查询教师、训练BC、比较强搜索并重执行检查点 |
+| `query-ppo` | 从冻结BC训练PPO，重放采样轨迹、更新记录和检查点 |
 | `workflow-audit` | 运行或重放多步工具任务 |
 | `verify-run` | 校验离线数据、预测、指标和源码身份 |
 | `sensitivity` | 运行参数及排放边界敏感性实验 |
@@ -148,6 +151,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `coupled_decision/` | 多SKU整数分配、共享容量、预算查询及完整重放 |
 | `budgeted_decision/` | 有限计算预算的查询规划、中断处理及逐分支复算 |
 | `query_policy/` | 公开特征、NumPy BC、教师生成和检查点绑定验证 |
+| `query_ppo/` | 轨迹隔离GAE、成本PPO、验证选模与完整训练复算 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |

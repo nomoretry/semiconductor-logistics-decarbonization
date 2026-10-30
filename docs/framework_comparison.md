@@ -10,15 +10,15 @@
 |---|---|---|
 | 任务与划分 | `envs/benchmark.py`、`benchmark_v14.py`；同一世界的反事实目标按组划分，区分开发与正式测试 | 已有场景生成和强规则审计；新增 BC 的 72/18/36 上下文划分。同一情境全部分支留在同一 split，尚无最终千题集 |
 | 策略输入 | `policy_input.py` 去除实例身份、隐藏目标、标签；公开信息是唯一决策入口 | `query_policy/features.py` 拒绝额外字段，不接收教师值和真实未观察状态；37维公开特征，不调用求解器 |
-| 候选评分 | `models/actor_critic.py` 逐候选评分，候选数可变；state value 独立输出 | 新增共享候选 MLP 与 masked softmax；当前是 NumPy BC，没有 value head 或 PyTorch PPO |
+| 候选评分 | `models/actor_critic.py` 逐候选评分，候选数可变；state value 独立输出 | 共享候选 MLP 与 masked softmax；新增 NumPy PPO 和独立状态 critic，未使用 PyTorch |
 | 专家模仿 | `algorithms/bc.py` 同时支持单标签与多正例集合损失；mask外动作不能成为正例 | 精确 DP 对所有合法历史给出动作成本；同价最优动作都算正例，采用集合 NLL，有限差分检查梯度 |
 | 动作执行 | `tools/registry.py` 验证后写入复制状态，拒绝动作不产生部分副作用 | 现有事务工具环境已检查提交；新查询策略受费用/次数 mask 约束，最终运输由整数规划保证可行。不是外部企业系统事务 |
 | 强基线 | v1.3 的公开 ready-greedy 审计；v1.4 保存 R0–R6 捷径基线 | 已有信息价值、两步前瞻、精确 DP 和同求解预算比较；新增 BC 继续与强搜索同场评估 |
-| PPO | `algorithms/ppo.py` clipped ratio/value、熵项与梯度裁剪；`gae.py` 不跨轨迹传播优势 | 尚未实现和训练。下一项需先定位 BC 的状态误差和轨迹误差，再与同一 BC 起点做配对比较 |
+| PPO | `algorithms/ppo.py` clipped ratio/value、熵项与梯度裁剪；`gae.py` 不跨轨迹传播优势 | 已完成同一 BC 起点的成本 PPO、轨迹隔离 GAE、clipped ratio/value、熵和梯度裁剪；36个新开发情境、1训练种子，完整重训与检查点复算 |
 | 势函数奖励 | `rewards/potential.py`、`training.py`；估计器先训练后冻结，终态势为零 | 尚未加入。不能把精确教师价值直接当成策略可见特征，或把实际成本改称学习出来的进度奖励 |
 | 训练证据 | 保存 updates、参数摘要、共享 BC 起点，变体身份绑定 checkpoint | 新增初始化、选中检查点、80轮日志、参数变化和验证集选模记录；验证器重新训练并比对 |
 | 逐题验证 | `evaluation/integrity.py`、`trace_store.py`；数据/配置/源码/checkpoint 四类身份，按模型重执行动作 | 旧结果已有重放；BC 新增教师重算、训练重执行、检查点逐情境重放。尚无中断续训；非空目录拒绝覆盖 |
-| 统计消融 | v1.3 六变体、5种子、1000题，E−B同起点比较与配对区间；v1.4协议进一步收紧 | 本次只有1个训练种子、36个开发评估情境；不报告正式显著性，未完成五种子消融 |
+| 统计消融 | v1.3 六变体、5种子、1000题，E−B同起点比较与配对区间；v1.4协议进一步收紧 | BC与PPO各有单种子开发评估，PPO与原BC在36个新情境配对；不报告正式显著性，未完成五种子消融 |
 | 分发与发布 | `uv.lock`、Ruff/mypy、隔离分发构建、多平台CI；v0.1.0带固定证据资产与校验入口 | Python包、固定数值依赖、离线CI与wheel检查已有；还缺完整依赖锁、静态检查、跨平台矩阵和经过验收的Release |
 
 ## 应当保留的经验
@@ -29,9 +29,9 @@
 
 ## 本轮与后续验收
 
-本轮完成 BC 的生成→训练→评估→检查点重放，并保存失败或成功的全部方法结果，见[协议](query_policy_protocol.md)和[结果](query_policy_results.md)。只借鉴接口划分与研究方法，新的 NumPy 实现没有复制对方源文件。
+BC已完成生成→训练→评估→检查点重放，见[协议](query_policy_protocol.md)和[结果](query_policy_results.md)。本轮再完成同一起点PPO、GAE、完整采样和更新重执行，见[PPO结果](query_ppo_results.md)；保留全部比较方法。只借鉴接口划分与研究方法，新的 NumPy 实现没有复制对方源文件。
 
-后续依次补：BC误差诊断和训练规模曲线；同起点 PPO 与奖励消融；冻结约1000个不同测试任务、5个训练种子、配对统计及完整证据包；分发锁与Release；最后加入未知需求和滚动决策。每一步以代码、实际运行和复算为准，不用仓库数量、徽章或README长度表示完成度。
+BC误差诊断和[同起点PPO](query_ppo_results.md)已完成首轮开发运行。后续依次补：种子稳定性、停止决策和奖励消融；冻结约1000个不同测试任务、5个训练种子、配对统计及完整证据包；分发锁与Release；最后加入未知需求和滚动决策。每一步以代码、实际运行和复算为准，不用仓库数量、徽章或README长度表示完成度。
 
 ## GitHub 页面差异
 

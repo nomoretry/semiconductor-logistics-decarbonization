@@ -28,6 +28,7 @@ smoke:
 	$(CLI) scale-audit --smoke --output artifacts/smoke/decision_scale
 	$(PYTHON) -m scripts.smoke_query_budget
 	$(CLI) query-bc --smoke-check
+	$(CLI) query-ppo --smoke-check
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -47,6 +48,7 @@ verify:
 	$(PYTHON) -m scripts.diagnose_query_budget --verify
 	$(CLI) query-bc --verify --output benchmark_results/query_bc_development
 	$(PYTHON) -m scripts.diagnose_query_policy --verify
+	$(CLI) query-ppo --verify --output benchmark_results/query_ppo_development
 
 report:
 	$(CLI) report
