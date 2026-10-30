@@ -1,0 +1,16 @@
+{
+  "version": "query-compute-budget-v1",
+  "sku_counts": [4, 8, 12],
+  "delay_bits": [2, 4, 6],
+  "seeds": [31, 47, 61, 73, 89, 101],
+  "old_seeds": [31, 47],
+  "budgets": [1, 5, 13, 33, 65],
+  "primary_budget": 13,
+  "comparison_budget": 65,
+  "methods": ["myopic_index", "myopic_priority", "lookahead_two", "iterative_dp"],
+  "gate_mean_regret": 0.01,
+  "gate_case_regret": 0.02,
+  "gate_case_fraction": 0.2,
+  "gate_relative_gap_reduction": 0.2,
+  "scope": "development_only_not_final_test"
+}

@@ -26,6 +26,7 @@ smoke:
 	$(CLI) notice-facts offline --output artifacts/smoke/notice_facts
 	$(CLI) notice-facts api --output artifacts/smoke/notice_facts
 	$(CLI) scale-audit --smoke --output artifacts/smoke/decision_scale
+	$(PYTHON) -m scripts.smoke_query_budget
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -41,6 +42,8 @@ verify:
 	$(PYTHON) -m scripts.verify_notice_facts_archive
 	$(CLI) coupled-audit --verify --output benchmark_results/coupled_development
 	$(CLI) scale-audit --verify --output benchmark_results/decision_scale
+	$(CLI) query-budget --verify --output benchmark_results/query_budget_development
+	$(PYTHON) -m scripts.diagnose_query_budget --verify
 
 report:
 	$(CLI) report
