@@ -43,7 +43,7 @@ The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archi
 
 See [architecture](docs/architecture.md), [data and benchmarks](docs/benchmark.md), and [methods and reproduction](docs/methodology.md). New detailed research documents provide Chinese first and English afterward. Historical pages will receive complete English explanations at final delivery; see the [documentation plan](docs/documentation_plan.md).
 
-**Draft archive status:** Three sensitivity trace/timing files await explicit public-upload approval. [File identities and status](docs/rolling_sensitivity_publication.md). Do not merge this draft until the bundle and CI are complete.
+The sensitivity archive is complete. [File identities and verification](docs/rolling_sensitivity_publication.md) cover all 2,304 trajectories; merge acceptance uses the current PR commit's CI results.
 
 The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. Rolling BC/PPO is deferred pending forecast and same-information teacher validation.
 

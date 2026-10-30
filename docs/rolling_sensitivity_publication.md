@@ -1,15 +1,13 @@
-# 敏感性实验归档状态 / Sensitivity archive publication
+# 敏感性实验归档与验收 / Sensitivity archive and verification
 
 本文提供中英文版本，中文在前，英文在后。
 This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-本轮实验已在本地完成：24条不同合成开发需求路径、2,304条轨迹、27,648期；322项测试、wheel/CLI检查及压缩归档的完整重执行通过。研究结果见[双语报告](rolling_sensitivity_results.md)。
+[PR #15](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/15)已补齐本轮公开证据包：24条不同合成开发需求路径、2,304条轨迹、27,648期。15份数据文件及manifest齐全，包括8份轨迹分片、结果表、计时和配置。完整列表与摘要见[manifest](../benchmark_results/rolling_sensitivity_development/manifest.json)，研究结论见[双语报告](rolling_sensitivity_results.md)。
 
-当前草稿PR的公开证据包尚不完整，**不要合并**。自动审批拒绝向公开仓库`nomoretry/semiconductor-logistics-decarbonization`上传`traces-06.jsonl.gz`，理由是需要用户对该具体载荷和目的地作出明确批准。完整字段检查、物理审计以及用已经公开的代码和配置重新生成288条轨迹后的逐字节一致检查均已完成；自动审批仍未放行。traces-05已在继续同步时获准提交，剩余三份文件仍待逐项明确批准。
-
-待批准上传的文件均位于`benchmark_results/rolling_sensitivity_development/`：
+先前的`artifact_coverage`错误来自未上传的文件。维护者明确批准后，以下3份文件按原SHA256补交；没有修改算法、参数、实验结果或放宽验收条件。文件均位于`benchmark_results/rolling_sensitivity_development/`：
 
 | File | Bytes | SHA256 |
 |---|---:|---|
@@ -17,20 +15,28 @@ This document is available in Chinese and English; English follows Chinese.
 | `traces-07.jsonl.gz` | 220806 | `e7e8aca620a12e40cf2ebe3a2bc0ada3ead228f70d1881bc4b1e36c98ab43376` |
 | `timing.jsonl.gz` | 263584 | `fe7698ad698fff44a7b8e4c4118e6b39e707006b36357d3a40db122181165d63` |
 
-总计705,804字节。内容仅包含合成情境标识、固定方法名和数值，不包含API响应、密钥、私人订单或企业记录。完整检查见[归档审计](../data_sources/rolling_sensitivity_artifact_audit.json)。原始结果和计时的压缩前后摘要见[打包记录](../data_sources/rolling_sensitivity_packaging.json)。
+上述文件共705,804字节，内容为合成情境标识、固定方法名和数值，不包含API响应、密钥、私人订单或企业记录。[内容审计](../data_sources/rolling_sensitivity_artifact_audit.json)和[无损打包记录](../data_sources/rolling_sensitivity_packaging.json)保留检查依据。
 
-公开分支仍保留要求全部文件的验证器；缺少这些文件时，敏感性CI会报告证据不完整，不会跳过或假装通过。取得批准后才能补齐三份文件，重新检查CI并转为可审阅PR。其他旧实验的源码和归档保持原字节。
+本地322项测试、wheel/CLI检查以及全部2,304条轨迹重执行已经通过。合并以PR当前提交的五项CI检查全部成功为准，不能沿用旧提交的通过状态。完整性检查、物理账本核验、源代码身份检查及全部策略重执行继续保留。
+
+```bash
+python -m scripts.check_research_progress
+make verify-sensitivity
+```
+
+第一个命令只核对保存的实验计数、文件和源码身份；第二个命令重生成需求、重执行全部策略并核对逐期证据。二者均不调用模型API。通过当前提交的CI后，按[操作说明](manual_steps.md)合并即可，不再需要文件上传授权或人工审核表。
 
 ## English
 
-The local study is complete: 24 distinct synthetic development demand paths, 2,304 trajectories and 27,648 periods. All 322 tests, wheel/CLI checks and full reexecution of the compressed bundle pass. See the [bilingual results](rolling_sensitivity_results.md).
+[PR #15](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/15) now includes the complete public bundle: 24 distinct synthetic development demand paths, 2,304 trajectories and 27,648 periods. All 15 data files and the manifest are present, including eight trace shards, outcomes, timings and configuration. See the [manifest](../benchmark_results/rolling_sensitivity_development/manifest.json) for file identities and the [bilingual report](rolling_sensitivity_results.md) for findings.
 
-The public bundle in this draft PR is incomplete; **do not merge**. Automatic approval review rejected publication of `traces-06.jsonl.gz` to the public repository `nomoretry/semiconductor-logistics-decarbonization`, requiring explicit user approval of the exact payload and destination. Full field inspection, physical audits and byte-identical reconstruction of all 288 trajectories from already-public code/configuration were completed, but review still rejected publication. traces-05 has now been approved and submitted; three files still require explicit approval.
+The earlier `artifact_coverage` failure was caused by missing uploads. After explicit maintainer approval, the three files listed above were added with their original SHA256 digests. No algorithm, setting, numerical result or acceptance requirement was changed. The files total 705,804 bytes and contain synthetic identifiers, fixed method names and numbers, with no API responses, credentials, private orders or corporate records. The [content audit](../data_sources/rolling_sensitivity_artifact_audit.json) and [lossless packaging record](../data_sources/rolling_sensitivity_packaging.json) retain the inspection evidence.
 
-The three files listed above belong under `benchmark_results/rolling_sensitivity_development/` and total 705,804 bytes. They contain only synthetic identifiers, fixed method names and numerical records, with no API responses, credentials, private orders or corporate records. The [content audit](../data_sources/rolling_sensitivity_artifact_audit.json) documents inspection, and the [packaging record](../data_sources/rolling_sensitivity_packaging.json) records original and compressed digests.
+All 322 local tests, wheel/CLI checks and reexecution of all 2,304 trajectories have passed. Merge acceptance requires all five CI jobs on the current PR commit; success on an older commit is not a substitute. Complete-coverage checks, physical audits, source identities and full policy replay remain enabled.
 
-The public branch retains complete-coverage verification. Until the three files are supplied, sensitivity CI must report missing evidence rather than skip checks or claim success. After approval, upload the exact files, check CI and mark the PR ready. All historical experiment source and archives retain their original bytes.
+```bash
+python -m scripts.check_research_progress
+make verify-sensitivity
+```
 
-可明确回复：我批准将 `traces-06.jsonl.gz`、`traces-07.jsonl.gz` 和 `timing.jsonl.gz`（内容与上表SHA256一致）公开上传到 `nomoretry/semiconductor-logistics-decarbonization`。
-
-Explicit approval may state: I approve public upload of `traces-06.jsonl.gz`, `traces-07.jsonl.gz` and `timing.jsonl.gz`, matching the SHA256 digests above, to `nomoretry/semiconductor-logistics-decarbonization`.
+The first command inventories saved experiment counts and checks files/source identities; the second regenerates demand, reexecutes all policies and compares period evidence. Neither uses model APIs. After current-head CI succeeds, follow the [merge instructions](manual_steps.md). No additional upload approval or human-review form is required.

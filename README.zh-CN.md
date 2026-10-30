@@ -182,4 +182,4 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 
 [滚动敏感性实验](docs/rolling_sensitivity_results.md)新增24条开发路径、3个采样种子和2,304条轨迹，量化碳分配、期末库存价值和情景数量。1→7情景成本降37.48%，7→21仅降0.36%且种子方向不一致；期末价值主要改变账面净成本。先验证预测分布及同信息教师，暂不训练滚动BC/PPO。复算：`python -m semiconductor_logistics rolling-sensitivity verify`。
 
-**草稿归档状态：**3份敏感性轨迹/计时文件等待明确公开上传批准，详见[文件身份和状态](docs/rolling_sensitivity_publication.md)。补齐证据并通过CI前不要合并。
+敏感性证据包已补齐，覆盖全部2,304条轨迹，详见[文件身份与验收](docs/rolling_sensitivity_publication.md)。合并以前须确认PR当前提交的CI通过。

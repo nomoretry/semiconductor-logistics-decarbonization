@@ -7,9 +7,9 @@ This document is available in Chinese and English; the English version follows t
 
 当前不需要填写人工意见、重新运行API、发送密钥或租用GPU。8条真实数量抽取和16条真实澄清审核均已完成并归档。
 
-## 本轮先批准归档，暂不合并
+## 本轮归档已补齐
 
-本地实验已完成，但自动审批要求明确批准3份纯合成证据文件的公开上传，见[文件清单](rolling_sensitivity_publication.md)。当前PR保持草稿；批准后由助手补齐文件、检查CI，再按下述步骤合并。
+3份文件已获明确授权并按原SHA256上传，见[文件清单与验收](rolling_sensitivity_publication.md)。不需要再次授权；待PR当前提交五项CI全部成功后，按下述步骤合并。
 
 ## 合并本轮代码
 
@@ -41,9 +41,9 @@ This document is available in Chinese and English; the English version follows t
 
 No human-review form, API rerun, key transfer or rented GPU is required. The eight real-quantity cases and 16 real-notice clarification cases are already archived.
 
-### Approve the archive first; do not merge yet
+### The archive is complete
 
-The local experiment is complete, but automatic approval review requires explicit approval to publish three synthetic evidence files. See the [exact file list](rolling_sensitivity_publication.md). The PR remains a draft; after approval, the assistant must upload them and check CI before the following merge steps.
+The three files received explicit approval and were uploaded with their original SHA256 digests. See the [file list and verification](rolling_sensitivity_publication.md). No additional approval is required. Follow the steps below after all five CI jobs pass on the current PR commit.
 
 ### Merge the current change
 
