@@ -1,0 +1,364 @@
+{
+  "distinct_development_contexts": 32,
+  "final_test_created": false,
+  "groups": {
+    "all": {
+      "base_stock": {
+        "backlog_unit_periods": 16.09375,
+        "contexts": 32,
+        "emissions": 95.0,
+        "final_backlog": 2.28125,
+        "final_stock": 10.25,
+        "forecast_bias": 0.010753983953143385,
+        "forecast_mae": 1.082051045859745,
+        "gap_to_perfect_information_pct": 191.05295158394046,
+        "immediate_fill_rate": 0.8267649720812347,
+        "solver_calls": 0.0,
+        "total_cost": 330.62187500000005
+      },
+      "marginal_cost": {
+        "backlog_unit_periods": 26.375,
+        "contexts": 32,
+        "emissions": 91.4375,
+        "final_backlog": 5.4375,
+        "final_stock": 6.3125,
+        "forecast_bias": 0.010753983953143385,
+        "forecast_mae": 1.082051045859745,
+        "gap_to_perfect_information_pct": 248.39562115382574,
+        "immediate_fill_rate": 0.7782851746502957,
+        "solver_calls": 0.0,
+        "total_cost": 427.99375
+      },
+      "mpc_mean": {
+        "backlog_unit_periods": 19.625,
+        "contexts": 32,
+        "emissions": 108.4375,
+        "final_backlog": 3.53125,
+        "final_stock": 4.96875,
+        "forecast_bias": 0.010753983953143385,
+        "forecast_mae": 1.082051045859745,
+        "gap_to_perfect_information_pct": 248.0819341057204,
+        "immediate_fill_rate": 0.7428296883533169,
+        "solver_calls": 12.0,
+        "total_cost": 391.2625
+      },
+      "mpc_scenarios": {
+        "backlog_unit_periods": 7.90625,
+        "contexts": 32,
+        "emissions": 109.6875,
+        "final_backlog": 1.65625,
+        "final_stock": 11.34375,
+        "forecast_bias": 0.010753983953143385,
+        "forecast_mae": 1.082051045859745,
+        "gap_to_perfect_information_pct": 172.35083224602994,
+        "immediate_fill_rate": 0.8961373996520523,
+        "solver_calls": 12.0,
+        "total_cost": 282.240625
+      },
+      "perfect_information": {
+        "backlog_unit_periods": 1.0625,
+        "contexts": 32,
+        "emissions": 69.40625,
+        "final_backlog": 0.34375,
+        "final_stock": 0.0,
+        "forecast_bias": 0.010753983953143385,
+        "forecast_mae": 1.082051045859745,
+        "gap_to_perfect_information_pct": 0.0,
+        "immediate_fill_rate": 0.9863458365697754,
+        "solver_calls": 1.0,
+        "total_cost": 111.1890625
+      }
+    },
+    "downshift": {
+      "base_stock": {
+        "backlog_unit_periods": 6.25,
+        "contexts": 8,
+        "emissions": 74.0,
+        "final_backlog": 0.0,
+        "final_stock": 14.25,
+        "forecast_bias": -0.15914019907004323,
+        "forecast_mae": 0.877361049643582,
+        "gap_to_perfect_information_pct": 201.76187999869887,
+        "immediate_fill_rate": 0.882593361690482,
+        "solver_calls": 0.0,
+        "total_cost": 186.45
+      },
+      "marginal_cost": {
+        "backlog_unit_periods": 11.375,
+        "contexts": 8,
+        "emissions": 82.375,
+        "final_backlog": 0.75,
+        "final_stock": 11.0,
+        "forecast_bias": -0.15914019907004323,
+        "forecast_mae": 0.877361049643582,
+        "gap_to_perfect_information_pct": 239.71852403770754,
+        "immediate_fill_rate": 0.8303659680734607,
+        "solver_calls": 0.0,
+        "total_cost": 222.79375
+      },
+      "mpc_mean": {
+        "backlog_unit_periods": 4.875,
+        "contexts": 8,
+        "emissions": 87.875,
+        "final_backlog": 0.25,
+        "final_stock": 8.125,
+        "forecast_bias": -0.15914019907004323,
+        "forecast_mae": 0.877361049643582,
+        "gap_to_perfect_information_pct": 181.85032228140375,
+        "immediate_fill_rate": 0.883602047522971,
+        "solver_calls": 12.0,
+        "total_cost": 176.68124999999998
+      },
+      "mpc_scenarios": {
+        "backlog_unit_periods": 2.125,
+        "contexts": 8,
+        "emissions": 95.75,
+        "final_backlog": 0.125,
+        "final_stock": 17.75,
+        "forecast_bias": -0.15914019907004323,
+        "forecast_mae": 0.877361049643582,
+        "gap_to_perfect_information_pct": 221.3537933703752,
+        "immediate_fill_rate": 0.9493618731730893,
+        "solver_calls": 12.0,
+        "total_cost": 194.42499999999998
+      },
+      "perfect_information": {
+        "backlog_unit_periods": 0.375,
+        "contexts": 8,
+        "emissions": 46.25,
+        "final_backlog": 0.0,
+        "final_stock": 0.0,
+        "forecast_bias": -0.15914019907004323,
+        "forecast_mae": 0.877361049643582,
+        "gap_to_perfect_information_pct": 0.0,
+        "immediate_fill_rate": 0.9903959810874704,
+        "solver_calls": 1.0,
+        "total_cost": 63.349999999999994
+      }
+    },
+    "stable": {
+      "base_stock": {
+        "backlog_unit_periods": 7.625,
+        "contexts": 8,
+        "emissions": 102.25,
+        "final_backlog": 0.375,
+        "final_stock": 10.75,
+        "forecast_bias": -5.420168125786981e-05,
+        "forecast_mae": 1.0813423476698327,
+        "gap_to_perfect_information_pct": 149.19913351174193,
+        "immediate_fill_rate": 0.8727393336260176,
+        "solver_calls": 0.0,
+        "total_cost": 215.4
+      },
+      "marginal_cost": {
+        "backlog_unit_periods": 11.875,
+        "contexts": 8,
+        "emissions": 91.75,
+        "final_backlog": 1.5,
+        "final_stock": 6.375,
+        "forecast_bias": -5.420168125786981e-05,
+        "forecast_mae": 1.0813423476698327,
+        "gap_to_perfect_information_pct": 162.36293840680315,
+        "immediate_fill_rate": 0.8828230979837723,
+        "solver_calls": 0.0,
+        "total_cost": 245.1375
+      },
+      "mpc_mean": {
+        "backlog_unit_periods": 13.75,
+        "contexts": 8,
+        "emissions": 118.625,
+        "final_backlog": 0.875,
+        "final_stock": 4.25,
+        "forecast_bias": -5.420168125786981e-05,
+        "forecast_mae": 1.0813423476698327,
+        "gap_to_perfect_information_pct": 223.48110525364817,
+        "immediate_fill_rate": 0.7742135078650765,
+        "solver_calls": 12.0,
+        "total_cost": 277.29375000000005
+      },
+      "mpc_scenarios": {
+        "backlog_unit_periods": 4.125,
+        "contexts": 8,
+        "emissions": 115.375,
+        "final_backlog": 0.0,
+        "final_stock": 12.125,
+        "forecast_bias": -5.420168125786981e-05,
+        "forecast_mae": 1.0813423476698327,
+        "gap_to_perfect_information_pct": 150.88020771437465,
+        "immediate_fill_rate": 0.9405365668162231,
+        "solver_calls": 12.0,
+        "total_cost": 208.89375
+      },
+      "perfect_information": {
+        "backlog_unit_periods": 0.125,
+        "contexts": 8,
+        "emissions": 61.125,
+        "final_backlog": 0.0,
+        "final_stock": 0.0,
+        "forecast_bias": -5.420168125786981e-05,
+        "forecast_mae": 1.0813423476698327,
+        "gap_to_perfect_information_pct": 0.0,
+        "immediate_fill_rate": 0.997983870967742,
+        "solver_calls": 1.0,
+        "total_cost": 85.66874999999999
+      }
+    },
+    "upshift": {
+      "base_stock": {
+        "backlog_unit_periods": 35.375,
+        "contexts": 8,
+        "emissions": 111.625,
+        "final_backlog": 6.75,
+        "final_stock": 4.5,
+        "forecast_bias": 0.24038889740992322,
+        "forecast_mae": 1.1919567742863866,
+        "gap_to_perfect_information_pct": 204.54048777898845,
+        "immediate_fill_rate": 0.7041139431630465,
+        "solver_calls": 0.0,
+        "total_cost": 610.7687500000001
+      },
+      "marginal_cost": {
+        "backlog_unit_periods": 52.0,
+        "contexts": 8,
+        "emissions": 113.75,
+        "final_backlog": 14.125,
+        "final_stock": 1.5,
+        "forecast_bias": 0.24038889740992322,
+        "forecast_mae": 1.1919567742863866,
+        "gap_to_perfect_information_pct": 321.94616056529594,
+        "immediate_fill_rate": 0.5986495492106167,
+        "solver_calls": 0.0,
+        "total_cost": 815.3125
+      },
+      "mpc_mean": {
+        "backlog_unit_periods": 40.5,
+        "contexts": 8,
+        "emissions": 128.625,
+        "final_backlog": 10.0,
+        "final_stock": 1.0,
+        "forecast_bias": 0.24038889740992322,
+        "forecast_mae": 1.1919567742863866,
+        "gap_to_perfect_information_pct": 287.6339584000593,
+        "immediate_fill_rate": 0.5748508905113054,
+        "solver_calls": 12.0,
+        "total_cost": 737.8562499999999
+      },
+      "mpc_scenarios": {
+        "backlog_unit_periods": 18.125,
+        "contexts": 8,
+        "emissions": 128.25,
+        "final_backlog": 5.375,
+        "final_stock": 4.875,
+        "forecast_bias": 0.24038889740992322,
+        "forecast_mae": 1.1919567742863866,
+        "gap_to_perfect_information_pct": 147.2942448758683,
+        "immediate_fill_rate": 0.7920291154834608,
+        "solver_calls": 12.0,
+        "total_cost": 482.7875
+      },
+      "perfect_information": {
+        "backlog_unit_periods": 2.625,
+        "contexts": 8,
+        "emissions": 108.875,
+        "final_backlog": 1.25,
+        "final_stock": 0.0,
+        "forecast_bias": 0.24038889740992322,
+        "forecast_mae": 1.1919567742863866,
+        "gap_to_perfect_information_pct": 0.0,
+        "immediate_fill_rate": 0.9717762214966161,
+        "solver_calls": 1.0,
+        "total_cost": 197.38125000000002
+      }
+    },
+    "volatile": {
+      "base_stock": {
+        "backlog_unit_periods": 15.125,
+        "contexts": 8,
+        "emissions": 92.125,
+        "final_backlog": 2.0,
+        "final_stock": 11.5,
+        "forecast_bias": -0.038178560846048565,
+        "forecast_mae": 1.1775440118391791,
+        "gap_to_perfect_information_pct": 208.71030504633262,
+        "immediate_fill_rate": 0.8476132498453927,
+        "solver_calls": 0.0,
+        "total_cost": 309.86875
+      },
+      "marginal_cost": {
+        "backlog_unit_periods": 30.25,
+        "contexts": 8,
+        "emissions": 77.875,
+        "final_backlog": 5.375,
+        "final_stock": 6.375,
+        "forecast_bias": -0.038178560846048565,
+        "forecast_mae": 1.1775440118391791,
+        "gap_to_perfect_information_pct": 269.5548616054963,
+        "immediate_fill_rate": 0.8013020833333333,
+        "solver_calls": 0.0,
+        "total_cost": 428.73125
+      },
+      "mpc_mean": {
+        "backlog_unit_periods": 19.375,
+        "contexts": 8,
+        "emissions": 98.625,
+        "final_backlog": 3.0,
+        "final_stock": 6.5,
+        "forecast_bias": -0.038178560846048565,
+        "forecast_mae": 1.1775440118391791,
+        "gap_to_perfect_information_pct": 299.3623504877703,
+        "immediate_fill_rate": 0.7386523075139146,
+        "solver_calls": 12.0,
+        "total_cost": 373.21875
+      },
+      "mpc_scenarios": {
+        "backlog_unit_periods": 7.25,
+        "contexts": 8,
+        "emissions": 99.375,
+        "final_backlog": 1.125,
+        "final_stock": 10.625,
+        "forecast_bias": -0.038178560846048565,
+        "forecast_mae": 1.1775440118391791,
+        "gap_to_perfect_information_pct": 169.87508302350165,
+        "immediate_fill_rate": 0.9026220431354359,
+        "solver_calls": 12.0,
+        "total_cost": 242.85625
+      },
+      "perfect_information": {
+        "backlog_unit_periods": 1.125,
+        "contexts": 8,
+        "emissions": 61.375,
+        "final_backlog": 0.125,
+        "final_stock": 0.0,
+        "forecast_bias": -0.038178560846048565,
+        "forecast_mae": 1.1775440118391791,
+        "gap_to_perfect_information_pct": 0.0,
+        "immediate_fill_rate": 0.9852272727272727,
+        "solver_calls": 1.0,
+        "total_cost": 98.35625
+      }
+    }
+  },
+  "outcomes_including_offline_bound": 160,
+  "paired": {
+    "marginal_cost": {
+      "better": 13,
+      "mean_cost_minus_base_stock": 97.371875,
+      "ties": 0,
+      "worse": 19
+    },
+    "mpc_mean": {
+      "better": 10,
+      "mean_cost_minus_base_stock": 60.640625,
+      "ties": 0,
+      "worse": 22
+    },
+    "mpc_scenarios": {
+      "better": 19,
+      "mean_cost_minus_base_stock": -48.381249999999994,
+      "ties": 0,
+      "worse": 13
+    }
+  },
+  "rl_trained": false,
+  "scope": "synthetic_development_descriptive_only"
+}

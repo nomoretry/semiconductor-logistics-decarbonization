@@ -174,3 +174,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 订单、价格、质量、容量和仓储参数为仿真假设。排放因子、路线几何和类比需求保存来源与校验值，详见 [ASML 数据说明](data_sources/data_audit_asml.md)、[Marvell 数据说明](data_sources/data_audit_marvell.md)和[第三方数据声明](THIRD_PARTY_NOTICES.md)。
 
 当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；未知需求、预测误差和滚动决策尚未加入。
+
+## 未知需求滚动环境
+
+[滚动库存实验](docs/rolling_inventory_results.md)已完成：12个校准、32个开发需求路径，4个可部署基线及预知需求下界。情景MPC平均成本282.2406，base-stock为330.6219；服务改善伴随排放增加。均值MPC未在总体胜过补货规则，未训练新RL。复算：`python -m semiconductor_logistics rolling-inventory verify`。

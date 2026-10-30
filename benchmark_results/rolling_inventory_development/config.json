@@ -1,0 +1,89 @@
+{
+  "backlog": [
+    7.0,
+    10.0,
+    5.0
+  ],
+  "base_mean": [
+    1.4,
+    1.8,
+    1.0
+  ],
+  "base_stock_z_candidates": [
+    0.0,
+    1.0,
+    2.0
+  ],
+  "calibration_seeds": [
+    101,
+    211,
+    307
+  ],
+  "capacity": [
+    8,
+    4
+  ],
+  "carbon_budget_per_period": 11,
+  "carbon_price": 0.25,
+  "development_seeds": [
+    1009,
+    1103,
+    1201,
+    1301,
+    1409,
+    1511,
+    1601,
+    1709
+  ],
+  "emissions": [
+    1.0,
+    4.0
+  ],
+  "forecast_alpha": 0.35,
+  "freight": [
+    1.0,
+    3.0
+  ],
+  "holding": [
+    0.4,
+    0.6,
+    0.3
+  ],
+  "horizon": 6,
+  "initial_inventory": [
+    3,
+    4,
+    2
+  ],
+  "lead": [
+    2,
+    1
+  ],
+  "mass": [
+    1,
+    2,
+    1
+  ],
+  "methods": [
+    "base_stock",
+    "marginal_cost",
+    "mpc_mean",
+    "mpc_scenarios"
+  ],
+  "periods": 12,
+  "profiles": [
+    "stable",
+    "volatile",
+    "upshift",
+    "downshift"
+  ],
+  "scenario_seed": 901337,
+  "scenarios": 7,
+  "schema": "rolling-inventory-development-v1",
+  "scope": "synthetic_development_not_final_or_company_calibrated",
+  "terminal_backlog": [
+    21.0,
+    30.0,
+    15.0
+  ]
+}
