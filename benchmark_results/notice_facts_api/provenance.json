@@ -1,0 +1,20 @@
+{
+  "artifact_id": 12959404094,
+  "artifact_zip_sha256": "c09f28a2a91319b558956b4750c8a90bb6682dd9570c6899243126e2ca6a20b9",
+  "claim_limit": "8 source-disjoint exploratory excerpts; assistant references pending human review; source quantity agreement is not internal-route update validation; frozen prompt and rules unchanged after observing results.",
+  "original_files_sha256": {
+    "api/assessment.json": "88f24288fe356901b999b77e4b45f96e9632a8896a7955ccf6c7bd4403782a6f",
+    "api/estimate.json": "69228dc4278f3230be6bdea8ef091b052d0bdc57f90f781ae15c0977b353db5f",
+    "api/inputs.jsonl": "e0ce798183078764a4fd1a65337f53f9da3f5df7116631a2973375e051f533aa",
+    "api/ledger-anchor.json": "90eb08c2d44f00510834a607a7915046ecc6279b7928722d16c57f0eb3de4f7b",
+    "api/manifest.json": "fce607f994c3f61fabfcd51e34024612962ca499b76ad400e2fd896ca5d978c1",
+    "api/prompt.txt": "52770c64c4e6f27c809e4ac4af13bf85a2639736a69e4577887d8a2956ba409e",
+    "api/records.jsonl": "7f9e85a9322a2d0fda37a4120aa43ecaf82a7de071870d7c89e192732271ff33",
+    "api/schema.json": "abff17fea57b9e1af2a6537a8cda2a8cee39bf879769cb84ef9cd9b3c0c917bc",
+    "offline.json": "e2b1687a0d609c667d4a60b6b8e5d30427acc1771a6262b459a728605a8e6c69"
+  },
+  "repository": "nomoretry/semiconductor-logistics-decarbonization",
+  "run_url": "https://github.com/nomoretry/semiconductor-logistics-decarbonization/actions/runs/41017440309",
+  "source_commit": "1be03d8c5ac55fde081a7138669e6dffa1781641",
+  "workflow_run_id": 41017440309
+}

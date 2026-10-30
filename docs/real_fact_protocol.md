@@ -37,7 +37,7 @@ python -m scripts.verify_real_notice_archive
 |---|---:|---:|
 | 冻结规则 | 16/16 | 6/8 |
 | 始终返回空事实 | 11/16 | 2/8 |
-| 固定LLM | 未运行此新任务 | 待手动运行 |
+| 固定LLM | 未运行此新任务 | 7/8（已运行，参考待人工复核） |
 
 [逐条离线结果](../benchmark_results/notice_facts_development/offline.json)保留规则的两个错误：把“改善后的14天总时长”误读成“缩短14天”；把“停航三周”误读成运输时长。没有根据新材料修正规则。8条不足以支持稳定的总体准确率估计，来源分布也不代表行业总体。
 
@@ -51,4 +51,4 @@ python -m semiconductor_logistics notice-facts api --split exploratory --output 
 
 最后一条仅估算，不读取密钥、不发请求。新工作流`Real fact extraction (manual)`只在main手动运行，沿用已有Secret。默认8条，按声明费率预留约USD 0.00807180；提交前总预留不得超过USD 0.05。此数值不是账单保证或账户级硬限额。模型名固定为`gpt-6-luna`，返回模型身份逐次保存，但别名不等于不可变快照。请求不含参考答案、来源ID或URL；原始响应、提示词、Schema、请求身份、预留日志与复算结果一起导出。
 
-操作与人工复核见[手动步骤](manual_steps.md)及[审核表](../reviews/notice_facts_v1/review.md)。后续人工意见另存，当前数据和结果不覆盖；若需修正标签，发布新版本并对原响应离线重评分。
+探索集API已经完成，详见[结果与E06分歧](results/notice_facts_api.md)，不用重跑。操作与人工复核见[手动步骤](manual_steps.md)及[审核表](../reviews/notice_facts_v1/review.md)。后续人工意见另存，当前数据和结果不覆盖；若需修正标签，发布新版本并对原响应离线重评分。
