@@ -1,0 +1,60 @@
+name: Real fact extraction (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      split:
+        description: 'exploratory = 8 new documents; development = 16 prior excerpts'
+        type: choice
+        required: true
+        default: exploratory
+        options:
+          - exploratory
+          - development
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notice-facts-evaluation
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FACT_SPLIT: ${{ inputs.split }}
+    steps:
+      - name: Check out reviewed source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - name: Validate frozen references and score offline baselines
+        run: |
+          python -m notice_facts validate
+          python -m notice_facts offline --output artifacts/notice_facts
+      - name: Estimate before requests
+        run: python -m notice_facts api --split "$FACT_SPLIT" --output artifacts/notice_facts/api
+      - name: Run the fixed model with a USD 0.05 reservation cap
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: python -m notice_facts api --split "$FACT_SPLIT" --output artifacts/notice_facts/api --execute --max-usd 0.05
+      - name: Replay responses and compare against rules
+        if: always()
+        run: python -m notice_facts verify --split "$FACT_SPLIT" --output artifacts/notice_facts/api --github-summary "$GITHUB_STEP_SUMMARY"
+      - name: Save raw evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: notice-facts-${{ inputs.split }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: artifacts/notice_facts/
+          include-hidden-files: false
+          if-no-files-found: warn
+          retention-days: 14

@@ -1,0 +1,9 @@
+{
+  "schema_version": "notice-facts-contract-freeze-v1",
+  "rule_development_source": "original 16 reviewed excerpts; generic total-duration extension defined before new labels",
+  "selection_note": "Same assistant curates new sources; source-disjoint exploratory set, not blind human-heldout gold",
+  "files": {
+    "notice_facts/contract.py": "069dc759d608f6f755d1b387120b4de01bb23ac5ef757464bb78661754cdab10",
+    "notice_facts/rules.py": "2b32d1074e12a7ea5db6a1ae62ad1edaea4fc0074c4641e594cb496f8658b05b"
+  }
+}

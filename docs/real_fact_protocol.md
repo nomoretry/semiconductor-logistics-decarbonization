@@ -27,4 +27,28 @@ python -m scripts.verify_real_notice_archive
 4. 与始终空输出、冻结规则和固定模型比较；模型API完成率、格式错误与语义错误分别报告。
 5. 真实公告与合成内部映射组成的任务明确标为混合案例。只有取得真实订舱映射才能宣称真实内部参数更新验证。
 
-当前只完成协议和现有字段盘点，尚未完成新的字段抽取API评测或人工金标准。
+## 已实现的数量抽取子任务
+
+[notice_facts](../notice_facts/)实现上述来源事实层的一部分：运输总时长、延误、增加时长、减少时长、增加距离及其单位、区间、限定语、原文证据。服务名、起讫地点、生效日期及内部路线映射尚未纳入此版输出。复合时长按原单位分别输出，不把“2天7小时”自行换算；同一摘录内不同路线的两个时长只按两个数量事实评分，不能据此验证路线归属。
+
+[数据](../benchmarks/notice_facts_v1/dataset.json)含16条原开发摘录和8份新官方材料。新材料为8条案例、7个事件组，其中6条含目标数量、2条不含，共8个数量事实。规则和提示词的[冻结记录](../notice_facts/freeze.json)先于新标签；但编写者同时负责资料收集并看过搜索摘要，因此只称来源分开的探索集，不称盲测或独立人工金标准。所有人工审核仍为pending。
+
+| 方法 | 原16条开发摘录 | 新8条探索摘录 |
+|---|---:|---:|
+| 冻结规则 | 16/16 | 6/8 |
+| 始终返回空事实 | 11/16 | 2/8 |
+| 固定LLM | 未运行此新任务 | 待手动运行 |
+
+[逐条离线结果](../benchmark_results/notice_facts_development/offline.json)保留规则的两个错误：把“改善后的14天总时长”误读成“缩短14天”；把“停航三周”误读成运输时长。没有根据新材料修正规则。8条不足以支持稳定的总体准确率估计，来源分布也不代表行业总体。
+
+`exact_match_planned`要求每个数量事实的类型、上下界、原单位和限定语全部一致；证据必须是输入中的连续子串，但子串校验不等于语义支持证明。格式错误、请求错误、未知调用结果和未调用分别保留；没有完成输出时API准确率为空。报告同时保留固定规则、始终空输出与完成案例上的成对差异。
+
+```bash
+python -m semiconductor_logistics notice-facts validate
+python -m semiconductor_logistics notice-facts offline --output artifacts/notice_facts
+python -m semiconductor_logistics notice-facts api --split exploratory --output artifacts/notice_facts/api
+```
+
+最后一条仅估算，不读取密钥、不发请求。新工作流`Real fact extraction (manual)`只在main手动运行，沿用已有Secret。默认8条，按声明费率预留约USD 0.00807180；提交前总预留不得超过USD 0.05。此数值不是账单保证或账户级硬限额。模型名固定为`gpt-6-luna`，返回模型身份逐次保存，但别名不等于不可变快照。请求不含参考答案、来源ID或URL；原始响应、提示词、Schema、请求身份、预留日志与复算结果一起导出。
+
+操作与人工复核见[手动步骤](manual_steps.md)及[审核表](../reviews/notice_facts_v1/review.md)。后续人工意见另存，当前数据和结果不覆盖；若需修正标签，发布新版本并对原响应离线重评分。

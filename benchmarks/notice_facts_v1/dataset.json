@@ -1,0 +1,441 @@
+{
+  "schema_version": "notice-facts-data-v1",
+  "human_gold": false,
+  "synthetic": false,
+  "scope": "source-disjoint exploratory quantity extraction; curator is also implementer; not blind heldout",
+  "source_access_date": "2026-10-30",
+  "selection": "Prespecified quantity/qualifier task; 16 prior excerpts for development; 8 new official documents selected for total vs change, compound units, capacity and service-suspension controls. Rules frozen before new labels; search previews were visible to the curator.",
+  "splits": {
+    "development": [
+      {
+        "id": "dev_real_r001",
+        "text": "across the Asia-North Europe network have contributed to an accumulation of delays on our services which resulted in a slide of AE55.",
+        "source_url": "https://www.maersk.com/news/articles/2024/06/05/capacity-adjustment-changes-far-east-asia-to-europe-services",
+        "source_title": "Capacity Adjustment Changes Far East Asia to Europe Services",
+        "group": "red_sea_diversion_and_asian_european_congestion_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "aaa994b2ca546ce2160f067720f64fd04ad2c0cbae7e6b1ceb9ec4c0340c1314"
+      },
+      {
+        "id": "dev_real_r002",
+        "text": "As a result, the following blank voyages will be introduced in the upcoming weeks.",
+        "source_url": "https://www.maersk.com/news/articles/2024/06/03/blanking-far-east-asia-to-med-services",
+        "source_title": "Blanking Far East Asia to Med Services",
+        "group": "red_sea_diversion_and_asian_european_congestion_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "22978ec37c359ad7903a5778509750ab102b809249655bee8a4ba60b55264084"
+      },
+      {
+        "id": "dev_real_r003",
+        "text": "As a result, the following voyage slide will be introduced.",
+        "source_url": "https://www.maersk.com/news/articles/2024/07/25/voyage-slide-far-east-asia-to-med-services",
+        "source_title": "Voyage Slide - Far East Asia to Med Services",
+        "group": "red_sea_diversion_and_asian_european_congestion_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "568dfe93d18191c28f0f6a2e39a979907957ddcaf34c365b4e6215423e30f2e5"
+      },
+      {
+        "id": "dev_real_r004",
+        "text": "the increasing congestion levels and operational disruptions at several ports across Northern Europe, specifically Antwerp and Bremerhaven.",
+        "source_url": "https://www.maersk.com/news/articles/2025/04/17/north-europe-port-update",
+        "source_title": "North Europe Port Update",
+        "group": "north_europe_terminal_congestion_2025h1",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "bc3495a452af6dfafe836b392986f5e40ae84dce7ed4fbfc53c3315f503b7958"
+      },
+      {
+        "id": "dev_real_r005",
+        "text": "contingency plans for week 13 and onward will not be implemented",
+        "source_url": "https://www.maersk.com/news/articles/2025/02/11/slow-operations-at-hutchinson-port-delta-in-rotterdam",
+        "source_title": "Slow Operations at Hutchinson Port Delta II in Rotterdam",
+        "group": "north_europe_terminal_congestion_2025h1",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "d67b59b80bd8f0a5651448cb45ab910f9e5907cd449bab19d395c53e3f0ccba4"
+      },
+      {
+        "id": "dev_real_r006",
+        "text": "strike action by lashing companies in the Port of Rotterdam is expected to start, Wednesday, 8 October 2025.",
+        "source_url": "https://www.maersk.com/news/articles/2025/10/08/strike-action-of-lashing-companies-in-rotterdam",
+        "source_title": "Customer advisory: Strike action of lashing companies in Rotterdam",
+        "group": "benelux_industrial_actions_2025oct",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "d54a09e416594d674d1ff4167e09cc2dcc03ce45727cd8cc07f9b3bee5c59579"
+      },
+      {
+        "id": "dev_real_r007",
+        "text": "challenges through the Adriatic Sea have caused delays across the network and impacted our ability to maintain regular schedules for the AE12 service.",
+        "source_url": "https://www.maersk.com/news/articles/2025/09/18/ca-ae12-voyage-slide",
+        "source_title": "Customer Advisory – AE12 Voyage Slide",
+        "group": "adriatic_port_congestion_2025q3q4",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "ce28e5a6911c83106a64db974bedc10e4e9c8ad93668f070d3c90f7754b014cc"
+      },
+      {
+        "id": "dev_real_r008",
+        "text": "In South Europe the Rijeka call will be scheduled ahead of Koper.",
+        "source_url": "https://www.hapag-lloyd.com/en/services-information/news/2025/09/shipping-between-asia-and-the-south-europe--here-s-an-important-.html",
+        "source_title": "Shipping between Asia and the South Europe? Here’s an important service update",
+        "group": "adriatic_port_congestion_2025q3q4",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "7ef14e1c17e11c861e23ac98da6eb3092e0e63c635f9e72499f904cbc08d1c5c"
+      },
+      {
+        "id": "dev_real_r009",
+        "text": "adding approximately 4,000 miles to the total voyage length, resulting in longer voyage times and higher operational expenses.",
+        "source_url": "https://www.maersk.com/news/articles/2024/06/12/navigating-challenges-in-red-sea-and-beyond",
+        "source_title": "Maersk Asia Pacific Market Update - June 2024",
+        "group": "red_sea_diversion_and_asian_european_congestion_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": [
+            {
+              "metric": "additional_distance",
+              "low": 4000,
+              "high": 4000,
+              "unit": "mile",
+              "qualifier": "approximate",
+              "evidence": "adding approximately 4,000 miles to the total voyage length, resulting in longer voyage times and higher operational expenses."
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "e16c7324426d7b8a7872274531b43440a11ee8e2ae2008d55604feff63e8141c"
+      },
+      {
+        "id": "dev_real_r010",
+        "text": "As new inbound vessels reach the canal, our aim is that these vessels will only experience a 1-2-day delay",
+        "source_url": "https://www.maersk.com/news/articles/2021/03/24/vessel-blockage-in-the-suez-canal",
+        "source_title": "Update to Vessel blockage in the Suez Canal",
+        "group": "suez_canal_blockage_2021marapr",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": [
+            {
+              "metric": "delay",
+              "low": 1,
+              "high": 2,
+              "unit": "day",
+              "qualifier": "target",
+              "evidence": "As new inbound vessels reach the canal, our aim is that these vessels will only experience a 1-2-day delay"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "2dcfdcae257f4b689a43f47ff0930734c240949348dc8704d7304cc9c4d53929"
+      },
+      {
+        "id": "dev_real_r011",
+        "text": "Rotterdam call is not anymore available in our schedule",
+        "source_url": "https://www.cma-cgm.com/local/netherlands/news/711/customer-advisory-nemo-service-change-of-rotation-in-north-europe",
+        "source_title": "CUSTOMER ADVISORY –NEMO SERVICE – Change of rotation in North Europe",
+        "group": "north_europe_terminal_congestion_2025h1",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "a73950d3da25ae25e632dcca83bb4223fd577283288de91060fb17503f28679a"
+      },
+      {
+        "id": "dev_real_r012",
+        "text": "Vessel traffic has now resumed, and port operations are gradually stabilizing. However, congestion remains significant at this time.",
+        "source_url": "https://www.hapag-lloyd.com/en/services-information/offices-localinfo/local-news/2025/11/belgian-national-strike-disrupts-port-operations-and-logistics-c.html",
+        "source_title": "Belgian National Strike Disrupts Port Operations and Logistics Chain",
+        "group": "belgian_national_strike_2025nov",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "6e51ace683b0e52b980d79ed8f391551adde416742573c4f6d95c8fc0b262569"
+      },
+      {
+        "id": "dev_real_r013",
+        "text": "customers may continue to experience intermittent delays in certain trade lanes as conditions across the wider regional network continue to normalize.",
+        "source_url": "https://www.maersk.com/news/articles/2026/10/20/east-asia-network-recovery-update-3",
+        "source_title": "East Asia network recovery: Update 3",
+        "group": "east_asia_typhoon_network_recovery_2026",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "213189c0886edaea8df923b38f4ed25d72b739c15be31ec00e991a417963d7c8"
+      },
+      {
+        "id": "dev_real_r014",
+        "text": "passage via Cape of Good Hope adds between 7 to 14 days to your shipment’s journey",
+        "source_url": "https://www.hapag-lloyd.com/en/services-information/news/2023/12/faq-for-the-suez-canal-situation.html",
+        "source_title": "FAQ for the Red Sea situation",
+        "group": "red_sea_diversion_and_asian_european_congestion_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": [
+            {
+              "metric": "journey_extension",
+              "low": 7,
+              "high": 14,
+              "unit": "day",
+              "qualifier": "range",
+              "evidence": "passage via Cape of Good Hope adds between 7 to 14 days to your shipment’s journey"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "8763ed9e21a14e6f174d5345f22b9d0a9783e2f5570225c9a450c70a10968a4e"
+      },
+      {
+        "id": "dev_real_r015",
+        "text": "On eastbound sailings, transit times will improve by an average of 14 days.",
+        "source_url": "https://www.maersk.com/news/articles/2026/07/09/structural-changes-to-mecl",
+        "source_title": "Structural changes to MECL",
+        "group": "red_sea_route_changes_2026",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_reduction",
+              "low": 14,
+              "high": 14,
+              "unit": "day",
+              "qualifier": "average",
+              "evidence": "On eastbound sailings, transit times will improve by an average of 14 days."
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "cfdea75db20660e9c4bd58296b6dd378300329d39002d49fbfd6e4c4daccae11"
+      },
+      {
+        "id": "dev_real_r016",
+        "text": "The transit times for ocean transports between Mumbai ports and North Europe will be shortened by five to seven days.",
+        "source_url": "https://www.maersk.com/news/articles/2024/04/19/maersk-enhances-me2-service-between-india-and-north-europe",
+        "source_title": "Maersk enhances ME2 service between India and North Europe ensuring shorter transit times",
+        "group": "india_north_europe_service_redesign_2024",
+        "locator": "Original short excerpt; see real_notices_v1/source_review.json",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_reduction",
+              "low": 5,
+              "high": 7,
+              "unit": "day",
+              "qualifier": "range",
+              "evidence": "The transit times for ocean transports between Mumbai ports and North Europe will be shortened by five to seven days."
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "4fe8afea68e2b027cdd27af770d33ead117d97f0bd045db266d16dfe5f5c97a6"
+      }
+    ],
+    "exploratory": [
+      {
+        "id": "E01",
+        "text": "will offer improved transit times. It will connect Busan and Long Beach with a transit time of 14 days,",
+        "source_url": "https://www.maersk.com/news/articles/2025/05/26/new-transpacific-gemini-service",
+        "source_title": "New Transpacific Gemini Service",
+        "group": "tp9_2025",
+        "locator": "The TP9 Service paragraph",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 14,
+              "high": 14,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "will offer improved transit times. It will connect Busan and Long Beach with a transit time of 14 days,"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "36ab5460e0a28b150a80a1db2e5657897ebeba473f586c04ad59c2254d3bf879"
+      },
+      {
+        "id": "E02",
+        "text": "Benefit from an expedited transit time of just 14 days from Shanghai to Bangladesh.",
+        "source_url": "https://www.cnc-line.com/news/271/revamp-bbx2-service-service-assurance-and-enhancements",
+        "source_title": "Revamp BBX2 Service",
+        "group": "bbx2_2024",
+        "locator": "Fast Transit Time bullet",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 14,
+              "high": 14,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "Benefit from an expedited transit time of just 14 days from Shanghai to Bangladesh."
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "d18819f70b6a7df54cb9cb75a4b31560c5458f4f9732ba06fd99c225c12e783f"
+      },
+      {
+        "id": "E03",
+        "text": "Best-in-Class Transit Time: Just 2 days and 7 hours",
+        "source_url": "https://www.maersk.com.cn/news/articles/2025/11/18/express-service-tunisia-italy-2d-7h",
+        "source_title": "Express Service Tunisia Italy",
+        "group": "tunisia_italy_2025",
+        "locator": "Key Highlights first bullet",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 2,
+              "high": 2,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "Best-in-Class Transit Time: Just 2 days and 7 hours"
+            },
+            {
+              "metric": "transit_time",
+              "low": 7,
+              "high": 7,
+              "unit": "hour",
+              "qualifier": "stated",
+              "evidence": "Best-in-Class Transit Time: Just 2 days and 7 hours"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "41cb43c932464408a66330064cf8870378111e769458a24c353fc56992e95ea9"
+      },
+      {
+        "id": "E04",
+        "text": "Our MEDUSEC service will achieve an industry-leading transit time of just 9 days between Genoa and New York",
+        "source_url": "https://www.msc.com/de/newsroom/customer-advisories/2025/february/msc-enhances-two-transatlantic-services-with-industry-leading-9day-genoa-to-new-york-transit-time",
+        "source_title": "MSC MEDUSEC enhancement",
+        "group": "medusec_2025",
+        "locator": "Paragraph before adjustments",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 9,
+              "high": 9,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "Our MEDUSEC service will achieve an industry-leading transit time of just 9 days between Genoa and New York"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "a31351bd6d47778f147e040e7fc226477b2b7746880620922d6cb3e237ef87d2"
+      },
+      {
+        "id": "E05",
+        "text": "Current transit times from London Gateway include:​\n\nDirect\n\n▪ Abu Dhabi – 27 days ▪ Jebel Ali - 29 days",
+        "source_url": "https://www.msc.com/tr/newsroom/news/local-news/united-kingdom/2026/february/return-of-the-lion-service",
+        "source_title": "Return of the Lion Service",
+        "group": "lion_2026",
+        "locator": "Direct destinations; whitespace normalized",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 27,
+              "high": 27,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "Current transit times from London Gateway include:​\n\nDirect\n\n▪ Abu Dhabi – 27 days ▪ Jebel Ali - 29 days"
+            },
+            {
+              "metric": "transit_time",
+              "low": 29,
+              "high": 29,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "Current transit times from London Gateway include:​\n\nDirect\n\n▪ Abu Dhabi – 27 days ▪ Jebel Ali - 29 days"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "2d4b84a94fb5d182bc856fb59ee93a0f337f13662d39e6751f3cadb6cb788192"
+      },
+      {
+        "id": "E06",
+        "text": "the TP9 will be blanked for three weeks in October, voyages 540E, 541E and 542E.",
+        "source_url": "https://www.maersk.com/news/articles/2025/09/10/asia-to-us-west-coast-services-service-suspension-tp9",
+        "source_title": "TP9 service suspension",
+        "group": "tp9_2025",
+        "locator": "Opening paragraph; suspension duration is not transport duration",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "66482f5c65a6675bc28a8d099a20effd9f183a1896a2a67f4f048a7cf9d88765"
+      },
+      {
+        "id": "E07",
+        "text": "Upgrade to 20,000 TEU vessels",
+        "source_url": "https://www.hapag-lloyd.com/en/services-information/news/2026/02/gemini-network-2026---service-enhancements-in-2026.headless.html",
+        "source_title": "Gemini network service enhancements",
+        "group": "gemini_se3_capacity_2026",
+        "locator": "SE3 first bullet; capacity is outside quantity-task scope",
+        "reference": {
+          "facts": []
+        },
+        "human_review": "pending",
+        "text_sha256": "df7658f9af9a83a5961edf7711250ebab4f980b881bbad014403424e1d3efba3"
+      },
+      {
+        "id": "E08",
+        "text": "transit times within the North Europe to North America routes (Westbound & Eastbound).\n\no Le Havre to New York 9 days",
+        "source_url": "https://www.cma-cgm.com/news/4947/2025-cma-cgm-transatlantic-north-europe-network?cat=servicesupdates",
+        "source_title": "CMA CGM Transatlantic North Europe network",
+        "group": "cma_transatlantic_2025",
+        "locator": "Transit time introduction and first destination bullet; rendered whitespace normalized",
+        "reference": {
+          "facts": [
+            {
+              "metric": "transit_time",
+              "low": 9,
+              "high": 9,
+              "unit": "day",
+              "qualifier": "stated",
+              "evidence": "transit times within the North Europe to North America routes (Westbound & Eastbound).\n\no Le Havre to New York 9 days"
+            }
+          ]
+        },
+        "human_review": "pending",
+        "text_sha256": "75758c38d249aa0f40fab02d95fe99e7115314e47f040f963df341b31dec4852"
+      }
+    ]
+  }
+}
