@@ -1,0 +1,24 @@
+{
+  "files": {
+    "calibration.jsonl": "ec36d1cf15335264a156bff30d387356dbdb75e30d29167ebcf425ca6d8bac38",
+    "config.json": "7d88327befa058c2f0b7cd6018fe245b246c8fcec5002127c20d4434ea0eca5a",
+    "outcomes.jsonl": "6410300dc14e393f629884e4f655ec7ed256288f40007cbe6d7af9870c73e742",
+    "runtime.json": "8fb0db89206baabe597889d2a498653e30ff0bc72223bb0cb64c6fe1eaf6a2df",
+    "selection.json": "41fdcda83d7fd660eb52ed109c4a0610c8fcaefaf1817d56d65e6d5b0a752aae",
+    "summary.json": "9223b4fb792c72570a30d65ce42ed03a2d8ccb54c4069ca8b19ee809777c461b",
+    "tasks.json": "597d4b3956b07ce49e8df0370ee6c57b5004fec63e429e8cfff9d68a6a88a1cf",
+    "timing.jsonl": "c8c879770626331fee20ef4dea844ee0bdce2f965a05996e1179aa52a7a94ff9",
+    "traces.jsonl.gz": "acecbefd925591a64a4d7e778f05586bebad6dcad6a863b60afee92d0600d403"
+  },
+  "schema": "rolling-inventory-development-v1",
+  "smoke": false,
+  "sources": {
+    "docs/rolling_inventory_protocol.md": "edb37df6884027e62aa858a5f50b83040496556f71c8e27647c8032d9b2b52e9",
+    "rolling_inventory/__init__.py": "aa4cddb4032f6a0eeaa337825c4ce6837a562701fc9a49297640e2dd0947d126",
+    "rolling_inventory/__main__.py": "9243c14e5789f310cfd7c60f66405c9fa02c43e590ef41c7ec2e78ce42e2cf86",
+    "rolling_inventory/config.json": "d671a7cd6cabf1b1a6962e886874b4ae377857581d52cd750c0ac07319c66b8c",
+    "rolling_inventory/environment.py": "3a08327ef704eff16be7b44fca006fa8d5c252a90027e3c5cff990b388e851f4",
+    "rolling_inventory/experiment.py": "aee77d909b52c138f341947554f13a1f90db1fd5768ea39493ea3650e3831d17",
+    "rolling_inventory/planning.py": "0dd0123f21908c1702980cbcf6bd58235bb29a1a66280d7ac6d35c3e80a8f8f3"
+  }
+}

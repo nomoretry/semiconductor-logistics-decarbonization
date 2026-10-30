@@ -1,7 +1,7 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m semiconductor_logistics
 
-.PHONY: sync test smoke benchmark verify report ci ci-core verify-components verify-strict-training package-check download-data real-notices decision-audit
+.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-strict-training package-check download-data real-notices decision-audit
 
 sync:
 	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
@@ -31,12 +31,13 @@ smoke:
 	$(CLI) query-ppo --smoke-check
 	$(CLI) query-study smoke-check
 	$(CLI) query-components smoke-check
+	$(CLI) rolling-inventory smoke-check
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
 	$(CLI) optimize --project both
 
-verify:
+verify-core:
 	$(CLI) verify-run
 	$(CLI) workflow-audit --verify
 	$(CLI) score-api --run benchmark_results/api_smoke
@@ -51,7 +52,11 @@ verify:
 	$(CLI) query-bc --verify --output benchmark_results/query_bc_development
 	$(PYTHON) -m scripts.diagnose_query_policy --verify
 	$(PYTHON) -m scripts.verify_training_portable
+
+verify-final:
 	$(CLI) query-study verify-final
+
+verify: verify-core verify-final
 
 # Byte-identical checkpoint hashes require the original numerical dispatch.
 # The default verifier binds those hashes to stored full coefficient arrays.
@@ -79,4 +84,9 @@ verify-components:
 
 ci-core: test smoke verify package-check
 
-ci: ci-core verify-components
+verify-rolling:
+	$(CLI) rolling-inventory verify
+
+ci-foundation: test smoke verify-core package-check
+
+ci: ci-core verify-components verify-rolling

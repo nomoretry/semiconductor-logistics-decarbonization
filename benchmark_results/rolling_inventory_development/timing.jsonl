@@ -1,0 +1,196 @@
+{"id": "calibration-stable-101", "method": "base_stock", "seconds": 0.0034764059892040677, "split": "calibration", "z": 0.0}
+{"id": "calibration-stable-211", "method": "base_stock", "seconds": 0.002637780999066308, "split": "calibration", "z": 0.0}
+{"id": "calibration-stable-307", "method": "base_stock", "seconds": 0.0025649439921835437, "split": "calibration", "z": 0.0}
+{"id": "calibration-volatile-101", "method": "base_stock", "seconds": 0.0024203879984270316, "split": "calibration", "z": 0.0}
+{"id": "calibration-volatile-211", "method": "base_stock", "seconds": 0.0023435899965988938, "split": "calibration", "z": 0.0}
+{"id": "calibration-volatile-307", "method": "base_stock", "seconds": 0.0016481069978908636, "split": "calibration", "z": 0.0}
+{"id": "calibration-upshift-101", "method": "base_stock", "seconds": 0.0029623749978782143, "split": "calibration", "z": 0.0}
+{"id": "calibration-upshift-211", "method": "base_stock", "seconds": 0.003221829996618908, "split": "calibration", "z": 0.0}
+{"id": "calibration-upshift-307", "method": "base_stock", "seconds": 0.003210763999959454, "split": "calibration", "z": 0.0}
+{"id": "calibration-downshift-101", "method": "base_stock", "seconds": 0.01624784999876283, "split": "calibration", "z": 0.0}
+{"id": "calibration-downshift-211", "method": "base_stock", "seconds": 0.002566128005128121, "split": "calibration", "z": 0.0}
+{"id": "calibration-downshift-307", "method": "base_stock", "seconds": 0.002187805002904497, "split": "calibration", "z": 0.0}
+{"id": "calibration-stable-101", "method": "base_stock", "seconds": 0.002678365992323961, "split": "calibration", "z": 1.0}
+{"id": "calibration-stable-211", "method": "base_stock", "seconds": 0.003119309993053321, "split": "calibration", "z": 1.0}
+{"id": "calibration-stable-307", "method": "base_stock", "seconds": 0.002870909003831912, "split": "calibration", "z": 1.0}
+{"id": "calibration-volatile-101", "method": "base_stock", "seconds": 0.002708261996303918, "split": "calibration", "z": 1.0}
+{"id": "calibration-volatile-211", "method": "base_stock", "seconds": 0.00263435200395179, "split": "calibration", "z": 1.0}
+{"id": "calibration-volatile-307", "method": "base_stock", "seconds": 0.0018292709974048194, "split": "calibration", "z": 1.0}
+{"id": "calibration-upshift-101", "method": "base_stock", "seconds": 0.0036197600020386744, "split": "calibration", "z": 1.0}
+{"id": "calibration-upshift-211", "method": "base_stock", "seconds": 0.0031154579992289655, "split": "calibration", "z": 1.0}
+{"id": "calibration-upshift-307", "method": "base_stock", "seconds": 0.003423175003263168, "split": "calibration", "z": 1.0}
+{"id": "calibration-downshift-101", "method": "base_stock", "seconds": 0.0023976210031833034, "split": "calibration", "z": 1.0}
+{"id": "calibration-downshift-211", "method": "base_stock", "seconds": 0.002517865003028419, "split": "calibration", "z": 1.0}
+{"id": "calibration-downshift-307", "method": "base_stock", "seconds": 0.0023380510101560503, "split": "calibration", "z": 1.0}
+{"id": "calibration-stable-101", "method": "base_stock", "seconds": 0.003187087997503113, "split": "calibration", "z": 2.0}
+{"id": "calibration-stable-211", "method": "base_stock", "seconds": 0.003487995003524702, "split": "calibration", "z": 2.0}
+{"id": "calibration-stable-307", "method": "base_stock", "seconds": 0.0031640310044167563, "split": "calibration", "z": 2.0}
+{"id": "calibration-volatile-101", "method": "base_stock", "seconds": 0.0034493850034778006, "split": "calibration", "z": 2.0}
+{"id": "calibration-volatile-211", "method": "base_stock", "seconds": 0.002909579998231493, "split": "calibration", "z": 2.0}
+{"id": "calibration-volatile-307", "method": "base_stock", "seconds": 0.0020438050014490727, "split": "calibration", "z": 2.0}
+{"id": "calibration-upshift-101", "method": "base_stock", "seconds": 0.00292672300565755, "split": "calibration", "z": 2.0}
+{"id": "calibration-upshift-211", "method": "base_stock", "seconds": 0.003168901999742957, "split": "calibration", "z": 2.0}
+{"id": "calibration-upshift-307", "method": "base_stock", "seconds": 0.0041157949999615084, "split": "calibration", "z": 2.0}
+{"id": "calibration-downshift-101", "method": "base_stock", "seconds": 0.0025309749944426585, "split": "calibration", "z": 2.0}
+{"id": "calibration-downshift-211", "method": "base_stock", "seconds": 0.0028538410078908782, "split": "calibration", "z": 2.0}
+{"id": "calibration-downshift-307", "method": "base_stock", "seconds": 0.0032479379951837473, "split": "calibration", "z": 2.0}
+{"id": "development-stable-1009", "method": "perfect_information", "seconds": 0.008976535998954205, "split": "development"}
+{"id": "development-stable-1009", "method": "base_stock", "seconds": 0.0030690570129081607, "split": "development"}
+{"id": "development-stable-1009", "method": "marginal_cost", "seconds": 0.03722804900826304, "split": "development"}
+{"id": "development-stable-1009", "method": "mpc_mean", "seconds": 0.08186698699137196, "split": "development"}
+{"id": "development-stable-1009", "method": "mpc_scenarios", "seconds": 0.04780640100580058, "split": "development"}
+{"id": "development-stable-1103", "method": "perfect_information", "seconds": 0.005704269999114331, "split": "development"}
+{"id": "development-stable-1103", "method": "base_stock", "seconds": 0.0025843139992502984, "split": "development"}
+{"id": "development-stable-1103", "method": "marginal_cost", "seconds": 0.03882901100223535, "split": "development"}
+{"id": "development-stable-1103", "method": "mpc_mean", "seconds": 0.06087653799841064, "split": "development"}
+{"id": "development-stable-1103", "method": "mpc_scenarios", "seconds": 0.06214822200126946, "split": "development"}
+{"id": "development-stable-1201", "method": "perfect_information", "seconds": 0.007136749998608138, "split": "development"}
+{"id": "development-stable-1201", "method": "base_stock", "seconds": 0.0021543939983530436, "split": "development"}
+{"id": "development-stable-1201", "method": "marginal_cost", "seconds": 0.03225017401200603, "split": "development"}
+{"id": "development-stable-1201", "method": "mpc_mean", "seconds": 0.10708772200814565, "split": "development"}
+{"id": "development-stable-1201", "method": "mpc_scenarios", "seconds": 0.07909347000531852, "split": "development"}
+{"id": "development-stable-1301", "method": "perfect_information", "seconds": 0.0036189620004734024, "split": "development"}
+{"id": "development-stable-1301", "method": "base_stock", "seconds": 0.0031555989990010858, "split": "development"}
+{"id": "development-stable-1301", "method": "marginal_cost", "seconds": 0.028989590999117354, "split": "development"}
+{"id": "development-stable-1301", "method": "mpc_mean", "seconds": 0.07842501699997229, "split": "development"}
+{"id": "development-stable-1301", "method": "mpc_scenarios", "seconds": 0.0595668430069054, "split": "development"}
+{"id": "development-stable-1409", "method": "perfect_information", "seconds": 0.008183055000699824, "split": "development"}
+{"id": "development-stable-1409", "method": "base_stock", "seconds": 0.003193366999767022, "split": "development"}
+{"id": "development-stable-1409", "method": "marginal_cost", "seconds": 0.03207648399984464, "split": "development"}
+{"id": "development-stable-1409", "method": "mpc_mean", "seconds": 0.11061085899928003, "split": "development"}
+{"id": "development-stable-1409", "method": "mpc_scenarios", "seconds": 0.06074548900141963, "split": "development"}
+{"id": "development-stable-1511", "method": "perfect_information", "seconds": 0.006832749000750482, "split": "development"}
+{"id": "development-stable-1511", "method": "base_stock", "seconds": 0.003218235000531422, "split": "development"}
+{"id": "development-stable-1511", "method": "marginal_cost", "seconds": 0.03577709100500215, "split": "development"}
+{"id": "development-stable-1511", "method": "mpc_mean", "seconds": 0.11569716500525828, "split": "development"}
+{"id": "development-stable-1511", "method": "mpc_scenarios", "seconds": 0.06755264699677355, "split": "development"}
+{"id": "development-stable-1601", "method": "perfect_information", "seconds": 0.006510491002700292, "split": "development"}
+{"id": "development-stable-1601", "method": "base_stock", "seconds": 0.00337422200027504, "split": "development"}
+{"id": "development-stable-1601", "method": "marginal_cost", "seconds": 0.03574997600298957, "split": "development"}
+{"id": "development-stable-1601", "method": "mpc_mean", "seconds": 0.07193378500596737, "split": "development"}
+{"id": "development-stable-1601", "method": "mpc_scenarios", "seconds": 0.06530888599445461, "split": "development"}
+{"id": "development-stable-1709", "method": "perfect_information", "seconds": 0.0028565469983732328, "split": "development"}
+{"id": "development-stable-1709", "method": "base_stock", "seconds": 0.002469498991558794, "split": "development"}
+{"id": "development-stable-1709", "method": "marginal_cost", "seconds": 0.039684253995801555, "split": "development"}
+{"id": "development-stable-1709", "method": "mpc_mean", "seconds": 0.10368435299096745, "split": "development"}
+{"id": "development-stable-1709", "method": "mpc_scenarios", "seconds": 0.054848317995492835, "split": "development"}
+{"id": "development-volatile-1009", "method": "perfect_information", "seconds": 0.007317572999454569, "split": "development"}
+{"id": "development-volatile-1009", "method": "base_stock", "seconds": 0.003164802004903322, "split": "development"}
+{"id": "development-volatile-1009", "method": "marginal_cost", "seconds": 0.031398337003338384, "split": "development"}
+{"id": "development-volatile-1009", "method": "mpc_mean", "seconds": 0.08444465300635784, "split": "development"}
+{"id": "development-volatile-1009", "method": "mpc_scenarios", "seconds": 0.08653845499793533, "split": "development"}
+{"id": "development-volatile-1103", "method": "perfect_information", "seconds": 0.007088066002324922, "split": "development"}
+{"id": "development-volatile-1103", "method": "base_stock", "seconds": 0.003614193992689252, "split": "development"}
+{"id": "development-volatile-1103", "method": "marginal_cost", "seconds": 0.030926148996513803, "split": "development"}
+{"id": "development-volatile-1103", "method": "mpc_mean", "seconds": 0.08333626799867488, "split": "development"}
+{"id": "development-volatile-1103", "method": "mpc_scenarios", "seconds": 0.048695238005166175, "split": "development"}
+{"id": "development-volatile-1201", "method": "perfect_information", "seconds": 0.008969446000264725, "split": "development"}
+{"id": "development-volatile-1201", "method": "base_stock", "seconds": 0.003158873994834721, "split": "development"}
+{"id": "development-volatile-1201", "method": "marginal_cost", "seconds": 0.040160778000426944, "split": "development"}
+{"id": "development-volatile-1201", "method": "mpc_mean", "seconds": 0.09892514199964353, "split": "development"}
+{"id": "development-volatile-1201", "method": "mpc_scenarios", "seconds": 0.08686131899958127, "split": "development"}
+{"id": "development-volatile-1301", "method": "perfect_information", "seconds": 0.00603855599911185, "split": "development"}
+{"id": "development-volatile-1301", "method": "base_stock", "seconds": 0.004929036003886722, "split": "development"}
+{"id": "development-volatile-1301", "method": "marginal_cost", "seconds": 0.0388409099978162, "split": "development"}
+{"id": "development-volatile-1301", "method": "mpc_mean", "seconds": 0.07697893599106465, "split": "development"}
+{"id": "development-volatile-1301", "method": "mpc_scenarios", "seconds": 0.050870751994807506, "split": "development"}
+{"id": "development-volatile-1409", "method": "perfect_information", "seconds": 0.00630015199931222, "split": "development"}
+{"id": "development-volatile-1409", "method": "base_stock", "seconds": 0.0030820580032013822, "split": "development"}
+{"id": "development-volatile-1409", "method": "marginal_cost", "seconds": 0.06726717999845278, "split": "development"}
+{"id": "development-volatile-1409", "method": "mpc_mean", "seconds": 0.0450702909984102, "split": "development"}
+{"id": "development-volatile-1409", "method": "mpc_scenarios", "seconds": 0.045124095006030984, "split": "development"}
+{"id": "development-volatile-1511", "method": "perfect_information", "seconds": 0.004886159997113282, "split": "development"}
+{"id": "development-volatile-1511", "method": "base_stock", "seconds": 0.0021739840012742206, "split": "development"}
+{"id": "development-volatile-1511", "method": "marginal_cost", "seconds": 0.02770062899799086, "split": "development"}
+{"id": "development-volatile-1511", "method": "mpc_mean", "seconds": 0.060265010008151876, "split": "development"}
+{"id": "development-volatile-1511", "method": "mpc_scenarios", "seconds": 0.053500734004046535, "split": "development"}
+{"id": "development-volatile-1601", "method": "perfect_information", "seconds": 0.003924535001715412, "split": "development"}
+{"id": "development-volatile-1601", "method": "base_stock", "seconds": 0.002563031990575837, "split": "development"}
+{"id": "development-volatile-1601", "method": "marginal_cost", "seconds": 0.040586252998764394, "split": "development"}
+{"id": "development-volatile-1601", "method": "mpc_mean", "seconds": 0.07701823499519378, "split": "development"}
+{"id": "development-volatile-1601", "method": "mpc_scenarios", "seconds": 0.0466351359973487, "split": "development"}
+{"id": "development-volatile-1709", "method": "perfect_information", "seconds": 0.0027055979990109336, "split": "development"}
+{"id": "development-volatile-1709", "method": "base_stock", "seconds": 0.0022971309954300523, "split": "development"}
+{"id": "development-volatile-1709", "method": "marginal_cost", "seconds": 0.02701249699748587, "split": "development"}
+{"id": "development-volatile-1709", "method": "mpc_mean", "seconds": 0.06053778500427143, "split": "development"}
+{"id": "development-volatile-1709", "method": "mpc_scenarios", "seconds": 0.04681931500090286, "split": "development"}
+{"id": "development-upshift-1009", "method": "perfect_information", "seconds": 0.006030894997820724, "split": "development"}
+{"id": "development-upshift-1009", "method": "base_stock", "seconds": 0.002893054006563034, "split": "development"}
+{"id": "development-upshift-1009", "method": "marginal_cost", "seconds": 0.03134531599789625, "split": "development"}
+{"id": "development-upshift-1009", "method": "mpc_mean", "seconds": 0.054094787996291416, "split": "development"}
+{"id": "development-upshift-1009", "method": "mpc_scenarios", "seconds": 0.048276298999553546, "split": "development"}
+{"id": "development-upshift-1103", "method": "perfect_information", "seconds": 0.007095396998920478, "split": "development"}
+{"id": "development-upshift-1103", "method": "base_stock", "seconds": 0.002752611006144434, "split": "development"}
+{"id": "development-upshift-1103", "method": "marginal_cost", "seconds": 0.03400518800117425, "split": "development"}
+{"id": "development-upshift-1103", "method": "mpc_mean", "seconds": 0.07104239299951587, "split": "development"}
+{"id": "development-upshift-1103", "method": "mpc_scenarios", "seconds": 0.05071328399935737, "split": "development"}
+{"id": "development-upshift-1201", "method": "perfect_information", "seconds": 0.01301883800260839, "split": "development"}
+{"id": "development-upshift-1201", "method": "base_stock", "seconds": 0.003791590002947487, "split": "development"}
+{"id": "development-upshift-1201", "method": "marginal_cost", "seconds": 0.03932165000151144, "split": "development"}
+{"id": "development-upshift-1201", "method": "mpc_mean", "seconds": 0.07381247900411836, "split": "development"}
+{"id": "development-upshift-1201", "method": "mpc_scenarios", "seconds": 0.08961437401012518, "split": "development"}
+{"id": "development-upshift-1301", "method": "perfect_information", "seconds": 0.007007284002611414, "split": "development"}
+{"id": "development-upshift-1301", "method": "base_stock", "seconds": 0.0031722959902253933, "split": "development"}
+{"id": "development-upshift-1301", "method": "marginal_cost", "seconds": 0.0290216569956101, "split": "development"}
+{"id": "development-upshift-1301", "method": "mpc_mean", "seconds": 0.09231021799496375, "split": "development"}
+{"id": "development-upshift-1301", "method": "mpc_scenarios", "seconds": 0.11072687300111284, "split": "development"}
+{"id": "development-upshift-1409", "method": "perfect_information", "seconds": 0.006489059000159614, "split": "development"}
+{"id": "development-upshift-1409", "method": "base_stock", "seconds": 0.003360873000929132, "split": "development"}
+{"id": "development-upshift-1409", "method": "marginal_cost", "seconds": 0.03270944500400219, "split": "development"}
+{"id": "development-upshift-1409", "method": "mpc_mean", "seconds": 0.09721755999635207, "split": "development"}
+{"id": "development-upshift-1409", "method": "mpc_scenarios", "seconds": 0.10271197499969276, "split": "development"}
+{"id": "development-upshift-1511", "method": "perfect_information", "seconds": 0.0034024230008071754, "split": "development"}
+{"id": "development-upshift-1511", "method": "base_stock", "seconds": 0.0032660150027368218, "split": "development"}
+{"id": "development-upshift-1511", "method": "marginal_cost", "seconds": 0.024744579004618572, "split": "development"}
+{"id": "development-upshift-1511", "method": "mpc_mean", "seconds": 0.089220176996605, "split": "development"}
+{"id": "development-upshift-1511", "method": "mpc_scenarios", "seconds": 0.08810844499748782, "split": "development"}
+{"id": "development-upshift-1601", "method": "perfect_information", "seconds": 0.007939364997582743, "split": "development"}
+{"id": "development-upshift-1601", "method": "base_stock", "seconds": 0.002549171000282513, "split": "development"}
+{"id": "development-upshift-1601", "method": "marginal_cost", "seconds": 0.034151728003052995, "split": "development"}
+{"id": "development-upshift-1601", "method": "mpc_mean", "seconds": 0.07501181699990411, "split": "development"}
+{"id": "development-upshift-1601", "method": "mpc_scenarios", "seconds": 0.05397567399995751, "split": "development"}
+{"id": "development-upshift-1709", "method": "perfect_information", "seconds": 0.012339148997853044, "split": "development"}
+{"id": "development-upshift-1709", "method": "base_stock", "seconds": 0.0026976450099027716, "split": "development"}
+{"id": "development-upshift-1709", "method": "marginal_cost", "seconds": 0.0328670909984794, "split": "development"}
+{"id": "development-upshift-1709", "method": "mpc_mean", "seconds": 0.08863618899704306, "split": "development"}
+{"id": "development-upshift-1709", "method": "mpc_scenarios", "seconds": 0.17903487799776485, "split": "development"}
+{"id": "development-downshift-1009", "method": "perfect_information", "seconds": 0.0036495479980658274, "split": "development"}
+{"id": "development-downshift-1009", "method": "base_stock", "seconds": 0.00277371200354537, "split": "development"}
+{"id": "development-downshift-1009", "method": "marginal_cost", "seconds": 0.02930068099158234, "split": "development"}
+{"id": "development-downshift-1009", "method": "mpc_mean", "seconds": 0.08903426600591047, "split": "development"}
+{"id": "development-downshift-1009", "method": "mpc_scenarios", "seconds": 0.04855896999652032, "split": "development"}
+{"id": "development-downshift-1103", "method": "perfect_information", "seconds": 0.00279575500098872, "split": "development"}
+{"id": "development-downshift-1103", "method": "base_stock", "seconds": 0.0022610730011365376, "split": "development"}
+{"id": "development-downshift-1103", "method": "marginal_cost", "seconds": 0.03525303599963081, "split": "development"}
+{"id": "development-downshift-1103", "method": "mpc_mean", "seconds": 0.09097216199734248, "split": "development"}
+{"id": "development-downshift-1103", "method": "mpc_scenarios", "seconds": 0.06559039899366326, "split": "development"}
+{"id": "development-downshift-1201", "method": "perfect_information", "seconds": 0.0037770099988847505, "split": "development"}
+{"id": "development-downshift-1201", "method": "base_stock", "seconds": 0.0035052780040132347, "split": "development"}
+{"id": "development-downshift-1201", "method": "marginal_cost", "seconds": 0.030625878996943356, "split": "development"}
+{"id": "development-downshift-1201", "method": "mpc_mean", "seconds": 0.05696246999286814, "split": "development"}
+{"id": "development-downshift-1201", "method": "mpc_scenarios", "seconds": 0.05702470500182244, "split": "development"}
+{"id": "development-downshift-1301", "method": "perfect_information", "seconds": 0.002786000000924105, "split": "development"}
+{"id": "development-downshift-1301", "method": "base_stock", "seconds": 0.0023278069966181647, "split": "development"}
+{"id": "development-downshift-1301", "method": "marginal_cost", "seconds": 0.03031125098641496, "split": "development"}
+{"id": "development-downshift-1301", "method": "mpc_mean", "seconds": 0.057994992996100336, "split": "development"}
+{"id": "development-downshift-1301", "method": "mpc_scenarios", "seconds": 0.045220776002679486, "split": "development"}
+{"id": "development-downshift-1409", "method": "perfect_information", "seconds": 0.002737225997407222, "split": "development"}
+{"id": "development-downshift-1409", "method": "base_stock", "seconds": 0.002180720999604091, "split": "development"}
+{"id": "development-downshift-1409", "method": "marginal_cost", "seconds": 0.022608777002460556, "split": "development"}
+{"id": "development-downshift-1409", "method": "mpc_mean", "seconds": 0.06342508099987754, "split": "development"}
+{"id": "development-downshift-1409", "method": "mpc_scenarios", "seconds": 0.07201010899370885, "split": "development"}
+{"id": "development-downshift-1511", "method": "perfect_information", "seconds": 0.0031678480008849874, "split": "development"}
+{"id": "development-downshift-1511", "method": "base_stock", "seconds": 0.002456972000800306, "split": "development"}
+{"id": "development-downshift-1511", "method": "marginal_cost", "seconds": 0.03123860599589534, "split": "development"}
+{"id": "development-downshift-1511", "method": "mpc_mean", "seconds": 0.07754015799218905, "split": "development"}
+{"id": "development-downshift-1511", "method": "mpc_scenarios", "seconds": 0.12445360700439778, "split": "development"}
+{"id": "development-downshift-1601", "method": "perfect_information", "seconds": 0.003187697999237571, "split": "development"}
+{"id": "development-downshift-1601", "method": "base_stock", "seconds": 0.0026853249910345767, "split": "development"}
+{"id": "development-downshift-1601", "method": "marginal_cost", "seconds": 0.025340023006720003, "split": "development"}
+{"id": "development-downshift-1601", "method": "mpc_mean", "seconds": 0.07013289700262249, "split": "development"}
+{"id": "development-downshift-1601", "method": "mpc_scenarios", "seconds": 0.15030633299829788, "split": "development"}
+{"id": "development-downshift-1709", "method": "perfect_information", "seconds": 0.005072764000942698, "split": "development"}
+{"id": "development-downshift-1709", "method": "base_stock", "seconds": 0.002719690997764701, "split": "development"}
+{"id": "development-downshift-1709", "method": "marginal_cost", "seconds": 0.026274837997334544, "split": "development"}
+{"id": "development-downshift-1709", "method": "mpc_mean", "seconds": 0.051728620994254015, "split": "development"}
+{"id": "development-downshift-1709", "method": "mpc_scenarios", "seconds": 0.05562808600006974, "split": "development"}

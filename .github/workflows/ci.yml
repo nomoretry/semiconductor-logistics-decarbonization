@@ -31,7 +31,7 @@ jobs:
       - name: Install the Python project
         run: make sync
       - name: Run offline tests, smoke replay, evidence verification and wheel checks
-        run: make ci-core
+        run: make ci-foundation
 
   component-study:
     runs-on: ubuntu-latest
@@ -56,3 +56,35 @@ jobs:
         run: make sync
       - name: Refit potential and replay all mask and shaping variants
         run: make verify-components
+
+  frozen-final:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - run: make sync
+      - run: make verify-final
+
+  rolling-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - run: make sync
+      - run: make verify-rolling

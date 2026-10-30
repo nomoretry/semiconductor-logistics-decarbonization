@@ -38,3 +38,9 @@ BC误差诊断和[同起点PPO](query_ppo_results.md)已完成首轮开发运行
 仓库列表里的头像、姓名、学校和地区来自个人资料；`Edit profile`是自己的编辑入口，访问别人的主页显示`Follow`。蓝色胶囊来自仓库Topics，许可证来自LICENSE文件。截图中的本项目已经被识别为Python。朋友列表中的部分条目标有`Forked from`，仓库数量包含这些派生仓库。
 
 可在个人主页`Edit profile`修改自己的介绍；仓库首页`About`右侧齿轮可填写Topics，例如`python`、`logistics`、`optimization`、`mixed-integer-programming`。这些元数据不改变算法或测试结果。许可证涉及授权范围，本轮未擅自添加MIT，也未修改个人资料。
+
+## 滚动库存扩展 / Rolling inventory extension
+
+[滚动环境](rolling_inventory_results.md)现已实现未知需求、历史信息预测、在途状态和四类强基线，保留成本/服务/排放取舍；尚未进行滚动策略训练或查询耦合。
+
+The [rolling environment](rolling_inventory_results.md) now implements unknown demand, history-only forecasting, pipeline state and four strong baselines, retaining cost/service/emissions tradeoffs. Rolling-policy training and query coupling remain unimplemented.
