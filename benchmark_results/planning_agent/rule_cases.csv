@@ -1,0 +1,25 @@
+id,split,success,tool_recall,tool_precision,args_met,facts_found,facts_total,faithful,steps,seconds,tools,question
+D01,dev,True,1.0,1.0,1/1,2,2,True,1,0.06,['describe_network'],介绍一下 ASML 备件网络有哪些运输线路，各自运力多少？
+D02,dev,True,1.0,1.0,1/1,1,1,True,1,0.0,['describe_network'],Marvell 芯片网络的线路和单位排放是什么情况？
+D03,dev,True,1.0,1.0,1/1,2,2,True,3,1.51,"['solve_plan', 'solve_plan', 'compare_plans']",如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？
+D04,dev,True,1.0,1.0,1/1,1,1,True,3,0.45,"['solve_plan', 'solve_plan', 'compare_plans']",台风导致台湾港口关闭，对芯片物流成本有什么影响？
+D05,dev,True,1.0,1.0,1/1,1,1,True,3,0.51,"['solve_plan', 'solve_plan', 'compare_plans']",马来西亚到新加坡边境拥堵会让成本增加多少？
+D06,dev,True,1.0,1.0,1/1,1,1,True,3,3.84,"['solve_plan', 'solve_plan', 'compare_plans']",ASML 备件需求激增 30%（第8到16周），成本会涨多少？
+D07,dev,True,1.0,1.0,1/1,1,1,True,3,3.65,"['solve_plan', 'solve_plan', 'compare_plans']",如果 ASML 网络要减排 25%，物流成本会增加多少？
+D08,dev,True,1.0,1.0,1/1,1,1,True,3,0.88,"['solve_plan', 'solve_plan', 'compare_plans']",芯片网络把排放控制在 80% 以内，成本代价是多少？
+D09,dev,True,1.0,1.0,1/1,1,1,True,1,4.93,['carbon_frontier'],ASML 网络的边际减排成本曲线是怎样的？
+D10,dev,True,1.0,0.333,1/1,1,1,True,4,16.79,"['solve_plan', 'solve_plan', 'compare_plans', 'hedge_disruption_risk']",红海中断有 25% 的概率发生，ASML 应该怎么对冲？值不值得提前预留空运舱位？
+D11,dev,True,1.0,1.0,1/1,2,2,True,1,17.03,['hedge_disruption_risk'],在不确定会不会发生中断的情况下，ASML 的随机规划对冲方案价值多少（VSS 和 EVPI）？
+D12,dev,True,1.0,0.667,1/1,1,1,True,4,2.17,"['solve_plan', 'solve_plan', 'compare_plans', 'explain_plan']",为什么红海中断后 ASML 成本上升？瓶颈在哪里？
+D13,dev,True,1.0,1.0,1/1,1,1,True,4,2.33,"['create_scenario', 'solve_plan', 'solve_plan', 'compare_plans']",船公司通知：第5到10周海运延误3周，舱位削减40%。对 ASML 备件有什么影响？
+D14,dev,True,1.0,,,,0,True,0,0.0,[],帮我订一张明天去新加坡的机票
+H01,holdout,False,0.0,0.0,0/1,0,1,True,0,0.0,[],Carriers are rerouting Asia-Europe sailings around Africa because of attacks on shipping. What does that do to our Singapore spare-parts logistics cost and emissions?
+H02,holdout,True,1.0,1.0,1/1,1,1,True,3,8.79,"['solve_plan', 'solve_plan', 'compare_plans']",红海如果出事，同时还要减排 20%，ASML 的成本比现在高多少？
+H03,holdout,False,0.0,0.0,0/1,0,1,True,0,0.0,[],What would it cost to cut our chip network's emissions by 30 percent?
+H04,holdout,True,1.0,1.0,1/1,1,1,True,1,0.01,['describe_network'],Which lane in the ASML network is the most carbon-intensive per kg shipped?
+H05,holdout,False,0.667,1.0,0/1,0,1,True,3,0.52,"['solve_plan', 'solve_plan', 'compare_plans']",A typhoon shuts Taiwan's ports completely in weeks 6-7 and halves Taiwan air capacity in the same weeks. What is the cost impact on the chip network?
+H06,holdout,False,1.0,0.333,1/1,0,1,True,4,26.59,"['solve_plan', 'solve_plan', 'compare_plans', 'hedge_disruption_risk']","There's maybe a 40% chance the Red Sea route closes. Should we reserve extra air capacity now, and what is planning for it worth?"
+H07,holdout,True,1.0,0.667,1/1,1,1,True,4,3.96,"['solve_plan', 'solve_plan', 'compare_plans', 'explain_plan']",ASML 减排40%以后，哪些线路成了瓶颈？碳约束的影子价格是多少？
+H08,holdout,False,0.0,,,,0,True,0,0.0,[],中断了怎么办？
+H09,holdout,True,1.0,,,,0,True,0,0.0,[],What will TSMC's revenue be next year?
+H10,holdout,False,0.0,0.0,0/1,0,1,True,0,0.0,[],如果第8到16周需求涨三成，同时把排放压到原来的80%，ASML 成本会比现在高多少？

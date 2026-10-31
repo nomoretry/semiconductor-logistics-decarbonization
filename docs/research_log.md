@@ -122,3 +122,8 @@ The user explicitly approved public upload of the 35 distribution evidence files
 Earlier documentation turned comparable difficulty/completeness into a module-by-module framework mapping, contrary to the user's intent. This update introduces [project-specific research design](research_design.md) and [source history](source_history.md); current entry points use our questions and acceptance criteria. The comparison is retired and the reading inventory moves to history. Frozen BC protocols and actual attribution retain their bytes. Standard methods are not claimed as inventions, and historical conceptual influence is not denied.
 
 A limited check finds no exact whole-file identities between 132 project Python files and 97 files at the historically reviewed commit, and no imports of that package. The [scope and limitations](../data_sources/code_origin_check.json) explicitly exclude comprehensive partial-copy or intellectual-independence judgments. Work remains centered on logistics information value, resource coupling and forecast error. Further modules follow research gaps. This change adds no training or performance claims.
+
+| 记录 | 问题与修改 | 验证/结果 | 结论 |
+|---|---|---|---|
+| R33 | 能否把研究变成回答“扰动影响多大、减排多贵、要不要对冲”的运筹工具 | 新增[网络规划引擎](network_planning.md)：固定费用多SKU多式联运MILP、空运舱位预留、两阶段随机规划、碳前沿与影子价格；独立核算与求解器目标相对差≤1e-6；[完整报告](../benchmark_results/network_planning/report.md) | ASML红海绕行成本+12.38%；减排25%成本+1.76%（影子价格277 USD/t）；VSS 864 USD（1.51%）。Marvell减排25%成本+13.12%，VSS在gap区间内约为零。整数发货溢价约0.04–0.09%，耗时数倍，战术层默认连续流量 |
+| R34 | 规划工具能否由自然语言驱动且数字可追溯 | 新增[规划Agent](planning_agent.md)：8个工具、数字护栏、备忘录、24条评测（14开发+10鲁棒性，同一作者编写）；[逐条结果](../benchmark_results/planning_agent) | 规则Agent开发集14/14、鲁棒性集4/10、忠实度100%，失败集中在未覆盖的说法；LLM Agent未运行，不报告LLM数字 |

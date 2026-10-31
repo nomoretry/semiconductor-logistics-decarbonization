@@ -16,6 +16,7 @@ This document is available in Chinese and English; English follows Chinese.
 | 3. BC/PPO | 公开37维特征、BC、成本PPO、5种子开发及掩码/势函数对照 | 小型查询策略，不是LLM训练；单种子提升未稳定复现 |
 | 4. 冻结千题 | 1,000不同情境、5实际训练种子、27,000评估；参数消融、逐策略重执行 | BC/PPO遗憾3.1179%/3.1477%，区间跨零；最多3次查询。组件对照尚无新留出确认 |
 | 5. 未知需求滚动 | 原基线44路径；敏感性24新路径/2,304轨迹；均值预测44新路径/352轨迹；分布16拟合+16选参+64确认/512轨迹 | 残差NB成本+2.06%，主区间跨零，教师筛选失败；当前MPC对跨SKU完整路径配对不敏感；未训练滚动BC/PPO |
+| 6. 运筹规划引擎与规划Agent | 固定费用多SKU多式联运MILP、两阶段随机规划（VSS/EVPI及对偶界区间）、碳前沿与影子价格、独立核算；8个工具的规划Agent、数字护栏、24条评测和离线规则基线，见[模型](network_planning.md)与[Agent](planning_agent.md) | 规则Agent开发集14/14、鲁棒性集4/10；LLM Agent需API key，尚未运行。下一项：接入LLM对比，并把评测扩到100条独立出题 |
 
 ### 已成立的结果
 
@@ -57,6 +58,7 @@ The [research guide](research_guide.md) defines current scope; the [research log
 | 3. BC/PPO | Public 37-feature input, BC, cost PPO, five-seed development and mask/potential study | Small query policies, not LLM training; early single-seed gains are unstable |
 | 4. Frozen final | 1,000 distinct contexts, five training seeds,27,000 evaluations, ablations and policy replay | BC/PPO regret 3.1179%/3.1477%, interval crosses zero; at most three queries. Components lack new heldout confirmation |
 | 5. Rolling demand |44 original paths;24 new sensitivity paths/2,304 trajectories;44 new forecast paths/352 trajectories;16 fit+16 tune+64 confirmation distribution paths/512 trajectories | NB cost+2.06%, interval crosses zero, teacher screen fails; current MPC is invariant to cross-SKU whole-path pairing; no rolling BC/PPO |
+| 6. OR planning engine and agent | Fixed-charge multi-SKU multi-modal MILP, two-stage stochastic planning (VSS/EVPI with dual-bound intervals), carbon frontier and shadow prices, independent accounting; eight-tool planning agent, numeric guardrail, 24-question evaluation and offline rule baseline ([model](network_planning.md), [agent](planning_agent.md)) | Rule agent 14/14 development and 4/10 robustness cases; the LLM agent has not been run (needs an API key). Next: LLM comparison and 100 independently written questions |
 
 ### Established results
 

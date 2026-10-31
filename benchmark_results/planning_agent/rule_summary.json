@@ -1,0 +1,36 @@
+{
+  "agent": "rule",
+  "model": null,
+  "splits": {
+    "dev": {
+      "cases": 14,
+      "success_rate": 1.0,
+      "tool_recall": 1.0,
+      "tool_precision": 0.9231,
+      "fact_accuracy": 1.0,
+      "faithfulness": 1.0,
+      "mean_tool_calls": 2.4286,
+      "mean_seconds": 3.8679
+    },
+    "holdout": {
+      "cases": 10,
+      "success_rate": 0.4,
+      "tool_recall": 0.5667,
+      "tool_precision": 0.5,
+      "fact_accuracy": 0.375,
+      "faithfulness": 1.0,
+      "mean_tool_calls": 1.5,
+      "mean_seconds": 3.987
+    }
+  },
+  "overall": {
+    "cases": 24,
+    "success_rate": 0.75,
+    "tool_recall": 0.8195,
+    "tool_precision": 0.7619,
+    "fact_accuracy": 0.7917,
+    "faithfulness": 1.0,
+    "mean_tool_calls": 2.0417,
+    "mean_seconds": 3.9175
+  }
+}

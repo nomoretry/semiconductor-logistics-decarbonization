@@ -18,7 +18,7 @@ import venv
 
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKAGES = ("semiconductor_logistics", "notice_benchmark", "notice_facts", "real_notice_eval", "decision_benchmark", "coupled_decision", "budgeted_decision", "query_policy", "query_ppo", "query_study", "query_components", "rolling_inventory", "rolling_sensitivity", "rolling_forecast", "rolling_distribution", "rolling_recourse", "shared", "scripts")
+PACKAGES = ("semiconductor_logistics", "notice_benchmark", "notice_facts", "real_notice_eval", "decision_benchmark", "coupled_decision", "budgeted_decision", "query_policy", "query_ppo", "query_study", "query_components", "rolling_inventory", "rolling_sensitivity", "rolling_forecast", "rolling_distribution", "rolling_recourse", "network_planning", "planning_agent", "shared", "scripts")
 
 
 def run(command: list[str], cwd: Path, *, expected: int = 0) -> str:

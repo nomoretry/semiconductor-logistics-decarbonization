@@ -1,0 +1,1669 @@
+{
+  "settings": {
+    "n_skus": 12,
+    "weeks": 16,
+    "seed": 7,
+    "quick": false,
+    "mip_gap": 0.001,
+    "reveal_week": 3,
+    "frontier_service_level": 0.98
+  },
+  "networks": {
+    "asml": {
+      "description": {
+        "network": "asml",
+        "label": "ASML-inspired spare parts, Netherlands to Singapore",
+        "weeks": 16,
+        "skus": 12,
+        "seed": 7,
+        "demand_units": 1132,
+        "demand_kg": 17238.5,
+        "value_density_usd_per_kg": [
+          49,
+          2513
+        ],
+        "lanes": [
+          {
+            "id": "NL_air",
+            "mode": "air",
+            "origin": "NL",
+            "lead_weeks": 1,
+            "distance_km": 10514,
+            "freight_usd_per_kg": 5.0,
+            "weekly_capacity_kg": 803.8,
+            "reservable_kg": 401.9,
+            "fixed_usd_per_week": 150.0,
+            "kgco2e_per_kg": 7.007
+          },
+          {
+            "id": "NL_ocean",
+            "mode": "ocean",
+            "origin": "NL",
+            "lead_weeks": 5,
+            "distance_km": 15349,
+            "freight_usd_per_kg": 0.35,
+            "weekly_capacity_kg": 1507.1,
+            "reservable_kg": 0.0,
+            "fixed_usd_per_week": 300.0,
+            "kgco2e_per_kg": 0.303
+          }
+        ],
+        "scenarios": {
+          "normal": {
+            "probability": 0.6,
+            "description": "No disruption."
+          },
+          "red_sea": {
+            "probability": 0.25,
+            "description": "Red Sea diversion via the Cape of Good Hope for departures in weeks 4-12: ocean lead time +2 weeks, distance x1.4183 (21,770 km / 15,349 km, Port of Rotterdam figures in data_sources/data_audit_asml.md), ocean capacity -30% and surcharge x1.6; air spot capacity -40% and spot price x1.8 as shippers move to air. Capacity and price factors are illustrative."
+          },
+          "air_crunch": {
+            "probability": 0.15,
+            "description": "Air cargo capacity crunch in weeks 6-10: air spot capacity -60% and spot price x1.6. Illustrative."
+          },
+          "demand_surge": {
+            "probability": 0.0,
+            "description": "Fab ramp-up: committed demand +30% in weeks 8-16. Illustrative."
+          }
+        },
+        "data_note": "Synthetic SKUs, demand, capacities and disruption factors; sourced distances and emission factors."
+      },
+      "scenario_impact": [
+        {
+          "scenario": "normal",
+          "status": "optimal",
+          "solve_seconds": 1.447,
+          "mip_gap": 0.0009628810680389256,
+          "total_cost_usd": 55253.33,
+          "emissions_t": 20.8211,
+          "air_share_kg": 0.1976,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 0.0,
+          "emissions_change_pct": 0.0
+        },
+        {
+          "scenario": "red_sea",
+          "status": "optimal",
+          "solve_seconds": 0.509,
+          "mip_gap": 0.0006458316066664707,
+          "total_cost_usd": 62094.54,
+          "emissions_t": 26.7311,
+          "air_share_kg": 0.2572,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 12.382,
+          "emissions_change_pct": 28.385
+        },
+        {
+          "scenario": "air_crunch",
+          "status": "optimal",
+          "solve_seconds": 0.641,
+          "mip_gap": 0.00025625290156925675,
+          "total_cost_usd": 55253.33,
+          "emissions_t": 20.8211,
+          "air_share_kg": 0.1976,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 0.0,
+          "emissions_change_pct": -0.0
+        },
+        {
+          "scenario": "demand_surge",
+          "status": "optimal",
+          "solve_seconds": 3.931,
+          "mip_gap": 0.0008620235671539071,
+          "total_cost_usd": 63863.52,
+          "emissions_t": 23.3414,
+          "air_share_kg": 0.1796,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 15.583,
+          "emissions_change_pct": 12.105
+        }
+      ],
+      "frontier": {
+        "scenario": "normal",
+        "service_level": 0.98,
+        "baseline_cost_usd": 55253.33,
+        "baseline_emissions_t": 20.8211,
+        "points": [
+          {
+            "level": 1.0,
+            "cap_t": null,
+            "status": "optimal",
+            "solve_seconds": 0.736,
+            "mip_gap": 0.0009632529298055238,
+            "total_cost_usd": 55253.33,
+            "emissions_t": 20.8211,
+            "air_share_kg": 0.1976,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0
+          },
+          {
+            "level": 0.9,
+            "cap_t": 18.739,
+            "status": "optimal",
+            "solve_seconds": 1.328,
+            "mip_gap": 0.000801073984724346,
+            "total_cost_usd": 55451.22,
+            "emissions_t": 18.739,
+            "air_share_kg": 0.1733,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 0.358,
+            "mac_vs_baseline_usd_per_t": 95.04,
+            "mac_step_usd_per_t": 95.04,
+            "shadow_price_usd_per_t": 155.11
+          },
+          {
+            "level": 0.8,
+            "cap_t": 16.6569,
+            "status": "optimal",
+            "solve_seconds": 1.939,
+            "mip_gap": 0.0008546339492801705,
+            "total_cost_usd": 55933.76,
+            "emissions_t": 16.6569,
+            "air_share_kg": 0.1489,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 1.231,
+            "mac_vs_baseline_usd_per_t": 163.4,
+            "mac_step_usd_per_t": 231.75,
+            "shadow_price_usd_per_t": 274.4
+          },
+          {
+            "level": 0.75,
+            "cap_t": 15.6158,
+            "status": "optimal",
+            "solve_seconds": 2.496,
+            "mip_gap": 0.0009022560853931986,
+            "total_cost_usd": 56224.76,
+            "emissions_t": 15.6158,
+            "air_share_kg": 0.1368,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 1.758,
+            "mac_vs_baseline_usd_per_t": 186.63,
+            "mac_step_usd_per_t": 279.52,
+            "shadow_price_usd_per_t": 276.53
+          },
+          {
+            "level": 0.7,
+            "cap_t": 14.5748,
+            "status": "optimal",
+            "solve_seconds": 6.23,
+            "mip_gap": 0.0008896889298267068,
+            "total_cost_usd": 56519.06,
+            "emissions_t": 14.5748,
+            "air_share_kg": 0.1246,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 2.291,
+            "mac_vs_baseline_usd_per_t": 202.64,
+            "mac_step_usd_per_t": 282.7,
+            "shadow_price_usd_per_t": 288.3
+          },
+          {
+            "level": 0.6,
+            "cap_t": 12.4927,
+            "status": "optimal",
+            "solve_seconds": 3.225,
+            "mip_gap": 0.0007742304468116767,
+            "total_cost_usd": 57144.06,
+            "emissions_t": 12.4927,
+            "air_share_kg": 0.1002,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 3.422,
+            "mac_vs_baseline_usd_per_t": 227.02,
+            "mac_step_usd_per_t": 300.17,
+            "shadow_price_usd_per_t": 295.52
+          },
+          {
+            "level": 0.5,
+            "cap_t": 10.4105,
+            "status": "optimal",
+            "solve_seconds": 2.795,
+            "mip_gap": 0.0008769630823516703,
+            "total_cost_usd": 58557.19,
+            "emissions_t": 10.4105,
+            "air_share_kg": 0.0759,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 5.979,
+            "mac_vs_baseline_usd_per_t": 317.36,
+            "mac_step_usd_per_t": 678.69,
+            "shadow_price_usd_per_t": 1425.59
+          },
+          {
+            "level": 0.4,
+            "cap_t": 8.3284,
+            "status": "optimal",
+            "solve_seconds": 2.706,
+            "mip_gap": 0.00021743988535029337,
+            "total_cost_usd": 62420.82,
+            "emissions_t": 8.3284,
+            "air_share_kg": 0.0516,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 12.972,
+            "mac_vs_baseline_usd_per_t": 573.74,
+            "mac_step_usd_per_t": 1855.67,
+            "shadow_price_usd_per_t": 3236.56
+          }
+        ],
+        "min_emissions_t": 5.7275,
+        "min_emissions_cost_usd": 77656.65,
+        "max_reduction_pct": 72.49
+      },
+      "price_sweep": [
+        {
+          "carbon_price_usd_per_t": 0,
+          "status": "optimal",
+          "solve_seconds": 1.264,
+          "mip_gap": 0.0009628810680389256,
+          "total_cost_usd": 55253.33,
+          "emissions_t": 20.8211,
+          "air_share_kg": 0.1976,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 0.0
+        },
+        {
+          "carbon_price_usd_per_t": 50,
+          "status": "optimal",
+          "solve_seconds": 0.492,
+          "mip_gap": 0.0008541351770741744,
+          "total_cost_usd": 55253.33,
+          "emissions_t": 20.8211,
+          "air_share_kg": 0.1976,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 1041.05
+        },
+        {
+          "carbon_price_usd_per_t": 100,
+          "status": "optimal",
+          "solve_seconds": 0.804,
+          "mip_gap": 0.0008253005235248986,
+          "total_cost_usd": 55349.78,
+          "emissions_t": 19.4408,
+          "air_share_kg": 0.1815,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 1944.08
+        },
+        {
+          "carbon_price_usd_per_t": 200,
+          "status": "optimal",
+          "solve_seconds": 0.534,
+          "mip_gap": 0.0007376855552695667,
+          "total_cost_usd": 55550.32,
+          "emissions_t": 18.1605,
+          "air_share_kg": 0.1665,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 3632.1
+        },
+        {
+          "carbon_price_usd_per_t": 400,
+          "status": "optimal",
+          "solve_seconds": 1.588,
+          "mip_gap": 0.00038240448802274096,
+          "total_cost_usd": 57616.6,
+          "emissions_t": 11.1214,
+          "air_share_kg": 0.0842,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 4448.54
+        },
+        {
+          "carbon_price_usd_per_t": 800,
+          "status": "optimal",
+          "solve_seconds": 2.393,
+          "mip_gap": 0.0009974639234104166,
+          "total_cost_usd": 57616.6,
+          "emissions_t": 11.1214,
+          "air_share_kg": 0.0842,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 8897.09
+        },
+        {
+          "carbon_price_usd_per_t": 1600,
+          "status": "optimal",
+          "solve_seconds": 2.447,
+          "mip_gap": 0.0007591460400550314,
+          "total_cost_usd": 60420.72,
+          "emissions_t": 9.1394,
+          "air_share_kg": 0.0611,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 14622.96
+        },
+        {
+          "carbon_price_usd_per_t": 3200,
+          "status": "optimal",
+          "solve_seconds": 1.826,
+          "mip_gap": 0.0009144938092252702,
+          "total_cost_usd": 62398.32,
+          "emissions_t": 8.3354,
+          "air_share_kg": 0.0517,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 26673.24
+        },
+        {
+          "carbon_price_usd_per_t": 6400,
+          "status": "optimal",
+          "solve_seconds": 1.575,
+          "mip_gap": 0.000981605766896191,
+          "total_cost_usd": 69569.38,
+          "emissions_t": 6.6083,
+          "air_share_kg": 0.0315,
+          "service_level": 0.99205,
+          "backlog_unit_weeks": 9.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 42292.98
+        }
+      ],
+      "stochastic": {
+        "network": "asml",
+        "reveal_week": 3,
+        "nominal": "normal",
+        "scenarios": [
+          {
+            "name": "normal",
+            "probability": 0.6
+          },
+          {
+            "name": "red_sea",
+            "probability": 0.25
+          },
+          {
+            "name": "air_crunch",
+            "probability": 0.15
+          }
+        ],
+        "RP": 57153.56,
+        "EEV": 58017.74,
+        "WS": 56963.63,
+        "VSS": 864.18,
+        "EVPI": 189.93,
+        "VSS_interval": [
+          820.76,
+          868.53
+        ],
+        "EVPI_interval": [
+          185.58,
+          234.0
+        ],
+        "VSS_pct_of_RP": 1.512,
+        "EVPI_pct_of_RP": 0.332,
+        "per_scenario": {
+          "normal": {
+            "probability": 0.6,
+            "stochastic_plan_usd": 55434.82,
+            "nominal_plan_usd": 55253.33,
+            "perfect_information_usd": 55253.33,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          },
+          "red_sea": {
+            "probability": 0.25,
+            "stochastic_plan_usd": 62309.77,
+            "nominal_plan_usd": 66310.99,
+            "perfect_information_usd": 62094.54,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          },
+          "air_crunch": {
+            "probability": 0.15,
+            "stochastic_plan_usd": 55434.82,
+            "nominal_plan_usd": 55253.33,
+            "perfect_information_usd": 55253.33,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          }
+        },
+        "first_stage": {
+          "stochastic": {
+            "air_reservation_kg_per_week": {
+              "NL_air": 199.1
+            },
+            "early_shipments_units": {
+              "NL_ocean": 84.48084054388111,
+              "NL_air": 16.0
+            },
+            "early_shipments_kg": {
+              "NL_ocean": 1766.8,
+              "NL_air": 113.1
+            }
+          },
+          "nominal": {
+            "air_reservation_kg_per_week": {
+              "NL_air": 164.1
+            },
+            "early_shipments_units": {
+              "NL_ocean": 45.72261989978526,
+              "NL_air": 16.0
+            },
+            "early_shipments_kg": {
+              "NL_ocean": 931.0,
+              "NL_air": 113.1
+            }
+          }
+        },
+        "mip_gap_setting": 0.001,
+        "solve_seconds": 17.15
+      },
+      "stochastic_plan_explained": {
+        "scenario": "normal",
+        "status": "optimal",
+        "binding_capacity": [
+          {
+            "lane": "NL_ocean",
+            "week": 10,
+            "load_kg": 1507.1,
+            "capacity_kg": 1507.1,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "NL_ocean",
+            "week": 11,
+            "load_kg": 1507.1,
+            "capacity_kg": 1507.1,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "NL_ocean",
+            "week": 2,
+            "load_kg": 1492.4,
+            "capacity_kg": 1507.1,
+            "utilisation": 0.99
+          }
+        ],
+        "cost_drivers": [
+          {
+            "item": "transit_capital",
+            "usd": 23808.63,
+            "share": 0.4295
+          },
+          {
+            "item": "freight",
+            "usd": 16773.04,
+            "share": 0.3026
+          },
+          {
+            "item": "holding",
+            "usd": 8310.48,
+            "share": 0.1499
+          },
+          {
+            "item": "fixed",
+            "usd": 4950.0,
+            "share": 0.0893
+          },
+          {
+            "item": "air_reservation",
+            "usd": 1592.67,
+            "share": 0.0287
+          },
+          {
+            "item": "backlog",
+            "usd": 0.0,
+            "share": 0.0
+          }
+        ],
+        "mode_kg_by_week": [
+          {
+            "week": 1,
+            "air": 40.5,
+            "ocean": 274.4
+          },
+          {
+            "week": 2,
+            "air": 72.7,
+            "ocean": 1492.4
+          },
+          {
+            "week": 3,
+            "air": 163.4,
+            "ocean": 0.0
+          },
+          {
+            "week": 4,
+            "air": 199.1,
+            "ocean": 1362.1
+          },
+          {
+            "week": 5,
+            "air": 234.8,
+            "ocean": 0.0
+          },
+          {
+            "week": 6,
+            "air": 154.0,
+            "ocean": 1083.8
+          },
+          {
+            "week": 7,
+            "air": 107.9,
+            "ocean": 704.5
+          },
+          {
+            "week": 8,
+            "air": 41.1,
+            "ocean": 1055.6
+          },
+          {
+            "week": 9,
+            "air": 199.1,
+            "ocean": 1218.9
+          },
+          {
+            "week": 10,
+            "air": 122.7,
+            "ocean": 1507.1
+          },
+          {
+            "week": 11,
+            "air": 165.6,
+            "ocean": 1507.1
+          },
+          {
+            "week": 12,
+            "air": 169.4,
+            "ocean": 0.0
+          },
+          {
+            "week": 13,
+            "air": 201.5,
+            "ocean": 0.0
+          },
+          {
+            "week": 14,
+            "air": 199.1,
+            "ocean": 0.0
+          },
+          {
+            "week": 15,
+            "air": 487.8,
+            "ocean": 0.0
+          },
+          {
+            "week": 16,
+            "air": 0.0,
+            "ocean": 0.0
+          }
+        ],
+        "air_reservation_kg_per_week": {
+          "NL_air": 199.1
+        },
+        "service_level": 1.0,
+        "backlog_unit_weeks": 0.0
+      },
+      "integrality": [
+        {
+          "case": "uncapped",
+          "continuous_usd": 55253.33,
+          "integer_usd": 55296.6,
+          "integer_premium_pct": 0.0783,
+          "continuous_seconds": 0.771,
+          "integer_seconds": 9.64,
+          "integer_status": "optimal"
+        },
+        {
+          "case": "cap_60pct",
+          "continuous_usd": 57144.06,
+          "integer_usd": 57183.49,
+          "integer_premium_pct": 0.069,
+          "continuous_seconds": 3.829,
+          "integer_seconds": 22.95,
+          "integer_status": "optimal"
+        },
+        {
+          "case": "stochastic",
+          "continuous_usd": 57153.56,
+          "integer_usd": 57194.03,
+          "integer_premium_pct": 0.0708,
+          "continuous_seconds": 3.123,
+          "integer_seconds": 18.331,
+          "integer_status": "optimal"
+        }
+      ]
+    },
+    "marvell": {
+      "description": {
+        "network": "marvell",
+        "label": "Marvell-inspired finished goods, Taiwan and Malaysia to Singapore",
+        "weeks": 16,
+        "skus": 12,
+        "seed": 7,
+        "demand_units": 4229,
+        "demand_kg": 8211.2,
+        "value_density_usd_per_kg": [
+          6000,
+          18800
+        ],
+        "lanes": [
+          {
+            "id": "TW_air",
+            "mode": "air",
+            "origin": "TW",
+            "lead_weeks": 1,
+            "distance_km": 3222,
+            "freight_usd_per_kg": 5.5,
+            "weekly_capacity_kg": 261.9,
+            "reservable_kg": 130.9,
+            "fixed_usd_per_week": 100.0,
+            "kgco2e_per_kg": 2.148
+          },
+          {
+            "id": "TW_ocean",
+            "mode": "ocean",
+            "origin": "TW",
+            "lead_weeks": 3,
+            "distance_km": 4000,
+            "freight_usd_per_kg": 0.6,
+            "weekly_capacity_kg": 491.0,
+            "reservable_kg": 0.0,
+            "fixed_usd_per_week": 250.0,
+            "kgco2e_per_kg": 0.079
+          },
+          {
+            "id": "MY_air",
+            "mode": "air",
+            "origin": "MY",
+            "lead_weeks": 1,
+            "distance_km": 297,
+            "freight_usd_per_kg": 5.5,
+            "weekly_capacity_kg": 147.5,
+            "reservable_kg": 73.7,
+            "fixed_usd_per_week": 100.0,
+            "kgco2e_per_kg": 0.198
+          },
+          {
+            "id": "MY_road",
+            "mode": "road",
+            "origin": "MY",
+            "lead_weeks": 1,
+            "distance_km": 400,
+            "freight_usd_per_kg": 0.7,
+            "weekly_capacity_kg": 276.6,
+            "reservable_kg": 0.0,
+            "fixed_usd_per_week": 80.0,
+            "kgco2e_per_kg": 0.051
+          }
+        ],
+        "scenarios": {
+          "normal": {
+            "probability": 0.65,
+            "description": "No disruption."
+          },
+          "typhoon": {
+            "probability": 0.2,
+            "description": "Typhoon closes Taiwan ports in weeks 5-6 (ocean capacity 0) and halves Taiwan air spot capacity at x1.5 spot price. Illustrative."
+          },
+          "border_congestion": {
+            "probability": 0.15,
+            "description": "Malaysia-Singapore border congestion in weeks 8-10: road lead time +1 week and road capacity -40%. Illustrative."
+          },
+          "demand_surge": {
+            "probability": 0.0,
+            "description": "Customer ramp-up: committed demand +30% in weeks 8-16. Illustrative."
+          }
+        },
+        "data_note": "Synthetic SKUs, demand, capacities and disruption factors; sourced distances and emission factors."
+      },
+      "scenario_impact": [
+        {
+          "scenario": "normal",
+          "status": "optimal",
+          "solve_seconds": 0.14,
+          "mip_gap": 0.00041094755421498076,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 0.0,
+          "emissions_change_pct": 0.0
+        },
+        {
+          "scenario": "typhoon",
+          "status": "optimal",
+          "solve_seconds": 0.257,
+          "mip_gap": 0.0005653261362925542,
+          "total_cost_usd": 474532.31,
+          "emissions_t": 9.5983,
+          "air_share_kg": 0.5942,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 2.175,
+          "emissions_change_pct": -2.531
+        },
+        {
+          "scenario": "border_congestion",
+          "status": "optimal",
+          "solve_seconds": 0.154,
+          "mip_gap": 0.000360106160206697,
+          "total_cost_usd": 467726.06,
+          "emissions_t": 9.932,
+          "air_share_kg": 0.6844,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 0.709,
+          "emissions_change_pct": 0.857
+        },
+        {
+          "scenario": "demand_surge",
+          "status": "optimal",
+          "solve_seconds": 0.142,
+          "mip_gap": 0.0005160033120254103,
+          "total_cost_usd": 546305.84,
+          "emissions_t": 11.0213,
+          "air_share_kg": 0.5903,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "cost_change_pct": 17.629,
+          "emissions_change_pct": 11.918
+        }
+      ],
+      "frontier": {
+        "scenario": "normal",
+        "service_level": 0.98,
+        "baseline_cost_usd": 464433.1,
+        "baseline_emissions_t": 9.8476,
+        "points": [
+          {
+            "level": 1.0,
+            "cap_t": null,
+            "status": "optimal",
+            "solve_seconds": 0.151,
+            "mip_gap": 0.00024988397598649687,
+            "total_cost_usd": 464433.1,
+            "emissions_t": 9.8476,
+            "air_share_kg": 0.6101,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0
+          },
+          {
+            "level": 0.9,
+            "cap_t": 8.8629,
+            "status": "optimal",
+            "solve_seconds": 0.119,
+            "mip_gap": 0.000535609364141911,
+            "total_cost_usd": 484848.17,
+            "emissions_t": 8.8629,
+            "air_share_kg": 0.5483,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 4.396,
+            "mac_vs_baseline_usd_per_t": 20730.97,
+            "mac_step_usd_per_t": 20731.41,
+            "shadow_price_usd_per_t": 19279.03
+          },
+          {
+            "level": 0.8,
+            "cap_t": 7.8781,
+            "status": "optimal",
+            "solve_seconds": 0.439,
+            "mip_gap": 0.0005279374545974549,
+            "total_cost_usd": 511209.26,
+            "emissions_t": 7.8781,
+            "air_share_kg": 0.4864,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 10.072,
+            "mac_vs_baseline_usd_per_t": 23749.98,
+            "mac_step_usd_per_t": 26767.87,
+            "shadow_price_usd_per_t": 28331.29
+          },
+          {
+            "level": 0.75,
+            "cap_t": 7.3857,
+            "status": "optimal",
+            "solve_seconds": 0.147,
+            "mip_gap": 0.0006541438048342449,
+            "total_cost_usd": 525380.06,
+            "emissions_t": 7.3857,
+            "air_share_kg": 0.4555,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 13.123,
+            "mac_vs_baseline_usd_per_t": 24756.01,
+            "mac_step_usd_per_t": 28779.94,
+            "shadow_price_usd_per_t": 30795.21
+          },
+          {
+            "level": 0.7,
+            "cap_t": 6.8933,
+            "status": "optimal",
+            "solve_seconds": 0.343,
+            "mip_gap": 0.0009605809914364077,
+            "total_cost_usd": 540543.04,
+            "emissions_t": 6.8933,
+            "air_share_kg": 0.4246,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 16.388,
+            "mac_vs_baseline_usd_per_t": 25762.55,
+            "mac_step_usd_per_t": 30796.18,
+            "shadow_price_usd_per_t": 30795.21
+          },
+          {
+            "level": 0.6,
+            "cap_t": 5.9086,
+            "status": "optimal",
+            "solve_seconds": 0.489,
+            "mip_gap": 0.00039829383929771236,
+            "total_cost_usd": 570868.99,
+            "emissions_t": 5.9086,
+            "air_share_kg": 0.3628,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 22.917,
+            "mac_vs_baseline_usd_per_t": 27020.71,
+            "mac_step_usd_per_t": 30796.29,
+            "shadow_price_usd_per_t": 30795.21
+          },
+          {
+            "level": 0.5,
+            "cap_t": 4.9238,
+            "status": "optimal",
+            "solve_seconds": 0.186,
+            "mip_gap": 0.0009538564788940133,
+            "total_cost_usd": 601650.11,
+            "emissions_t": 4.9238,
+            "air_share_kg": 0.301,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 29.545,
+            "mac_vs_baseline_usd_per_t": 27868.05,
+            "mac_step_usd_per_t": 31256.54,
+            "shadow_price_usd_per_t": 31313.64
+          },
+          {
+            "level": 0.4,
+            "cap_t": 3.939,
+            "status": "optimal",
+            "solve_seconds": 0.175,
+            "mip_gap": 0.00044917682665692653,
+            "total_cost_usd": 633057.89,
+            "emissions_t": 3.939,
+            "air_share_kg": 0.2391,
+            "service_level": 1.0,
+            "backlog_unit_weeks": 0.0,
+            "terminal_shortfall_units": 0.0,
+            "cost_increase_pct": 36.308,
+            "mac_vs_baseline_usd_per_t": 28539.01,
+            "mac_step_usd_per_t": 31894.11,
+            "shadow_price_usd_per_t": 31978.37
+          }
+        ],
+        "min_emissions_t": 0.6138,
+        "min_emissions_cost_usd": 842649.73,
+        "max_reduction_pct": 93.77
+      },
+      "price_sweep": [
+        {
+          "carbon_price_usd_per_t": 0,
+          "status": "optimal",
+          "solve_seconds": 0.14,
+          "mip_gap": 0.00041094755421498076,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 0.0
+        },
+        {
+          "carbon_price_usd_per_t": 50,
+          "status": "optimal",
+          "solve_seconds": 0.134,
+          "mip_gap": 0.0004105123386979059,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 492.38
+        },
+        {
+          "carbon_price_usd_per_t": 100,
+          "status": "optimal",
+          "solve_seconds": 0.244,
+          "mip_gap": 0.0004100780440390272,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 984.76
+        },
+        {
+          "carbon_price_usd_per_t": 200,
+          "status": "optimal",
+          "solve_seconds": 0.195,
+          "mip_gap": 0.00040921220562956416,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 1969.52
+        },
+        {
+          "carbon_price_usd_per_t": 400,
+          "status": "optimal",
+          "solve_seconds": 0.158,
+          "mip_gap": 0.0004074914514685469,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 3939.05
+        },
+        {
+          "carbon_price_usd_per_t": 800,
+          "status": "optimal",
+          "solve_seconds": 0.145,
+          "mip_gap": 0.0004040929961196093,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 7878.1
+        },
+        {
+          "carbon_price_usd_per_t": 1600,
+          "status": "optimal",
+          "solve_seconds": 0.154,
+          "mip_gap": 0.000397463352955482,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 15756.19
+        },
+        {
+          "carbon_price_usd_per_t": 3200,
+          "status": "optimal",
+          "solve_seconds": 0.178,
+          "mip_gap": 0.00038483593812316735,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 31512.39
+        },
+        {
+          "carbon_price_usd_per_t": 6400,
+          "status": "optimal",
+          "solve_seconds": 0.166,
+          "mip_gap": 0.00036184434120172383,
+          "total_cost_usd": 464433.1,
+          "emissions_t": 9.8476,
+          "air_share_kg": 0.6101,
+          "service_level": 1.0,
+          "backlog_unit_weeks": 0.0,
+          "terminal_shortfall_units": 0.0,
+          "carbon_tax_usd": 63024.77
+        }
+      ],
+      "stochastic": {
+        "network": "marvell",
+        "reveal_week": 3,
+        "nominal": "normal",
+        "scenarios": [
+          {
+            "name": "normal",
+            "probability": 0.65
+          },
+          {
+            "name": "typhoon",
+            "probability": 0.2
+          },
+          {
+            "name": "border_congestion",
+            "probability": 0.15
+          }
+        ],
+        "RP": 466996.2,
+        "EEV": 466996.2,
+        "WS": 466946.88,
+        "VSS": 0.0,
+        "EVPI": 49.31,
+        "VSS_interval": [
+          -228.4,
+          236.85
+        ],
+        "EVPI_interval": [
+          -187.54,
+          252.29
+        ],
+        "VSS_pct_of_RP": 0.0,
+        "EVPI_pct_of_RP": 0.011,
+        "per_scenario": {
+          "normal": {
+            "probability": 0.65,
+            "stochastic_plan_usd": 464433.1,
+            "nominal_plan_usd": 464433.1,
+            "perfect_information_usd": 464433.1,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          },
+          "typhoon": {
+            "probability": 0.2,
+            "stochastic_plan_usd": 474778.88,
+            "nominal_plan_usd": 474778.88,
+            "perfect_information_usd": 474532.31,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          },
+          "border_congestion": {
+            "probability": 0.15,
+            "stochastic_plan_usd": 467726.06,
+            "nominal_plan_usd": 467726.06,
+            "perfect_information_usd": 467726.06,
+            "stochastic_service_level": 1.0,
+            "nominal_service_level": 1.0
+          }
+        },
+        "first_stage": {
+          "stochastic": {
+            "air_reservation_kg_per_week": {
+              "TW_air": 130.9,
+              "MY_air": 73.7
+            },
+            "early_shipments_units": {
+              "TW_air": 25.0,
+              "MY_road": 16.0
+            },
+            "early_shipments_kg": {
+              "TW_air": 53.5,
+              "MY_road": 43.1
+            }
+          },
+          "nominal": {
+            "air_reservation_kg_per_week": {
+              "TW_air": 130.9,
+              "MY_air": 73.7
+            },
+            "early_shipments_units": {
+              "TW_air": 25.0,
+              "MY_road": 16.0
+            },
+            "early_shipments_kg": {
+              "TW_air": 53.5,
+              "MY_road": 43.1
+            }
+          }
+        },
+        "mip_gap_setting": 0.001,
+        "solve_seconds": 1.47
+      },
+      "stochastic_plan_explained": {
+        "scenario": "normal",
+        "status": "optimal",
+        "binding_capacity": [
+          {
+            "lane": "TW_air",
+            "week": 13,
+            "load_kg": 392.8,
+            "capacity_kg": 392.8,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "TW_air",
+            "week": 14,
+            "load_kg": 392.8,
+            "capacity_kg": 392.8,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "TW_air",
+            "week": 15,
+            "load_kg": 392.8,
+            "capacity_kg": 392.8,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "TW_ocean",
+            "week": 13,
+            "load_kg": 491.0,
+            "capacity_kg": 491.0,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "MY_air",
+            "week": 15,
+            "load_kg": 221.2,
+            "capacity_kg": 221.2,
+            "utilisation": 1.0
+          },
+          {
+            "lane": "MY_road",
+            "week": 14,
+            "load_kg": 276.6,
+            "capacity_kg": 276.6,
+            "utilisation": 1.0
+          }
+        ],
+        "cost_drivers": [
+          {
+            "item": "transit_capital",
+            "usd": 322773.22,
+            "share": 0.695
+          },
+          {
+            "item": "holding",
+            "usd": 105245.32,
+            "share": 0.2266
+          },
+          {
+            "item": "freight",
+            "usd": 31807.76,
+            "share": 0.0685
+          },
+          {
+            "item": "fixed",
+            "usd": 2970.0,
+            "share": 0.0064
+          },
+          {
+            "item": "air_reservation",
+            "usd": 1636.8,
+            "share": 0.0035
+          },
+          {
+            "item": "terminal_shortfall",
+            "usd": 0.0,
+            "share": 0.0
+          }
+        ],
+        "mode_kg_by_week": [
+          {
+            "week": 1,
+            "air": 0.0,
+            "ocean": 0.0,
+            "road": 0.0
+          },
+          {
+            "week": 2,
+            "air": 53.5,
+            "ocean": 0.0,
+            "road": 43.1
+          },
+          {
+            "week": 3,
+            "air": 303.4,
+            "ocean": 0.0,
+            "road": 133.2
+          },
+          {
+            "week": 4,
+            "air": 330.5,
+            "ocean": 0.0,
+            "road": 189.2
+          },
+          {
+            "week": 5,
+            "air": 385.4,
+            "ocean": 0.0,
+            "road": 148.3
+          },
+          {
+            "week": 6,
+            "air": 344.6,
+            "ocean": 0.0,
+            "road": 154.8
+          },
+          {
+            "week": 7,
+            "air": 313.0,
+            "ocean": 0.0,
+            "road": 133.4
+          },
+          {
+            "week": 8,
+            "air": 303.8,
+            "ocean": 0.0,
+            "road": 199.1
+          },
+          {
+            "week": 9,
+            "air": 351.1,
+            "ocean": 0.0,
+            "road": 196.8
+          },
+          {
+            "week": 10,
+            "air": 256.7,
+            "ocean": 0.0,
+            "road": 176.9
+          },
+          {
+            "week": 11,
+            "air": 346.6,
+            "ocean": 0.0,
+            "road": 219.9
+          },
+          {
+            "week": 12,
+            "air": 290.7,
+            "ocean": 0.0,
+            "road": 143.2
+          },
+          {
+            "week": 13,
+            "air": 392.8,
+            "ocean": 491.0,
+            "road": 220.4
+          },
+          {
+            "week": 14,
+            "air": 411.4,
+            "ocean": 0.0,
+            "road": 276.6
+          },
+          {
+            "week": 15,
+            "air": 614.0,
+            "ocean": 0.0,
+            "road": 276.6
+          },
+          {
+            "week": 16,
+            "air": 0.0,
+            "ocean": 0.0,
+            "road": 0.0
+          }
+        ],
+        "air_reservation_kg_per_week": {
+          "TW_air": 130.9,
+          "MY_air": 73.7
+        },
+        "service_level": 1.0,
+        "backlog_unit_weeks": 0.0
+      },
+      "integrality": [
+        {
+          "case": "uncapped",
+          "continuous_usd": 464433.1,
+          "integer_usd": 464616.48,
+          "integer_premium_pct": 0.0395,
+          "continuous_seconds": 0.138,
+          "integer_seconds": 3.672,
+          "integer_status": "optimal"
+        },
+        {
+          "case": "cap_60pct",
+          "continuous_usd": 570868.99,
+          "integer_usd": 571208.52,
+          "integer_premium_pct": 0.0595,
+          "continuous_seconds": 0.35,
+          "integer_seconds": 1.142,
+          "integer_status": "optimal"
+        },
+        {
+          "case": "stochastic",
+          "continuous_usd": 466996.2,
+          "integer_usd": 467427.78,
+          "integer_premium_pct": 0.0924,
+          "continuous_seconds": 0.386,
+          "integer_seconds": 6.585,
+          "integer_status": "optimal"
+        }
+      ]
+    }
+  },
+  "scale": [
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 10,
+      "weeks": 16,
+      "variables": 715,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 250,
+      "build_seconds": 0.035,
+      "solve_seconds": 0.672,
+      "status": "optimal",
+      "mip_gap": 0.00021088526634401104,
+      "objective_usd": 46799.88
+    },
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 25,
+      "weeks": 16,
+      "variables": 1690,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 505,
+      "build_seconds": 0.079,
+      "solve_seconds": 0.598,
+      "status": "optimal",
+      "mip_gap": 0.0008204358321701784,
+      "objective_usd": 111727.63
+    },
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 50,
+      "weeks": 16,
+      "variables": 3315,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 930,
+      "build_seconds": 0.259,
+      "solve_seconds": 1.234,
+      "status": "optimal",
+      "mip_gap": 5.285722648210996e-05,
+      "objective_usd": 212098.25
+    },
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 100,
+      "weeks": 16,
+      "variables": 6565,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 1780,
+      "build_seconds": 0.391,
+      "solve_seconds": 0.871,
+      "status": "optimal",
+      "mip_gap": 0.0004987687407769865,
+      "objective_usd": 429929.45
+    },
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 200,
+      "weeks": 16,
+      "variables": 13065,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 3480,
+      "build_seconds": 0.807,
+      "solve_seconds": 3.961,
+      "status": "optimal",
+      "mip_gap": 0.0008159562805043119,
+      "objective_usd": 875080.49
+    },
+    {
+      "network": "asml",
+      "variant": "continuous_flows",
+      "skus": 400,
+      "weeks": 16,
+      "variables": 26065,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 6880,
+      "build_seconds": 1.972,
+      "solve_seconds": 3.94,
+      "status": "optimal",
+      "mip_gap": 0.0005231089158231314,
+      "objective_usd": 1692902.67
+    },
+    {
+      "network": "asml",
+      "variant": "integer_units",
+      "skus": 10,
+      "weeks": 16,
+      "variables": 715,
+      "integer_variables": 352,
+      "binary_variables": 32,
+      "constraints": 250,
+      "build_seconds": 0.055,
+      "solve_seconds": 6.795,
+      "status": "optimal",
+      "mip_gap": 0.0008799892705306844,
+      "objective_usd": 46829.48
+    },
+    {
+      "network": "asml",
+      "variant": "integer_units",
+      "skus": 25,
+      "weeks": 16,
+      "variables": 1690,
+      "integer_variables": 832,
+      "binary_variables": 32,
+      "constraints": 505,
+      "build_seconds": 0.096,
+      "solve_seconds": 18.543,
+      "status": "optimal",
+      "mip_gap": 0.00034317839361239645,
+      "objective_usd": 111768.79
+    },
+    {
+      "network": "asml",
+      "variant": "integer_units",
+      "skus": 50,
+      "weeks": 16,
+      "variables": 3315,
+      "integer_variables": 1632,
+      "binary_variables": 32,
+      "constraints": 930,
+      "build_seconds": 0.246,
+      "solve_seconds": 6.232,
+      "status": "optimal",
+      "mip_gap": 0.00037861941008216074,
+      "objective_usd": 212108.59
+    },
+    {
+      "network": "asml",
+      "variant": "integer_units",
+      "skus": 100,
+      "weeks": 16,
+      "variables": 6565,
+      "integer_variables": 3232,
+      "binary_variables": 32,
+      "constraints": 1780,
+      "build_seconds": 0.369,
+      "solve_seconds": 40.976,
+      "status": "optimal",
+      "mip_gap": 0.0006415213173050174,
+      "objective_usd": 429940.3
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 10,
+      "weeks": 16,
+      "variables": 715,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 570,
+      "build_seconds": 0.055,
+      "solve_seconds": 0.387,
+      "status": "optimal",
+      "mip_gap": 0.0005648160479422903,
+      "objective_usd": 46799.88
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 25,
+      "weeks": 16,
+      "variables": 1690,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 1305,
+      "build_seconds": 0.113,
+      "solve_seconds": 0.538,
+      "status": "optimal",
+      "mip_gap": 0.00028275050024700833,
+      "objective_usd": 111727.63
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 50,
+      "weeks": 16,
+      "variables": 3315,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 2530,
+      "build_seconds": 0.285,
+      "solve_seconds": 3.282,
+      "status": "optimal",
+      "mip_gap": 0.0006889870661759548,
+      "objective_usd": 212098.25
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 100,
+      "weeks": 16,
+      "variables": 6565,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 4980,
+      "build_seconds": 0.613,
+      "solve_seconds": 3.696,
+      "status": "optimal",
+      "mip_gap": 0.00018909044701640067,
+      "objective_usd": 429929.45
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 200,
+      "weeks": 16,
+      "variables": 13065,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 9880,
+      "build_seconds": 1.208,
+      "solve_seconds": 7.839,
+      "status": "optimal",
+      "mip_gap": 0.0005998144176588491,
+      "objective_usd": 875080.49
+    },
+    {
+      "network": "asml",
+      "variant": "disaggregated_links",
+      "skus": 400,
+      "weeks": 16,
+      "variables": 26065,
+      "integer_variables": 32,
+      "binary_variables": 32,
+      "constraints": 19680,
+      "build_seconds": 2.056,
+      "solve_seconds": 4.105,
+      "status": "optimal",
+      "mip_gap": 0.0007658116919788345,
+      "objective_usd": 1692902.67
+    },
+    {
+      "network": "asml",
+      "variant": "sku_order_fee",
+      "skus": 10,
+      "weeks": 16,
+      "variables": 1035,
+      "integer_variables": 352,
+      "binary_variables": 352,
+      "constraints": 570,
+      "build_seconds": 0.108,
+      "solve_seconds": 13.779,
+      "status": "optimal",
+      "mip_gap": 0.0009985107728749656,
+      "objective_usd": 48688.09
+    },
+    {
+      "network": "asml",
+      "variant": "sku_order_fee",
+      "skus": 25,
+      "weeks": 16,
+      "variables": 2490,
+      "integer_variables": 832,
+      "binary_variables": 832,
+      "constraints": 1305,
+      "build_seconds": 0.22,
+      "solve_seconds": 12.832,
+      "status": "optimal",
+      "mip_gap": 0.0007540136972945307,
+      "objective_usd": 117202.63
+    },
+    {
+      "network": "asml",
+      "variant": "sku_order_fee",
+      "skus": 50,
+      "weeks": 16,
+      "variables": 4915,
+      "integer_variables": 1632,
+      "binary_variables": 1632,
+      "constraints": 2530,
+      "build_seconds": 0.303,
+      "solve_seconds": 49.364,
+      "status": "optimal",
+      "mip_gap": 0.0009953475200398913,
+      "objective_usd": 222447.81
+    },
+    {
+      "network": "asml",
+      "variant": "sku_order_fee",
+      "skus": 100,
+      "weeks": 16,
+      "variables": 9765,
+      "integer_variables": 3232,
+      "binary_variables": 3232,
+      "constraints": 4980,
+      "build_seconds": 0.745,
+      "solve_seconds": 61.848,
+      "status": "feasible",
+      "mip_gap": 0.001997478188217825,
+      "objective_usd": 451501.12
+    }
+  ]
+}

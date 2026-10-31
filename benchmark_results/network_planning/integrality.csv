@@ -1,0 +1,7 @@
+network,case,continuous_usd,integer_usd,integer_premium_pct,continuous_seconds,integer_seconds,integer_status
+asml,uncapped,55253.33,55296.6,0.0783,0.771,9.64,optimal
+asml,cap_60pct,57144.06,57183.49,0.069,3.829,22.95,optimal
+asml,stochastic,57153.56,57194.03,0.0708,3.123,18.331,optimal
+marvell,uncapped,464433.1,464616.48,0.0395,0.138,3.672,optimal
+marvell,cap_60pct,570868.99,571208.52,0.0595,0.35,1.142,optimal
+marvell,stochastic,466996.2,467427.78,0.0924,0.386,6.585,optimal

@@ -3,3 +3,6 @@ numpy==2.3.5
 scipy==1.17.0
 matplotlib==3.10.8
 openpyxl==3.1.5
+# Optional planning extra (network_planning, planning_agent).
+pulp==3.3.2
+highspy==1.15.1
