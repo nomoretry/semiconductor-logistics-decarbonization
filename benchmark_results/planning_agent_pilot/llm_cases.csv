@@ -1,0 +1,4 @@
+id,split,success,tool_recall,tool_precision,args_met,facts_found,facts_total,faithful,steps,seconds,tools,question
+D03,dev,True,1.0,0.5,1/1,2,2,True,8,53.89,"['describe_network', 'solve_plan', 'solve_plan', 'solve_plan', 'solve_plan', 'compare_plans', 'explain_plan', 'compare_plans']",如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？
+D13,dev,True,1.0,0.6,1/1,1,1,True,7,61.6,"['describe_network', 'create_scenario', 'solve_plan', 'solve_plan', 'solve_plan', 'compare_plans', 'explain_plan']",船公司通知：第5到10周海运延误3周，舱位削减40%。对 ASML 备件有什么影响？
+H05,holdout,False,0.667,0.667,1/1,0,1,True,11,41.07,"['describe_network', 'create_scenario', 'solve_plan', 'create_scenario', 'solve_plan', 'create_scenario', 'create_scenario', 'create_scenario', 'create_scenario', 'solve_plan', 'create_scenario']",A typhoon shuts Taiwan's ports completely in weeks 6-7 and halves Taiwan air capacity in the same weeks. What is the cost impact on the chip network?

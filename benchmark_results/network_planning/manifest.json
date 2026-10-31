@@ -1,0 +1,37 @@
+{
+  "command": "python -m network_planning report --output benchmark_results/network_planning",
+  "settings": {
+    "n_skus": 12,
+    "weeks": 16,
+    "seed": 7,
+    "quick": false,
+    "mip_gap": 0.001,
+    "reveal_week": 3,
+    "frontier_service_level": 0.98
+  },
+  "inputs": {
+    "network_planning/config.json": "2d0fb9921e58231a09fbf9045c54778a432f59c1c3bff8d5eaf9ea178a164da4",
+    "asml/config.json": "bc7748568cba654316c9220c136c51d9f42eae6abef5ab9c80b5cbe8dfe26330",
+    "marvell/config.json": "54d0860792b212de095ecf799cb539563aaef64fb15dbb848fb3dc954e0611c0",
+    "data_sources/selected_emission_factors.json": "ba69d0daa7c992f498afc121ca8694883620e880ce2c7805509160406b5d0c21"
+  },
+  "runtime": {
+    "python": "3.12.10",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "pulp": "3.3.2",
+    "highspy": "1.15.1",
+    "numpy": "2.3.5"
+  },
+  "outputs": {
+    "frontier.csv": "e3bb2e2455316f1971dd92bc701728cedd1b10604f5be749cd71dcc3e3dce3f6",
+    "frontier.png": "1bd4fcd5d3855217434bcbc22013df31961fc91cfaac6b585f05e719cd4e7c86",
+    "integrality.csv": "e68879e18199a48e7fc54783a9820a2cf35c4677e95f35660a8fa2502dee0ad0",
+    "price_sweep.csv": "75a3d69423ca650c1820692d5833baeff7934bd954066d9d5e93e90a6c802dd2",
+    "price_sweep.png": "c2915cce1d040e888c609d4f3d201035347ba7c8797d75d4aab3135610581298",
+    "report.md": "81d9785225ffde384802d519e56214a3ae2bd65a8859783e123b2a7e53b1db4a",
+    "results.json": "af4cab44d598c6038b48e815bef170514993dcb9f47c7f79edbbd968a8d9906d",
+    "scale.csv": "ad50d5bb3d16b502dba022663cc9a8b824ee9124277ad9eebf733263b98e202f",
+    "scenario_impact.csv": "5e2818f04731f19a98f7d4d496d2915c5abc1cc587f24695e96381d545a8e9b9"
+  },
+  "data_note": "Synthetic portfolio, capacity, cost and disruption parameters for the network planning engine. Lane geometry, base freight rates and lead times are read from asml/config.json and marvell/config.json; emission factors from data_sources/selected_emission_factors.json. Every value in this file is a scenario assumption, not company data."
+}

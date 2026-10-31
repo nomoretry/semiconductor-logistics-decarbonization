@@ -17,6 +17,29 @@
 
 核心问题是：在共享运输容量、库存演化和碳约束下，哪些信息值得获取，预测误差如何改变决策，信息处理与优化计算的成本是否值得付出？[研究设计](docs/research_design.md)据此定义方法选择、已有证据与尚未成立的贡献。
 
+## 运筹规划引擎与规划 Agent
+
+新增一层独立模块，把研究变成可以直接回答业务问题的决策工具：
+
+- **[网络规划引擎](docs/network_planning.md)**（`network_planning/`，PuLP + HiGHS）：固定费用的多 SKU、多式联运 MILP，扰动会改变提前期和运力；支持空运舱位预留、服务水平、碳上限或碳价；两阶段随机规划给出 VSS/EVPI 及考虑 MIP gap 的区间；ε-约束碳前沿给出边际减排成本和 LP 影子价格；每个解都做独立核算。
+- **[规划副驾驶 Agent](docs/planning_agent.md)**（`planning_agent/`）：OpenAI 兼容的工具调用 Agent，8 个带校验的工具、数字忠实度护栏、决策备忘录和 24 条评测问题；规则 Agent 作为离线兜底与基线。产品设计见 [PRD](docs/planning_agent_prd.md)。
+
+主要结果（每个网络 12 个合成 SKU、16 周，[完整报告](benchmark_results/network_planning/report.md)）：
+
+| 问题 | ASML 备件 | Marvell 芯片 |
+|---|---|---|
+| 扰动的成本影响 | 红海绕行：成本 +12.38%，排放 +28.4% | 台风：成本 +2.17% |
+| 减排 25% 的代价（服务水平 ≥ 98%） | +1.76%；平均边际减排成本 187 USD/t，影子价格 277 USD/t | +13.12%；平均边际减排成本 24,756 USD/t |
+| 两阶段随机方案的价值（VSS） | 864 USD（1.51%）：红海中断时便宜 6.0%，正常时贵 0.33% | 约为零（在 MIP gap 区间内）：名义方案已足够稳健 |
+| 规划 Agent，24 条计划员问题 | 规则基线：开发集 14/14、鲁棒性集 4/10；gpt-6.1-sol（xhigh）：修复护栏后 9/14 和 9/10，数字忠实度 100% | |
+
+```bash
+python -m pip install -c constraints.txt -e ".[planning]"
+python -m network_planning solve --network asml --scenario red_sea --explain
+python -m planning_agent ask "如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？"
+python -m planning_agent demo
+```
+
 ## 设计与实验
 
 | 模块 | 实现 | 实验与输出 |
@@ -172,6 +195,8 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 | `query_study/` | 多种子训练、无损证据、任务/模型冻结及配对统计 |
 | `rolling_inventory/`、`rolling_sensitivity/` | 未知需求库存仿真、强基线规划及敏感性复算 |
 | `query_components/` | 掩码与成本势函数对照、拒绝语义、完整开发训练重放 |
+| `network_planning/` | 固定费用 MILP、两阶段随机规划、碳前沿与独立核算（PuLP + HiGHS） |
+| `planning_agent/` | 工具调用规划 Agent、工具层、数字护栏、规则基线、备忘录与评测 |
 | `asml/`、`marvell/` | 两个案例的参数配置 |
 | `benchmarks/` | 冻结公告集、规则身份及来源登记 |
 | `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |

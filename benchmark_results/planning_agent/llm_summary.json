@@ -1,0 +1,45 @@
+{
+  "agent": "llm",
+  "model": "gpt-6.1-sol",
+  "api_style": "responses",
+  "reasoning_effort": "xhigh",
+  "usage": {
+    "prompt_tokens": 314075,
+    "completion_tokens": 42058,
+    "reasoning_tokens": 22475,
+    "calls": 102
+  },
+  "stopped_early": null,
+  "splits": {
+    "dev": {
+      "cases": 14,
+      "success_rate": 0.5714,
+      "tool_recall": 0.8571,
+      "tool_precision": 0.5013,
+      "fact_accuracy": 0.625,
+      "faithfulness": 0.9286,
+      "mean_tool_calls": 3.7143,
+      "mean_seconds": 31.7093
+    },
+    "holdout": {
+      "cases": 10,
+      "success_rate": 0.8,
+      "tool_recall": 0.9,
+      "tool_precision": 0.596,
+      "fact_accuracy": 0.875,
+      "faithfulness": 0.9,
+      "mean_tool_calls": 5.0,
+      "mean_seconds": 37.288
+    }
+  },
+  "overall": {
+    "cases": 24,
+    "success_rate": 0.6667,
+    "tool_recall": 0.875,
+    "tool_precision": 0.5374,
+    "fact_accuracy": 0.7083,
+    "faithfulness": 0.9167,
+    "mean_tool_calls": 4.25,
+    "mean_seconds": 34.0337
+  }
+}

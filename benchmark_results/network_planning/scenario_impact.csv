@@ -1,0 +1,9 @@
+network,scenario,status,solve_seconds,mip_gap,total_cost_usd,emissions_t,air_share_kg,service_level,backlog_unit_weeks,terminal_shortfall_units,cost_change_pct,emissions_change_pct
+asml,normal,optimal,1.447,0.0009628810680389256,55253.33,20.8211,0.1976,1.0,0.0,0.0,0.0,0.0
+asml,red_sea,optimal,0.509,0.0006458316066664707,62094.54,26.7311,0.2572,1.0,0.0,0.0,12.382,28.385
+asml,air_crunch,optimal,0.641,0.00025625290156925675,55253.33,20.8211,0.1976,1.0,0.0,0.0,0.0,-0.0
+asml,demand_surge,optimal,3.931,0.0008620235671539071,63863.52,23.3414,0.1796,1.0,0.0,0.0,15.583,12.105
+marvell,normal,optimal,0.14,0.00041094755421498076,464433.1,9.8476,0.6101,1.0,0.0,0.0,0.0,0.0
+marvell,typhoon,optimal,0.257,0.0005653261362925542,474532.31,9.5983,0.5942,1.0,0.0,0.0,2.175,-2.531
+marvell,border_congestion,optimal,0.154,0.000360106160206697,467726.06,9.932,0.6844,1.0,0.0,0.0,0.709,0.857
+marvell,demand_surge,optimal,0.142,0.0005160033120254103,546305.84,11.0213,0.5903,1.0,0.0,0.0,17.629,11.918
