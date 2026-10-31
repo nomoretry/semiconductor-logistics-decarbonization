@@ -1,6 +1,5 @@
 {
   "destination": "nomoretry/semiconductor-logistics-decarbonization",
-  "reason": "automatic_approval_review_requires_explicit_public_upload_authorization_for_all_new_forecast_evidence",
   "files": [
     {
       "path": "benchmark_results/rolling_forecast_development/calibration.jsonl",
@@ -367,5 +366,8 @@
       "bytes": 126918,
       "sha256": "b7e8ff5ff1758898288376a347b32b569a8eb7fe02c2f434351dd56e5fba337e"
     }
-  ]
+  ],
+  "previous_block_reason": "automatic_approval_review_requires_explicit_public_upload_authorization_for_all_new_forecast_evidence",
+  "status": "complete_with_explicit_user_approval",
+  "authorization": "All 73 listed evidence files approved for public upload with their original SHA256 digests."
 }

@@ -1,27 +1,29 @@
-# 预测证据发布状态 / Forecast archive publication status
+# 预测证据归档与验收 / Forecast archive and verification
 
 本文提供中英文版本，中文在前，英文在后。
 This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-本地实验和完整复算已完成，331项测试及wheel安装检查通过，新研究共有73份文件。自动审批先拒绝公开上传`traces-05.jsonl`，随后也拒绝包含已准备轨迹的提交，理由是此前明确授权只覆盖三份敏感性文件，未覆盖新的预测证据。因此本PR只提交代码、研究报告和摘要清单；全部73份新证据文件均等待明确公开上传授权，不纳入分支。不修改原文件字节、不拆分、不重新编码以绕过拒绝。
+维护者已明确批准按清单SHA256公开上传全部73份预测研究证据。现已补齐，原文件字节、实验参数、模型选择和结果均未改变；不需要再次授权。本地331项测试、wheel安装检查和352轨迹完整重执行均通过。合并前仍须确认当前提交的全部六项GitHub CI成功，不能用旧提交的检查代替。
 
-已完成[全部轨迹字段检查与独立物理审核](../data_sources/rolling_forecast_artifact_audit.json)：32份轨迹文件、352轨迹、4,224期，与再生成的合成任务、源码和文件哈希匹配。轨迹只允许合成任务ID、固定方法名、SHA256及数值字段，不含自由文本、真实公司订单或API密钥。完整策略重执行另已通过。这项检查解释内容范围，不替代公开上传授权。
+[完整轨迹字段与独立物理审核](../data_sources/rolling_forecast_artifact_audit.json)覆盖32份轨迹文件、352条轨迹和4,224期，并与再生成的合成任务及源码/文件哈希匹配。轨迹字段只允许合成任务ID、固定方法名、SHA256及数值；没有自由文本、真实公司订单或API密钥。完整政策重执行仍由`make verify-forecast`完成。
 
-目的地是公开仓库`nomoretry/semiconductor-logistics-decarbonization`的`benchmark_results/rolling_forecast_development/`。下表列明全部73份文件的原始SHA256：32份预测、32份轨迹，以及配置、任务、校准、选参、结果、计时、汇总、运行版本和manifest。公开后任何人均可读取这些合成实验记录。核准文字可以是：
+此前自动审批认为原授权只覆盖三份敏感性文件，因此草稿先仅提交代码、说明及摘要，保留完整验收对缺证据的失败。收到针对本清单的明确授权后，才补齐预测证据；没有改写、拆分、重编码或跳过检查。原[申请清单文件](../data_sources/rolling_forecast_pending_uploads.json)保留原文件名，状态已标为完成。
 
-> 我批准将预测研究清单中的73份证据文件，按清单SHA256公开上传到nomoretry/semiconductor-logistics-decarbonization。
+归档位于公开仓库`nomoretry/semiconductor-logistics-decarbonization`的`benchmark_results/rolling_forecast_development/`。73份文件包括32份预测、32份轨迹，以及配置、任务、校准、选参、结果、计时、汇总、运行版本和manifest。下表保留批准时的SHA256，公开文件可由任何人读取。
 
 ## English
 
-The local experiment and complete replay are finished; all 331 tests and wheel checks passed. The study contains 73 files. Automatic approval review first stopped the upload of `traces-05.jsonl`, then rejected the commit containing the already prepared traces, because prior explicit approval covered three sensitivity files rather than the new forecast evidence. This draft PR therefore includes only code, research reports and checksum metadata. All 73 new evidence files await explicit public-upload approval and are excluded from the branch. No original artifact is changed, split or re-encoded to bypass the rejection.
+The maintainer explicitly approved public upload of all 73 forecast-study evidence files with their listed SHA256 digests. The archive is now complete. Original bytes, experiment settings, model selection and numerical results are unchanged; no additional authorization is required. All 331 local tests, wheel checks and complete reexecution of 352 trajectories passed. Merge acceptance still requires all six GitHub CI jobs on the current commit; old-commit checks do not substitute for them.
 
-The [complete trace-field inspection and independent physical audit](../data_sources/rolling_forecast_artifact_audit.json) covers 32 trace files, 352 trajectories and 4,224 periods, matching regenerated synthetic tasks and source/artifact hashes. Allowed trace values are generated task IDs, fixed method names, SHA256 hex and numerical fields, with no free text, actual company orders or API keys. Full policy reexecution also passed. These checks describe content; they do not substitute for public-upload authorization.
+The [complete trace-field and independent physical audit](../data_sources/rolling_forecast_artifact_audit.json) covers 32 trace files, 352 trajectories and 4,224 periods, matching regenerated synthetic tasks and source/artifact hashes. Trace values are limited to generated task IDs, fixed method names, SHA256 hex and numerical fields, without free text, actual company orders or API keys. Complete policy reexecution remains available through `make verify-forecast`.
 
-The destination is the public repository `nomoretry/semiconductor-logistics-decarbonization`, directory `benchmark_results/rolling_forecast_development/`. The 73 pending files and original digests are listed below: 32 forecast files, 32 trace files, and configuration, tasks, calibration, selection, outcomes, timing, summary, runtime and manifest. Publication makes these synthetic experiment records readable by anyone.
+Earlier automatic approval review treated the prior approval as covering only three sensitivity files. The draft therefore initially contained code, reports and checksum metadata while complete verification continued to reject missing evidence. The forecast files were added only after explicit approval of this manifest, without modifying, splitting, re-encoding or bypassing checks. The [original request-manifest filename](../data_sources/rolling_forecast_pending_uploads.json) is retained with its status marked complete.
 
-## 待上传清单 / Pending files
+The public archive is `nomoretry/semiconductor-logistics-decarbonization`, directory `benchmark_results/rolling_forecast_development/`. Its 73 files comprise 32 forecast files, 32 trace files, and configuration, tasks, calibration, selection, outcomes, timing, summary, runtime and manifest. The table preserves the approved SHA256 digests; the files are publicly readable.
+
+## 文件清单 / File manifest
 
 | 文件 / File | 字节 / Bytes | SHA256 |
 |---|---:|---|
@@ -99,6 +101,12 @@ The destination is the public repository `nomoretry/semiconductor-logistics-deca
 | `traces-30.jsonl` | 128318 | `b9aa7585e70283d7faef3db860a4c74c7ce3f11e5871084599d72a77139a096c` |
 | `traces-31.jsonl` | 126918 | `b7e8ff5ff1758898288376a347b32b569a8eb7fe02c2f434351dd56e5fba337e` |
 
-`make verify-forecast`必须继续拒绝没有完整证据包的检出，不能把本地通过解释为当前GitHub检查通过。批准补齐后，再验收当前提交的全部六项CI，并将PR转为可审阅。
+```bash
+make verify-forecast
+python -m scripts.check_research_progress
+python -m scripts.audit_rolling_forecast_artifacts
+```
 
-`make verify-forecast` must continue to reject checkouts without the complete evidence bundle. Local success is not current-head GitHub CI success. After publication is approved and complete, check all six jobs on the resulting commit and mark the PR ready for review.
+验收依次检查文件覆盖与哈希、源码身份、任务再生成与选参、完整策略重执行、物理台账及汇总。计时汇总从原计时重算，不要求新计时与旧计时逐值相等。CI通过后按[操作说明](manual_steps.md)合并。
+
+Verification checks file coverage and hashes, source identity, regenerated tasks and selection, complete policy reexecution, physical ledgers and summaries. Archived timing summaries are recomputed without requiring fresh wall-time measurements to match. After CI passes, follow the [manual steps](manual_steps.md) to merge.

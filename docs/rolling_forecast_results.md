@@ -5,7 +5,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开归档尚未完成：** 本地73份文件及完整复算均齐全，73份新证据的公开上传被自动审批拒绝。文件与SHA256见[待上传清单](rolling_forecast_publication.md)；PR保持草稿，不能把本地通过写成远端CI通过。
+**公开归档已补齐：** 73份文件已获明确授权并按原SHA256归档，见[文件清单与验收](rolling_forecast_publication.md)。合并使用当前提交的六项GitHub CI结果，本地通过不替代远端验收。
 
 ### 结论与范围
 
@@ -75,7 +75,7 @@ python -m scripts.check_research_progress
 
 ## English
 
-**Public archive incomplete:** all 73 files and full replay are available locally; automatic approval review blocked all 73 new evidence files. See the [pending files and SHA256](rolling_forecast_publication.md). The PR remains a draft; local validation is not remote CI success.
+**Public archive complete:** all 73 files received explicit approval and were archived with their original SHA256 digests. See the [manifest and verification](rolling_forecast_publication.md). Merge acceptance uses all six CI jobs on the current commit; local validation does not replace remote checks.
 
 ### Conclusion and scope
 

@@ -48,7 +48,7 @@ The sensitivity archive is complete and PR #15 is merged after all five checks p
 
 The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. The [forecast comparison](docs/rolling_forecast_results.md) is now complete: both calibration-selected alternatives have higher mean cost and worse marginal prediction scores than original EWMA on 32 new paths. Three paths improve forecast NLL while worsening decision cost. No new teacher passes the fixed descriptive screen; rolling BC/PPO remains deferred.
 
-The forecast experiment is complete locally, but 73 evidence files still require explicit public-upload authorization after automatic approval review. The PR remains a draft; see the [file identities and publication status](docs/rolling_forecast_publication.md).
+The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). Merge acceptance requires all six CI jobs on the current commit.
 
 ## Quick start
 

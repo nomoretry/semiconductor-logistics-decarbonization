@@ -1,0 +1,36 @@
+{
+  "calibration_paths": 12,
+  "criterion": "calibration_one_step_marginal_poisson_nll",
+  "models": {
+    "fast_ewma": {
+      "alpha": 0.55,
+      "family": "ewma"
+    },
+    "original_ewma": {
+      "alpha": 0.35,
+      "family": "ewma"
+    },
+    "seasonal_window": {
+      "family": "window",
+      "window": 6
+    }
+  },
+  "ranking": {
+    "fast_ewma": {
+      "candidate_scores": [
+        1.68315700256292,
+        1.807697798355666,
+        2.010905070097421
+      ],
+      "selected_index": 0
+    },
+    "seasonal_window": {
+      "candidate_scores": [
+        1.908328733374914,
+        1.7172800135681958,
+        1.702026276620752
+      ],
+      "selected_index": 2
+    }
+  }
+}

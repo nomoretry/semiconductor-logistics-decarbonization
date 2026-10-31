@@ -190,4 +190,4 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 
 运行 `make verify-forecast` 可重新选参、求解和核对全部证据；本轮不调用LLM API。
 
-本轮73份预测证据公开上传仍待明确授权，PR保持草稿。见[文件身份与发布状态](docs/rolling_forecast_publication.md)；本地复算通过不代表远端归档已齐全。
+本轮73份预测证据已获明确授权并按原SHA256归档，见[文件身份与验收](docs/rolling_forecast_publication.md)。合并前检查当前提交的全部六项CI。

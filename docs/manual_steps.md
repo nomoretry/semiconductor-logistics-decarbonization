@@ -9,7 +9,7 @@ This document is available in Chinese and English; the English version follows t
 
 ## 当前需要操作的内容
 
-PR #15的三份归档已补齐，五项CI通过并已合并。本轮是[预测与滚动决策比较](rolling_forecast_results.md)；待当前提交六项CI全部成功后，再合并本轮PR。不需要重新运行API或填写人工意见。自动审批另外要求明确授权公开上传73份新预测证据，详见[原文件SHA256清单](rolling_forecast_publication.md)。授权补齐前PR保持草稿。
+PR #15的三份归档已补齐，五项CI通过并已合并。本轮是[预测与滚动决策比较](rolling_forecast_results.md)；待当前提交六项CI全部成功后，再合并本轮PR。73份预测证据已按明确授权及原SHA256补齐，见[清单与验收](rolling_forecast_publication.md)。不需要再次授权、重新运行API或填写人工意见。
 
 ## 合并本轮代码
 
@@ -43,7 +43,7 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Current manual action
 
-PR #15 is merged with its complete archive and five successful CI jobs. The new change is the [forecast and rolling-decision comparison](rolling_forecast_results.md). Merge its PR after all six current-commit CI jobs pass. No API rerun or human-review form is required. Automatic approval review separately requires explicit public-upload authorization for all 73 new forecast evidence files; see the [original file digests](rolling_forecast_publication.md). The PR remains a draft until that publication is complete.
+PR #15 is merged with its complete archive and five successful CI jobs. The new change is the [forecast and rolling-decision comparison](rolling_forecast_results.md). Merge its PR after all six current-commit CI jobs pass. All 73 evidence files are included with explicit approval and their original digests; see the [manifest and verification](rolling_forecast_publication.md). No additional authorization, API rerun or human-review form is required.
 
 ### Merge the current change
 
