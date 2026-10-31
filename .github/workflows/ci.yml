@@ -121,3 +121,34 @@ jobs:
           python-version: '3.12'
       - run: make sync
       - run: make verify-forecast
+
+  distribution-study:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
+        with:
+          python-version: '3.12'
+      - run: make sync
+      - name: Require the complete published distribution archive
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          root = Path('benchmark_results/rolling_distribution_confirmation')
+          manifest = root / 'manifest.json'
+          if not manifest.is_file():
+              print('::error::Distribution evidence manifest is missing; restore the complete frozen archive before verification.')
+              raise SystemExit(1)
+          missing = [name for name in json.loads(manifest.read_text())['files'] if not (root / name).is_file()]
+          if missing:
+              print('::error::The distribution evidence archive is incomplete: ' + ', '.join(missing))
+              raise SystemExit(1)
+          PY
+      - run: make verify-distribution

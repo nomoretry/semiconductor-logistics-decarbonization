@@ -1,4 +1,11 @@
-# 方法
+# 静态模型与公告方法 / Static optimization and notice methods
+
+本文提供中英文版本，中文在前，英文在后。
+This document is available in Chinese and English; English follows Chinese.
+
+本文限定原已知订单实验；后续查询学习与未知需求模型见[架构](architecture.md)和[研究说明](research_guide.md)。
+
+## 中文
 
 项目研究已知订单与已公告扰动下的物流规划：先将运输通知转成参数修改，再在相同服务约束下求解运输、库存与碳预算。ASML 和 Marvell 是业务启发的仿真场景；订单、SKU、成本和能力参数见各自配置，公开数据来源见 `data_sources/`。
 
@@ -81,3 +88,47 @@ $E_{cost}$ 来自同一订单簿、同一扰动与同一服务约束下的 `cost
 2. 参考确实缺少信息，工作流完成澄清交接。
 
 可见审计按抽取配置执行，终局审计按隐藏参考配置重建发运结果。报告分别保留可行计划、正确交接和不必要交接。环境奖励为终局成功 `+1`、失败 `-1`，每步扣 `0.01`，无效动作再扣 `0.2`；该奖励衡量流程完成与工具成本，未优化企业经营收益。
+
+
+## English
+
+This document concerns the original known-order experiments. Later query learning and unknown-demand control have distinct contracts, explained in the [architecture](architecture.md) and [research guide](research_guide.md).
+
+### Notice interface
+
+The project first converts transport notices into parameter changes, then optimizes transport, inventory and carbon under matched service constraints. ASML and Marvell are company-inspired simulations; orders, SKUs, costs and capacities are explicit configuration assumptions, with public sources in `data_sources/`.
+
+The independent text benchmark accepts only integer-week lead-time increments on `NL_ocean`. The JSON example in the Chinese section adds two weeks to dispatches in weeks 5 through 9 inclusive. Week indices start at one. `ready` with an empty change list explicitly means no update; `needs_clarification` requires an empty list. Missing fields, unresolved conflicts, uncertain ranges and non-integral day-to-week conversions require clarification. Arrival windows cannot substitute for dispatch windows.
+
+`normalize_output` rejects extra fields, duplicate changes, invalid values and unsupported operations, normalizing only change order. `compile_notice` checks route and horizon before producing period parameters. The shared compiler also supports distance, capacity, freight, source releases and carbon budgets for early scenario replay; these operations are outside the independent text benchmark.
+
+### Static logistics model
+
+Let t index periods, j routes and k SKUs. Nonnegative integer shipments are q, with end-period stock I and backlog B. The inventory-balance equation above accounts for old pipeline arrivals a and new shipments arriving according to dispatch-period lead time L. Initial net inventory is fixed. These experiments enforce B=0 every period and final inventory no lower than the common initial inventory. New shipments arriving beyond the horizon are prohibited. Route and shared source capacities use SKU unit counts; an eligibility matrix restricts route–SKU assignments.
+
+The objective equation above sums freight, capital tied up in transit and on-hand holding/storage. Its parameters are item mass m, item value v, annual carrying rate r, periods per year P, per-kilogram freight f and warehouse holding charge w. Weekly experiments use P=52; monthly stress tests use P=12. The solver supports backlog penalties, but these static experiments impose no backlog to match service conditions.
+
+Emissions E combine transport and allocated inventory-related warehouse emissions, as defined above. Distance is measured in km; transport factors are kgCO₂e per tonne-km. The aviation factor already includes distance adjustment, and well-to-tank emissions are counted once. Manufacturing, embodied product carbon, damage, vehicle production and fixed warehouse energy are excluded.
+
+### Policies and solution status
+
+| Policy | Restriction |
+|---|---|
+| `cost_only` | Minimize cost under common service conditions |
+| `fast_only` | Air routes only |
+| `slow_only` | Non-air routes only |
+| `carbon_minus10` | E≤0.90×matched cost-only emissions |
+| `carbon_minus25` | E≤0.75×matched cost-only emissions |
+| `carbon_minus50` | E≤0.50×matched cost-only emissions |
+
+The reference emissions come from identical orders, disruption and service constraints. SciPy `milp` calls HiGHS with relative MIP gap 1e-4. `success` means a validated feasible plan exists; `optimal` means normal termination within the configured tolerance. Infeasible cases and runs without incumbents retain missing costs/emissions, not zeros.
+
+Means use feasible subsets and report their counts. Pairwise cost/emission comparisons use matched commonly feasible instances. End-of-week no-backlog constraints are not intraday service measurements.
+
+### Text and workflow evaluation
+
+The primary text metric is whole-notice structural exact match: status and every change must be correct. Invalid/missing outputs fail. Additional metrics cover JSON/schema validity, fields, actionable coverage and false `ready` decisions when information is incomplete.
+
+A secondary measure expands changes into route-by-week lead-time tables, detecting equivalent effects from different interval decompositions. Clarification agreement is counted separately. Event Wilson intervals and template-family bootstrap intervals use different statistical units; synthetic dependence and real-source scope are documented in the [benchmark](benchmark.md).
+
+Workflow terminal success is either a committed plan feasible under the reference configuration with matching compiled parameters, or a correct clarification handoff when the reference lacks information. The visible audit uses extracted parameters; terminal evaluation reconstructs shipments under hidden reference parameters. Reports separate feasible plans, correct handoffs and unnecessary handoffs. Reward is+1 for terminal success,−1 for failure,−0.01 per step and a further−0.2 for invalid actions. This rewards process completion and tool cost, not measured enterprise profitability.

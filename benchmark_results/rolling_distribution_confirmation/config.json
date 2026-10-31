@@ -1,0 +1,60 @@
+{
+  "acceptable_policy_cost_increase": null,
+  "allocation": "uniform",
+  "base_stock_z": 1.0,
+  "bootstrap_replicates": 4000,
+  "bootstrap_seed": 977141,
+  "confirmation_seeds": [
+    61001,
+    61007,
+    61027,
+    61031,
+    61043,
+    61051,
+    61057,
+    61091,
+    61121,
+    61129,
+    61141,
+    61151,
+    61153,
+    61169,
+    61211,
+    61223
+  ],
+  "deployment_p95_deadline_seconds": null,
+  "dispersion_cap": 2.0,
+  "fit_seeds": [
+    51001,
+    51007,
+    51031,
+    51043
+  ],
+  "horizon": 6,
+  "primary_contrast": "residual_nb_minus_poisson_total_cost",
+  "prior_strength_candidates": [
+    12,
+    48,
+    192
+  ],
+  "sampler_seeds": [
+    901337,
+    902347,
+    903359
+  ],
+  "scenarios": 7,
+  "schema": "rolling-distribution-confirmation-v1",
+  "scope": "new_synthetic_confirmation_fixed_before_outputs_not_company_data",
+  "score_members": 128,
+  "score_seed": 977117,
+  "teacher_emissions_relative_tolerance": 0.02,
+  "teacher_fill_tolerance": 0.005,
+  "teacher_min_relative_improvement": 0.02,
+  "terminal_fraction": 0.0,
+  "tune_seeds": [
+    52009,
+    52021,
+    52027,
+    52051
+  ]
+}

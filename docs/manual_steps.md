@@ -9,11 +9,11 @@ This document is available in Chinese and English; the English version follows t
 
 ## 当前需要操作的内容
 
-PR #15的三份归档已补齐，五项CI通过并已合并。本轮是[预测与滚动决策比较](rolling_forecast_results.md)；待当前提交六项CI全部成功后，再合并本轮PR。73份预测证据已按明确授权及原SHA256补齐，见[清单与验收](rolling_forecast_publication.md)。不需要再次授权、重新运行API或填写人工意见。
+35份分布证据的公开上传已获得明确批准并按原清单补齐，不需要再次确认。进入[PR #17](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/17)，审阅独立研究设计、归档及来源历史修正；等待当前提交七项CI全部通过、草稿状态解除后再合并。见[归档记录](rolling_distribution_publication.md)与[研究设计](research_design.md)。
 
 ## 合并本轮代码
 
-1. 打开仓库的`Pull requests`，进入本轮预测与滚动决策比较的PR。
+1. 打开仓库的`Pull requests`，进入本轮架构与需求分布研究的PR。
 2. 查看`Files changed`和实验结果；等待`Python offline checks`成功。
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
@@ -43,11 +43,11 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Current manual action
 
-PR #15 is merged with its complete archive and five successful CI jobs. The new change is the [forecast and rolling-decision comparison](rolling_forecast_results.md). Merge its PR after all six current-commit CI jobs pass. All 73 evidence files are included with explicit approval and their original digests; see the [manifest and verification](rolling_forecast_publication.md). No additional authorization, API rerun or human-review form is required.
+Publication of the 35 distribution files has been explicitly approved and completed under the original manifest; no further approval is needed. Open [PR #17](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/17) and review the research design, archive and provenance correction. Merge only after all seven current-commit checks pass and the draft status is removed. See the [publication record](rolling_distribution_publication.md) and [research design](research_design.md).
 
 ### Merge the current change
 
-1. Open the repository's `Pull requests` and select the forecast and rolling-decision comparison PR.
+1. Open the repository's `Pull requests` and select the architecture and demand-distribution PR.
 2. Review `Files changed` and the experiment results; wait for `Python offline checks` to succeed.
 3. Click `Merge pull request`, then `Confirm merge`.
 

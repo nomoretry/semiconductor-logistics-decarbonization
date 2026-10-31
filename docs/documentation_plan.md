@@ -11,12 +11,13 @@ This document is available in Chinese and English; the English version follows t
 
 | 文档范围 | 当前安排 | 最终验收 |
 |---|---|---|
-| PPO、多种子、冻结评测、组件对照、滚动库存、敏感性及预测协议/结果 | 新增双语正文及复现说明 | 配置、指标和命令一致 |
-| 优化模型、来源与假设 | 历史中文文档保留；定稿后补英文 | 符号、参数单位和公司启发范围一致 |
+| 架构与研究总说明 | `architecture.md`、`research_guide.md`已提供完整双语正文 | 三条研究线、信息边界和未完成项一致 |
+| PPO、多种子、冻结评测、组件对照、滚动库存、敏感性、预测、分布及追索协议/结果 | 新增双语正文及复现说明 | 配置、指标和命令一致 |
+| 优化模型、来源与假设 | 静态方法已补英文；来源审计旧文保留，仍需逐篇翻译 | 符号、参数单位和公司启发范围一致 |
 | 文本与真实材料评估 | 历史证据与中文说明保留 | 区分合成、助手参考、未人工复核和内部路线更新限制 |
 | 查询环境、预算、BC 与最终消融 | 定稿后补双语研究说明 | 保留失败门槛和负结果 |
 | 复现、证据复算与人工操作 | 随流程更新，最终双语验收 | 命令能运行，证据链接可访问 |
-| 进度、研究日志、框架差距 | 开发中持续更新 | 区分已执行和未执行工作 |
+| 进度、研究日志、研究验收 | 开发中持续更新 | 区分已执行和未执行工作 |
 
 冻结协议被旧证据包的源码哈希引用时，不直接改写其字节。为它新增中文在前、英文在后的双语说明，链接回原协议，并在索引注明对应关系；旧实验继续验证原始协议。
 
@@ -30,12 +31,13 @@ The repository keeps an English `README.md` and a separate `README.zh-CN.md` wit
 
 | Scope | Current arrangement | Final check |
 |---|---|---|
-| PPO, multi-seed, frozen-evaluation, component, rolling inventory, sensitivity and forecast protocols/results | Bilingual text and reproduction notes | Matching settings, metrics and commands |
-| Optimization, sources and assumptions | Preserve historical Chinese documents; translate after finalization | Consistent notation, units and company-inspired scope |
+| Architecture and integrated research explanation | Full bilingual `architecture.md` and `research_guide.md` | Matching research lines, information boundaries and unfinished work |
+| PPO, multi-seed, frozen-evaluation, component, rolling inventory, sensitivity, forecast, distribution and recourse protocols/results | Bilingual text and reproduction notes | Matching settings, metrics and commands |
+| Optimization, sources and assumptions | Static methods now include English; historical source audits still need per-document translations | Consistent notation, units and company-inspired scope |
 | Text and real-source evaluations | Preserve historical evidence and explanations | Distinguish synthetic data, assistant references, absent human review and internal-route limitations |
 | Query environments, budgets, BC and final ablations | Add bilingual explanations after finalization | Retain failed gates and negative results |
 | Reproduction, evidence replay and manual steps | Update with the workflow; check both languages at delivery | Runnable commands and accessible evidence links |
-| Progress, research log and framework gaps | Maintain throughout development | Distinguish executed work from remaining work |
+| Progress, research log and research acceptance | Maintain throughout development | Distinguish executed work from remaining work |
 
 When an archived evidence bundle hashes an original protocol as source identity, do not change those original bytes. Add a bilingual companion with Chinese first and English second, link it to the frozen original and document the correspondence in the index. The old experiment continues to verify against its original protocol.
 
