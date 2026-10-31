@@ -7,13 +7,13 @@ This document is available in Chinese and English; the English version follows t
 
 当前不需要填写人工意见、重新运行API、发送密钥或租用GPU。8条真实数量抽取和16条真实澄清审核均已完成并归档。
 
-## 本轮归档已补齐
+## 当前需要操作的内容
 
-3份文件已获明确授权并按原SHA256上传，见[文件清单与验收](rolling_sensitivity_publication.md)。不需要再次授权；待PR当前提交五项CI全部成功后，按下述步骤合并。
+PR #15的三份归档已补齐，五项CI通过并已合并。本轮是[预测与滚动决策比较](rolling_forecast_results.md)；待当前提交六项CI全部成功后，再合并本轮PR。73份预测证据已按明确授权及原SHA256补齐，见[清单与验收](rolling_forecast_publication.md)。不需要再次授权、重新运行API或填写人工意见。
 
 ## 合并本轮代码
 
-1. 打开仓库的`Pull requests`，进入本轮碳分配、期末库存价值和情景数量敏感性实验的PR。
+1. 打开仓库的`Pull requests`，进入本轮预测与滚动决策比较的PR。
 2. 查看`Files changed`和实验结果；等待`Python offline checks`成功。
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
@@ -21,7 +21,7 @@ This document is available in Chinese and English; the English version follows t
 
 ## 自查实验进度
 
-在仓库目录运行`python -m scripts.check_research_progress`。这会核对保存的计数、文件和源码身份，不启动训练或API调用；完整实验重执行另用`make verify-sensitivity`。
+在仓库目录运行`python -m scripts.check_research_progress`。这会核对保存的计数、文件和源码身份，不启动训练或API调用；完整预测实验重执行另用`make verify-forecast`。
 
 ## 人工意见的处理
 
@@ -41,13 +41,13 @@ This document is available in Chinese and English; the English version follows t
 
 No human-review form, API rerun, key transfer or rented GPU is required. The eight real-quantity cases and 16 real-notice clarification cases are already archived.
 
-### The archive is complete
+### Current manual action
 
-The three files received explicit approval and were uploaded with their original SHA256 digests. See the [file list and verification](rolling_sensitivity_publication.md). No additional approval is required. Follow the steps below after all five CI jobs pass on the current PR commit.
+PR #15 is merged with its complete archive and five successful CI jobs. The new change is the [forecast and rolling-decision comparison](rolling_forecast_results.md). Merge its PR after all six current-commit CI jobs pass. All 73 evidence files are included with explicit approval and their original digests; see the [manifest and verification](rolling_forecast_publication.md). No additional authorization, API rerun or human-review form is required.
 
 ### Merge the current change
 
-1. Open the repository's `Pull requests` and select the rolling carbon/value/scenario sensitivity PR.
+1. Open the repository's `Pull requests` and select the forecast and rolling-decision comparison PR.
 2. Review `Files changed` and the experiment results; wait for `Python offline checks` to succeed.
 3. Click `Merge pull request`, then `Confirm merge`.
 
@@ -55,7 +55,7 @@ CI runs local synthetic experiments, retrains the small BC/PPO policies and veri
 
 ### Check saved progress
 
-Run `python -m scripts.check_research_progress` from the checkout. It checks saved counts, files and source identity without training or API calls. Use `make verify-sensitivity` for full reexecution.
+Run `python -m scripts.check_research_progress` from the checkout. It checks saved counts, files and source identity without training or API calls. Use `make verify-forecast` for full forecast-study reexecution.
 
 ### Human review
 

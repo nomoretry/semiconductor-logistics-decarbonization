@@ -183,3 +183,11 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 [滚动敏感性实验](docs/rolling_sensitivity_results.md)新增24条开发路径、3个采样种子和2,304条轨迹，量化碳分配、期末库存价值和情景数量。1→7情景成本降37.48%，7→21仅降0.36%且种子方向不一致；期末价值主要改变账面净成本。先验证预测分布及同信息教师，暂不训练滚动BC/PPO。复算：`python -m semiconductor_logistics rolling-sensitivity verify`。
 
 敏感性证据包已补齐，覆盖全部2,304条轨迹，详见[文件身份与验收](docs/rolling_sensitivity_publication.md)。合并以前须确认PR当前提交的CI通过。
+
+## 预测与滚动决策
+
+[预测对照](docs/rolling_forecast_results.md)已完成：12条校准与32条新开发路径，共352轨迹、4,224期。固定同一优化器后，快速EWMA和季节短窗成本比原EWMA分别高7.19%/8.48%，三个采样种子方向一致；两者均未通过描述性教师筛选。另有3条路径预测NLL改善而成本上升。保留原EWMA情景MPC，暂不训练滚动BC/PPO。
+
+运行 `make verify-forecast` 可重新选参、求解和核对全部证据；本轮不调用LLM API。
+
+本轮73份预测证据已获明确授权并按原SHA256归档，见[文件身份与验收](docs/rolling_forecast_publication.md)。合并前检查当前提交的全部六项CI。
