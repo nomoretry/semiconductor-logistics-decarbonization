@@ -40,7 +40,7 @@ This document provides Chinese first and English second.
 
 ### 复现与证据
 
-- [源码](../rolling_recourse/experiment.py)、[构造配置](../rolling_recourse/config.json)、[完整逐模型/节点/叶成本](../benchmark_results/rolling_recourse_mechanism/results.json)、[SHA256清单](../benchmark_results/rolling_recourse_mechanism/manifest.json)。这些是新机制检查的可读JSON，与仍待批准的35份分布证据是不同的工作。
+- [源码](../rolling_recourse/experiment.py)、[构造配置](../rolling_recourse/config.json)、[完整逐模型/节点/叶成本](../benchmark_results/rolling_recourse_mechanism/results.json)、[SHA256清单](../benchmark_results/rolling_recourse_mechanism/manifest.json)。这些是新机制检查的可读JSON，与已按授权补齐的35份分布证据是不同的工作。
 - `python -m semiconductor_logistics rolling-recourse verify` 或 `make verify-recourse`：重新枚举、重放原环境、与原MILP交叉比较，最后逐字段比较。
 - `python -m semiconductor_logistics rolling-recourse run --output artifacts/recourse-new`：在空目录重建。已存在的证据不会被覆盖。
 - 新增测试覆盖精确概率、相同历史仍有未知未来、提前期、逐路径碳、平局审计，以及改动作并重算哈希后的拒绝。
@@ -82,4 +82,4 @@ Next, implement longer history-consistent trees and conditional forecasts under 
 
 ### Reproduction and evidence
 
-The linked source,configuration,complete model/node/leaf-cost JSON and SHA256 manifest support full reconstruction. These readable mechanism-check files are separate from the35 distribution evidence files awaiting approval. `make verify-recourse` or `python -m semiconductor_logistics rolling-recourse verify` enumerates again,replays the old environment,cross-checks the old MILP,and compares all fields. `python -m semiconductor_logistics rolling-recourse run --output artifacts/recourse-new` generates into an empty directory without overwriting evidence. Tests cover exact probabilities,unresolved futures at the same history,lead times,pathwise carbon,optimal ties,and rejection after an action is altered and its hash recomputed.
+The linked source,configuration,complete model/node/leaf-cost JSON and SHA256 manifest support full reconstruction. These readable mechanism-check files are separate from the 35 distribution evidence files now archived with explicit approval. `make verify-recourse` or `python -m semiconductor_logistics rolling-recourse verify` enumerates again,replays the old environment,cross-checks the old MILP,and compares all fields. `python -m semiconductor_logistics rolling-recourse run --output artifacts/recourse-new` generates into an empty directory without overwriting evidence. Tests cover exact probabilities,unresolved futures at the same history,lead times,pathwise carbon,optimal ties,and rejection after an action is altered and its hash recomputed.

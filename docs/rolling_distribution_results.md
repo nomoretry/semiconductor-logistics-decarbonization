@@ -5,7 +5,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开归档待批准：** 本地实验和复算已完成，35份新证据尚未完整公开，PR保持草稿。清单、审批原因和操作见[归档状态](rolling_distribution_publication.md)。
+**公开证据已补齐：** 35份分布研究文件按用户明确批准的SHA256清单归档，实验数值不变。合并前须通过当前提交的七项CI；见[归档记录](rolling_distribution_publication.md)。
 
 ### 结论
 
@@ -62,7 +62,7 @@ python -m scripts.check_research_progress
 
 ## English
 
-**Publication pending approval:** local experiments/replay are complete; the 35-file public archive is incomplete and the PR remains draft. See [publication status](rolling_distribution_publication.md).
+**Evidence publication complete:** all 35 distribution files are archived under the explicitly approved SHA256 manifest, with results unchanged. Require all seven checks on the current commit before merge; see the [publication record](rolling_distribution_publication.md).
 
 ### Conclusion
 

@@ -1,0 +1,16 @@
+{
+  "candidate_nll": [
+    1.5940902630543283,
+    1.5973600343793068,
+    1.5996857938983104
+  ],
+  "candidates": [
+    12,
+    48,
+    192
+  ],
+  "criterion": "tuning_one_step_marginal_nb_nll",
+  "selected_index": 0,
+  "strength": 12,
+  "tuning_paths": 16
+}

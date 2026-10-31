@@ -5,7 +5,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开归档待批准：** 本地实验和复算已完成，35份新证据尚未完整公开，PR保持草稿。清单、审批原因和操作见[归档状态](rolling_distribution_publication.md)。
+**公开证据已补齐：** 35份分布研究文件按用户明确批准的SHA256清单归档，实验数值不变。合并前须通过当前提交的七项CI；见[归档记录](rolling_distribution_publication.md)。
 
 当前架构与证据口径见[研究说明](research_guide.md)；逐步记录见[研究日志](research_log.md)。完成状态按实际代码、实验和复算判断，不按计划数量判断。
 
@@ -26,6 +26,10 @@ This document is available in Chinese and English; English follows Chinese.
 - [均值预测](rolling_forecast_results.md)：快速EWMA/季节短窗成本+7.19%/+8.48%，保留原EWMA。
 - [分布确认](rolling_distribution_results.md)：NB−Poisson成本+5.5615（+2.06%），95%区间[−0.9259,+12.7341]；31路径改善、33变差。768次配对不变性审计最大目标偏差1.14×10⁻¹³。
 
+### 本轮定位与归档修正
+
+35份已授权证据已补齐；当前问题、方法与验收采用[本项目研究设计](research_design.md)。逐项框架对照退出当前设计，历史阅读与冻结协议留作来源记录，本轮不改模型或结果。
+
 ### 本轮继续推进
 
 [有限情景追索检查](rolling_recourse_results.md)已完成36个构造模型、36次MILP交叉验证和1,920次物理重放。18组表面改善全部能由固定计划的并列最优动作解释；按最好平局重规划后36组均无额外收益。108次跨相关性评估（72次错配）遗憾全为0。说明追索结构能使期望成本依赖相关性，但尚未证明预测相关性有决策价值，未启动滚动学习。
@@ -42,7 +46,7 @@ PR #16已合并，六项主分支CI通过。本轮新增分布复算检查；新
 
 ## English
 
-**Publication pending approval:** local experiments/replay are complete; the 35-file public archive is incomplete and the PR remains draft. See [publication status](rolling_distribution_publication.md).
+**Evidence publication complete:** all 35 distribution files are archived under the explicitly approved SHA256 manifest, with results unchanged. Require all seven checks on the current commit before merge; see the [publication record](rolling_distribution_publication.md).
 
 The [research guide](research_guide.md) defines current scope; the [research log](research_log.md) retains each step. Completion is based on implemented, executed and replayed work, not plans.
 
@@ -59,6 +63,10 @@ The [research guide](research_guide.md) defines current scope; the [research log
 Frozen query PPO−BC regret is+0.0298 percentage points, approximate 95% interval[−0.1817,+0.2540]. Two-step search/iterative DP achieve 0.6309%/0.0528%; fewer learned-policy solver calls are not demonstrated deployment speedups. Masks reduce rejections; masked potential shaping has no stable benefit on inspected development data.
 
 Scenario MPC improves rolling cost/service over base-stock with higher emissions. Sensitivity shows 37.48% lower cost from one to seven scenarios, only 0.36% from seven to 21 with mixed seed directions; terminal credit mainly changes accounting. Fast EWMA/seasonal-window forecasts raise cost 7.19%/8.48%. In distribution confirmation, NB−Poisson is+5.5615 (+2.06%),95% interval[−0.9259,+12.7341];31 paths improve and 33 worsen. Across 768 dependence audits, maximum objective discrepancy is 1.14×10⁻¹³. The linked Chinese bullets lead to bilingual result pages with full evidence.
+
+### Framing and archive correction
+
+The 35 explicitly authorized files are now archived. Current questions, methods and acceptance follow the [project research design](research_design.md). The module-by-module comparison is retired; historical reading and frozen protocols retain provenance. No model or result changes are introduced.
 
 ### Further work completed
 

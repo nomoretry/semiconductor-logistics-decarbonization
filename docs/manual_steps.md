@@ -9,7 +9,7 @@ This document is available in Chinese and English; the English version follows t
 
 ## 当前需要操作的内容
 
-PR #16已合并且主分支六项CI通过。本轮更新双语架构及需求分布研究；新PR暂不合并：先批准[本轮35文件清单](../data_sources/rolling_distribution_artifact_audit.json)公开上传，完成证据归档与七项CI后再合并。当前无需重跑API、发送密钥或填写人工意见。分布研究的35份文件均为合成实验输出，见[结果](rolling_distribution_results.md)和[SHA256清单](../data_sources/rolling_distribution_artifact_audit.json)。
+35份分布证据的公开上传已获得明确批准并按原清单补齐，不需要再次确认。进入[PR #17](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/17)，审阅独立研究设计、归档及来源历史修正；等待当前提交七项CI全部通过、草稿状态解除后再合并。见[归档记录](rolling_distribution_publication.md)与[研究设计](research_design.md)。
 
 ## 合并本轮代码
 
@@ -43,7 +43,7 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Current manual action
 
-PR #16 is merged and all six main-branch CI jobs passed. This change unifies bilingual architecture and adds demand-distribution research. Do not merge yet: first approve publication of the [new 35-file manifest](../data_sources/rolling_distribution_artifact_audit.json); finish evidence upload and all seven checks before merging. No API rerun, key transfer or human form is needed. The35 new files are synthetic experiment outputs; see the [results](rolling_distribution_results.md) and [SHA256 manifest](../data_sources/rolling_distribution_artifact_audit.json).
+Publication of the 35 distribution files has been explicitly approved and completed under the original manifest; no further approval is needed. Open [PR #17](https://github.com/nomoretry/semiconductor-logistics-decarbonization/pull/17) and review the research design, archive and provenance correction. Merge only after all seven current-commit checks pass and the draft status is removed. See the [publication record](rolling_distribution_publication.md) and [research design](research_design.md).
 
 ### Merge the current change
 

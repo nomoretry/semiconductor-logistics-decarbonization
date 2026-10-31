@@ -15,7 +15,7 @@
 | R09 | 固定模型在新真实数量子任务上的实际表现 | [8次API结果](results/notice_facts_api.md)、[9个原始文件及来源清单](../benchmark_results/notice_facts_api/provenance.json)；下载包哈希核对、原响应和冻结规则离线复算一致 | 模型7/8、规则6/8；E06把停航三周抽成延误三周。参考标签待人工审核，未据此修改提示词或重跑 |
 | R10 | 同求解调用上限下，强规划还留下多少差距 | [事前协议](query_budget_protocol.md)、[完整结果](query_budget_results.md)；54情境×4方法×5预算，全部策略分支、整条路径计算量与物理计划复算 | 主预算最强方法平均差距0.6253%，新36情境0.6836%；预设BC筛选未通过，未训练 |
 | R11 | 平均成本是否掩盖少数严重损失 | [事后最差案例](../benchmark_results/query_budget_diagnostic/worst_case.json)，条件期望成本差×分支概率精确解释19.48125的任务损失 | 昂贵单次查询耗尽后续信息预算，便宜查询组合可更优；局部取舍成立，不把案例诊断包装成留出结论 |
-| R12 | 如何接近参考项目的工程与研究完成度 | 阅读固定commit的架构、BC/PPO、策略输入、工具注册器、GAE、检查点、验证和发布结构；[逐项对照](framework_comparison.md)与[文件身份](../data_sources/framework_reference.json) | 借鉴训练到证据的完整流程；保留对方公开规则审计的教训，不照搬其数字和结论 |
+| R12 | 历史外部仓库阅读（定位已在R32修正） | 阅读固定commit的架构、BC/PPO、策略输入、工具注册器、GAE、检查点、验证和发布结构；[历史入口](framework_comparison.md)与[原阅读文件身份](history/repository_reading.json) | 借鉴训练到证据的完整流程；保留对方公开规则审计的教训，不照搬其数字和结论 |
 | R13 | BC能否减少在线查询规划的求解次数 | [独立协议](query_policy_protocol.md)、[训练与结果](query_policy_results.md)、[证据包](../benchmark_results/query_bc_development)；72/18/36情境，1训练种子，880次更新，教师重算/重训/检查点重执行 | BC遗憾2.0833%、一次最终MILP；两步搜索0.3140%、约16.15次。减少在线求解但质量未达到强搜索，不宣称PPO收益 |
 | R14 | BC损失主要来自何种决策 | [36情境逐节点分解](../benchmark_results/query_bc_diagnostic/errors.json)；每题占用概率加权的教师动作差精确解释策略损失 | 多余查询成本26.41785、过早停止14.328875、路线选择12.0948625；事后诊断，不改本轮模型 |
 | R15 | 人工复核是否阻塞研究 | 维护者明确选择不填写人工意见；更新[操作说明](manual_steps.md)与当前状态，冻结数据及旧审核表不变 | 不代填人工意见；真实评测保留未复核探索范围，其他环境与策略研究继续 |
@@ -107,3 +107,18 @@ Reviewed PR #17 at `7ffc191`: all six existing CI jobs pass; distribution verifi
 The [recourse protocol](rolling_recourse_protocol.md) preceded the 36 finite probability models, preserving demand revelation, route lead times and physical replay. The question is decision value of dependence, not training. The initial 18 improvements prompted additional exploratory tie and cross-model checks: best-open-loop-tie replanning matches recourse in every model, and all 108 cross-model evaluations have zero regret. The [results](rolling_recourse_results.md) identify these audits as post-output diagnostics. All 36 MILP comparisons and 1,920 policy/leaf replays pass; repeated calculations are not independent test tasks.
 
 Fixed the omission of `rolling_distribution` from installed-wheel verification and added the new module/CLI. All 348 offline tests, installed-wheel checks and complete recourse replay under another BLAS dispatch pass. `verify-recourse` runs inside the existing offline job, retaining seven jobs. Evidence, architecture, bilingual explanations, the five-stage ledger and reproduction commands are updated together. No model API calls or rolling BC/PPO training were performed.
+
+
+## R32：完成授权归档并纠正研究定位 / Authorized archive and research framing
+
+用户明确批准固定清单中的35份分布证据按SHA256公开上传。全部文件与提交`7ffc191`的清单逐一匹配，保留12个已创建的文件对象，补齐其余23个并归入PR；不重生成数据、不重跑API、不改变任何模型结果。清单总计3,887,809字节，旧缺文件CI失败记录保留，当前提交须通过完整七项检查。
+
+此前将“匹配难度与完成度”写成逐项框架映射，偏离了用户意图。本轮新增[本项目研究设计](research_design.md)和[来源历史说明](source_history.md)，首页改用独立的问题与验收标准；旧逐项对照退出当前设计，原阅读清单移入历史目录。冻结BC协议及既有归属保持原字节，既不把通用方法当作原创，也不声称历史上从未受过参考影响。
+
+有限检查：本项目132份Python文件与历史固定提交的97份Python文件无整文件身份匹配，也无该包导入；详见[检查范围和限制](../data_sources/code_origin_check.json)。这不是局部复制或思想独立性的全面鉴定。研究路线仍围绕物流信息价值、资源耦合和预测误差，后续模块按实际研究缺口决定。本轮不新增训练或性能结果。
+
+The user explicitly approved public upload of the 35 distribution evidence files by the fixed SHA256 manifest at `7ffc191`. Each file matches: retain 12 existing Git objects, complete the other 23 and attach the entire archive to the PR. No data regeneration, API requests or result changes. Total size is 3,887,809 bytes. Historical missing-file CI failures remain; the current commit must pass all seven complete checks.
+
+Earlier documentation turned comparable difficulty/completeness into a module-by-module framework mapping, contrary to the user's intent. This update introduces [project-specific research design](research_design.md) and [source history](source_history.md); current entry points use our questions and acceptance criteria. The comparison is retired and the reading inventory moves to history. Frozen BC protocols and actual attribution retain their bytes. Standard methods are not claimed as inventions, and historical conceptual influence is not denied.
+
+A limited check finds no exact whole-file identities between 132 project Python files and 97 files at the historically reviewed commit, and no imports of that package. The [scope and limitations](../data_sources/code_origin_check.json) explicitly exclude comprehensive partial-copy or intellectual-independence judgments. Work remains centered on logistics information value, resource coupling and forecast error. Further modules follow research gaps. This change adds no training or performance claims.

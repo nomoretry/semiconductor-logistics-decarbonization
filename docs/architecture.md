@@ -7,6 +7,8 @@ This document is available in Chinese and English; English follows Chinese.
 
 项目有三条分别验证的研究线：公告转参数、已知订单下的付费查询、未知需求下的滚动库存决策。它们共享物流问题和部分求解代码，尚未组成经过验证的端到端LLM决策系统。
 
+架构围绕[本项目的研究问题](research_design.md)组织；模块是否继续扩展，由物流决策证据决定。
+
 ### 模块与连接
 
 | 研究线 | 实际连接 | 代码 | 证据范围 |
@@ -54,6 +56,8 @@ flowchart TD
 ## English
 
 The project has three separately evaluated research lines: notice-to-parameter processing, paid queries with known orders, and rolling inventory control with unknown demand. They share a logistics setting and some solver code, but are not a validated end-to-end LLM decision system.
+
+Architecture follows [this project's research questions](research_design.md); logistics decision evidence determines further modules.
 
 ### Modules and connections
 

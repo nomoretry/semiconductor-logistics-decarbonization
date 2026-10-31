@@ -144,7 +144,7 @@ jobs:
           root = Path('benchmark_results/rolling_distribution_confirmation')
           manifest = root / 'manifest.json'
           if not manifest.is_file():
-              print('::error::Distribution evidence publication is awaiting approval. Keep this PR in draft; do not skip verification or merge.')
+              print('::error::Distribution evidence manifest is missing; restore the complete frozen archive before verification.')
               raise SystemExit(1)
           missing = [name for name in json.loads(manifest.read_text())['files'] if not (root / name).is_file()]
           if missing:

@@ -13,7 +13,9 @@
 
 [有限追索检查](docs/rolling_recourse_results.md)完成36个构造模型、36次MILP核对、1,920次物理重放。18组表面提升均被并列最优动作解释，108次跨相关性策略评估遗憾全为0；尚无新的有效教师。复算：`make verify-recourse`。
 
-本轮分布研究的35份证据尚待公开批准，PR保持草稿；[清单与归档状态](docs/rolling_distribution_publication.md)。
+本轮35份分布证据已按明确批准的SHA256清单补齐，合并前需当前提交七项CI全部通过；见[归档记录](docs/rolling_distribution_publication.md)。
+
+核心问题是：在共享运输容量、库存演化和碳约束下，哪些信息值得获取，预测误差如何改变决策，信息处理与优化计算的成本是否值得付出？[研究设计](docs/research_design.md)据此定义方法选择、已有证据与尚未成立的贡献。
 
 ## 设计与实验
 
@@ -40,7 +42,7 @@
 
 [组件对照](docs/query_components_results.md)已完成：在36个已查看开发情境上，去掩码使含拒绝惩罚的遗憾从2.5362%升至4.6288%，拒绝概率14.3215%；有掩码时成本势函数为2.7956%，未见稳定收益。本轮不重评或改写千题结果。
 
-[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[框架对照](docs/framework_comparison.md)逐项说明与Agentic Tool RL的结构对应和剩余工作；[研究记录](docs/research_log.md)保存每轮实现与证据。
+[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[研究设计](docs/research_design.md)定义本项目的物流问题、方法选择与验收标准；[研究记录](docs/research_log.md)保存每轮实现与证据。
 
 [真实数量评测](docs/results/notice_facts_api.md)已归档：模型7/8、规则6/8与助手参考一致。维护者选择不填写人工意见，结果保留为未进行人工复核的探索证据，不阻塞环境研究，也不重复调用API。需要手动操作的内容见[操作说明](docs/manual_steps.md)。
 

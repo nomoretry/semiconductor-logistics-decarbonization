@@ -1,24 +1,28 @@
-# 分布证据归档状态 / Distribution evidence publication
+# 分布证据归档记录 / Distribution evidence publication
 
 本文提供中英文版本，中文在前，英文在后。
-This document is available in Chinese and English; English follows Chinese.
+This document provides Chinese first and English second.
 
 ## 中文
 
-本地研究和复算已完成；公开证据包尚未完整发布，当前PR保持草稿，不应合并。自动上传审批拒绝压缩证据，理由是此前明确授权涵盖上一轮文件，不涵盖本轮新集合。
+用户已明确批准将固定清单中的35份分布研究证据，按所列SHA256公开上传到`nomoretry/semiconductor-logistics-decarbonization`。本轮补齐全部文件，保留原始字节、模型配置、实验数值和失败的教师筛选结论。
 
-本轮共有35份文件、3,887,809字节，包括27份gzip和8份JSON/JSONL。[逐文件路径、长度、SHA256及Git blob身份](../data_sources/rolling_distribution_artifact_audit.json)是本轮批准和上传的固定清单。不得更换文件字节后沿用批准。[逐字段检查](../data_sources/rolling_distribution_content_check.json)验证全部27份压缩文件：4,160条顶层记录、5,452,544个有限数值；所有字符串仅是生成的合成任务ID、公开方法/过程标签或SHA256，没有自由文本、公司订单或API输出。完整512轨迹及768次审计也已重执行。
+批准依据是提交`7ffc1910640c2deeef938f18973517e7f5022005`中的[固定清单](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/7ffc1910640c2deeef938f18973517e7f5022005/data_sources/rolling_distribution_artifact_audit.json)。35份文件共3,887,809字节，含27份gzip及8份JSON/JSONL；逐一核对SHA256、长度及Git blob身份。12个先前已上传的文件对象按相同身份复用，其余23个补齐。完整目录：[分布确认归档](../benchmark_results/rolling_distribution_confirmation)。
 
-用户需要批准的范围：将该清单中的35份合成证据按清单SHA256公开上传到`nomoretry/semiconductor-logistics-decarbonization`。这不是再次批准上一轮73文件，不需要提供密钥、运行API或填写人工意见。
+[逐值检查](../data_sources/rolling_distribution_content_check.json)覆盖27份压缩文件、4,160条顶层记录、5,452,544个有限数值；字符串为合成任务ID、公开方法/过程标签或SHA256。归档不含公司订单或API响应。完整复算会重建拟合、选参、确认数据，重执行512轨迹和768次相关性不变性审计。
 
-批准后，完成剩余文件上传，核对远端Git blob身份与完整树，运行本轮七项CI，更新本页归档状态，再将草稿PR转为可合并。批准前不绕过上传限制，不将缺证据的检查跳过后称为通过。代码、双语结果和清单可先审阅；它们不代表公开原始证据已经完整。
+复算命令：`make verify-distribution`。合并必须以**当前提交的七项CI全部通过**为准，包含完整分布重执行；文件齐全不代替复算，旧提交通过不代替新提交通过。CI保留缺文件检查，错误说明更新为一般的归档完整性错误。
+
+此前自动审核因新集合没有明确授权而拒绝上传，这一历史保留；本次针对35份文件的明确授权已解除该阻塞，不需要再次确认。维护者完成代码与结果审阅后按[操作说明](manual_steps.md)合并PR。
 
 ## English
 
-Local research and replay are complete, but the public evidence bundle is incomplete. Keep the PR in draft and do not merge it. Automatic upload review rejected compressed evidence because the explicit prior authorization covered the previous set, not this new set.
+The user explicitly authorized public upload of the 35 distribution evidence files, with their listed SHA256 digests, to `nomoretry/semiconductor-logistics-decarbonization`. This change completes the archive without changing bytes, model configuration, numerical results or the failed teacher-screen conclusion.
 
-This set contains 35 files totaling 3,887,809 bytes: 27 gzip files and eight JSON/JSONL files. The [per-file paths, sizes, SHA256 and Git blob identities](../data_sources/rolling_distribution_artifact_audit.json) define the exact approval/upload scope. Do not reuse approval for changed bytes. The [decompressed field audit](../data_sources/rolling_distribution_content_check.json) checks all 27 compressed files: 4,160 top-level records and 5,452,544 finite numeric values. Every string is a generated synthetic task ID, public method/profile label or SHA256. There is no free text, company order data or API response. All 512 trajectories and 768 dependence audits have also been reexecuted.
+Authorization binds to the [fixed manifest](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/7ffc1910640c2deeef938f18973517e7f5022005/data_sources/rolling_distribution_artifact_audit.json) at commit `7ffc1910640c2deeef938f18973517e7f5022005`. The set contains 35 files totaling 3,887,809 bytes: 27 gzip and eight JSON/JSONL files. Each length, SHA256 and Git blob identity is checked. Twelve existing objects are reused under identical identities; the remaining 23 are completed. The full directory is the [distribution confirmation archive](../benchmark_results/rolling_distribution_confirmation).
 
-Required approval: publish these 35 synthetic evidence files, with their listed SHA256 digests, to `nomoretry/semiconductor-logistics-decarbonization`. This is a new set, not another approval for the previous 73 files. No key transfer, API run or human-review form is required.
+The [value audit](../data_sources/rolling_distribution_content_check.json) covers 27 compressed files, 4,160 top-level records and 5,452,544 finite numbers. Strings are synthetic task IDs, public method/profile labels or SHA256 hashes. No company orders or API responses are included. Complete replay regenerates fitting, selection and confirmation data, reexecutes 512 trajectories and repeats 768 dependence-invariance audits.
 
-After approval, finish uploading, verify remote blob identities and complete tree coverage, run all seven current-commit CI jobs, update publication status and mark the PR ready. Before approval, do not bypass the restriction or skip missing-evidence checks and claim success. Code, bilingual results and the manifest are reviewable now; they do not mean the raw public archive is complete.
+Run `make verify-distribution`. Merge requires **all seven CI jobs on the current commit**, including complete distribution reexecution. File coverage is not replay; previous-commit success is not current-commit success. The missing-file guard remains, with a general archive-integrity error message.
+
+Earlier automatic review rejected upload because this new set lacked explicit authorization. That history is retained; approval of these exact 35 files now removes the blocker and needs no further confirmation. After reviewing code and results, the maintainer can merge using the [manual steps](manual_steps.md).

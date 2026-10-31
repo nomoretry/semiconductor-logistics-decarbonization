@@ -17,7 +17,7 @@ This document is available in Chinese and English; the English version follows t
 | 文本与真实材料评估 | 历史证据与中文说明保留 | 区分合成、助手参考、未人工复核和内部路线更新限制 |
 | 查询环境、预算、BC 与最终消融 | 定稿后补双语研究说明 | 保留失败门槛和负结果 |
 | 复现、证据复算与人工操作 | 随流程更新，最终双语验收 | 命令能运行，证据链接可访问 |
-| 进度、研究日志、框架差距 | 开发中持续更新 | 区分已执行和未执行工作 |
+| 进度、研究日志、研究验收 | 开发中持续更新 | 区分已执行和未执行工作 |
 
 冻结协议被旧证据包的源码哈希引用时，不直接改写其字节。为它新增中文在前、英文在后的双语说明，链接回原协议，并在索引注明对应关系；旧实验继续验证原始协议。
 
@@ -37,7 +37,7 @@ The repository keeps an English `README.md` and a separate `README.zh-CN.md` wit
 | Text and real-source evaluations | Preserve historical evidence and explanations | Distinguish synthetic data, assistant references, absent human review and internal-route limitations |
 | Query environments, budgets, BC and final ablations | Add bilingual explanations after finalization | Retain failed gates and negative results |
 | Reproduction, evidence replay and manual steps | Update with the workflow; check both languages at delivery | Runnable commands and accessible evidence links |
-| Progress, research log and framework gaps | Maintain throughout development | Distinguish executed work from remaining work |
+| Progress, research log and research acceptance | Maintain throughout development | Distinguish executed work from remaining work |
 
 When an archived evidence bundle hashes an original protocol as source identity, do not change those original bytes. Add a bilingual companion with Chinese first and English second, link it to the frozen original and document the correspondence in the index. The old experiment continues to verify against its original protocol.
 

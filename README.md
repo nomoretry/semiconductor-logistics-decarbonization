@@ -12,7 +12,9 @@ Two company-inspired case studies share the solver while retaining separate oper
 
 The [distribution confirmation study](docs/rolling_distribution_results.md) holds mean forecasts and MPC fixed. Residual-NB cost is 275.8435 versus Poisson 270.2820; the paired 95% cost interval crosses zero. It improves marginal NLL slightly but fails the teacher screen. A structural audit proves and numerically verifies that current additive, shared-schedule MPC cannot exploit cross-SKU pairing when complete SKU path marginals are preserved. No rolling BC/PPO is trained. Notice extraction, query learning and rolling control remain separately evaluated research lines.
 
-Publication of the new 35-file distribution evidence set awaits approval; keep the PR in draft. See the [manifest and publication status](docs/rolling_distribution_publication.md).
+The 35-file distribution archive is complete under the explicitly approved SHA256 manifest. Require all seven checks on the current commit before merge; see the [publication record](docs/rolling_distribution_publication.md).
+
+The central question is when information acquisition and forecast modeling improve logistics decisions enough to justify their cost, under shared transport capacity, inventory dynamics and carbon constraints. The [research design](docs/research_design.md) connects each method to this question and separates implemented evidence from unproven contributions.
 
 ## Design and experiments
 
@@ -45,7 +47,7 @@ The [component audit](docs/query_components_results.md) is complete on 36 alread
 
 The [rolling inventory study](docs/rolling_inventory_results.md) implements the next stage: 44 distinct synthetic paths, four deployable baselines and a perfect-information lower bound. On 32 development paths, scenario MPC costs 282.2406 versus base-stock 330.6219, with higher immediate fill but higher emissions. Mean MPC does not beat the rule overall; no RL is trained.
 
-The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [framework comparison](docs/framework_comparison.md) maps the implementation and remaining gaps against Agentic Tool RL; the [research log](docs/research_log.md) records each change and its evidence.
+The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [research design](docs/research_design.md) defines our logistics questions, method choices and acceptance criteria; the [research log](docs/research_log.md) records each change and its evidence.
 
 The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archived: model outputs agree with assistant references on 7/8 cases, compared with 6/8 for frozen rules. These results remain exploratory and have not undergone independent human review. They do not block environment research or require another API run. Any necessary user actions are listed in the [manual steps](docs/manual_steps.md).
 
