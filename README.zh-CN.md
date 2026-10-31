@@ -9,6 +9,10 @@
 
 两个案例共享求解器，分别保留业务约束：[ASML 备件物流](asml/README.md)与 [Marvell 成品物流](marvell/README.md)。
 
+[分布确认研究](docs/rolling_distribution_results.md)固定均值预测和MPC，新增16拟合、16选参、64确认路径，共512轨迹。残差NB/Poisson成本275.8435/270.2820，差值区间跨零，教师筛选失败。768次审计验证：当前可分目标与共享计划结构无法利用跨SKU完整路径的配对信息。尚未训练滚动BC/PPO；公告抽取、查询学习和滚动控制仍分别验证。
+
+本轮分布研究的35份证据尚待公开批准，PR保持草稿；[清单与归档状态](docs/rolling_distribution_publication.md)。
+
 ## 设计与实验
 
 | 模块 | 实现 | 实验与输出 |

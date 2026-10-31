@@ -27,6 +27,8 @@ def main():
         'rolling_sensitivity_development': ['distinct_demand_paths', 'trajectories', 'learning', 'scope'],
         'rolling_forecast_development': ['calibration_paths', 'distinct_development_paths', 'trajectories',
                                          'period_records', 'learning', 'scope'],
+        'rolling_distribution_confirmation': ['fit_paths', 'tune_paths', 'confirmation_paths',
+                                              'trajectories', 'period_records', 'learning', 'scope'],
     }
     results = {}
     errors = []
@@ -74,6 +76,26 @@ def main():
         from rolling_forecast.experiment import identity as forecast_identity
         if fm['sources'] != forecast_identity():
             errors.append('changed_forecast_sources')
+    distribution = ROOT / 'benchmark_results/rolling_distribution_confirmation'
+    distribution_checked = 0
+    distribution_expected = 0
+    if not (distribution / 'manifest.json').is_file():
+        errors.append('missing_distribution_manifest')
+    else:
+        dm = json.loads((distribution / 'manifest.json').read_text())
+        distribution_expected = len(dm['files'])
+        for name, expected in dm['files'].items():
+            if Path(name).name != name:
+                errors.append('invalid_distribution_path:' + name)
+                continue
+            path = distribution / name
+            if not path.is_file() or path.is_symlink() or digest(path) != expected:
+                errors.append('missing_or_changed_distribution_artifact:' + name)
+            else:
+                distribution_checked += 1
+        from rolling_distribution.experiment import identity as distribution_identity
+        if dm['sources'] != distribution_identity():
+            errors.append('changed_distribution_sources')
     print(json.dumps({
         'scope': 'local_saved_result_inventory_and_file_integrity_only',
         'new_experiments_executed': False,
@@ -83,6 +105,8 @@ def main():
         'sensitivity_artifact_files_expected': len(manifest['files']),
         'forecast_artifact_files_verified': forecast_checked,
         'forecast_artifact_files_expected': forecast_expected,
+        'distribution_artifact_files_verified': distribution_checked,
+        'distribution_artifact_files_expected': distribution_expected,
         'errors': errors,
         'checkout_check_passed': not errors,
     }, ensure_ascii=False, indent=2))

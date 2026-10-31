@@ -1,6 +1,7 @@
 # Semiconductor Logistics Decarbonization
 
 [研究说明 / Research guide](docs/research_guide.md) · [系统结构 / Architecture](docs/architecture.md)
+
 English | [简体中文](README.zh-CN.md)
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
@@ -8,6 +9,10 @@ English | [简体中文](README.zh-CN.md)
 A research framework for joint inventory and transport optimization in semiconductor spare-parts and finished-goods logistics. It uses SciPy/HiGHS to solve mixed-integer models with delivery, transport-capacity and carbon-budget constraints, and includes fixed-configuration LLM notice extraction, multi-step tool environments, query-policy behavior cloning (BC), cost-based PPO, and reproducible evaluation.
 
 Two company-inspired case studies share the solver while retaining separate operating assumptions: [ASML spare-parts logistics](asml/README.md) and [Marvell finished-goods logistics](marvell/README.md).
+
+The [distribution confirmation study](docs/rolling_distribution_results.md) holds mean forecasts and MPC fixed. Residual-NB cost is 275.8435 versus Poisson 270.2820; the paired 95% cost interval crosses zero. It improves marginal NLL slightly but fails the teacher screen. A structural audit proves and numerically verifies that current additive, shared-schedule MPC cannot exploit cross-SKU pairing when complete SKU path marginals are preserved. No rolling BC/PPO is trained. Notice extraction, query learning and rolling control remain separately evaluated research lines.
+
+Publication of the new 35-file distribution evidence set awaits approval; keep the PR in draft. See the [manifest and publication status](docs/rolling_distribution_publication.md).
 
 ## Design and experiments
 
@@ -29,6 +34,7 @@ Two company-inspired case studies share the solver while retaining separate oper
 | Rolling sensitivity | Carbon pacing, final-stock credit and 1/7/21 scenarios | 24 new paths, three sampling seeds, 2,304 trajectories; 21 vs seven scenarios has no consistent seed-level benefit |
 | Unknown-demand rolling inventory | Dated pipeline, history-only forecasts, shared capacities and cumulative carbon | 12 calibration + 32 development paths; four baselines; scenario MPC improves cost/service with higher emissions |
 | Forecast comparison | Calibration-only parameter selection; the same scenario MPC for all predictors | 12 calibration + 32 new development paths, 352 trajectories; fast EWMA and seasonal-window costs rise 7.19%/8.48% versus original EWMA |
+| Demand distribution | Fixed EWMA means; past-residual NB dispersion; whole-SKU-path dependence audit | 16 fit + 16 tune + 64 confirmation paths, 512 trajectories; NB cost +2.06%, no stable teacher; 768 dependence audits preserve the objective |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
 The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
@@ -49,7 +55,7 @@ The sensitivity archive is complete and PR #15 is merged after all five checks p
 
 The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. The [forecast comparison](docs/rolling_forecast_results.md) is now complete: both calibration-selected alternatives have higher mean cost and worse marginal prediction scores than original EWMA on 32 new paths. Three paths improve forecast NLL while worsening decision cost. No new teacher passes the fixed descriptive screen; rolling BC/PPO remains deferred.
 
-The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). Merge acceptance requires all six CI jobs on the current commit.
+The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). PR #16 is merged with all six main-branch checks successful. The current distribution extension requires seven checks.
 
 ## Quick start
 

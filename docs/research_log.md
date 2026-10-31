@@ -76,3 +76,19 @@ R29在获得针对全部73份文件的明确授权后补齐预测归档。此前
 问题：固定均值预测后，历史误差的离散度估计是否改善滚动成本？读代码发现情景MPC无情景追索且损失按SKU相加，跨SKU整段路径重排不改变目标。因此将研究分成边际离散度比较与相关性不变性审计，先固定[协议](rolling_distribution_protocol.md)、`rolling_distribution/config.json`和实现；不把重排引起的多最优解差异解释为收益。烟雾测试只使用独立小数据；正式16/16/64划分尚未运行。来源、指标、质量教师条件及尚未指定的计算时限均在协议中记录。旧冻结记录不改。
 
 Question: does past-error dispersion improve rolling cost with fixed means? Code inspection shows no scenario recourse and additive SKU losses, so whole-path cross-SKU permutations preserve the objective. Separate the marginal-dispersion comparison from the dependence-invariance audit. Fix the [protocol](rolling_distribution_protocol.md), config and implementation first; tie-breaking differences are not benefits. Smoke uses isolated small data; formal16/16/64 splits have not run. The protocol records sources, metrics, teacher screening and unspecified compute targets. Prior frozen records remain unchanged.
+
+## 分布确认与学习判断 / Distribution confirmation and learning decision
+
+正式运行前提交为`e71d68d7a822508e2b574c61d97b9b2d356a6d9c`。完成16拟合、16选参和64新确认路径，512轨迹/6,144期，35份证据。NB均值成本275.8435、Poisson270.2820（+2.06%），主配对区间跨零。NLL略好不等于库存成本更低；教师筛选失败。768次跨SKU整段路径重排审计验证可分目标不变性，5次首期动作变化来自多最优解，不报告相关性收益。
+
+341测试、wheel安装检查及另一BLAS分派下的完整重执行通过，拟合/选参/预测/策略/物理台账和相关性审计均复算。新增第七项CI进行独立分布研究重执行。旧源码绑定协议和证据原字节保持不变。当前无部署时限和容许损失，不训练滚动BC/PPO；下一问题应先明确联合风险或追索是否属于业务目标。详见[结果](rolling_distribution_results.md)和[清单](../benchmark_results/rolling_distribution_confirmation/manifest.json)。
+
+Formal execution follows commit `e71d68d7a822508e2b574c61d97b9b2d356a6d9c`. The study completes16 fitting,16 tuning and64 new confirmation paths,512 trajectories/6,144 periods and35 evidence files. NB/Poisson costs are275.8435/270.2820 (+2.06%); the primary paired interval crosses zero. Slightly better NLL does not imply lower inventory cost; teacher screening fails. The768 whole-path pairing audits verify separability; five changed first actions arise from multiple optima, not dependence value.
+
+All341 tests, installed-wheel checks and complete replay under another BLAS dispatch pass. Replay covers fitting, selection, forecasts, policies, physical ledgers and dependence audits. A seventh CI job reexecutes this study. Prior source-bound protocols and evidence retain their bytes. No deployment deadline or tolerable loss exists, so rolling BC/PPO stays untrained. Define the business relevance of joint risk or recourse before the next protocol. See the linked results and manifest.
+
+## 本轮公开归档阻塞 / Current publication block
+
+本地全部检查完成。自动上传审批在压缩文件上拒绝，补做27文件的解压逐值允许列表检查后部分上传成功，但后续文件仍因新集合缺少明确公开授权而拒绝。不继续尝试绕过；完成代码、双语说明、逐文件SHA256清单和草稿PR。35文件待批准后补齐，七项CI验收前不合并。见[归档状态](rolling_distribution_publication.md)。
+
+Local validation is complete. Automatic review rejected compressed files. A strict decompressed-value check allowed some uploads, but subsequent files were still rejected for lacking explicit publication approval for this new set. Do not try another bypass. Finish code, bilingual explanations, the per-file SHA256 list and a draft PR. Complete all 35 files after approval and require seven passing checks before merge. See the publication-status page.

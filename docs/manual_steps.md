@@ -9,11 +9,11 @@ This document is available in Chinese and English; the English version follows t
 
 ## 当前需要操作的内容
 
-PR #15的三份归档已补齐，五项CI通过并已合并。本轮是[预测与滚动决策比较](rolling_forecast_results.md)；待当前提交六项CI全部成功后，再合并本轮PR。73份预测证据已按明确授权及原SHA256补齐，见[清单与验收](rolling_forecast_publication.md)。不需要再次授权、重新运行API或填写人工意见。
+PR #16已合并且主分支六项CI通过。本轮更新双语架构及需求分布研究；新PR暂不合并：先批准[本轮35文件清单](../data_sources/rolling_distribution_artifact_audit.json)公开上传，完成证据归档与七项CI后再合并。当前无需重跑API、发送密钥或填写人工意见。分布研究的35份文件均为合成实验输出，见[结果](rolling_distribution_results.md)和[SHA256清单](../data_sources/rolling_distribution_artifact_audit.json)。
 
 ## 合并本轮代码
 
-1. 打开仓库的`Pull requests`，进入本轮预测与滚动决策比较的PR。
+1. 打开仓库的`Pull requests`，进入本轮架构与需求分布研究的PR。
 2. 查看`Files changed`和实验结果；等待`Python offline checks`成功。
 3. 点击`Merge pull request`，再点`Confirm merge`。
 
@@ -43,11 +43,11 @@ No human-review form, API rerun, key transfer or rented GPU is required. The eig
 
 ### Current manual action
 
-PR #15 is merged with its complete archive and five successful CI jobs. The new change is the [forecast and rolling-decision comparison](rolling_forecast_results.md). Merge its PR after all six current-commit CI jobs pass. All 73 evidence files are included with explicit approval and their original digests; see the [manifest and verification](rolling_forecast_publication.md). No additional authorization, API rerun or human-review form is required.
+PR #16 is merged and all six main-branch CI jobs passed. This change unifies bilingual architecture and adds demand-distribution research. Do not merge yet: first approve publication of the [new 35-file manifest](../data_sources/rolling_distribution_artifact_audit.json); finish evidence upload and all seven checks before merging. No API rerun, key transfer or human form is needed. The35 new files are synthetic experiment outputs; see the [results](rolling_distribution_results.md) and [SHA256 manifest](../data_sources/rolling_distribution_artifact_audit.json).
 
 ### Merge the current change
 
-1. Open the repository's `Pull requests` and select the forecast and rolling-decision comparison PR.
+1. Open the repository's `Pull requests` and select the architecture and demand-distribution PR.
 2. Review `Files changed` and the experiment results; wait for `Python offline checks` to succeed.
 3. Click `Merge pull request`, then `Confirm merge`.
 

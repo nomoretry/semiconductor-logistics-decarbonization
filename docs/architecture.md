@@ -16,7 +16,7 @@ This document is available in Chinese and English; English follows Chinese.
 | 信息获取 | 已知订单/公开延误先验→付费观测→信念更新→运输求解 | `decision_benchmark/`、`coupled_decision/`、`budgeted_decision/` | 多SKU、共享容量、查询预算、强搜索和等计算预算 |
 | 查询学习 | 公开特征/候选→BC/PPO查询或提交→最终MILP | `query_policy/`、`query_ppo/`、`query_study/`、`query_components/` | 5种子、冻结1,000情境、27,000评估；无稳定PPO收益 |
 | 滚动库存 | 历史需求/库存/积压/在途/碳→预测→规划首期动作→需求实现→下一状态 | `rolling_inventory/`、`rolling_sensitivity/`、`rolling_forecast/` | 基线、敏感性和均值预测比较；未训练滚动BC/PPO |
-| 需求分布 | 过去残差→离散度估计→情景生成→相同MPC | `rolling_distribution/` | 独立协议下的边际波动研究与跨SKU配对不变性审计；执行状态见进度页 |
+| 需求分布 | 过去残差→离散度估计→情景生成→相同MPC | `rolling_distribution/` | 64确认路径、512轨迹、768次配对不变性审计；NB未通过教师筛选 |
 
 ```mermaid
 flowchart TD
@@ -62,7 +62,7 @@ The project has three separately evaluated research lines: notice-to-parameter p
 | Information acquisition | Known orders/public priors → paid observation → belief update → transport optimization | `decision_benchmark/`, `coupled_decision/`, `budgeted_decision/` | Multiple SKUs, shared capacity, query budgets, strong search and matched compute budgets |
 | Query learning | Public features/candidates → BC/PPO query or commit → final MILP | `query_policy/`, `query_ppo/`, `query_study/`, `query_components/` | Five seeds, 1,000 frozen contexts, 27,000 evaluations; no stable PPO benefit |
 | Rolling inventory | History/stock/backlog/pipeline/carbon → forecast → first action → realized demand → next state | `rolling_inventory/`, `rolling_sensitivity/`, `rolling_forecast/` | Baselines, sensitivity and mean-forecast comparison; no rolling BC/PPO |
-| Demand distributions | Past residuals → dispersion estimate → scenarios → unchanged MPC | `rolling_distribution/` | Separate marginal-dispersion protocol and cross-SKU pairing audit; execution status is in the progress ledger |
+| Demand distributions | Past residuals → dispersion estimate → scenarios → unchanged MPC | `rolling_distribution/` | 64 confirmation paths,512 trajectories,768 invariance audits; NB fails teacher screening |
 
 The diagram above represents separate implemented paths. No evaluated connection currently feeds extraction into learned queries or rolling MPC. Mapping real service names to internal routes, bookings and SKUs remains unresolved. Static company-inspired models and the synthetic rolling environment use different constraints, units and service definitions; their results cannot be combined into company savings.
 

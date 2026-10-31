@@ -1,0 +1,239 @@
+{
+  "check": "strict_decompressed_value_allowlist",
+  "freeze_commit": "e71d68d7a822508e2b574c61d97b9b2d356a6d9c",
+  "counts": {
+    "files": 27,
+    "records": 4160,
+    "numeric_values": 5452544,
+    "controlled_labels": 9792,
+    "sha256_values": 6144
+  },
+  "keys": [
+    "action",
+    "arrivals",
+    "backlog",
+    "backlog_end",
+    "carbon",
+    "continuous_variables",
+    "cost",
+    "costs",
+    "coverage80",
+    "cross_objectives",
+    "decision_seconds",
+    "demand",
+    "denominator",
+    "dispatch_variables",
+    "emissions",
+    "energy",
+    "filled_new",
+    "first_action_differs",
+    "freight",
+    "holding",
+    "horizon",
+    "horizon_total",
+    "id",
+    "kappa",
+    "marginal_crps",
+    "max_error",
+    "mean",
+    "members",
+    "method",
+    "mip_gap",
+    "nll",
+    "numerator",
+    "objective",
+    "observation",
+    "observed",
+    "one_step",
+    "one_step_nll",
+    "origin",
+    "original",
+    "original_schedule",
+    "pipeline_end",
+    "planning",
+    "policy_observation_sha256",
+    "profile",
+    "rearranged",
+    "rearranged_schedule",
+    "rows",
+    "sampler",
+    "scenarios",
+    "schedule_differs",
+    "served_old",
+    "solver_calls",
+    "standardized",
+    "status",
+    "stock_end",
+    "strength",
+    "terminal_backlog",
+    "truth",
+    "variogram_p05",
+    "width80",
+    "window_carbon_budget"
+  ],
+  "files": [
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-00.jsonl.gz",
+      "sha256": "2fcdf916bfcbe4ef852e17f836909d7d8a25a6b340f3e66ecfd14f59b78062b5",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-01.jsonl.gz",
+      "sha256": "c3a8a5897bf58a6be718a3208a30f3bd381ad8668947f94fe153ea530896e3b2",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-02.jsonl.gz",
+      "sha256": "53bfaeddcf66e6463d4dbce6b434a44b259fa756c28f5bd9a9ff45e353fa363f",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-03.jsonl.gz",
+      "sha256": "888e9dd9a77ab37ab29b496c55f5f2be517a8dc67d34f7c6f1133ebeeafb54da",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-04.jsonl.gz",
+      "sha256": "67a259de495c381b70ced7efdc87aefd95c5af9e55daf5fe363a43b3cdd5ac39",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-05.jsonl.gz",
+      "sha256": "7c0d9317c43a38edb2715a0856a29320c285a0282ca7b91878347f381ea33b45",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-06.jsonl.gz",
+      "sha256": "3659a12c67a5edec41783268b9896e6419f41edb0b8bfdb2622e518ce4878041",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/dependence-07.jsonl.gz",
+      "sha256": "a28ba8c5e043359f26944d1717759dd0f52c4590a14b0c100b435199553d7779",
+      "records": 8,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/fit_residuals.jsonl.gz",
+      "sha256": "ddb55fb67322da3005c2d48debef2366cec44dab2a7bcfa291bc4fce84d61d2d",
+      "records": 192,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-00.jsonl.gz",
+      "sha256": "38fd6e0d1817a691b5cbeff7f846e1216adc41ce0af36fec65d1efe91f1e27a2",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-01.jsonl.gz",
+      "sha256": "3146ed44ce6af0d7edd52f6db7149d5e5cf76834aff4e801d46b8d60f81d7c41",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-02.jsonl.gz",
+      "sha256": "98ba179bc7f39fcd66a5c6cfcf7512eeb458589a7dd29f4aba67af282497ae36",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-03.jsonl.gz",
+      "sha256": "47af5efd5f7f92b3113ea22c20166065ec6e1a925e797b24415247ffee457c7e",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-04.jsonl.gz",
+      "sha256": "1317d513efc657299a557b7044b3d157b17c2337fd8e2821d934c88e6866bee1",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-05.jsonl.gz",
+      "sha256": "6387c83b8f5a96c9e7225b268e02de5b59a146a32e98b197687e846eec7a983d",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-06.jsonl.gz",
+      "sha256": "55d6fd7a084b88170b66e05a34c760ed6bce24acdfc0e2c9972b4b5cf67a17f8",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/forecasts-07.jsonl.gz",
+      "sha256": "e276675bb54a945449a0921318e607cd212913ef034621911dd76614cff1230a",
+      "records": 288,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/timing.jsonl.gz",
+      "sha256": "8b4692ff61f193ced8a54cfc4672f56d664cd1922944e902a5d9dc0473b01939",
+      "records": 512,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-00.jsonl.gz",
+      "sha256": "6212e8aa7964d0efd683d58661423e934a71f2a26d5808e447fdfee510f86d0a",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-01.jsonl.gz",
+      "sha256": "9475902c457cb5533fe21ef1bd78735922c08e674dc28f2e61bb97b2b9962f14",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-02.jsonl.gz",
+      "sha256": "30a561af2b4db7f2db53b7fd2ad77978caf896f3dcf5f440407eaa04b32ce6c5",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-03.jsonl.gz",
+      "sha256": "b24da405d6c96342584928e64d65df357cda460f920722f7c9bdbb122df5fc93",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-04.jsonl.gz",
+      "sha256": "a0d47348ff075f7afdaf1c6444036b4b4cacad53fc5eb608385aeca6e9cff5f4",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-05.jsonl.gz",
+      "sha256": "c0224241d01e0693e8ac7103a6afbdd2c7081fab29c142961d24123e3a36b378",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-06.jsonl.gz",
+      "sha256": "5cd2779e84fb60ca4d61efa404704a0dd7acd7d490576e6356cf71f859fd79ee",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/traces-07.jsonl.gz",
+      "sha256": "478ea7a93fcc8a2a9ba1bb61383f080d88640dafd8d6146f9588f2c41b462fc7",
+      "records": 64,
+      "unapproved_strings": 0
+    },
+    {
+      "path": "benchmark_results/rolling_distribution_confirmation/tuning.jsonl.gz",
+      "sha256": "8b839cb98c00dc2a92086e43131ea49da8315eee8ab92b8fb71be17bd8f0c22e",
+      "records": 576,
+      "unapproved_strings": 0
+    }
+  ],
+  "result": "Every string is an exact generated synthetic task ID, one of 9 public method/profile labels, or a 64-character hash; every other value is finite numeric, boolean or null. No free-text or API records."
+}

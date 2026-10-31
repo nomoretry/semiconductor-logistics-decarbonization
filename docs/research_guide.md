@@ -5,6 +5,8 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
+**公开归档待批准：** 本地实验和复算已完成，35份新证据尚未完整公开，PR保持草稿。清单、审批原因和操作见[归档状态](rolling_distribution_publication.md)。
+
 ### 研究问题
 
 项目研究物流决策中两类信息问题：公告中的事实能否可靠地转为有限结构参数；在信息和计算都需要成本时，应该查询什么、如何运输和维持库存。公司公开材料限定场景和事实语义，不提供真实订单、合同运价或可用容量。当前所有策略收益均来自显式合成环境，不是ASML或Marvell的经营结果。
@@ -32,7 +34,7 @@ This document is available in Chinese and English; English follows Chinese.
 | [滚动基线](rolling_inventory_results.md) | 12校准+32开发路径 | 情景MPC优于该base-stock，排放也更高 |
 | [三因素敏感性](rolling_sensitivity_results.md) | 24新开发路径、2,304轨迹 | 1→7情景改善明显；7→21收益小且跨种子不稳定；期末价值主要改变记账 |
 | [均值预测](rolling_forecast_results.md) | 12新校准+32新开发、352轨迹 | 快速EWMA/季节短窗成本+7.19%/+8.48%；保留原EWMA |
-| [分布研究](rolling_distribution_protocol.md) | 独立预先固定协议；执行状态见进度 | 检验边际波动，另审计当前MPC对跨SKU配对的不变性 |
+| [分布研究](rolling_distribution_protocol.md) | 16拟合+16选参+64确认、512轨迹 | NB成本+2.06%、未通过教师筛选；768次审计验证配对不变性 |
 
 ### 学习策略何时有用途
 
@@ -59,6 +61,8 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## English
 
+**Publication pending approval:** local experiments/replay are complete; the 35-file public archive is incomplete and the PR remains draft. See [publication status](rolling_distribution_publication.md).
+
 ### Research questions
 
 The project studies two information problems in logistics: extracting bounded structured facts from notices, and choosing information acquisition, transport and inventory actions when queries and computation incur costs. Public company materials motivate scenarios and constrain factual meaning; they do not supply real orders, contractual prices or usable capacity. All policy benefits are measured in explicit synthetic environments, not ASML or Marvell operations.
@@ -79,14 +83,14 @@ The rolling environment includes unknown demand, backlog, route lead times, shar
 
 | Experiment | Evidence | Supported conclusion |
 |---|---|---|
-| [Fixed LLM](results/api_test.md) | 400 distinct synthetic tests: LLM400/400, rules204/400; repeat uses the same400 | Improvement over frozen rules within this interface, not broad generalization |
-| [Real excerpts](data/real_notices.md), [quantities](results/notice_facts_api.md) | 16 clarification cases; 8 quantity cases, model7/8 vs rules6/8 | Agreement with assistant references, not human gold or internal-route validation |
-| [Five-seed final](query_final_results.md) | Five actual training seeds, 1,000 contexts, 27,000 evaluations | BC/PPO regret3.1179%/3.1477%; no stable PPO gain |
+| [Fixed LLM](results/api_test.md) | 400 distinct synthetic tests: LLM 400/400, rules 204/400; repeat uses the same 400 | Improvement over frozen rules within this interface, not broad generalization |
+| [Real excerpts](data/real_notices.md), [quantities](results/notice_facts_api.md) | 16 clarification cases; 8 quantity cases, model 7/8 vs rules 6/8 | Agreement with assistant references, not human gold or internal-route validation |
+| [Five-seed final](query_final_results.md) | Five actual training seeds, 1,000 contexts, 27,000 evaluations | BC/PPO regret 3.1179%/3.1477%; no stable PPO gain |
 | [Components](query_components_results.md) | Mask×cost potential,20 PPO fits,36 inspected development contexts | Mask reduces rejection; no stable shaping benefit or new heldout confirmation |
 | [Rolling baselines](rolling_inventory_results.md) | 12 calibration+32 development paths | Scenario MPC beats this base-stock, with higher emissions |
-| [Sensitivity](rolling_sensitivity_results.md) | 24 new development paths,2,304 trajectories | Large1→7 scenario benefit; small/unstable7→21 benefit; terminal credit mainly changes accounting |
-| [Mean forecasts](rolling_forecast_results.md) | 12 new calibration+32 new development paths,352 trajectories | Fast EWMA/window raise cost7.19%/8.48%; retain original EWMA |
-| [Distribution study](rolling_distribution_protocol.md) | Separately fixed protocol; execution status in ledger | Test marginal dispersion and audit cross-SKU pairing invariance in current MPC |
+| [Sensitivity](rolling_sensitivity_results.md) | 24 new development paths,2,304 trajectories | Large 1→7 scenario benefit; small/unstable 7→21 benefit; terminal credit mainly changes accounting |
+| [Mean forecasts](rolling_forecast_results.md) | 12 new calibration+32 new development paths,352 trajectories | Fast EWMA/window raise cost 7.19%/8.48%; retain original EWMA |
+| [Distribution study](rolling_distribution_protocol.md) | 16 fit+16 tune+64 confirmation paths,512 trajectories | NB cost+2.06%, teacher screen fails;768 audits verify pairing invariance |
 
 ### When learned policies are useful
 
