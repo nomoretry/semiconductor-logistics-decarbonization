@@ -8,6 +8,7 @@ automatic rewrite is requested if it is not.
 from __future__ import annotations
 
 import json
+import os
 import time
 from dataclasses import dataclass, field
 
@@ -46,8 +47,11 @@ class AgentResult:
         return [call["name"] for call in self.tool_calls]
 
 
-def run_llm(question: str, session, client, *, history: list | None = None, max_steps: int = 8,
+def run_llm(question: str, session, client, *, history: list | None = None, max_steps: int | None = None,
             max_revisions: int = 1) -> AgentResult:
+    # One step = one model call. High-effort reasoning models explore more (the gpt-6.1-sol xhigh pilot used
+    # up to 8 calls per question), so the default cap is 16; LLM_MAX_STEPS overrides it.
+    max_steps = max_steps or int(os.getenv("LLM_MAX_STEPS") or 16)
     started, first = time.perf_counter(), len(session.calls)
     messages = [{"role": "system", "content": SYSTEM_PROMPT}, *(history or []), {"role": "user", "content": question}]
     tools, revisions = session.schemas(), 0

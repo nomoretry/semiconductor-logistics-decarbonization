@@ -178,8 +178,13 @@ class Network:
                 raise ValueError(f"disruption weeks must satisfy 1 <= start <= end <= {self.weeks}")
             if not 0 <= d.extra_lead_weeks <= 8:
                 raise ValueError("extra_lead_weeks must be between 0 and 8")
-            if not (0 <= d.capacity_factor <= 3 and 0.5 <= d.distance_factor <= 3 and 0.2 <= d.cost_factor <= 5):
-                raise ValueError("capacity 0-3, distance 0.5-3 and cost factors 0.2-5 are allowed")
+            for field, value, low, high, hint in (
+                    ("capacity_factor", d.capacity_factor, 0, 3, "capacity_change_pct between -100 and +200"),
+                    ("distance_factor", d.distance_factor, 0.5, 3, "distance_factor between 0.5 and 3"),
+                    ("cost_factor", d.cost_factor, 0.2, 5, "cost_change_pct between -80 and +400")):
+                if not low <= value <= high:
+                    raise ValueError(f"{field}={value:g} on {'/'.join(d.lanes)} weeks {d.start_week}-{d.end_week} "
+                                     f"is outside {low}-{high}; use {hint}")
         if scenario.demand_weeks and not 1 <= scenario.demand_weeks[0] <= scenario.demand_weeks[1] <= self.weeks:
             raise ValueError(f"demand weeks must lie within 1..{self.weeks}")
         if not 0 <= scenario.demand_factor <= 3:

@@ -63,9 +63,10 @@ flowchart LR
 |---|---|---:|---:|---:|---:|---:|---:|
 | 规则 Agent | 开发集 | 14 | 100% | 100% | 100% | 100% | 2.4 |
 | 规则 Agent | 鲁棒性集 | 10 | 40% | 56.7% | 37.5% | 100% | 1.5 |
-| LLM Agent | — | — | 未运行 | | | | |
+| LLM Agent 试跑（gpt-6.1-sol，xhigh） | 2 条开发 + 1 条鲁棒性 | 3 | 2/3 | 88.9% | 75% | 100% | 8.7 |
+| LLM Agent 正式评测 | — | — | 未运行 | | | | |
 
-规则 Agent 在开发集上全对、在后写的问题上只对 4 条，失败原因是没覆盖到的说法：“around Africa”、“30 percent”、“涨三成”、“压到原来的 80%”、英文概率、需要澄清的模糊问题。这和仓库里冻结规则“开发集 100%、留出集 51%”是同一个现象，也是需要 LLM 的原因。LLM Agent 需要 API key，本仓库还没有运行，不报告任何 LLM 数字。完整逐条结果见 [`benchmark_results/planning_agent/`](../benchmark_results/planning_agent)。
+规则 Agent 在开发集上全对、在后写的问题上只对 4 条，失败原因是没覆盖到的说法：“around Africa”、“30 percent”、“涨三成”、“压到原来的 80%”、英文概率、需要澄清的模糊问题。这和仓库里冻结规则“开发集 100%、留出集 51%”是同一个现象，也是需要 LLM 的原因。LLM Agent 只做了 3 条试跑（gpt-6.1-sol，Responses 接口，推理强度 xhigh，最多 8 轮）：D03、D13 全对，数字全部可追溯；H05 用完 8 轮上限没有作答。3 条共 73,898 输入、8,582 输出 token（含 3,733 推理 token），平均每条约 52 秒。据此把上限改为 16 轮，评测记录改为保存每次工具调用的参数和错误，校验报错改为写明字段和取值；没有修改提示词。试跑只有 3 条，不能代表整体表现；24 条正式评测尚未运行。试跑结果见 [`benchmark_results/planning_agent_pilot/`](../benchmark_results/planning_agent_pilot)。完整逐条结果见 [`benchmark_results/planning_agent/`](../benchmark_results/planning_agent)。
 
 ### 使用
 
@@ -115,7 +116,7 @@ python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output
 
 **Design choices.** Tools do all arithmetic (`compare_plans` computes differences); validation errors are actionable feedback; every number in an answer must trace to a tool result or the user's words at the precision shown, otherwise one rewrite is requested and remaining issues are flagged; omitted scenario parameters become explicit assumptions; plans are referenced by id; one agent with tools rather than several agents; offline fallback without an API key.
 
-**Evaluation.** 24 planner questions: 14 development cases written with the rule agent and 10 later robustness cases (English, paraphrases, numbers in words, multi-intent, clarification). Both were written by the same author, so the robustness set is a probe, not an independent test. Gold numbers are recomputed by the engine. The rule agent solves 14/14 development cases and 4/10 robustness cases with 100% numeric faithfulness, failing on wording outside its patterns. The LLM agent needs an API key and has not been run; no LLM numbers are reported.
+**Evaluation.** 24 planner questions: 14 development cases written with the rule agent and 10 later robustness cases (English, paraphrases, numbers in words, multi-intent, clarification). Both were written by the same author, so the robustness set is a probe, not an independent test. Gold numbers are recomputed by the engine. The rule agent solves 14/14 development cases and 4/10 robustness cases with 100% numeric faithfulness, failing on wording outside its patterns. A three-case LLM pilot (gpt-6.1-sol, Responses API, xhigh reasoning, at most 8 model calls) solved D03 and D13 with fully traceable numbers and exhausted the step cap on H05; it used 73,898 input and 8,582 output tokens (3,733 reasoning) at about 52 seconds per case. The cap is now 16, evaluation rows keep tool arguments and errors, and validation errors name the failing field and value; the prompt was not changed. Three cases do not measure overall performance; the 24-case LLM evaluation has not been run.
 
 **Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 

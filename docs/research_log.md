@@ -127,3 +127,4 @@ A limited check finds no exact whole-file identities between 132 project Python 
 |---|---|---|---|
 | R33 | 能否把研究变成回答“扰动影响多大、减排多贵、要不要对冲”的运筹工具 | 新增[网络规划引擎](network_planning.md)：固定费用多SKU多式联运MILP、空运舱位预留、两阶段随机规划、碳前沿与影子价格；独立核算与求解器目标相对差≤1e-6；[完整报告](../benchmark_results/network_planning/report.md) | ASML红海绕行成本+12.38%；减排25%成本+1.76%（影子价格277 USD/t）；VSS 864 USD（1.51%）。Marvell减排25%成本+13.12%，VSS在gap区间内约为零。整数发货溢价约0.04–0.09%，耗时数倍，战术层默认连续流量 |
 | R34 | 规划工具能否由自然语言驱动且数字可追溯 | 新增[规划Agent](planning_agent.md)：8个工具、数字护栏、备忘录、24条评测（14开发+10鲁棒性，同一作者编写）；[逐条结果](../benchmark_results/planning_agent) | 规则Agent开发集14/14、鲁棒性集4/10、忠实度100%，失败集中在未覆盖的说法；LLM Agent未运行，不报告LLM数字 |
+| R35 | 真实 LLM 能否驱动规划工具（试跑） | gpt-6.1-sol，Responses 接口，推理强度 xhigh，最多 8 轮；3 条用例（D03、D13 开发集，H05 鲁棒性集），[逐条结果](../benchmark_results/planning_agent_pilot) | D03、D13 成功且数字全部可追溯；H05 用完 8 轮未作答。共 73,898 输入、8,582 输出 token（含 3,733 推理）。据此把轮数上限改为 16、评测保存工具参数与错误、校验报错写明字段和取值；未改提示词。3 条不代表整体表现，24 条正式评测待运行 |

@@ -175,6 +175,9 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
         row = score(case, result, gold)
         after = dict(getattr(client, "usage", None) or {})
         row.update(answer=result.answer, model=getattr(client, "model", None),
+                   tool_calls=[{"name": c["name"], "arguments": c["arguments"], "ok": c["ok"],
+                                **({} if c["ok"] else {"error": str(c["result"].get("error", ""))[:300]})}
+                               for c in result.tool_calls],
                    usage={k: after.get(k, 0) - before.get(k, 0) for k in USAGE_KEYS} if after else {})
         rows.append(row)
         if path:
