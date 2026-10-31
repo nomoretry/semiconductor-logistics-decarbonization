@@ -34,12 +34,17 @@ class OpenAICompatibleClient:
         self.model = model or os.getenv("LLM_MODEL_ID") or "gpt-4o-mini"
         self.timeout, self.retries = timeout, retries
         self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
+        # Some reasoning models refuse function tools on chat/completions unless reasoning is off;
+        # LLM_REASONING_EFFORT sets it explicitly, otherwise it falls back to "none" after that 400.
+        self.reasoning_effort = os.getenv("LLM_REASONING_EFFORT") or None
         self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
 
     def chat(self, messages: list[dict], tools: list[dict] | None = None, temperature: float = 0.1) -> dict:
         body = {"model": self.model, "messages": messages}
         if self.send_temperature:
             body["temperature"] = temperature
+        if self.reasoning_effort:
+            body["reasoning_effort"] = self.reasoning_effort
         if tools:
             body.update(tools=tools, tool_choice="auto")
         request = urllib.request.Request(
@@ -57,6 +62,9 @@ class OpenAICompatibleClient:
                 detail = error.read().decode("utf-8", "replace")[:300]
                 if error.code == 400 and self.send_temperature and "temperature" in detail:
                     self.send_temperature = False
+                    return self.chat(messages, tools, temperature)
+                if error.code == 400 and self.reasoning_effort != "none" and "reasoning_effort" in detail:
+                    self.reasoning_effort = "none"
                     return self.chat(messages, tools, temperature)
                 raise LLMError(f"HTTP {error.code} from {self.base_url}: {detail}") from None
             except (urllib.error.URLError, TimeoutError) as error:

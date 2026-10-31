@@ -48,6 +48,28 @@ class LLMClientTests(unittest.TestCase):
         self.assertEqual(["temperature" in b for b in bodies], [True, False, False])
         self.assertEqual(client.usage, {"prompt_tokens": 10, "completion_tokens": 14, "reasoning_tokens": 8, "calls": 2})
 
+    def test_reasoning_is_turned_off_when_tools_require_it(self):
+        import io
+        import urllib.error
+        from unittest import mock
+        from planning_agent.llm import OpenAICompatibleClient
+        bodies = []
+
+        def fake_urlopen(request, timeout):
+            body = json.loads(request.data)
+            bodies.append(body)
+            if body.get("reasoning_effort") != "none":
+                raise urllib.error.HTTPError(request.full_url, 400, "Bad Request", {}, io.BytesIO(
+                    b'{"error": {"message": "Function tools with reasoning_effort are not supported", '
+                    b'"param": "reasoning_effort"}}'))
+            return io.BytesIO(b'{"choices": [{"message": {"content": "ok"}}]}')
+
+        client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
+        with mock.patch("urllib.request.urlopen", fake_urlopen):
+            client.chat([{"role": "user", "content": "hi"}], tools=[{"type": "function"}])
+        self.assertEqual([b.get("reasoning_effort") for b in bodies], [None, "none"])
+        self.assertEqual(client.reasoning_effort, "none")
+
 
 @unittest.skipUnless(PLANNING, "requires the optional planning extra: pip install -e '.[planning]'")
 class PlanningAgentTests(unittest.TestCase):

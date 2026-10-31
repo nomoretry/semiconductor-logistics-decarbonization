@@ -146,6 +146,8 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
         row["usage"] = result.usage
         rows.append(row)
     summary = {"agent": agent, "model": getattr(client, "model", None),
+               "reasoning_effort": getattr(client, "reasoning_effort", None),
+               "usage": getattr(client, "usage", None),
                "splits": {name: summarise([r for r in rows if r["split"] == name])
                           for name in sorted({r["split"] for r in rows})},
                "overall": summarise(rows)}
