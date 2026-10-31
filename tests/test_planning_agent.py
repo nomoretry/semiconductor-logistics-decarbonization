@@ -48,27 +48,46 @@ class LLMClientTests(unittest.TestCase):
         self.assertEqual(["temperature" in b for b in bodies], [True, False, False])
         self.assertEqual(client.usage, {"prompt_tokens": 10, "completion_tokens": 14, "reasoning_tokens": 8, "calls": 2})
 
-    def test_reasoning_is_turned_off_when_tools_require_it(self):
+    def test_switches_to_responses_api_and_replays_reasoning_with_tool_calls(self):
         import io
         import urllib.error
         from unittest import mock
         from planning_agent.llm import OpenAICompatibleClient
-        bodies = []
+        sent = []
+        replies = [
+            {"output": [{"type": "reasoning", "id": "rs_1", "summary": []},
+                        {"type": "function_call", "id": "fc_1", "call_id": "call_1", "name": "solve_plan",
+                         "arguments": "{\"network\": \"asml\"}"}],
+             "usage": {"input_tokens": 100, "output_tokens": 30, "output_tokens_details": {"reasoning_tokens": 20}}},
+            {"output": [{"type": "message", "content": [{"type": "output_text", "text": "done"}]}],
+             "usage": {"input_tokens": 150, "output_tokens": 10, "output_tokens_details": {"reasoning_tokens": 0}}},
+        ]
 
         def fake_urlopen(request, timeout):
-            body = json.loads(request.data)
-            bodies.append(body)
-            if body.get("reasoning_effort") != "none":
+            sent.append((request.full_url.rsplit("/", 1)[-1], json.loads(request.data)))
+            if request.full_url.endswith("chat/completions"):
                 raise urllib.error.HTTPError(request.full_url, 400, "Bad Request", {}, io.BytesIO(
-                    b'{"error": {"message": "Function tools with reasoning_effort are not supported", '
-                    b'"param": "reasoning_effort"}}'))
-            return io.BytesIO(b'{"choices": [{"message": {"content": "ok"}}]}')
+                    b'{"error": {"message": "Function tools with reasoning_effort are not supported for this model '
+                    b'in /v1/chat/completions. To use function tools, use /v1/responses."}}'))
+            return io.BytesIO(json.dumps(replies.pop(0)).encode("utf-8"))
 
+        tools = [{"type": "function", "function": {"name": "solve_plan", "description": "d", "parameters": {}}}]
+        messages = [{"role": "system", "content": "sys"}, {"role": "user", "content": "q"}]
         client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
         with mock.patch("urllib.request.urlopen", fake_urlopen):
-            client.chat([{"role": "user", "content": "hi"}], tools=[{"type": "function"}])
-        self.assertEqual([b.get("reasoning_effort") for b in bodies], [None, "none"])
-        self.assertEqual(client.reasoning_effort, "none")
+            first = client.chat(messages, tools)
+            messages += [{"role": "assistant", "content": "", "tool_calls": first["tool_calls"]},
+                         {"role": "tool", "tool_call_id": "call_1", "content": "{\"plan_id\": \"P1\"}"}]
+            second = client.chat(messages, tools)
+        self.assertEqual([path for path, _ in sent], ["completions", "responses", "responses"])
+        self.assertEqual(first["tool_calls"][0]["function"]["name"], "solve_plan")
+        self.assertEqual(sent[1][1]["tools"][0]["name"], "solve_plan")
+        replay = sent[2][1]["input"]
+        self.assertEqual([i.get("type", i.get("role")) for i in replay],
+                         ["system", "user", "reasoning", "function_call", "function_call_output"])
+        self.assertEqual(second["content"], "done")
+        self.assertEqual(client.api_style, "responses")
+        self.assertEqual(client.usage, {"prompt_tokens": 250, "completion_tokens": 40, "reasoning_tokens": 20, "calls": 2})
 
 
 @unittest.skipUnless(PLANNING, "requires the optional planning extra: pip install -e '.[planning]'")
