@@ -38,7 +38,8 @@ class LLMClientTests(unittest.TestCase):
                     b'{"error": {"message": "Unsupported value: temperature does not support 0.1"}}'))
             reply = {"choices": [{"message": {"content": "ok"}}],
                      "usage": {"prompt_tokens": 5, "completion_tokens": 7,
-                               "completion_tokens_details": {"reasoning_tokens": 4}}}
+                               "completion_tokens_details": {"reasoning_tokens": 4},
+                               "prompt_tokens_details": {"cached_tokens": 3}}}
             return io.BytesIO(json.dumps(reply).encode("utf-8"))
 
         client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
@@ -46,7 +47,8 @@ class LLMClientTests(unittest.TestCase):
             self.assertEqual(client.chat([{"role": "user", "content": "hi"}])["content"], "ok")
             client.chat([{"role": "user", "content": "again"}])
         self.assertEqual(["temperature" in b for b in bodies], [True, False, False])
-        self.assertEqual(client.usage, {"prompt_tokens": 10, "completion_tokens": 14, "reasoning_tokens": 8, "calls": 2})
+        self.assertEqual(client.usage, {"prompt_tokens": 10, "cached_tokens": 6, "completion_tokens": 14,
+                                        "reasoning_tokens": 8, "calls": 2})
 
     def test_switches_to_responses_api_and_replays_reasoning_with_tool_calls(self):
         import io
@@ -60,7 +62,8 @@ class LLMClientTests(unittest.TestCase):
                          "arguments": "{\"network\": \"asml\"}"}],
              "usage": {"input_tokens": 100, "output_tokens": 30, "output_tokens_details": {"reasoning_tokens": 20}}},
             {"output": [{"type": "message", "content": [{"type": "output_text", "text": "done"}]}],
-             "usage": {"input_tokens": 150, "output_tokens": 10, "output_tokens_details": {"reasoning_tokens": 0}}},
+             "usage": {"input_tokens": 150, "output_tokens": 10, "output_tokens_details": {"reasoning_tokens": 0},
+                       "input_tokens_details": {"cached_tokens": 90}}},
         ]
 
         def fake_urlopen(request, timeout):
@@ -87,7 +90,8 @@ class LLMClientTests(unittest.TestCase):
                          ["system", "user", "reasoning", "function_call", "function_call_output"])
         self.assertEqual(second["content"], "done")
         self.assertEqual(client.api_style, "responses")
-        self.assertEqual(client.usage, {"prompt_tokens": 250, "completion_tokens": 40, "reasoning_tokens": 20, "calls": 2})
+        self.assertEqual(client.usage, {"prompt_tokens": 250, "cached_tokens": 90, "completion_tokens": 40,
+                                        "reasoning_tokens": 20, "calls": 2})
 
 
 @unittest.skipUnless(PLANNING, "requires the optional planning extra: pip install -e '.[planning]'")

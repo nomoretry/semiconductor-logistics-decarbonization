@@ -132,7 +132,7 @@ def summarise(rows: list[dict]) -> dict:
             "mean_tool_calls": mean([r["steps"] for r in rows]), "mean_seconds": mean([r["seconds"] for r in rows])}
 
 
-USAGE_KEYS = ("prompt_tokens", "completion_tokens", "reasoning_tokens", "calls")
+USAGE_KEYS = ("prompt_tokens", "cached_tokens", "completion_tokens", "reasoning_tokens", "calls")
 
 
 def _tokens(usage: dict | None) -> int:

@@ -45,7 +45,7 @@ class OpenAICompatibleClient:
         self.timeout = timeout or float(os.getenv("LLM_TIMEOUT") or 600)
         self.retries = retries
         self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
-        self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
+        self.usage = {"prompt_tokens": 0, "cached_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
         self._output_items = {}  # call_id -> raw Responses output items (reasoning + function calls) to replay
 
     def chat(self, messages: list[dict], tools: list[dict] | None = None, temperature: float = 0.1) -> dict:
@@ -71,7 +71,8 @@ class OpenAICompatibleClient:
             raise
         usage = data.get("usage") or {}
         self._count(usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0),
-                    (usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0))
+                    (usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0),
+                    (usage.get("prompt_tokens_details") or {}).get("cached_tokens", 0))
         try:
             message = data["choices"][0]["message"]
         except (KeyError, IndexError):
@@ -88,7 +89,8 @@ class OpenAICompatibleClient:
         data = self._post("responses", body)
         usage = data.get("usage") or {}
         self._count(usage.get("input_tokens", 0), usage.get("output_tokens", 0),
-                    (usage.get("output_tokens_details") or {}).get("reasoning_tokens", 0))
+                    (usage.get("output_tokens_details") or {}).get("reasoning_tokens", 0),
+                    (usage.get("input_tokens_details") or {}).get("cached_tokens", 0))
         output = data.get("output") or []
         text, calls = [], []
         for item in output:
@@ -144,8 +146,10 @@ class OpenAICompatibleClient:
                 raise LLMError(f"cannot reach {self.base_url}: {error}") from None
         raise LLMError("unreachable")
 
-    def _count(self, prompt: int, completion: int, reasoning: int) -> None:
+    def _count(self, prompt: int, completion: int, reasoning: int, cached: int = 0) -> None:
+        """Cached prompt tokens are a subset of prompt tokens (billed at the cached-input rate)."""
         self.usage["prompt_tokens"] += prompt
+        self.usage["cached_tokens"] += cached
         self.usage["completion_tokens"] += completion
         self.usage["reasoning_tokens"] += reasoning
         self.usage["calls"] += 1
