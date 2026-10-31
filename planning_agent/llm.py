@@ -33,10 +33,13 @@ class OpenAICompatibleClient:
         self.base_url = (base_url or os.getenv("LLM_BASE_URL") or "https://api.openai.com/v1").rstrip("/")
         self.model = model or os.getenv("LLM_MODEL_ID") or "gpt-4o-mini"
         self.timeout, self.retries = timeout, retries
-        self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "calls": 0}
+        self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
+        self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
 
     def chat(self, messages: list[dict], tools: list[dict] | None = None, temperature: float = 0.1) -> dict:
-        body = {"model": self.model, "messages": messages, "temperature": temperature}
+        body = {"model": self.model, "messages": messages}
+        if self.send_temperature:
+            body["temperature"] = temperature
         if tools:
             body.update(tools=tools, tool_choice="auto")
         request = urllib.request.Request(
@@ -52,6 +55,9 @@ class OpenAICompatibleClient:
                     time.sleep(2 ** attempt)
                     continue
                 detail = error.read().decode("utf-8", "replace")[:300]
+                if error.code == 400 and self.send_temperature and "temperature" in detail:
+                    self.send_temperature = False
+                    return self.chat(messages, tools, temperature)
                 raise LLMError(f"HTTP {error.code} from {self.base_url}: {detail}") from None
             except (urllib.error.URLError, TimeoutError) as error:
                 if attempt < self.retries:
@@ -61,6 +67,7 @@ class OpenAICompatibleClient:
         usage = data.get("usage") or {}
         self.usage["prompt_tokens"] += usage.get("prompt_tokens", 0)
         self.usage["completion_tokens"] += usage.get("completion_tokens", 0)
+        self.usage["reasoning_tokens"] += (usage.get("completion_tokens_details") or {}).get("reasoning_tokens", 0)
         self.usage["calls"] += 1
         try:
             message = data["choices"][0]["message"]

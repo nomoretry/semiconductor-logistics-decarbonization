@@ -22,6 +22,33 @@ class GuardrailTests(unittest.TestCase):
         self.assertTrue(check_answer(answer, tools, "第4到12周延误")["ok"])
 
 
+class LLMClientTests(unittest.TestCase):
+    def test_temperature_is_dropped_when_the_model_rejects_it(self):
+        import io
+        import urllib.error
+        from unittest import mock
+        from planning_agent.llm import OpenAICompatibleClient
+        bodies = []
+
+        def fake_urlopen(request, timeout):
+            body = json.loads(request.data)
+            bodies.append(body)
+            if "temperature" in body:
+                raise urllib.error.HTTPError(request.full_url, 400, "Bad Request", {}, io.BytesIO(
+                    b'{"error": {"message": "Unsupported value: temperature does not support 0.1"}}'))
+            reply = {"choices": [{"message": {"content": "ok"}}],
+                     "usage": {"prompt_tokens": 5, "completion_tokens": 7,
+                               "completion_tokens_details": {"reasoning_tokens": 4}}}
+            return io.BytesIO(json.dumps(reply).encode("utf-8"))
+
+        client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
+        with mock.patch("urllib.request.urlopen", fake_urlopen):
+            self.assertEqual(client.chat([{"role": "user", "content": "hi"}])["content"], "ok")
+            client.chat([{"role": "user", "content": "again"}])
+        self.assertEqual(["temperature" in b for b in bodies], [True, False, False])
+        self.assertEqual(client.usage, {"prompt_tokens": 10, "completion_tokens": 14, "reasoning_tokens": 8, "calls": 2})
+
+
 @unittest.skipUnless(PLANNING, "requires the optional planning extra: pip install -e '.[planning]'")
 class PlanningAgentTests(unittest.TestCase):
     def session(self):
