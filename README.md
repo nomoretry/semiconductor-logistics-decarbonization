@@ -8,6 +8,29 @@ A research framework for joint inventory and transport optimization in semicondu
 
 Two company-inspired case studies share the solver while retaining separate operating assumptions: [ASML spare-parts logistics](asml/README.md) and [Marvell finished-goods logistics](marvell/README.md).
 
+## OR planning engine and planning agent
+
+A self-contained layer turns the study into a decision tool:
+
+- **[Network planning engine](docs/network_planning.md)** (`network_planning/`, PuLP + HiGHS): a fixed-charge multi-SKU, multi-modal MILP with disruption-dependent lead times and capacities, air block-space reservation, service floors and carbon caps or prices; two-stage stochastic programming with VSS/EVPI and MIP-gap-aware intervals; an epsilon-constraint frontier with marginal abatement cost and LP shadow prices; independent accounting of every solution.
+- **[Planning copilot agent](docs/planning_agent.md)** (`planning_agent/`): an OpenAI-compatible tool-calling agent with eight validated tools, a numeric faithfulness guardrail, decision memos and a 24-question evaluation; a rule agent is the offline fallback and baseline. Product framing: [PRD](docs/planning_agent_prd.md).
+
+Selected results with 12 synthetic SKUs per network over 16 weeks ([full report](benchmark_results/network_planning/report.md)):
+
+| Question | ASML-inspired spare parts | Marvell-inspired chips |
+|---|---|---|
+| Cost impact of a disruption | Red Sea diversion: +12.38% cost, +28.4% CO2e | Typhoon: +2.17% cost |
+| Cost of a 25% CO2e cut at 98% service | +1.76%; average MAC 187 USD/t; shadow price 277 USD/t | +13.12%; average MAC 24,756 USD/t |
+| Value of the two-stage plan (VSS) | 864 USD (1.51%): 6.0% cheaper if the Red Sea scenario occurs, 0.33% dearer otherwise | About zero (inside the MIP-gap interval): the nominal plan is already robust |
+| Rule agent on 24 planner questions | 14/14 development and 4/10 robustness cases; 100% numeric faithfulness | |
+
+```bash
+python -m pip install -c constraints.txt -e ".[planning]"
+python -m network_planning solve --network asml --scenario red_sea --explain
+python -m planning_agent ask "How would a Red Sea diversion change ASML spare-parts cost and emissions?"
+python -m planning_agent demo
+```
+
 ## Design and experiments
 
 | Module | Implementation | Experiments and evidence |
@@ -180,6 +203,8 @@ All installed commands are also available through `python -m semiconductor_logis
 | `query_study/` | Multi-seed training, lossless evidence records, task/model freezing and paired statistics |
 | `rolling_inventory/`, `rolling_sensitivity/` | Unknown-demand inventory simulation, baseline planning and sensitivity replay |
 | `query_components/` | Mask/potential factorial, rejection semantics and complete development replay |
+| `network_planning/` | Fixed-charge MILP, two-stage stochastic planning, carbon frontier and independent accounting (PuLP + HiGHS) |
+| `planning_agent/` | Tool-calling planning agent, tools, numeric guardrail, rule baseline, memos and evaluation |
 | `asml/`, `marvell/` | Case-study configurations |
 | `benchmarks/` | Frozen notice datasets, rule identities and source records |
 | `benchmark_results/` | Per-case predictions, API responses, tool traces and verification manifests |

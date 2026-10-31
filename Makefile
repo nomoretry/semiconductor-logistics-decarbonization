@@ -1,7 +1,7 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m semiconductor_logistics
 
-.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit
+.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit planning-sync planning-test planning-report planning-eval planning-ci
 
 sync:
 	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
@@ -98,3 +98,21 @@ verify-forecast:
 	$(CLI) rolling-forecast verify
 
 ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast
+
+# Optional OR planning engine and planning agent (PuLP + HiGHS); runs offline without an LLM key.
+planning-sync:
+	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning]'
+
+planning-test:
+	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent -v
+
+planning-report:
+	$(PYTHON) -m network_planning report --output benchmark_results/network_planning
+
+planning-eval:
+	$(PYTHON) -m planning_agent --agent rule eval --output benchmark_results/planning_agent
+
+planning-ci: planning-test
+	$(PYTHON) -m network_planning report --quick --output artifacts/planning/report
+	$(PYTHON) -m planning_agent --agent rule demo --output artifacts/planning/demo
+	$(PYTHON) -m planning_agent --agent rule eval --split dev --output artifacts/planning/eval
