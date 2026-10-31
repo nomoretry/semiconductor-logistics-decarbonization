@@ -201,6 +201,51 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
     return {"summary": summary, "rows": rows}
 
 
+GUARDRAIL_NOTE = "\n\n> 自动审查提示："
+
+
+def rescore(agent: str, output: Path, settings: dict | None = None) -> dict:
+    """Re-check saved answers with the current guardrail without calling any model.
+
+    Each case's recorded tool calls are replayed on a fresh session to rebuild the tool results the model
+    saw (the engine is deterministic; a replayed call whose success differs from the recording is counted
+    as a mismatch), the note the guardrail appended at run time is removed, and success is recomputed.
+    Results go to <agent>_rescored_*; the original files are left untouched.
+    """
+    from .guardrails import check_answer
+    output, settings = Path(output), settings or {}
+    rows = [json.loads(line) for line in (output / f"{agent}_cases.jsonl").read_text(encoding="utf-8").splitlines()
+            if line.strip()]
+    cases = {c["id"]: c for c in load_cases()}
+    rescored, mismatches = [], 0
+    for row in rows:
+        if "tool_calls" not in row:
+            raise ValueError(f"{row['id']} has no recorded tool calls; rerun it with the current evaluation")
+        session = Session(**settings)
+        results = []
+        for call in row["tool_calls"]:
+            results.append(session.call(call["name"], call["arguments"]))
+            mismatches += session.calls[-1]["ok"] != call["ok"]
+        answer = row["answer"].split(GUARDRAIL_NOTE)[0]
+        check = check_answer(answer, results, row["question"])
+        new = dict(row, answer=answer, faithful=check["ok"], unsupported_numbers=check["unsupported"], rescored=True)
+        case = cases[row["id"]]
+        if not (case.get("expect_refusal") or case.get("expect_clarification")):
+            met, total = (int(x) for x in row["args_met"].split("/"))
+            new["facts_found"] = sum(_has_number(answer, g) for g in row.get("gold") or [])
+            new["success"] = (row["tool_recall"] == 1.0 and met == total and new["facts_found"] == row["facts_total"]
+                              and check["ok"] and not row.get("error"))
+        rescored.append(new)
+    summary = json.loads((output / f"{agent}_summary.json").read_text(encoding="utf-8"))
+    summary.update(rescored_with="current guardrail; tool results rebuilt by replaying the recorded calls",
+                   replay_mismatches=mismatches,
+                   splits={name: summarise([r for r in rescored if r["split"] == name])
+                           for name in sorted({r["split"] for r in rescored})},
+                   overall=summarise(rescored))
+    _write(output, f"{agent}_rescored", summary, rescored)
+    return {"summary": summary, "rows": rescored}
+
+
 def _write(output: Path, agent: str, summary: dict, rows: list[dict]) -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output / f"{agent}_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8",

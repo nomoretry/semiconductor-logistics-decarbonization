@@ -15,6 +15,14 @@ class GuardrailTests(unittest.TestCase):
         self.assertFalse(check["ok"])
         self.assertEqual(check["unsupported"], ["9,999"])
 
+    def test_numbers_directly_after_chinese_text_are_read_whole(self):
+        from planning_agent.guardrails import check_answer, numbers_in
+        self.assertEqual([raw for raw, _, _ in numbers_in("总成本增加4,537美元，每周发运1,507.1 kg，方案P3")],
+                         ["4,537", "1,507.1"])
+        tools = [{"cost_change_usd": 4537, "weekly_capacity_kg": 1507.1}]
+        self.assertTrue(check_answer("总成本增加4,537美元，每周发运1,507.1 kg，排放压到80%", tools,
+                                     "把排放压到原来的80%")["ok"])
+
     def test_rounding_units_and_user_numbers_are_accepted(self):
         from planning_agent.guardrails import check_answer
         tools = [{"cost_change_usd": 6842, "cost_change_pct": 12.38, "weekly_capacity_kg": 803.8, "air_share": 0.257}]
@@ -201,6 +209,27 @@ class PlanningAgentTests(unittest.TestCase):
         self.assertEqual([r["id"] for r in resumed["rows"]], ["D01", "D14", "H09"])
         self.assertIsNone(resumed["summary"]["stopped_early"])
         self.assertEqual(resumed["summary"]["usage"]["calls"], 3)
+
+    def test_rescore_replays_tool_calls_and_rechecks_answers_offline(self):
+        from planning_agent.evaluate import rescore
+        out = Path(self.session().memo_dir) / "rescore"
+        out.mkdir()
+        lanes = {l["id"]: l for l in self.session().call("describe_network", {"network": "asml"})["lanes"]}
+        ocean, air = lanes["NL_ocean"]["weekly_capacity_kg"], lanes["NL_air"]["weekly_capacity_kg"]
+        row = {"id": "D01", "split": "dev", "question": "介绍一下 ASML 备件网络有哪些运输线路，各自运力多少？",
+               "tools": ["describe_network"], "steps": 1, "seconds": 1.0, "faithful": False,
+               "unsupported_numbers": ["507.1"], "error": None, "tool_recall": 1.0, "tool_precision": 1.0,
+               "args_met": "1/1", "facts_found": 2, "facts_total": 2, "gold": [ocean, air], "success": False,
+               "tool_calls": [{"name": "describe_network", "arguments": {"network": "asml"}, "ok": True}],
+               "answer": f"海运周运力{ocean:,}kg，空运周运力{air:,}kg。\n\n> 自动审查提示：以下数字未能与工具结果核对：x"}
+        (out / "llm_cases.jsonl").write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
+        (out / "llm_summary.json").write_text(json.dumps({"agent": "llm"}), encoding="utf-8")
+        result = rescore("llm", out, settings=SETTINGS)
+        fixed = result["rows"][0]
+        self.assertTrue(fixed["faithful"] and fixed["success"] and fixed["rescored"])
+        self.assertNotIn("自动审查", fixed["answer"])
+        self.assertEqual(result["summary"]["replay_mismatches"], 0)
+        self.assertTrue((out / "llm_rescored_summary.json").exists())
 
     def test_evaluation_scores_cases(self):
         from planning_agent.evaluate import evaluate

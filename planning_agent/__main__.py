@@ -16,7 +16,7 @@ from pathlib import Path
 
 from . import llm
 from .agent import run_llm
-from .evaluate import evaluate
+from .evaluate import evaluate, rescore
 from .rules import run_rules
 from .tools import Session
 
@@ -60,10 +60,16 @@ def main(argv=None) -> int:
     p.add_argument("--ids", help="comma-separated case ids for a pilot run, e.g. D03,D13,H05")
     p.add_argument("--resume", action="store_true", help="skip cases already saved in the output folder")
     p.add_argument("--max-tokens", type=int, help="stop between cases once billable tokens reach this budget")
+    p.add_argument("--rescore", action="store_true",
+                   help="re-check saved answers with the current guardrail by replaying their tool calls (no API calls)")
     args = parser.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
+    if args.command == "eval" and args.rescore:
+        result = rescore("rule" if args.agent == "rule" else "llm", args.output)
+        print(json.dumps(result["summary"], indent=2, ensure_ascii=False))
+        return 0
     kind, client = _agent(args.agent)
     if args.command == "eval":
         ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None

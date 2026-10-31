@@ -12,7 +12,9 @@ from __future__ import annotations
 import json
 import re
 
-NUMBER = re.compile(r"(?<![\w.])([-+−]?\d[\d,]*(?:\.\d+)?)\s*(万|千|[kK](?![a-zA-Z])|%)?")
+# A number may follow Chinese text directly ("增加4,537美元"), so only ASCII word characters, dots and
+# commas block a match: they keep "P3" out and stop a match from starting inside "4,537" or "1.5".
+NUMBER = re.compile(r"(?<![A-Za-z0-9_.,])([-+−]?\d[\d,]*(?:\.\d+)?)\s*(万|千|[kK](?![a-zA-Z])|%)?")
 SCALE = {"万": 1e4, "千": 1e3, "k": 1e3, "K": 1e3}
 
 

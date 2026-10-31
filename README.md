@@ -30,7 +30,7 @@ Selected results with 12 synthetic SKUs per network over 16 weeks ([full report]
 | Cost impact of a disruption | Red Sea diversion: +12.38% cost, +28.4% CO2e | Typhoon: +2.17% cost |
 | Cost of a 25% CO2e cut at 98% service | +1.76%; average MAC 187 USD/t; shadow price 277 USD/t | +13.12%; average MAC 24,756 USD/t |
 | Value of the two-stage plan (VSS) | 864 USD (1.51%): 6.0% cheaper if the Red Sea scenario occurs, 0.33% dearer otherwise | About zero (inside the MIP-gap interval): the nominal plan is already robust |
-| Rule agent on 24 planner questions | 14/14 development and 4/10 robustness cases; 100% numeric faithfulness | |
+| Planning agent on 24 planner questions | Rule baseline: 14/14 development, 4/10 robustness. gpt-6.1-sol (xhigh): 9/14 and 9/10 after a guardrail fix, 100% numeric faithfulness | |
 
 ```bash
 python -m pip install -c constraints.txt -e ".[planning]"
