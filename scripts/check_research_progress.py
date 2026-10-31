@@ -96,6 +96,22 @@ def main():
         from rolling_distribution.experiment import identity as distribution_identity
         if dm['sources'] != distribution_identity():
             errors.append('changed_distribution_sources')
+    recourse = ROOT / 'benchmark_results/rolling_recourse_mechanism'
+    recourse_checked = 0
+    if not (recourse / 'manifest.json').is_file():
+        errors.append('missing_recourse_manifest')
+    else:
+        from rolling_recourse.experiment import identity as recourse_identity
+        rm = json.loads((recourse / 'manifest.json').read_text())
+        if rm['sources'] != recourse_identity() or set(rm['files']) != {'results.json'}:
+            errors.append('changed_recourse_identity')
+        elif not (recourse / 'results.json').is_file() or (recourse / 'results.json').is_symlink():
+            errors.append('missing_recourse_results')
+        elif digest(recourse / 'results.json') != rm['files']['results.json']:
+            errors.append('changed_recourse_results')
+        else:
+            recourse_checked = 1
+            results['rolling_recourse_mechanism'] = json.loads((recourse / 'results.json').read_text())['summary']
     print(json.dumps({
         'scope': 'local_saved_result_inventory_and_file_integrity_only',
         'new_experiments_executed': False,
@@ -107,6 +123,7 @@ def main():
         'forecast_artifact_files_expected': forecast_expected,
         'distribution_artifact_files_verified': distribution_checked,
         'distribution_artifact_files_expected': distribution_expected,
+        'recourse_artifact_files_verified': recourse_checked,
         'errors': errors,
         'checkout_check_passed': not errors,
     }, ensure_ascii=False, indent=2))

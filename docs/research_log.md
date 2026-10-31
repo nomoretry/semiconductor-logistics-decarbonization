@@ -92,3 +92,18 @@ All341 tests, installed-wheel checks and complete replay under another BLAS disp
 本地全部检查完成。自动上传审批在压缩文件上拒绝，补做27文件的解压逐值允许列表检查后部分上传成功，但后续文件仍因新集合缺少明确公开授权而拒绝。不继续尝试绕过；完成代码、双语说明、逐文件SHA256清单和草稿PR。35文件待批准后补齐，七项CI验收前不合并。见[归档状态](rolling_distribution_publication.md)。
 
 Local validation is complete. Automatic review rejected compressed files. A strict decompressed-value check allowed some uploads, but subsequent files were still rejected for lacking explicit publication approval for this new set. Do not try another bypass. Finish code, bilingual explanations, the per-file SHA256 list and a draft PR. Complete all 35 files after approval and require seven passing checks before merge. See the publication-status page.
+
+
+## R31：进度复核与有限情景追索 / Progress review and finite recourse
+
+复核PR #17提交`7ffc191`：六项原有CI成功，分布job因35份证据未获新批准而在归档完整性步骤停止；不重试被拒绝的上传，也不降低验收。旧协议、分布数据和原模型保留原字节。
+
+先写[追索协议](rolling_recourse_protocol.md)，再运行36组有限概率模型，沿用原需求揭示顺序、路线提前期和物理重放。目标是检验相关性是否进入可用决策，而非开始训练。初始18组改善触发追加平局与跨模型审计；36组最好平局基线均追平追索，108次跨模型评估全部零遗憾。[完整结果](rolling_recourse_results.md)记录追加检查为探索性，不作事前假设声明。36次MILP核对、1,920次逐叶重放通过；不把这些重复计算计作独立测试任务。
+
+工程检查补上`check_package.py`对`rolling_distribution`的漏项，并加入新模块与CLI检查。348项离线测试、安装后的wheel/CLI检查、不同BLAS分派下的追索完整重执行通过。`verify-recourse`加入原offline job，因此仍为七个job。归档、架构、双语说明、五阶段进度与复算命令一起更新；没有调用API或训练滚动BC/PPO。
+
+Reviewed PR #17 at `7ffc191`: all six existing CI jobs pass; distribution verification stops at archive completeness because the new 35-file publication still requires approval. No rejected upload is retried and no acceptance check is weakened. Frozen protocols, distribution evidence and original models retain their bytes.
+
+The [recourse protocol](rolling_recourse_protocol.md) preceded the 36 finite probability models, preserving demand revelation, route lead times and physical replay. The question is decision value of dependence, not training. The initial 18 improvements prompted additional exploratory tie and cross-model checks: best-open-loop-tie replanning matches recourse in every model, and all 108 cross-model evaluations have zero regret. The [results](rolling_recourse_results.md) identify these audits as post-output diagnostics. All 36 MILP comparisons and 1,920 policy/leaf replays pass; repeated calculations are not independent test tasks.
+
+Fixed the omission of `rolling_distribution` from installed-wheel verification and added the new module/CLI. All 348 offline tests, installed-wheel checks and complete recourse replay under another BLAS dispatch pass. `verify-recourse` runs inside the existing offline job, retaining seven jobs. Evidence, architecture, bilingual explanations, the five-stage ledger and reproduction commands are updated together. No model API calls or rolling BC/PPO training were performed.

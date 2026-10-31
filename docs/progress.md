@@ -26,9 +26,13 @@ This document is available in Chinese and English; English follows Chinese.
 - [均值预测](rolling_forecast_results.md)：快速EWMA/季节短窗成本+7.19%/+8.48%，保留原EWMA。
 - [分布确认](rolling_distribution_results.md)：NB−Poisson成本+5.5615（+2.06%），95%区间[−0.9259,+12.7341]；31路径改善、33变差。768次配对不变性审计最大目标偏差1.14×10⁻¹³。
 
+### 本轮继续推进
+
+[有限情景追索检查](rolling_recourse_results.md)已完成36个构造模型、36次MILP交叉验证和1,920次物理重放。18组表面改善全部能由固定计划的并列最优动作解释；按最好平局重规划后36组均无额外收益。108次跨相关性评估（72次错配）遗憾全为0。说明追索结构能使期望成本依赖相关性，但尚未证明预测相关性有决策价值，未启动滚动学习。
+
 ### 接下来应解决什么
 
-先明确联合服务风险或非预知未来的追索决策是否符合业务目标，才能设计有能力利用相关性的规划问题。当前可分期望成本模型不能用更多相关性情景产生该收益。质量教师筛选未通过；计算时限和允许质量损失仍无业务定义，因此不启动滚动BC/PPO。新的问题必须另存协议和独立确认数据，不改旧结果或反复使用已查看测试。
+有限追索检查已排除一次平局造成的表面收益。下一步在原12期时序下研究历史条件情景树，保留同信息滚动基线与全部最优平局审计；出现实质动作差异后再固定新确认路径。当前可分期望成本模型不能用更多相关性情景产生该收益。质量教师筛选未通过；计算时限和允许质量损失仍无业务定义，因此不启动滚动BC/PPO。新的问题必须另存协议和独立确认数据，不改旧结果或反复使用已查看测试。
 
 ### 工程与文档
 
@@ -56,9 +60,13 @@ Frozen query PPO−BC regret is+0.0298 percentage points, approximate 95% interv
 
 Scenario MPC improves rolling cost/service over base-stock with higher emissions. Sensitivity shows 37.48% lower cost from one to seven scenarios, only 0.36% from seven to 21 with mixed seed directions; terminal credit mainly changes accounting. Fast EWMA/seasonal-window forecasts raise cost 7.19%/8.48%. In distribution confirmation, NB−Poisson is+5.5615 (+2.06%),95% interval[−0.9259,+12.7341];31 paths improve and 33 worsen. Across 768 dependence audits, maximum objective discrepancy is 1.14×10⁻¹³. The linked Chinese bullets lead to bilingual result pages with full evidence.
 
+### Further work completed
+
+The [finite-support recourse check](rolling_recourse_results.md) covers 36 constructed models, 36 MILP cross-checks and 1,920 physical replays. All 18 apparent gains are explained by open-loop-optimal first-action ties; best-tie replanning matches recourse in all 36 models. All 108 cross-coupling evaluations (72 misspecified) have zero regret. Recourse can make expected costs dependence-sensitive, but this has not established decision value from better coupling forecasts. No rolling policy was trained.
+
 ### Next decision
 
-Clarify whether joint service risk or nonclairvoyant recourse represents the business objective before constructing a planner capable of using dependence. More correlated scenarios cannot create that benefit in the current separable expected-cost model. The quality-teacher screen fails; no deployment deadline or acceptable quality loss has been specified. Do not start rolling BC/PPO. New questions require separate protocols and fresh confirmation data; do not rewrite old results or repeatedly reuse inspected tests.
+The finite recourse check rules out an apparent gain due to ties. Next study history-conditioned scenario trees under the original 12-period timing, retaining equal-information rolling baselines and audits of all optimal ties; fix fresh confirmation paths only after a meaningful action difference is established. More correlated scenarios cannot create that benefit in the current separable expected-cost model. The quality-teacher screen fails; no deployment deadline or acceptable quality loss has been specified. Do not start rolling BC/PPO. New questions require separate protocols and fresh confirmation data; do not rewrite old results or repeatedly reuse inspected tests.
 
 ### Engineering and documentation
 

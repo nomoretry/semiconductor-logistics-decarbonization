@@ -45,6 +45,8 @@ flowchart TD
 
 当前情景MPC对全部情景共享整段发运计划，没有情景相关的未来追索。损失按SKU相加，容量与碳约束只涉及发运。因此保留每个SKU的完整多期路径集合、只重排跨SKU配对，不改变任何可行计划的样本平均目标。相关性可以改变联合预测评分，但在此结构下不能创造期望成本优化收益；不同多最优解也不是相关性收益。见[分布协议](rolling_distribution_protocol.md)。
 
+独立的`rolling_recourse/`枚举2SKU、3期有限情景树：首期动作共同，后续动作按已观察需求历史共享。它重用原库存环境作物理重放，不替换12期MPC。36组检查发现期望成本可依赖相关性，但最优平局与跨模型审计尚未支持新的决策收益，见[追索结果](rolling_recourse_results.md)。
+
 ### 复现
 
 入口为`python -m semiconductor_logistics`；各实验有独立run/verify入口，完整命令见[研究说明](research_guide.md)。`benchmark_results/`保存配置、逐例记录、检查点、源码身份和SHA256。验证器重建数据、重执行策略，并从动作独立核对库存/在途守恒、容量、碳和费用。计时单独保存和复算汇总，不要求重跑耗时相同。旧冻结记录保留原字节；新问题使用独立包。CI通过只说明指定提交的检查通过。
@@ -79,6 +81,8 @@ Before dispatch at period `t`, rolling policies see only demand before `t`, curr
 `shared/optimization.py` handles known orders; original static experiments enforce no backlog and a common final inventory floor. MPC in `rolling_sensitivity/planning.py` allows backlog, uses horizon six, replans each period and executes its first dispatch.
 
 Current scenario MPC shares the complete dispatch schedule across scenarios, with no scenario-dependent future recourse. Losses add across SKUs; capacity/carbon constrain dispatch only. Preserving each SKU's complete path multiset and changing cross-SKU pairing therefore preserves the sample-average objective of every feasible plan. Dependence can change joint forecast scores but cannot create expected-cost optimization gains in this structure. Different tied solutions are not dependence benefits. See the [distribution protocol](rolling_distribution_protocol.md).
+
+The separate `rolling_recourse/` package enumerates two-SKU, three-period finite trees: common initial actions and later actions shared by observed history. It uses the original environment for physical replay and does not replace 12-period MPC. Across 36 models, expected costs can depend on coupling, but optimal-tie and cross-model audits do not establish new decision gains. See [recourse results](rolling_recourse_results.md).
 
 ### Reproduction
 

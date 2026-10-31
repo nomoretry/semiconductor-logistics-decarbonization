@@ -57,6 +57,8 @@ The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantif
 
 The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). PR #16 is merged with all six main-branch checks successful. The current distribution extension requires seven checks.
 
+The [finite recourse check](docs/rolling_recourse_results.md) adds 36 constructed models, 36 MILP cross-checks and 1,920 physical replays. All apparent gains over the lexicographic rolling baseline disappear after considering its optimal first-action ties. Cross-coupling policy evaluation shows no regret in this construction. This is a mechanism check, not new heldout confirmation or a rolling learning result. Reproduce with `make verify-recourse`.
+
 ## Quick start
 
 Python 3.12 is recommended. `constraints.txt` pins the numerical dependencies used for validation, replay and CI.

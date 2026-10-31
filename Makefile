@@ -90,7 +90,7 @@ ci-core: test smoke verify package-check
 verify-rolling:
 	$(CLI) rolling-inventory verify
 
-ci-foundation: test smoke verify-core package-check
+ci-foundation: test smoke verify-core verify-recourse package-check
 
 verify-sensitivity:
 	$(CLI) rolling-sensitivity verify
@@ -101,4 +101,8 @@ verify-forecast:
 verify-distribution:
 	$(CLI) rolling-distribution verify
 
-ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast verify-distribution
+.PHONY: verify-recourse
+verify-recourse:
+	$(CLI) rolling-recourse verify
+
+ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast verify-distribution verify-recourse

@@ -11,6 +11,8 @@
 
 [分布确认研究](docs/rolling_distribution_results.md)固定均值预测和MPC，新增16拟合、16选参、64确认路径，共512轨迹。残差NB/Poisson成本275.8435/270.2820，差值区间跨零，教师筛选失败。768次审计验证：当前可分目标与共享计划结构无法利用跨SKU完整路径的配对信息。尚未训练滚动BC/PPO；公告抽取、查询学习和滚动控制仍分别验证。
 
+[有限追索检查](docs/rolling_recourse_results.md)完成36个构造模型、36次MILP核对、1,920次物理重放。18组表面提升均被并列最优动作解释，108次跨相关性策略评估遗憾全为0；尚无新的有效教师。复算：`make verify-recourse`。
+
 本轮分布研究的35份证据尚待公开批准，PR保持草稿；[清单与归档状态](docs/rolling_distribution_publication.md)。
 
 ## 设计与实验

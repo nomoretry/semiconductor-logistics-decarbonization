@@ -36,6 +36,8 @@ This document is available in Chinese and English; English follows Chinese.
 | [均值预测](rolling_forecast_results.md) | 12新校准+32新开发、352轨迹 | 快速EWMA/季节短窗成本+7.19%/+8.48%；保留原EWMA |
 | [分布研究](rolling_distribution_protocol.md) | 16拟合+16选参+64确认、512轨迹 | NB成本+2.06%、未通过教师筛选；768次审计验证配对不变性 |
 
+[有限追索机制检查](rolling_recourse_results.md)新增36模型、36次MILP核对及1,920次物理重放。18组字典序基线差距均由最优平局解释；108次跨配对评估全部零遗憾。构造机制与正式留出结论分开，不新增有效教师。
+
 ### 学习策略何时有用途
 
 质量目标：新方法在相同可见信息下稳定优于强基线，同时报告服务和排放代价，才形成可进一步研究的教师。计算目标：先给出部署时限和允许质量损失，再研究BC替代优化计算。PPO需在这些强基线之后仍有实际顺序决策损失；模型规模、训练次数、参考项目结构或下界差距均不是充分理由。
@@ -55,6 +57,7 @@ This document is available in Chinese and English; English follows Chinese.
 | `make verify-sensitivity` | 碳分配、期末价值、情景数 |
 | `make verify-forecast` | 均值预测比较 |
 | `make verify-distribution` | 分布模型与相关性不变性 |
+| `make verify-recourse` | 有限历史追索、最优平局和跨相关性策略重执行 |
 | `python -m scripts.check_research_progress` | 已保存结果与清单完整性，不重新做实验 |
 
 原协议被证据哈希绑定时保留原文，本文是贯通研究的双语说明，不替换冻结记录。[翻译索引](documentation_plan.md)明确哪些历史文档仍需逐篇补英文。尚无正式Release、完整依赖锁或跨平台验收；当前结果足以构成可复算研究原型，但不等于企业部署或完整LLM智能体系统。
@@ -91,6 +94,8 @@ The rolling environment includes unknown demand, backlog, route lead times, shar
 | [Sensitivity](rolling_sensitivity_results.md) | 24 new development paths,2,304 trajectories | Large 1→7 scenario benefit; small/unstable 7→21 benefit; terminal credit mainly changes accounting |
 | [Mean forecasts](rolling_forecast_results.md) | 12 new calibration+32 new development paths,352 trajectories | Fast EWMA/window raise cost 7.19%/8.48%; retain original EWMA |
 | [Distribution study](rolling_distribution_protocol.md) | 16 fit+16 tune+64 confirmation paths,512 trajectories | NB cost+2.06%, teacher screen fails;768 audits verify pairing invariance |
+
+The [finite recourse mechanism check](rolling_recourse_results.md) adds 36 models, 36 MILP cross-checks and 1,920 physical replays. Optimal ties explain all 18 gaps against the lexicographic baseline; all 108 cross-coupling evaluations have zero regret. This constructed mechanism check is separate from heldout confirmation and provides no new validated teacher.
 
 ### When learned policies are useful
 
