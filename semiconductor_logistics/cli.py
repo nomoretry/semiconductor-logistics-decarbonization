@@ -19,6 +19,8 @@ from . import __version__
 
 
 COMMANDS = {
+    "rolling-recourse": ("rolling_recourse", "Check finite-support nonanticipative recourse against exact rolling baselines"),
+    "rolling-distribution": ("rolling_distribution", "Compare residual dispersion and audit cross-SKU dependence invariance"),
     "rolling-forecast": ("rolling_forecast", "Compare history-only forecasts and replay paired rolling decisions"),
     "optimize": ("scripts.run_experiments", "Run the company-inspired MILP grids"),
     "generate": ("notice_benchmark.data", "Generate synthetic development and test notices"),

@@ -34,6 +34,7 @@ smoke:
 	$(CLI) rolling-inventory smoke-check
 	$(CLI) rolling-sensitivity smoke-check
 	$(CLI) rolling-forecast smoke-check
+	$(CLI) rolling-distribution smoke-check
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -89,7 +90,7 @@ ci-core: test smoke verify package-check
 verify-rolling:
 	$(CLI) rolling-inventory verify
 
-ci-foundation: test smoke verify-core package-check
+ci-foundation: test smoke verify-core verify-recourse package-check
 
 verify-sensitivity:
 	$(CLI) rolling-sensitivity verify
@@ -97,7 +98,14 @@ verify-sensitivity:
 verify-forecast:
 	$(CLI) rolling-forecast verify
 
-ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast
+verify-distribution:
+	$(CLI) rolling-distribution verify
+
+.PHONY: verify-recourse
+verify-recourse:
+	$(CLI) rolling-recourse verify
+
+ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast verify-distribution verify-recourse
 
 # Optional OR planning engine and planning agent (PuLP + HiGHS); runs offline without an LLM key.
 planning-sync:

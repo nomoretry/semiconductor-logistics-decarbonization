@@ -1,0 +1,16 @@
+{
+  "scope": "limited_exact_python_file_identity_and_import_audit_not_a_plagiarism_or_semantic_similarity_certificate",
+  "project_commit": "28ef2e92a553beaa6e74673dd7a06196dd568189",
+  "historically_reviewed_repository": "Iams4kura/agentic-tool-rl",
+  "reference_commit": "f5357240e66e969a50fe0be126a65c95f77d9e44",
+  "reference_tree": "f5357240e66e969a50fe0be126a65c95f77d9e44",
+  "local_python_files": 132,
+  "reference_python_files": 97,
+  "exact_file_matches": [],
+  "reference_package_imports": [],
+  "limitations": [
+    "No semantic equivalence or partial-copy determination.",
+    "Historical conceptual influence is recorded, not denied.",
+    "Generic algorithms are attributed to original literature; no new-algorithm claim."
+  ]
+}

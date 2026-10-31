@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "rolling_recourse/__init__.py": "6156b318acc5dcd99a647d4e4508e91ee616e528e022e37582d76d09ac9290cb",
+    "rolling_recourse/__main__.py": "5710fa375147ad5babc8ccc84f427fb6e1c07f5a152098d1e49970366ab9669b",
+    "rolling_recourse/config.json": "60d86c5674dbf5e87ed164c9c359cdd39c26488e5d0f344cba307662a2f06bcf",
+    "rolling_recourse/experiment.py": "37cdf1f5227aa29fd2dcd84b454a2ce92ae5436aebbadb85a328200c8ba032f9",
+    "docs/rolling_recourse_protocol.md": "27772fe9fbefd3f4f51b764f42fddfc1c62b7b55adac9b0631d4b61baeec533f",
+    "rolling_inventory/environment.py": "3a08327ef704eff16be7b44fca006fa8d5c252a90027e3c5cff990b388e851f4",
+    "rolling_inventory/planning.py": "0dd0123f21908c1702980cbcf6bd58235bb29a1a66280d7ac6d35c3e80a8f8f3",
+    "rolling_sensitivity/planning.py": "c9172ba4402287b2279a3dc8809e496aa45e2f76b14226dda5576e8b719d6d29"
+  },
+  "files": {
+    "results.json": "a540d584676cde715efcfaa351b7d02b9fa6814a6a49220abdaaad7c0006ed94"
+  }
+}

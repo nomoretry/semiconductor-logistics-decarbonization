@@ -11,6 +11,7 @@ For each substantive research change:
 5. Keep prior frozen API runners, prompts, data and archived ledgers unchanged. Extend with a separate version/package when the task contract changes.
 6. Run appropriate offline tests and artifact verification. Live API runs remain separate manual workflows with a bounded budget and repository Secret; do not add credentials to files.
 7. Train BC/PPO only after strong adaptive and optimization baselines leave a measurable quality or computation tradeoff. Task count alone does not satisfy this condition.
+8. Define modules, hypotheses, metrics and acceptance from this project's logistics questions. A different repository may illustrate engineering completeness, but must not become a module-by-module blueprint. Attribute standard algorithms and actual reuse accurately; never erase historical provenance to claim originality. Current design is documented in `docs/research_design.md`.
 
 Documentation should state the problem, implementation, measured result and next acceptance condition. Avoid date headings, promotional claims and claims of enterprise deployment or broad LLM generalization.
 

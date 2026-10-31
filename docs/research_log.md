@@ -15,7 +15,7 @@
 | R09 | 固定模型在新真实数量子任务上的实际表现 | [8次API结果](results/notice_facts_api.md)、[9个原始文件及来源清单](../benchmark_results/notice_facts_api/provenance.json)；下载包哈希核对、原响应和冻结规则离线复算一致 | 模型7/8、规则6/8；E06把停航三周抽成延误三周。参考标签待人工审核，未据此修改提示词或重跑 |
 | R10 | 同求解调用上限下，强规划还留下多少差距 | [事前协议](query_budget_protocol.md)、[完整结果](query_budget_results.md)；54情境×4方法×5预算，全部策略分支、整条路径计算量与物理计划复算 | 主预算最强方法平均差距0.6253%，新36情境0.6836%；预设BC筛选未通过，未训练 |
 | R11 | 平均成本是否掩盖少数严重损失 | [事后最差案例](../benchmark_results/query_budget_diagnostic/worst_case.json)，条件期望成本差×分支概率精确解释19.48125的任务损失 | 昂贵单次查询耗尽后续信息预算，便宜查询组合可更优；局部取舍成立，不把案例诊断包装成留出结论 |
-| R12 | 如何接近参考项目的工程与研究完成度 | 阅读固定commit的架构、BC/PPO、策略输入、工具注册器、GAE、检查点、验证和发布结构；[逐项对照](framework_comparison.md)与[文件身份](../data_sources/framework_reference.json) | 借鉴训练到证据的完整流程；保留对方公开规则审计的教训，不照搬其数字和结论 |
+| R12 | 历史外部仓库阅读（定位已在R32修正） | 阅读固定commit的架构、BC/PPO、策略输入、工具注册器、GAE、检查点、验证和发布结构；[历史入口](framework_comparison.md)与[原阅读文件身份](history/repository_reading.json) | 借鉴训练到证据的完整流程；保留对方公开规则审计的教训，不照搬其数字和结论 |
 | R13 | BC能否减少在线查询规划的求解次数 | [独立协议](query_policy_protocol.md)、[训练与结果](query_policy_results.md)、[证据包](../benchmark_results/query_bc_development)；72/18/36情境，1训练种子，880次更新，教师重算/重训/检查点重执行 | BC遗憾2.0833%、一次最终MILP；两步搜索0.3140%、约16.15次。减少在线求解但质量未达到强搜索，不宣称PPO收益 |
 | R14 | BC损失主要来自何种决策 | [36情境逐节点分解](../benchmark_results/query_bc_diagnostic/errors.json)；每题占用概率加权的教师动作差精确解释策略损失 | 多余查询成本26.41785、过早停止14.328875、路线选择12.0948625；事后诊断，不改本轮模型 |
 | R15 | 人工复核是否阻塞研究 | 维护者明确选择不填写人工意见；更新[操作说明](manual_steps.md)与当前状态，冻结数据及旧审核表不变 | 不代填人工意见；真实评测保留未复核探索范围，其他环境与策略研究继续 |
@@ -71,7 +71,59 @@ R28归档发布补充：新预测轨迹的公开上传被自动审批拒绝，�
 
 R29在获得针对全部73份文件的明确授权后补齐预测归档。此前R28的上传阻塞已解除；不把旧CI或本地成功替代当前提交的远端验收。
 
+## 架构同步与分布预检 / Architecture update and distribution preflight
+
+问题：固定均值预测后，历史误差的离散度估计是否改善滚动成本？读代码发现情景MPC无情景追索且损失按SKU相加，跨SKU整段路径重排不改变目标。因此将研究分成边际离散度比较与相关性不变性审计，先固定[协议](rolling_distribution_protocol.md)、`rolling_distribution/config.json`和实现；不把重排引起的多最优解差异解释为收益。烟雾测试只使用独立小数据；正式16/16/64划分尚未运行。来源、指标、质量教师条件及尚未指定的计算时限均在协议中记录。旧冻结记录不改。
+
+Question: does past-error dispersion improve rolling cost with fixed means? Code inspection shows no scenario recourse and additive SKU losses, so whole-path cross-SKU permutations preserve the objective. Separate the marginal-dispersion comparison from the dependence-invariance audit. Fix the [protocol](rolling_distribution_protocol.md), config and implementation first; tie-breaking differences are not benefits. Smoke uses isolated small data; formal16/16/64 splits have not run. The protocol records sources, metrics, teacher screening and unspecified compute targets. Prior frozen records remain unchanged.
+
+## 分布确认与学习判断 / Distribution confirmation and learning decision
+
+正式运行前提交为`e71d68d7a822508e2b574c61d97b9b2d356a6d9c`。完成16拟合、16选参和64新确认路径，512轨迹/6,144期，35份证据。NB均值成本275.8435、Poisson270.2820（+2.06%），主配对区间跨零。NLL略好不等于库存成本更低；教师筛选失败。768次跨SKU整段路径重排审计验证可分目标不变性，5次首期动作变化来自多最优解，不报告相关性收益。
+
+341测试、wheel安装检查及另一BLAS分派下的完整重执行通过，拟合/选参/预测/策略/物理台账和相关性审计均复算。新增第七项CI进行独立分布研究重执行。旧源码绑定协议和证据原字节保持不变。当前无部署时限和容许损失，不训练滚动BC/PPO；下一问题应先明确联合风险或追索是否属于业务目标。详见[结果](rolling_distribution_results.md)和[清单](../benchmark_results/rolling_distribution_confirmation/manifest.json)。
+
+Formal execution follows commit `e71d68d7a822508e2b574c61d97b9b2d356a6d9c`. The study completes16 fitting,16 tuning and64 new confirmation paths,512 trajectories/6,144 periods and35 evidence files. NB/Poisson costs are275.8435/270.2820 (+2.06%); the primary paired interval crosses zero. Slightly better NLL does not imply lower inventory cost; teacher screening fails. The768 whole-path pairing audits verify separability; five changed first actions arise from multiple optima, not dependence value.
+
+All341 tests, installed-wheel checks and complete replay under another BLAS dispatch pass. Replay covers fitting, selection, forecasts, policies, physical ledgers and dependence audits. A seventh CI job reexecutes this study. Prior source-bound protocols and evidence retain their bytes. No deployment deadline or tolerable loss exists, so rolling BC/PPO stays untrained. Define the business relevance of joint risk or recourse before the next protocol. See the linked results and manifest.
+
+## 本轮公开归档阻塞 / Current publication block
+
+本地全部检查完成。自动上传审批在压缩文件上拒绝，补做27文件的解压逐值允许列表检查后部分上传成功，但后续文件仍因新集合缺少明确公开授权而拒绝。不继续尝试绕过；完成代码、双语说明、逐文件SHA256清单和草稿PR。35文件待批准后补齐，七项CI验收前不合并。见[归档状态](rolling_distribution_publication.md)。
+
+Local validation is complete. Automatic review rejected compressed files. A strict decompressed-value check allowed some uploads, but subsequent files were still rejected for lacking explicit publication approval for this new set. Do not try another bypass. Finish code, bilingual explanations, the per-file SHA256 list and a draft PR. Complete all 35 files after approval and require seven passing checks before merge. See the publication-status page.
+
+
+## R31：进度复核与有限情景追索 / Progress review and finite recourse
+
+复核PR #17提交`7ffc191`：六项原有CI成功，分布job因35份证据未获新批准而在归档完整性步骤停止；不重试被拒绝的上传，也不降低验收。旧协议、分布数据和原模型保留原字节。
+
+先写[追索协议](rolling_recourse_protocol.md)，再运行36组有限概率模型，沿用原需求揭示顺序、路线提前期和物理重放。目标是检验相关性是否进入可用决策，而非开始训练。初始18组改善触发追加平局与跨模型审计；36组最好平局基线均追平追索，108次跨模型评估全部零遗憾。[完整结果](rolling_recourse_results.md)记录追加检查为探索性，不作事前假设声明。36次MILP核对、1,920次逐叶重放通过；不把这些重复计算计作独立测试任务。
+
+工程检查补上`check_package.py`对`rolling_distribution`的漏项，并加入新模块与CLI检查。348项离线测试、安装后的wheel/CLI检查、不同BLAS分派下的追索完整重执行通过。`verify-recourse`加入原offline job，因此仍为七个job。归档、架构、双语说明、五阶段进度与复算命令一起更新；没有调用API或训练滚动BC/PPO。
+
+Reviewed PR #17 at `7ffc191`: all six existing CI jobs pass; distribution verification stops at archive completeness because the new 35-file publication still requires approval. No rejected upload is retried and no acceptance check is weakened. Frozen protocols, distribution evidence and original models retain their bytes.
+
+The [recourse protocol](rolling_recourse_protocol.md) preceded the 36 finite probability models, preserving demand revelation, route lead times and physical replay. The question is decision value of dependence, not training. The initial 18 improvements prompted additional exploratory tie and cross-model checks: best-open-loop-tie replanning matches recourse in every model, and all 108 cross-model evaluations have zero regret. The [results](rolling_recourse_results.md) identify these audits as post-output diagnostics. All 36 MILP comparisons and 1,920 policy/leaf replays pass; repeated calculations are not independent test tasks.
+
+Fixed the omission of `rolling_distribution` from installed-wheel verification and added the new module/CLI. All 348 offline tests, installed-wheel checks and complete recourse replay under another BLAS dispatch pass. `verify-recourse` runs inside the existing offline job, retaining seven jobs. Evidence, architecture, bilingual explanations, the five-stage ledger and reproduction commands are updated together. No model API calls or rolling BC/PPO training were performed.
+
+
+## R32：完成授权归档并纠正研究定位 / Authorized archive and research framing
+
+用户明确批准固定清单中的35份分布证据按SHA256公开上传。全部文件与提交`7ffc191`的清单逐一匹配，保留12个已创建的文件对象，补齐其余23个并归入PR；不重生成数据、不重跑API、不改变任何模型结果。清单总计3,887,809字节，旧缺文件CI失败记录保留，当前提交须通过完整七项检查。
+
+此前将“匹配难度与完成度”写成逐项框架映射，偏离了用户意图。本轮新增[本项目研究设计](research_design.md)和[来源历史说明](source_history.md)，首页改用独立的问题与验收标准；旧逐项对照退出当前设计，原阅读清单移入历史目录。冻结BC协议及既有归属保持原字节，既不把通用方法当作原创，也不声称历史上从未受过参考影响。
+
+有限检查：本项目132份Python文件与历史固定提交的97份Python文件无整文件身份匹配，也无该包导入；详见[检查范围和限制](../data_sources/code_origin_check.json)。这不是局部复制或思想独立性的全面鉴定。研究路线仍围绕物流信息价值、资源耦合和预测误差，后续模块按实际研究缺口决定。本轮不新增训练或性能结果。
+
+The user explicitly approved public upload of the 35 distribution evidence files by the fixed SHA256 manifest at `7ffc191`. Each file matches: retain 12 existing Git objects, complete the other 23 and attach the entire archive to the PR. No data regeneration, API requests or result changes. Total size is 3,887,809 bytes. Historical missing-file CI failures remain; the current commit must pass all seven complete checks.
+
+Earlier documentation turned comparable difficulty/completeness into a module-by-module framework mapping, contrary to the user's intent. This update introduces [project-specific research design](research_design.md) and [source history](source_history.md); current entry points use our questions and acceptance criteria. The comparison is retired and the reading inventory moves to history. Frozen BC protocols and actual attribution retain their bytes. Standard methods are not claimed as inventions, and historical conceptual influence is not denied.
+
+A limited check finds no exact whole-file identities between 132 project Python files and 97 files at the historically reviewed commit, and no imports of that package. The [scope and limitations](../data_sources/code_origin_check.json) explicitly exclude comprehensive partial-copy or intellectual-independence judgments. Work remains centered on logistics information value, resource coupling and forecast error. Further modules follow research gaps. This change adds no training or performance claims.
+
 | 记录 | 问题与修改 | 验证/结果 | 结论 |
 |---|---|---|---|
-| R30 | 能否把研究变成回答“扰动影响多大、减排多贵、要不要对冲”的运筹工具 | 新增[网络规划引擎](network_planning.md)：固定费用多SKU多式联运MILP、空运舱位预留、两阶段随机规划、碳前沿与影子价格；独立核算与求解器目标相对差≤1e-6；[完整报告](../benchmark_results/network_planning/report.md) | ASML红海绕行成本+12.38%；减排25%成本+1.76%（影子价格277 USD/t）；VSS 864 USD（1.51%）。Marvell减排25%成本+13.12%，VSS在gap区间内约为零。整数发货溢价约0.04–0.09%，耗时数倍，战术层默认连续流量 |
-| R31 | 规划工具能否由自然语言驱动且数字可追溯 | 新增[规划Agent](planning_agent.md)：8个工具、数字护栏、备忘录、24条评测（14开发+10鲁棒性，同一作者编写）；[逐条结果](../benchmark_results/planning_agent) | 规则Agent开发集14/14、鲁棒性集4/10、忠实度100%，失败集中在未覆盖的说法；LLM Agent未运行，不报告LLM数字 |
+| R33 | 能否把研究变成回答“扰动影响多大、减排多贵、要不要对冲”的运筹工具 | 新增[网络规划引擎](network_planning.md)：固定费用多SKU多式联运MILP、空运舱位预留、两阶段随机规划、碳前沿与影子价格；独立核算与求解器目标相对差≤1e-6；[完整报告](../benchmark_results/network_planning/report.md) | ASML红海绕行成本+12.38%；减排25%成本+1.76%（影子价格277 USD/t）；VSS 864 USD（1.51%）。Marvell减排25%成本+13.12%，VSS在gap区间内约为零。整数发货溢价约0.04–0.09%，耗时数倍，战术层默认连续流量 |
+| R34 | 规划工具能否由自然语言驱动且数字可追溯 | 新增[规划Agent](planning_agent.md)：8个工具、数字护栏、备忘录、24条评测（14开发+10鲁棒性，同一作者编写）；[逐条结果](../benchmark_results/planning_agent) | 规则Agent开发集14/14、鲁棒性集4/10、忠实度100%，失败集中在未覆盖的说法；LLM Agent未运行，不报告LLM数字 |

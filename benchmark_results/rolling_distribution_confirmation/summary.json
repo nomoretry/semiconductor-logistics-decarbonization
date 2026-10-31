@@ -1,0 +1,1160 @@
+{
+  "confirmation_paths": 64,
+  "decision_metrics": {
+    "all": {
+      "base_stock": {
+        "backlog_unit_periods": 14.9375,
+        "emissions": 92.078125,
+        "fill_rate": 0.8338884734455422,
+        "final_backlog": 2.375,
+        "final_stock": 9.84375,
+        "solver_calls": 0.0,
+        "total_cost": 313.23359375
+      },
+      "clairvoyant": {
+        "backlog_unit_periods": 1.5,
+        "emissions": 67.265625,
+        "fill_rate": 0.983985287604025,
+        "final_backlog": 0.640625,
+        "final_stock": 0.0,
+        "solver_calls": 1.0,
+        "total_cost": 118.78828125
+      },
+      "poisson": {
+        "backlog_unit_periods": 7.645833333333333,
+        "emissions": 106.72395833333333,
+        "fill_rate": 0.8966925893063022,
+        "final_backlog": 1.6614583333333333,
+        "final_stock": 10.505208333333334,
+        "solver_calls": 12.0,
+        "total_cost": 270.28203125
+      },
+      "residual_nb": {
+        "backlog_unit_periods": 7.369791666666667,
+        "emissions": 107.734375,
+        "fill_rate": 0.9046308761942331,
+        "final_backlog": 1.7916666666666667,
+        "final_stock": 11.291666666666666,
+        "solver_calls": 12.0,
+        "total_cost": 275.84348958333334
+      }
+    },
+    "downshift": {
+      "base_stock": {
+        "backlog_unit_periods": 8.6875,
+        "emissions": 77.1875,
+        "fill_rate": 0.875826668615934,
+        "final_backlog": 0.0,
+        "final_stock": 13.9375,
+        "solver_calls": 0.0,
+        "total_cost": 206.28437499999998
+      },
+      "clairvoyant": {
+        "backlog_unit_periods": 0.875,
+        "emissions": 48.25,
+        "fill_rate": 0.9846023908523909,
+        "final_backlog": 0.0,
+        "final_stock": 0.0,
+        "solver_calls": 1.0,
+        "total_cost": 71.64375000000001
+      },
+      "poisson": {
+        "backlog_unit_periods": 3.125,
+        "emissions": 95.375,
+        "fill_rate": 0.9374733446084745,
+        "final_backlog": 0.0,
+        "final_stock": 16.0625,
+        "solver_calls": 12.0,
+        "total_cost": 192.91666666666666
+      },
+      "residual_nb": {
+        "backlog_unit_periods": 2.8958333333333335,
+        "emissions": 97.0,
+        "fill_rate": 0.9444934967087799,
+        "final_backlog": 0.0,
+        "final_stock": 16.895833333333332,
+        "solver_calls": 12.0,
+        "total_cost": 194.74375
+      }
+    },
+    "stable": {
+      "base_stock": {
+        "backlog_unit_periods": 6.4375,
+        "emissions": 86.3125,
+        "fill_rate": 0.897404501869286,
+        "final_backlog": 0.625,
+        "final_stock": 9.9375,
+        "solver_calls": 0.0,
+        "total_cost": 201.659375
+      },
+      "clairvoyant": {
+        "backlog_unit_periods": 0.125,
+        "emissions": 54.125,
+        "fill_rate": 0.9979166666666667,
+        "final_backlog": 0.0,
+        "final_stock": 0.0,
+        "solver_calls": 1.0,
+        "total_cost": 75.64375
+      },
+      "poisson": {
+        "backlog_unit_periods": 3.5208333333333335,
+        "emissions": 96.4375,
+        "fill_rate": 0.9355175848847516,
+        "final_backlog": 0.22916666666666666,
+        "final_stock": 11.145833333333334,
+        "solver_calls": 12.0,
+        "total_cost": 194.68437499999996
+      },
+      "residual_nb": {
+        "backlog_unit_periods": 2.875,
+        "emissions": 97.5625,
+        "fill_rate": 0.9502882694575039,
+        "final_backlog": 0.3333333333333333,
+        "final_stock": 13.125,
+        "solver_calls": 12.0,
+        "total_cost": 198.203125
+      }
+    },
+    "upshift": {
+      "base_stock": {
+        "backlog_unit_periods": 35.8125,
+        "emissions": 114.5625,
+        "fill_rate": 0.6906807708584628,
+        "final_backlog": 8.3125,
+        "final_stock": 5.75,
+        "solver_calls": 0.0,
+        "total_cost": 616.7593750000001
+      },
+      "clairvoyant": {
+        "backlog_unit_periods": 4.8125,
+        "emissions": 106.875,
+        "fill_rate": 0.9575015386705674,
+        "final_backlog": 2.5625,
+        "final_stock": 0.0,
+        "solver_calls": 1.0,
+        "total_cost": 244.225
+      },
+      "poisson": {
+        "backlog_unit_periods": 19.375,
+        "emissions": 130.89583333333334,
+        "fill_rate": 0.7942936203761256,
+        "final_backlog": 5.916666666666667,
+        "final_stock": 4.125,
+        "solver_calls": 12.0,
+        "total_cost": 473.9302083333334
+      },
+      "residual_nb": {
+        "backlog_unit_periods": 20.0,
+        "emissions": 130.6875,
+        "fill_rate": 0.7899566016664279,
+        "final_backlog": 6.520833333333333,
+        "final_stock": 3.9583333333333335,
+        "solver_calls": 12.0,
+        "total_cost": 498.43854166666665
+      }
+    },
+    "volatile": {
+      "base_stock": {
+        "backlog_unit_periods": 8.8125,
+        "emissions": 90.25,
+        "fill_rate": 0.8716419524384859,
+        "final_backlog": 0.5625,
+        "final_stock": 9.75,
+        "solver_calls": 0.0,
+        "total_cost": 228.23125
+      },
+      "clairvoyant": {
+        "backlog_unit_periods": 0.1875,
+        "emissions": 59.8125,
+        "fill_rate": 0.9959205542264753,
+        "final_backlog": 0.0,
+        "final_stock": 0.0,
+        "solver_calls": 1.0,
+        "total_cost": 83.640625
+      },
+      "poisson": {
+        "backlog_unit_periods": 4.5625,
+        "emissions": 104.1875,
+        "fill_rate": 0.9194858073558576,
+        "final_backlog": 0.5,
+        "final_stock": 10.6875,
+        "solver_calls": 12.0,
+        "total_cost": 219.59687500000004
+      },
+      "residual_nb": {
+        "backlog_unit_periods": 3.7083333333333335,
+        "emissions": 105.6875,
+        "fill_rate": 0.9337851369442206,
+        "final_backlog": 0.3125,
+        "final_stock": 11.1875,
+        "solver_calls": 12.0,
+        "total_cost": 211.98854166666663
+      }
+    }
+  },
+  "dependence_audit": {
+    "decision_value_identifiable": false,
+    "different_first_actions": 5,
+    "different_schedules": 13,
+    "max_objective_error": 1.1368683772161603e-13,
+    "origins": 768
+  },
+  "fit_paths": 16,
+  "forecast_scores": {
+    "joint_diagnostic": {
+      "horizon_total": {
+        "coverage80": 0.7200520833333334,
+        "energy": 4.540170791586976,
+        "marginal_crps": 2.268037451638116,
+        "variogram_p05": 2.4912671208966253,
+        "width80": 7.0360243055555545
+      },
+      "one_step": {
+        "coverage80": 0.9131944444444443,
+        "energy": 1.4689658552911595,
+        "marginal_crps": 0.7119193871816,
+        "variogram_p05": 1.2560534727324675,
+        "width80": 3.19140625
+      },
+      "one_step_nll": 1.5822019617250866
+    },
+    "poisson": {
+      "horizon_total": {
+        "coverage80": 0.6805555555555555,
+        "energy": 4.576434783172515,
+        "marginal_crps": 2.2913829485575357,
+        "variogram_p05": 2.4774836815512615,
+        "width80": 6.309461805555556
+      },
+      "one_step": {
+        "coverage80": 0.892361111111111,
+        "energy": 1.4700263014463577,
+        "marginal_crps": 0.7111663288540311,
+        "variogram_p05": 1.2344747250794172,
+        "width80": 2.8572048611111107
+      },
+      "one_step_nll": 1.5883571645946735
+    },
+    "residual_nb": {
+      "horizon_total": {
+        "coverage80": 0.7200520833333334,
+        "energy": 4.5293414832712395,
+        "marginal_crps": 2.268037451638116,
+        "variogram_p05": 2.4980333793990477,
+        "width80": 7.0360243055555545
+      },
+      "one_step": {
+        "coverage80": 0.9131944444444443,
+        "energy": 1.4697955272261243,
+        "marginal_crps": 0.7119193871816,
+        "variogram_p05": 1.2681982867815669,
+        "width80": 3.19140625
+      },
+      "one_step_nll": 1.5822019617250866
+    }
+  },
+  "learning": {
+    "compute_target_specified": false,
+    "decision": "separate_policy_study_required_if_teacher_passes_otherwise_defer",
+    "quality_teacher_checks": {
+      "cost_reduction_at_least_2pct": false,
+      "each_sampler_improves": false,
+      "emissions_increase_at_most_2pct": true,
+      "fill_loss_at_most_0_005": true,
+      "primary_interval_upper_negative": false
+    },
+    "quality_teacher_passed": false,
+    "rolling_bc_trained": false,
+    "rolling_ppo_trained": false
+  },
+  "period_records": 6144,
+  "primary_contrast": {
+    "better_paths": 31,
+    "mean_delta": {
+      "backlog_unit_periods": -0.2760416666666661,
+      "emissions": 1.0104166666666714,
+      "fill_rate": 0.007938286887930857,
+      "final_backlog": 0.13020833333333348,
+      "final_stock": 0.7864583333333321,
+      "solver_calls": 0.0,
+      "total_cost": 5.5614583333333485
+    },
+    "paired_path_95_interval": [
+      -0.9258854166666654,
+      12.734055989583334
+    ],
+    "paths": [
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": 12.0,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": 2.0,
+          "solver_calls": 0.0,
+          "total_cost": 13.966666666666669
+        },
+        "id": "distribution-confirmation-stable-61001",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": 11.333333333333334,
+          "fill_rate": 0.012820512820512811,
+          "final_backlog": 0.0,
+          "final_stock": 5.333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 11.533333333333331
+        },
+        "id": "distribution-confirmation-stable-61007",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": -1.6666666666666667,
+          "fill_rate": -0.006535947712418315,
+          "final_backlog": 0.0,
+          "final_stock": 4.0,
+          "solver_calls": 0.0,
+          "total_cost": 4.75
+        },
+        "id": "distribution-confirmation-stable-61027",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": -1.3333333333333333,
+          "fill_rate": 0.021276595744680844,
+          "final_backlog": 0.0,
+          "final_stock": 2.3333333333333335,
+          "solver_calls": 0.0,
+          "total_cost": -1.5999999999999943
+        },
+        "id": "distribution-confirmation-stable-61031",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": -2.0,
+          "fill_rate": -0.005847953216374287,
+          "final_backlog": 0.0,
+          "final_stock": 3.0,
+          "solver_calls": 0.0,
+          "total_cost": 7.066666666666673
+        },
+        "id": "distribution-confirmation-stable-61043",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": 14.0,
+          "fill_rate": -0.0062893081761006275,
+          "final_backlog": 0.0,
+          "final_stock": 2.0,
+          "solver_calls": 0.0,
+          "total_cost": 14.966666666666649
+        },
+        "id": "distribution-confirmation-stable-61051",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -2.3333333333333335,
+          "emissions": -6.0,
+          "fill_rate": 0.03999999999999996,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -17.299999999999983
+        },
+        "id": "distribution-confirmation-stable-61057",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": 11.666666666666666,
+          "fill_rate": 0.011494252873563204,
+          "final_backlog": 0.0,
+          "final_stock": 2.6666666666666665,
+          "solver_calls": 0.0,
+          "total_cost": 22.016666666666666
+        },
+        "id": "distribution-confirmation-stable-61091",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": -6.333333333333333,
+          "fill_rate": 0.026666666666666655,
+          "final_backlog": 0.0,
+          "final_stock": -0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -10.416666666666666
+        },
+        "id": "distribution-confirmation-stable-61121",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": -15.333333333333334,
+          "fill_rate": 0.00877192982456143,
+          "final_backlog": 0.3333333333333333,
+          "final_stock": -0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -6.399999999999987
+        },
+        "id": "distribution-confirmation-stable-61129",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -2.0,
+          "emissions": -0.3333333333333333,
+          "fill_rate": 0.034013605442176874,
+          "final_backlog": 0.0,
+          "final_stock": 1.0,
+          "solver_calls": 0.0,
+          "total_cost": -11.216666666666669
+        },
+        "id": "distribution-confirmation-stable-61141",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": 0.6666666666666666,
+          "fill_rate": -3.700743415417188e-17,
+          "final_backlog": -0.6666666666666666,
+          "final_stock": 1.6666666666666667,
+          "solver_calls": 0.0,
+          "total_cost": -16.466666666666658
+        },
+        "id": "distribution-confirmation-stable-61151",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": -1.0,
+          "fill_rate": 0.018518518518518528,
+          "final_backlog": 0.0,
+          "final_stock": 1.0,
+          "solver_calls": 0.0,
+          "total_cost": -6.316666666666677
+        },
+        "id": "distribution-confirmation-stable-61153",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": 0.0,
+          "fill_rate": 0.04255319148936173,
+          "final_backlog": -0.3333333333333333,
+          "final_stock": 2.6666666666666665,
+          "solver_calls": 0.0,
+          "total_cost": -22.96666666666667
+        },
+        "id": "distribution-confirmation-stable-61169",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 2.0,
+          "emissions": 0.0,
+          "fill_rate": -0.016666666666666646,
+          "final_backlog": 2.3333333333333335,
+          "final_stock": 3.6666666666666665,
+          "solver_calls": 0.0,
+          "total_cost": 95.43333333333332
+        },
+        "id": "distribution-confirmation-stable-61211",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -3.0,
+          "emissions": 2.3333333333333335,
+          "fill_rate": 0.055555555555555504,
+          "final_backlog": 0.0,
+          "final_stock": 0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -20.75
+        },
+        "id": "distribution-confirmation-stable-61223",
+        "profile": "stable"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": 0.3333333333333333,
+          "fill_rate": 0.007092198581560294,
+          "final_backlog": 0.0,
+          "final_stock": 1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 4.8833333333333355
+        },
+        "id": "distribution-confirmation-volatile-61001",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -3.3333333333333335,
+          "emissions": 1.0,
+          "fill_rate": 0.033816425120772986,
+          "final_backlog": -0.3333333333333333,
+          "final_stock": 1.6666666666666667,
+          "solver_calls": 0.0,
+          "total_cost": -18.316666666666663
+        },
+        "id": "distribution-confirmation-volatile-61007",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 1.0,
+          "emissions": 0.0,
+          "fill_rate": -0.01754385964912279,
+          "final_backlog": -0.3333333333333333,
+          "final_stock": -1.0,
+          "solver_calls": 0.0,
+          "total_cost": 3.6666666666666665
+        },
+        "id": "distribution-confirmation-volatile-61027",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.6666666666666667,
+          "emissions": 6.333333333333333,
+          "fill_rate": 0.03787878787878788,
+          "final_backlog": -1.3333333333333333,
+          "final_stock": 0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -55.25000000000001
+        },
+        "id": "distribution-confirmation-volatile-61031",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.6666666666666666,
+          "emissions": 7.0,
+          "fill_rate": -0.006410256410256425,
+          "final_backlog": -1.0,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": -11.149999999999986
+        },
+        "id": "distribution-confirmation-volatile-61043",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -2.3333333333333335,
+          "emissions": -8.666666666666666,
+          "fill_rate": 0.047619047619047596,
+          "final_backlog": 0.0,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -23.366666666666646
+        },
+        "id": "distribution-confirmation-volatile-61051",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": -12.0,
+          "fill_rate": -0.009009009009008992,
+          "final_backlog": 0.0,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": -9.666666666666666
+        },
+        "id": "distribution-confirmation-volatile-61057",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": -1.0,
+          "fill_rate": -0.006666666666666672,
+          "final_backlog": 0.0,
+          "final_stock": -1.6666666666666667,
+          "solver_calls": 0.0,
+          "total_cost": -1.6166666666666647
+        },
+        "id": "distribution-confirmation-volatile-61091",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.0,
+          "emissions": 5.666666666666667,
+          "fill_rate": 0.024999999999999984,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 1.4499999999999886
+        },
+        "id": "distribution-confirmation-volatile-61121",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": 1.3333333333333333,
+          "fill_rate": -3.700743415417188e-17,
+          "final_backlog": 0.0,
+          "final_stock": 1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 2.5333333333333314
+        },
+        "id": "distribution-confirmation-volatile-61129",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.0,
+          "emissions": -5.666666666666667,
+          "fill_rate": 0.028368794326241176,
+          "final_backlog": 0.0,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -9.883333333333326
+        },
+        "id": "distribution-confirmation-volatile-61141",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": 2.6666666666666665,
+          "fill_rate": 0.024999999999999984,
+          "final_backlog": 0.0,
+          "final_stock": 1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -13.133333333333317
+        },
+        "id": "distribution-confirmation-volatile-61151",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": 11.0,
+          "fill_rate": 0.011111111111111108,
+          "final_backlog": 0.0,
+          "final_stock": 5.0,
+          "solver_calls": 0.0,
+          "total_cost": 20.583333333333332
+        },
+        "id": "distribution-confirmation-volatile-61153",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -2.6666666666666665,
+          "emissions": -0.3333333333333333,
+          "fill_rate": 0.03508771929824561,
+          "final_backlog": 0.0,
+          "final_stock": 0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -27.31666666666668
+        },
+        "id": "distribution-confirmation-volatile-61169",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": 3.3333333333333335,
+          "fill_rate": 0.024691358024691357,
+          "final_backlog": 0.0,
+          "final_stock": 0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 0.533333333333322
+        },
+        "id": "distribution-confirmation-volatile-61211",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": 13.0,
+          "fill_rate": -0.007246376811594198,
+          "final_backlog": 0.0,
+          "final_stock": -0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 14.316666666666672
+        },
+        "id": "distribution-confirmation-volatile-61223",
+        "profile": "volatile"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": -0.6666666666666666,
+          "fill_rate": 0.010101010101010091,
+          "final_backlog": 0.0,
+          "final_stock": -1.0,
+          "solver_calls": 0.0,
+          "total_cost": -3.0333333333333314
+        },
+        "id": "distribution-confirmation-upshift-61001",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.6666666666666667,
+          "emissions": 0.0,
+          "fill_rate": 0.03225806451612904,
+          "final_backlog": -0.3333333333333333,
+          "final_stock": 1.0,
+          "solver_calls": 0.0,
+          "total_cost": -14.899999999999986
+        },
+        "id": "distribution-confirmation-upshift-61007",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -2.0,
+          "emissions": -1.3333333333333333,
+          "fill_rate": 0.009803921568627416,
+          "final_backlog": -1.0,
+          "final_stock": -2.0,
+          "solver_calls": 0.0,
+          "total_cost": -23.100000000000023
+        },
+        "id": "distribution-confirmation-upshift-61027",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -4.0,
+          "emissions": 0.0,
+          "fill_rate": 0.05238095238095238,
+          "final_backlog": -1.0,
+          "final_stock": 1.0,
+          "solver_calls": 0.0,
+          "total_cost": -40.90000000000001
+        },
+        "id": "distribution-confirmation-upshift-61031",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 5.333333333333333,
+          "emissions": -0.6666666666666666,
+          "fill_rate": -0.05622489959839361,
+          "final_backlog": 1.6666666666666667,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 67.10000000000001
+        },
+        "id": "distribution-confirmation-upshift-61043",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.6666666666666666,
+          "emissions": 0.0,
+          "fill_rate": -0.008230452674897118,
+          "final_backlog": -0.3333333333333333,
+          "final_stock": -1.0,
+          "solver_calls": 0.0,
+          "total_cost": 10.366666666666674
+        },
+        "id": "distribution-confirmation-upshift-61051",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": 0.0,
+          "fill_rate": -0.009523809523809526,
+          "final_backlog": 0.0,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 7.866666666666674
+        },
+        "id": "distribution-confirmation-upshift-61057",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 2.3333333333333335,
+          "emissions": 0.6666666666666666,
+          "fill_rate": -0.023148148148148178,
+          "final_backlog": 2.3333333333333335,
+          "final_stock": 1.0,
+          "solver_calls": 0.0,
+          "total_cost": 99.46666666666665
+        },
+        "id": "distribution-confirmation-upshift-61091",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 3.3333333333333335,
+          "emissions": 1.6666666666666667,
+          "fill_rate": -0.01234567901234566,
+          "final_backlog": 0.6666666666666666,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": 44.05000000000007
+        },
+        "id": "distribution-confirmation-upshift-61121",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.3333333333333333,
+          "emissions": 0.0,
+          "fill_rate": 0.035460992907801435,
+          "final_backlog": 5.333333333333333,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": 129.39999999999998
+        },
+        "id": "distribution-confirmation-upshift-61129",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": -5.0,
+          "fill_rate": -3.700743415417188e-17,
+          "final_backlog": 0.0,
+          "final_stock": 2.0,
+          "solver_calls": 0.0,
+          "total_cost": 2.75
+        },
+        "id": "distribution-confirmation-upshift-61141",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.6666666666666667,
+          "emissions": 1.6666666666666667,
+          "fill_rate": 0.025316455696202556,
+          "final_backlog": 0.6666666666666666,
+          "final_stock": -1.0,
+          "solver_calls": 0.0,
+          "total_cost": 12.016666666666728
+        },
+        "id": "distribution-confirmation-upshift-61151",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 3.3333333333333335,
+          "emissions": 0.6666666666666666,
+          "fill_rate": -0.028571428571428543,
+          "final_backlog": 0.3333333333333333,
+          "final_stock": -1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 29.600000000000005
+        },
+        "id": "distribution-confirmation-upshift-61153",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.6666666666666667,
+          "emissions": 0.0,
+          "fill_rate": 0.004166666666666689,
+          "final_backlog": 0.0,
+          "final_stock": 1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -4.433333333333356
+        },
+        "id": "distribution-confirmation-upshift-61169",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 4.666666666666667,
+          "emissions": -1.0,
+          "fill_rate": -0.06060606060606063,
+          "final_backlog": 1.0,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 52.883333333333304
+        },
+        "id": "distribution-confirmation-upshift-61211",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 2.6666666666666665,
+          "emissions": 0.6666666666666666,
+          "fill_rate": -0.04022988505747127,
+          "final_backlog": 0.3333333333333333,
+          "final_stock": -0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 23.0
+        },
+        "id": "distribution-confirmation-upshift-61223",
+        "profile": "upshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": 3.0,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": 0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 3.916666666666657
+        },
+        "id": "distribution-confirmation-downshift-61001",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": 3.6666666666666665,
+          "fill_rate": 0.017094017094017106,
+          "final_backlog": 0.0,
+          "final_stock": 1.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 2.6500000000000057
+        },
+        "id": "distribution-confirmation-downshift-61007",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": -1.6666666666666667,
+          "fill_rate": -0.006060606060606062,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -2.716666666666678
+        },
+        "id": "distribution-confirmation-downshift-61027",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.3333333333333333,
+          "emissions": 0.6666666666666666,
+          "fill_rate": -0.01709401709401707,
+          "final_backlog": 0.0,
+          "final_stock": 1.6666666666666667,
+          "solver_calls": 0.0,
+          "total_cost": 7.99999999999999
+        },
+        "id": "distribution-confirmation-downshift-61031",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": -5.0,
+          "fill_rate": 0.007407407407407418,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -6.550000000000002
+        },
+        "id": "distribution-confirmation-downshift-61043",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": 14.333333333333334,
+          "fill_rate": 0.008130081300813016,
+          "final_backlog": 0.0,
+          "final_stock": 4.333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 18.383333333333336
+        },
+        "id": "distribution-confirmation-downshift-61051",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": 18.666666666666668,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 23.76666666666667
+        },
+        "id": "distribution-confirmation-downshift-61057",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": 7.0,
+          "fill_rate": 0.027027027027027046,
+          "final_backlog": 0.0,
+          "final_stock": -0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": 2.8499999999999943
+        },
+        "id": "distribution-confirmation-downshift-61091",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.0,
+          "emissions": -5.333333333333333,
+          "fill_rate": 0.03225806451612908,
+          "final_backlog": 0.0,
+          "final_stock": -0.3333333333333333,
+          "solver_calls": 0.0,
+          "total_cost": -9.933333333333337
+        },
+        "id": "distribution-confirmation-downshift-61121",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -1.6666666666666667,
+          "emissions": 5.333333333333333,
+          "fill_rate": 0.04065040650406504,
+          "final_backlog": 0.0,
+          "final_stock": 2.3333333333333335,
+          "solver_calls": 0.0,
+          "total_cost": -2.1333333333333258
+        },
+        "id": "distribution-confirmation-downshift-61129",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.0,
+          "emissions": -5.333333333333333,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": -4.933333333333327
+        },
+        "id": "distribution-confirmation-downshift-61141",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.6666666666666666,
+          "emissions": 0.6666666666666666,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": 1.6666666666666667,
+          "solver_calls": 0.0,
+          "total_cost": 13.100000000000003
+        },
+        "id": "distribution-confirmation-downshift-61151",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": -3.0,
+          "fill_rate": 0.0,
+          "final_backlog": 0.0,
+          "final_stock": -1.0,
+          "solver_calls": 0.0,
+          "total_cost": -8.083333333333334
+        },
+        "id": "distribution-confirmation-downshift-61153",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.3333333333333333,
+          "emissions": -6.666666666666667,
+          "fill_rate": 0.009523809523809526,
+          "final_backlog": 0.0,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": -10.466666666666677
+        },
+        "id": "distribution-confirmation-downshift-61169",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": 0.6666666666666666,
+          "emissions": 6.333333333333333,
+          "fill_rate": -0.01587301587301589,
+          "final_backlog": 0.0,
+          "final_stock": 0.6666666666666666,
+          "solver_calls": 0.0,
+          "total_cost": 11.75
+        },
+        "id": "distribution-confirmation-downshift-61211",
+        "profile": "downshift"
+      },
+      {
+        "delta": {
+          "backlog_unit_periods": -0.6666666666666666,
+          "emissions": -6.666666666666667,
+          "fill_rate": 0.009259259259259264,
+          "final_backlog": 0.0,
+          "final_stock": 0.0,
+          "solver_calls": 0.0,
+          "total_cost": -10.366666666666665
+        },
+        "id": "distribution-confirmation-downshift-61223",
+        "profile": "downshift"
+      }
+    ],
+    "profile_cost_deltas": {
+      "downshift": 1.8270833333333316,
+      "stable": 3.5187500000000003,
+      "upshift": 24.508333333333336,
+      "volatile": -7.608333333333331
+    },
+    "relative_cost_delta": 0.02057650043405669,
+    "sampler_cost_deltas": {
+      "901337": 10.827343750000002,
+      "902347": -2.296874999999999,
+      "903359": 8.153906249999999
+    },
+    "worse_paths": 33
+  },
+  "scope": "new_synthetic_confirmation_fixed_before_outputs_not_company_data",
+  "selected_strength": 12,
+  "timing_measured_not_replay_equal": {
+    "base_stock": {
+      "count": 768,
+      "mean_seconds": 0.00034785108728030423,
+      "p95_seconds": 0.000616945499632493
+    },
+    "clairvoyant": {
+      "count": 64,
+      "mean_seconds": 0.007462978296985057,
+      "p95_seconds": 0.017655423100131882
+    },
+    "poisson": {
+      "count": 2304,
+      "mean_seconds": 0.006432078065980562,
+      "p95_seconds": 0.01174769555050261
+    },
+    "residual_nb": {
+      "count": 2304,
+      "mean_seconds": 0.007132240832902426,
+      "p95_seconds": 0.012377253150270912
+    }
+  },
+  "trajectories": 512,
+  "tune_paths": 16
+}

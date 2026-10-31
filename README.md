@@ -1,5 +1,7 @@
 # Semiconductor Logistics Decarbonization
 
+[研究说明 / Research guide](docs/research_guide.md) · [系统结构 / Architecture](docs/architecture.md)
+
 English | [简体中文](README.zh-CN.md)
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
@@ -7,6 +9,12 @@ English | [简体中文](README.zh-CN.md)
 A research framework for joint inventory and transport optimization in semiconductor spare-parts and finished-goods logistics. It uses SciPy/HiGHS to solve mixed-integer models with delivery, transport-capacity and carbon-budget constraints, and includes fixed-configuration LLM notice extraction, multi-step tool environments, query-policy behavior cloning (BC), cost-based PPO, and reproducible evaluation.
 
 Two company-inspired case studies share the solver while retaining separate operating assumptions: [ASML spare-parts logistics](asml/README.md) and [Marvell finished-goods logistics](marvell/README.md).
+
+The [distribution confirmation study](docs/rolling_distribution_results.md) holds mean forecasts and MPC fixed. Residual-NB cost is 275.8435 versus Poisson 270.2820; the paired 95% cost interval crosses zero. It improves marginal NLL slightly but fails the teacher screen. A structural audit proves and numerically verifies that current additive, shared-schedule MPC cannot exploit cross-SKU pairing when complete SKU path marginals are preserved. No rolling BC/PPO is trained. Notice extraction, query learning and rolling control remain separately evaluated research lines.
+
+The 35-file distribution archive is complete under the explicitly approved SHA256 manifest. Require all seven checks on the current commit before merge; see the [publication record](docs/rolling_distribution_publication.md).
+
+The central question is when information acquisition and forecast modeling improve logistics decisions enough to justify their cost, under shared transport capacity, inventory dynamics and carbon constraints. The [research design](docs/research_design.md) connects each method to this question and separates implemented evidence from unproven contributions.
 
 ## OR planning engine and planning agent
 
@@ -51,6 +59,7 @@ python -m planning_agent demo
 | Rolling sensitivity | Carbon pacing, final-stock credit and 1/7/21 scenarios | 24 new paths, three sampling seeds, 2,304 trajectories; 21 vs seven scenarios has no consistent seed-level benefit |
 | Unknown-demand rolling inventory | Dated pipeline, history-only forecasts, shared capacities and cumulative carbon | 12 calibration + 32 development paths; four baselines; scenario MPC improves cost/service with higher emissions |
 | Forecast comparison | Calibration-only parameter selection; the same scenario MPC for all predictors | 12 calibration + 32 new development paths, 352 trajectories; fast EWMA and seasonal-window costs rise 7.19%/8.48% versus original EWMA |
+| Demand distribution | Fixed EWMA means; past-residual NB dispersion; whole-SKU-path dependence audit | 16 fit + 16 tune + 64 confirmation paths, 512 trajectories; NB cost +2.06%, no stable teacher; 768 dependence audits preserve the objective |
 | Verification | Input and source hashes, per-case rescoring, logistics-plan replay and training re-execution | Offline verification commands and automated tests |
 
 The original fixed tool workflow produced 127 feasible plans and 73 correct clarification handoffs on its development tasks. The [information-cost environment](docs/decision_environment.md) then introduced consequential choices about querying, clarification and planning. Current acceptance criteria and remaining work are recorded in the [progress ledger](docs/progress.md).
@@ -61,7 +70,7 @@ The [component audit](docs/query_components_results.md) is complete on 36 alread
 
 The [rolling inventory study](docs/rolling_inventory_results.md) implements the next stage: 44 distinct synthetic paths, four deployable baselines and a perfect-information lower bound. On 32 development paths, scenario MPC costs 282.2406 versus base-stock 330.6219, with higher immediate fill but higher emissions. Mean MPC does not beat the rule overall; no RL is trained.
 
-The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [framework comparison](docs/framework_comparison.md) maps the implementation and remaining gaps against Agentic Tool RL; the [research log](docs/research_log.md) records each change and its evidence.
+The failed screening result from the [equal-budget experiment](docs/query_budget_results.md) is preserved. BC addresses a separate question under the [computation-amortization protocol](docs/query_policy_protocol.md). The [research design](docs/research_design.md) defines our logistics questions, method choices and acceptance criteria; the [research log](docs/research_log.md) records each change and its evidence.
 
 The [real-source quantity evaluation](docs/results/notice_facts_api.md) is archived: model outputs agree with assistant references on 7/8 cases, compared with 6/8 for frozen rules. These results remain exploratory and have not undergone independent human review. They do not block environment research or require another API run. Any necessary user actions are listed in the [manual steps](docs/manual_steps.md).
 
@@ -71,7 +80,9 @@ The sensitivity archive is complete and PR #15 is merged after all five checks p
 
 The [rolling sensitivity study](docs/rolling_sensitivity_results.md) now quantifies carbon pacing, final-stock value and scenario count on 24 new paths. Seven scenarios lower cost by 37.48% versus one; 21 lower it by only 0.36% versus seven, with mixed sampling-seed effects. Final-stock credit mainly changes accounting. The [forecast comparison](docs/rolling_forecast_results.md) is now complete: both calibration-selected alternatives have higher mean cost and worse marginal prediction scores than original EWMA on 32 new paths. Three paths improve forecast NLL while worsening decision cost. No new teacher passes the fixed descriptive screen; rolling BC/PPO remains deferred.
 
-The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). Merge acceptance requires all six CI jobs on the current commit.
+The forecast archive is complete: all 73 evidence files were uploaded with the explicitly approved SHA256 digests. See the [file identities and verification](docs/rolling_forecast_publication.md). PR #16 is merged with all six main-branch checks successful. The current distribution extension requires seven checks.
+
+The [finite recourse check](docs/rolling_recourse_results.md) adds 36 constructed models, 36 MILP cross-checks and 1,920 physical replays. All apparent gains over the lexicographic rolling baseline disappear after considering its optimal first-action ties. Cross-coupling policy evaluation shows no regret in this construction. This is a mechanism check, not new heldout confirmation or a rolling learning result. Reproduce with `make verify-recourse`.
 
 ## Quick start
 

@@ -1,5 +1,6 @@
 # Semiconductor Logistics Decarbonization
 
+[研究说明 / Research guide](docs/research_guide.md) · [系统结构 / Architecture](docs/architecture.md)
 [English](README.md) | 简体中文
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
@@ -7,6 +8,14 @@
 面向半导体备件与成品物流的库存—运输联合优化框架。使用 SciPy/HiGHS 求解带交付、运输容量和碳预算约束的整数规划；提供固定 LLM 公告抽取评测、多步工具环境、查询策略行为克隆（BC）和结果复算。
 
 两个案例共享求解器，分别保留业务约束：[ASML 备件物流](asml/README.md)与 [Marvell 成品物流](marvell/README.md)。
+
+[分布确认研究](docs/rolling_distribution_results.md)固定均值预测和MPC，新增16拟合、16选参、64确认路径，共512轨迹。残差NB/Poisson成本275.8435/270.2820，差值区间跨零，教师筛选失败。768次审计验证：当前可分目标与共享计划结构无法利用跨SKU完整路径的配对信息。尚未训练滚动BC/PPO；公告抽取、查询学习和滚动控制仍分别验证。
+
+[有限追索检查](docs/rolling_recourse_results.md)完成36个构造模型、36次MILP核对、1,920次物理重放。18组表面提升均被并列最优动作解释，108次跨相关性策略评估遗憾全为0；尚无新的有效教师。复算：`make verify-recourse`。
+
+本轮35份分布证据已按明确批准的SHA256清单补齐，合并前需当前提交七项CI全部通过；见[归档记录](docs/rolling_distribution_publication.md)。
+
+核心问题是：在共享运输容量、库存演化和碳约束下，哪些信息值得获取，预测误差如何改变决策，信息处理与优化计算的成本是否值得付出？[研究设计](docs/research_design.md)据此定义方法选择、已有证据与尚未成立的贡献。
 
 ## 运筹规划引擎与规划 Agent
 
@@ -56,7 +65,7 @@ python -m planning_agent demo
 
 [组件对照](docs/query_components_results.md)已完成：在36个已查看开发情境上，去掩码使含拒绝惩罚的遗憾从2.5362%升至4.6288%，拒绝概率14.3215%；有掩码时成本势函数为2.7956%，未见稳定收益。本轮不重评或改写千题结果。
 
-[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[框架对照](docs/framework_comparison.md)逐项说明与Agentic Tool RL的结构对应和剩余工作；[研究记录](docs/research_log.md)保存每轮实现与证据。
+[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[研究设计](docs/research_design.md)定义本项目的物流问题、方法选择与验收标准；[研究记录](docs/research_log.md)保存每轮实现与证据。
 
 [真实数量评测](docs/results/notice_facts_api.md)已归档：模型7/8、规则6/8与助手参考一致。维护者选择不填写人工意见，结果保留为未进行人工复核的探索证据，不阻塞环境研究，也不重复调用API。需要手动操作的内容见[操作说明](docs/manual_steps.md)。
 

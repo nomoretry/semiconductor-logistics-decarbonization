@@ -1,0 +1,60 @@
+{
+  "schema": "rolling-distribution-confirmation-v1",
+  "scope": "new_synthetic_confirmation_fixed_before_outputs_not_company_data",
+  "fit_seeds": [
+    51001,
+    51007,
+    51031,
+    51043
+  ],
+  "tune_seeds": [
+    52009,
+    52021,
+    52027,
+    52051
+  ],
+  "confirmation_seeds": [
+    61001,
+    61007,
+    61027,
+    61031,
+    61043,
+    61051,
+    61057,
+    61091,
+    61121,
+    61129,
+    61141,
+    61151,
+    61153,
+    61169,
+    61211,
+    61223
+  ],
+  "prior_strength_candidates": [
+    12,
+    48,
+    192
+  ],
+  "dispersion_cap": 2.0,
+  "scenarios": 7,
+  "horizon": 6,
+  "allocation": "uniform",
+  "terminal_fraction": 0.0,
+  "base_stock_z": 1.0,
+  "sampler_seeds": [
+    901337,
+    902347,
+    903359
+  ],
+  "score_members": 128,
+  "score_seed": 977117,
+  "bootstrap_seed": 977141,
+  "bootstrap_replicates": 4000,
+  "primary_contrast": "residual_nb_minus_poisson_total_cost",
+  "teacher_min_relative_improvement": 0.02,
+  "teacher_fill_tolerance": 0.005,
+  "teacher_emissions_relative_tolerance": 0.02,
+  "deployment_p95_deadline_seconds": null,
+  "acceptable_policy_cost_increase": null
+}
