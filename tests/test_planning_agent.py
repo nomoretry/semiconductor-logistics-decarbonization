@@ -167,6 +167,37 @@ class PlanningAgentTests(unittest.TestCase):
         self.assertIn("| P1 |", text)
         self.assertIn(f"{b['total_cost_usd']:,}", text)
 
+    def test_paid_evaluation_saves_each_case_resumes_and_respects_the_budget(self):
+        from planning_agent.evaluate import evaluate
+
+        class CountingClient:
+            """Answers every question at once and bills 1,000 tokens per call."""
+            model, api_style, reasoning_effort = "fake-model", "chat", "xhigh"
+
+            def __init__(self):
+                self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
+
+            def chat(self, messages, tools=None):
+                self.usage.update(prompt_tokens=self.usage["prompt_tokens"] + 800,
+                                  completion_tokens=self.usage["completion_tokens"] + 200,
+                                  calls=self.usage["calls"] + 1)
+                return {"content": "超出范围，无法回答。", "tool_calls": []}
+
+        out = Path(self.session().memo_dir) / "eval"
+        first = evaluate("llm", ids=["D14", "H09", "D01"], output=out, settings=SETTINGS, client=CountingClient(),
+                         max_tokens=2000)
+        self.assertEqual([r["id"] for r in first["rows"]], ["D01", "D14"])  # cases run in file order
+        self.assertEqual(first["summary"]["stopped_early"]["remaining"], ["H09"])
+        self.assertEqual(first["summary"]["usage"]["prompt_tokens"], 1600)
+        lines = (out / "llm_cases.jsonl").read_text(encoding="utf-8").splitlines()
+        self.assertEqual(len(lines), 2)
+        client = CountingClient()
+        resumed = evaluate("llm", ids=["D14", "H09", "D01"], output=out, settings=SETTINGS, client=client, resume=True)
+        self.assertEqual(client.usage["calls"], 1)  # only H09 is asked; saved cases are not paid for twice
+        self.assertEqual([r["id"] for r in resumed["rows"]], ["D01", "D14", "H09"])
+        self.assertIsNone(resumed["summary"]["stopped_early"])
+        self.assertEqual(resumed["summary"]["usage"]["calls"], 3)
+
     def test_evaluation_scores_cases(self):
         from planning_agent.evaluate import evaluate
         result = evaluate("rule", ids=["D01", "D14", "H03"], settings=SETTINGS)

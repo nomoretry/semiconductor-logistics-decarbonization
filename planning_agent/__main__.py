@@ -57,13 +57,18 @@ def main(argv=None) -> int:
     p = sub.add_parser("eval")
     p.add_argument("--split", choices=("all", "dev", "holdout"), default="all")
     p.add_argument("--output", type=Path, default=Path("benchmark_results/planning_agent"))
+    p.add_argument("--ids", help="comma-separated case ids for a pilot run, e.g. D03,D13,H05")
+    p.add_argument("--resume", action="store_true", help="skip cases already saved in the output folder")
+    p.add_argument("--max-tokens", type=int, help="stop between cases once billable tokens reach this budget")
     args = parser.parse_args(argv)
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
     kind, client = _agent(args.agent)
     if args.command == "eval":
-        result = evaluate(kind, split=args.split, output=args.output, client=client)
+        ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None
+        result = evaluate(kind, split=args.split, ids=ids, output=args.output, client=client, resume=args.resume,
+                          max_tokens=args.max_tokens, progress=lambda line: print(line, flush=True))
         print(json.dumps(result["summary"], indent=2, ensure_ascii=False))
         return 0
     if args.command == "demo":

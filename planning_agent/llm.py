@@ -7,7 +7,8 @@ Configure with environment variables, the same names as in many LangChain exampl
                           https://api.openai.com/v1
     LLM_MODEL_ID          e.g. deepseek-chat, qwen-plus, gpt-4o-mini
     LLM_API_STYLE         "chat" (default) or "responses" (OpenAI /v1/responses)
-    LLM_REASONING_EFFORT  optional, e.g. low / medium / high for reasoning models
+    LLM_REASONING_EFFORT  optional, e.g. low / medium / high / xhigh for reasoning models
+    LLM_TIMEOUT           seconds per request (default 600; high reasoning effort can be slow)
 
 The agent always speaks the chat-completions message format. Some OpenAI
 reasoning models refuse function tools on /v1/chat/completions; the client
@@ -33,7 +34,7 @@ def configured() -> bool:
 
 class OpenAICompatibleClient:
     def __init__(self, api_key: str | None = None, base_url: str | None = None, model: str | None = None,
-                 timeout: float = 180.0, retries: int = 2):
+                 timeout: float | None = None, retries: int = 2):
         self.api_key = api_key or os.getenv("LLM_API_KEY")
         if not self.api_key:
             raise LLMError("LLM_API_KEY is not set")
@@ -41,7 +42,8 @@ class OpenAICompatibleClient:
         self.model = model or os.getenv("LLM_MODEL_ID") or "gpt-4o-mini"
         self.api_style = os.getenv("LLM_API_STYLE") or "chat"
         self.reasoning_effort = os.getenv("LLM_REASONING_EFFORT") or None
-        self.timeout, self.retries = timeout, retries
+        self.timeout = timeout or float(os.getenv("LLM_TIMEOUT") or 600)
+        self.retries = retries
         self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
         self.usage = {"prompt_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
         self._output_items = {}  # call_id -> raw Responses output items (reasoning + function calls) to replay

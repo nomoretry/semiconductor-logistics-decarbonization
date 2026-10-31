@@ -132,28 +132,69 @@ def summarise(rows: list[dict]) -> dict:
             "mean_tool_calls": mean([r["steps"] for r in rows]), "mean_seconds": mean([r["seconds"] for r in rows])}
 
 
+USAGE_KEYS = ("prompt_tokens", "completion_tokens", "reasoning_tokens", "calls")
+
+
+def _tokens(usage: dict | None) -> int:
+    """Billable tokens; providers count reasoning tokens inside completion tokens."""
+    usage = usage or {}
+    return usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)
+
+
 def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = None, settings: dict | None = None,
-             client=None) -> dict:
+             client=None, resume: bool = False, max_tokens: int | None = None, progress=None) -> dict:
+    """Run the cases, saving each row as soon as it is scored.
+
+    resume skips cases already in <agent>_cases.jsonl, so an interrupted paid run is never repeated;
+    max_tokens stops between cases once the recorded usage reaches the budget.
+    """
     from .agent import run_llm
     from .rules import run_rules
     settings = settings or {}
-    gold, rows = Gold(settings), []
-    for case in load_cases(split, ids):
+    output = Path(output) if output else None
+    path = output / f"{agent}_cases.jsonl" if output else None
+    rows = []
+    if path and resume and path.exists():
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if path:
+        output.mkdir(parents=True, exist_ok=True)
+        if not resume:
+            path.write_text("", encoding="utf-8")
+    done = {r["id"] for r in rows}
+    todo = [c for c in load_cases(split, ids) if c["id"] not in done]
+    gold, stopped = Gold(settings), None
+    for n, case in enumerate(todo, 1):
+        spent = sum(_tokens(r.get("usage")) for r in rows)
+        if max_tokens and spent >= max_tokens:
+            stopped = {"reason": f"token budget {max_tokens:,} reached after {spent:,} tokens",
+                       "remaining": [c["id"] for c in todo[n - 1:]]}
+            break
+        before = dict(getattr(client, "usage", None) or {})
         session = Session(**settings)
         result = run_rules(case["question"], session) if agent == "rule" else run_llm(case["question"], session, client)
         row = score(case, result, gold)
-        row["answer"] = result.answer
-        row["usage"] = result.usage
+        after = dict(getattr(client, "usage", None) or {})
+        row.update(answer=result.answer, model=getattr(client, "model", None),
+                   usage={k: after.get(k, 0) - before.get(k, 0) for k in USAGE_KEYS} if after else {})
         rows.append(row)
+        if path:
+            with path.open("a", encoding="utf-8", newline="\n") as handle:
+                handle.write(json.dumps(row, ensure_ascii=False, default=str) + "\n")
+        if progress:
+            progress(f"[{n}/{len(todo)}] {case['id']} {'OK  ' if row['success'] else 'FAIL'} "
+                     f"tools={len(row['tools'])} tokens={_tokens(row['usage']):,} {row['seconds']}s")
+    order = {c["id"]: i for i, c in enumerate(load_cases())}
+    rows.sort(key=lambda r: order.get(r["id"], len(order)))
     summary = {"agent": agent, "model": getattr(client, "model", None),
                "api_style": getattr(client, "api_style", None),
                "reasoning_effort": getattr(client, "reasoning_effort", None),
-               "usage": getattr(client, "usage", None),
+               "usage": {k: sum((r.get("usage") or {}).get(k, 0) for r in rows) for k in USAGE_KEYS},
+               "stopped_early": stopped,
                "splits": {name: summarise([r for r in rows if r["split"] == name])
                           for name in sorted({r["split"] for r in rows})},
                "overall": summarise(rows)}
     if output:
-        _write(Path(output), agent, summary, rows)
+        _write(output, agent, summary, rows)
     return {"summary": summary, "rows": rows}
 
 

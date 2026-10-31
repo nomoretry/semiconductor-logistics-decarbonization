@@ -88,6 +88,18 @@ python -m planning_agent --agent llm eval --output benchmark_results/planning_ag
 
 key 只从环境变量读取，不会写入文件、日志或评测结果。
 
+**推理模型与付费评测的保护措施**：
+
+- 有些 OpenAI 推理模型（如 gpt-6.1-sol）在 `/v1/chat/completions` 上不允许“推理 + 工具调用”，推理强度也不能设为 `none`。客户端遇到这类 400 错误时自动改用 `/v1/responses`，并把推理条目随工具调用一起回传；也可以用 `LLM_API_STYLE=responses` 直接指定。推理强度用 `LLM_REASONING_EFFORT`（low/medium/high/xhigh）设置，单次请求超时用 `LLM_TIMEOUT`（默认 600 秒）。
+- 评测每完成一条就写入 `llm_cases.jsonl`；`--resume` 跳过已保存的用例，中断后重跑不会重复付费；`--max-tokens` 在用例之间检查累计 token，达到预算就停止并在汇总里记录剩余用例；`--ids` 只跑指定用例，用于先小规模试跑。
+- 汇总文件记录模型、接口、推理强度和总 token（含推理 token），逐条记录每个用例的 token。
+
+```powershell
+$env:LLM_REASONING_EFFORT = "xhigh"
+python -m planning_agent --agent llm eval --ids D03,D13,H05 --output benchmark_results/planning_agent_pilot
+python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output benchmark_results/planning_agent
+```
+
 ### 局限与下一步
 
 - 评测集小（24 条）且同一作者编写；下一步扩充到 100 条，并请业务同事独立出题。
@@ -104,5 +116,7 @@ key 只从环境变量读取，不会写入文件、日志或评测结果。
 **Design choices.** Tools do all arithmetic (`compare_plans` computes differences); validation errors are actionable feedback; every number in an answer must trace to a tool result or the user's words at the precision shown, otherwise one rewrite is requested and remaining issues are flagged; omitted scenario parameters become explicit assumptions; plans are referenced by id; one agent with tools rather than several agents; offline fallback without an API key.
 
 **Evaluation.** 24 planner questions: 14 development cases written with the rule agent and 10 later robustness cases (English, paraphrases, numbers in words, multi-intent, clarification). Both were written by the same author, so the robustness set is a probe, not an independent test. Gold numbers are recomputed by the engine. The rule agent solves 14/14 development cases and 4/10 robustness cases with 100% numeric faithfulness, failing on wording outside its patterns. The LLM agent needs an API key and has not been run; no LLM numbers are reported.
+
+**Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 
 **Limitations and next steps.** Small single-author test set (expand to 100 independent questions); the guardrail checks traceability, not reasoning; no web UI yet; the framework-neutral tools can be wrapped as LangGraph or AgentScope nodes or exposed as MCP tools.
