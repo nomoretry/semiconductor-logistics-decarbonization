@@ -1,5 +1,6 @@
 # Semiconductor Logistics Decarbonization
 
+[研究说明 / Research guide](docs/research_guide.md) · [系统结构 / Architecture](docs/architecture.md)
 [English](README.md) | 简体中文
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)

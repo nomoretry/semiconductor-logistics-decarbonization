@@ -62,3 +62,9 @@ PR #15已合并。补齐归档后的[当前提交检查](https://github.com/nomo
 下一项先检查需求分布模型或更强收缩预测，使用另行登记的新路径确认；同时明确在线时限和可接受质量损失。不能把预知需求下界差距称为可被学习回收的收益，也不能把当前32条已查看路径重新称作未知测试。
 
 本轮公开归档已补齐：维护者明确批准全部73份证据按清单SHA256公开上传，原字节与结果不变，见[归档验收](rolling_forecast_publication.md)。当前提交须通过全部六项CI后再合并，旧缺文件失败记录保留。
+
+## 架构统一与分布研究 / Architecture and distribution study
+
+架构页已更新为完整双语版本，明确公告、查询学习和滚动控制三条研究线的真实连接；新增[双语研究说明](research_guide.md)。PPO已经实现并完成五种子千题，滚动BC/PPO仍未训练。分布研究的协议、配置和实现将在正式数据生成前固定；当前仅完成独立烟雾验证，未报告正式结果。见[协议](rolling_distribution_protocol.md)。
+
+The bilingual architecture now separates notice processing, query learning and rolling control. A [bilingual research guide](research_guide.md) connects definitions, evidence and commands. Query PPO and five-seed final evaluation are implemented; rolling BC/PPO are not. Distribution protocol, config and implementation will be fixed before formal data generation. Only isolated smoke validation has run at this point; no formal result is reported. See the [protocol](rolling_distribution_protocol.md).

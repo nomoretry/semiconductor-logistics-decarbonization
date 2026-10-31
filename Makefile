@@ -34,6 +34,7 @@ smoke:
 	$(CLI) rolling-inventory smoke-check
 	$(CLI) rolling-sensitivity smoke-check
 	$(CLI) rolling-forecast smoke-check
+	$(CLI) rolling-distribution smoke-check
 
 # Full grid includes the external demand analogue; download-data is explicit.
 benchmark:
@@ -97,4 +98,7 @@ verify-sensitivity:
 verify-forecast:
 	$(CLI) rolling-forecast verify
 
-ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast
+verify-distribution:
+	$(CLI) rolling-distribution verify
+
+ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast verify-distribution

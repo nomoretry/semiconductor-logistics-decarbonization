@@ -1,96 +1,85 @@
-# 系统结构
+# 系统结构 / Architecture
 
-项目由通知抽取、参数编译、整数规划和结果校验四部分组成。ASML 与 Marvell 场景共享优化器；独立文本基准和多步工具环境目前只覆盖 ASML 启发的 `NL_ocean` 已公告延误。
+本文提供中英文版本，中文在前，英文在后。
+This document is available in Chinese and English; English follows Chinese.
 
-## 模块
+## 中文
 
-| 路径 | 职责 |
-| --- | --- |
-| `semiconductor_logistics/` | Python 包入口与统一 CLI，分发到各实验模块 |
-| `notice_benchmark/data.py` | 生成、划分和校验合成通知 |
-| `notice_benchmark/rules.py` | 冻结的规则抽取器 |
-| `notice_benchmark/api_runner.py` | API 请求、预算控制及调用记录 |
-| `notice_benchmark/metrics.py`、`effects.py` | 结构匹配、字段指标和编译效果匹配 |
-| `notice_benchmark/tool_env.py` | 工具状态机、计划审计与终局评分 |
-| `shared/experiments.py` | 场景配置、通知编译、规划输入和实验网格 |
-| `shared/optimization.py` | SciPy/HiGHS 库存与运输 MILP |
-| `scripts/` | 优化实验、API 评分、敏感性分析与报告生成 |
+项目有三条分别验证的研究线：公告转参数、已知订单下的付费查询、未知需求下的滚动库存决策。它们共享物流问题和部分求解代码，尚未组成经过验证的端到端LLM决策系统。
 
-## 数据流
+### 模块与连接
+
+| 研究线 | 实际连接 | 代码 | 证据范围 |
+|---|---|---|---|
+| 公告与计划 | 文本/上下文→抽取→校验→允许列表编译→MILP→物理审计 | `notice_benchmark/`、`shared/` | 400条独立合成测试；固定LLM/规则对照；事务工具流程 |
+| 真实材料 | 官方摘录→澄清或数量事实→助手参考评分 | `real_notice_eval/`、`notice_facts/` | 16条澄清、8条数量案例；未验证内部路线更新 |
+| 信息获取 | 已知订单/公开延误先验→付费观测→信念更新→运输求解 | `decision_benchmark/`、`coupled_decision/`、`budgeted_decision/` | 多SKU、共享容量、查询预算、强搜索和等计算预算 |
+| 查询学习 | 公开特征/候选→BC/PPO查询或提交→最终MILP | `query_policy/`、`query_ppo/`、`query_study/`、`query_components/` | 5种子、冻结1,000情境、27,000评估；无稳定PPO收益 |
+| 滚动库存 | 历史需求/库存/积压/在途/碳→预测→规划首期动作→需求实现→下一状态 | `rolling_inventory/`、`rolling_sensitivity/`、`rolling_forecast/` | 基线、敏感性和均值预测比较；未训练滚动BC/PPO |
+| 需求分布 | 过去残差→离散度估计→情景生成→相同MPC | `rolling_distribution/` | 独立协议下的边际波动研究与跨SKU配对不变性审计；执行状态见进度页 |
 
 ```mermaid
 flowchart TD
-    N["通知文本与业务上下文"] --> E["规则或 API 抽取"]
-    E --> V["结构校验与参数编译"]
-    V -->|信息不足或校验失败| H["澄清交接"]
-    V -->|可执行更新| M["MILP 规划"]
-    S["已承诺订单与初始库存"] --> M
-    M --> A["按发运量重建物理结果"]
-    A -->|通过| C["提交仿真计划"]
-    A -->|未通过| H
-    C --> T["隐藏参考终局评估"]
-    H --> T
+    A["公告与业务上下文"] --> B["抽取与允许列表编译"]
+    B --> C["已知订单MILP与审计"]
+    D["公开信念与查询预算"] --> E["强搜索或BC/PPO查询"]
+    E --> F["最终运输MILP"]
+    G["历史需求与库存状态"] --> H["需求预测与情景MPC"]
+    H --> I["执行首期动作并观察需求"]
+    I --> G
 ```
 
-抽取器只接收 `model_input={text, context}`。参考标签、语义类别、事件编号和模板编号用于评分，不进入推理请求。抽取结果通过允许列表更新配置，不执行生成代码。结构接口见[方法说明](methodology.md)。
+三条路径是各自的实际实现，目前没有公告抽取进入查询学习或滚动MPC的实验连接。真实服务名到内部路线、订舱和SKU的映射仍缺失。静态公司启发模型与滚动合成环境的约束、单位和服务口径不同，不能合并解释为企业收益。
 
-规划器读取完整的已承诺订单簿，并按发运期的提前期计算到货。工具审计直接重建库存、积压、容量、资格、期末库存和碳预算，独立于求解器声明的可行性。
+### 信息与执行边界
 
-## 工具环境
+抽取器只接收`text/context`，不接收标签。`ToolWorkflowEnv`提供检查、抽取、编译、读取、求解、审计、提交和交接；重新编译使旧计划失效，提交前必须审计。可见审计检查抽取配置，隐藏终局评估检查参考配置。
 
-`ToolWorkflowEnv` 接受一条合成通知、一份基础配置、一份已知订单簿和可替换抽取器。策略接口为 `observation()`、`action_mask()` 和 `step(action)`。
+查询策略使用37维公开特征，不接收隐藏路线状态、专家价值或实例标签。BC用精确DP的多正例集合损失；PPO已有独立状态critic、轨迹隔离GAE、策略/价值裁剪、熵和梯度裁剪。成本势函数仅用训练集拟合后冻结。这是NumPy小型结构化策略，不是LLM训练；冻结千题最多3次查询，运输分配仍由MILP完成。
 
-| 工具 | 状态变化或输出 |
-| --- | --- |
-| `inspect_notice` | 显示通知及上下文 |
-| `extract_notice` | 调用抽取器，增加配置版本并清除旧计划 |
-| `validate_update` | 校验结构，编译允许的参数修改 |
-| `read_state` | 显示基础配置、订单、初始库存和碳预算 |
-| `solve_plan` | 在当前配置上调用 MILP |
-| `audit_plan` | 在当前配置上重建物理结果 |
-| `commit_plan` | 提交当前版本中已通过审计的计划并结束 |
-| `request_clarification` | 记录信息不足；当前仿真不提供新增信息 |
-| `safe_handoff` | 结束任务，记录交接 |
+滚动策略在第`t`期发运前只能看到`t`之前的需求、当前到货和已知在途；发运后才观察本期需求。12期环境有3SKU、2条共享容量路线、提前期、积压和累计碳预算。预知需求方法仅给下界，不是可部署教师。
 
-动作掩码只表达结构前置条件和剩余预算。重新抽取或编译会使旧计划和审计失效。参考配置仅用于终局评估：可见审计可能接受一个基于错误解释的计划，终局评估再检查参考配置下的实际可行性与参数一致性。
+### 优化结构
 
-`run_fixed_workflow`保留原固定流程及其[开发审计](benchmark.md#工具工作流)。新的`query_policy/`单独训练查询策略BC，提供公开特征、预算mask、多正例损失、检查点和完整概率树重执行；不改变原工具环境或公告评测。PPO尚未实现。
+`shared/optimization.py`处理已知订单；原静态实验使用零积压硬约束和共同期末库存要求。`rolling_sensitivity/planning.py`的MPC允许积压、用6期窗口、每期重规划并执行首期发运。
 
-## 命令入口
+当前情景MPC对全部情景共享整段发运计划，没有情景相关的未来追索。损失按SKU相加，容量与碳约束只涉及发运。因此保留每个SKU的完整多期路径集合、只重排跨SKU配对，不改变任何可行计划的样本平均目标。相关性可以改变联合预测评分，但在此结构下不能创造期望成本优化收益；不同多最优解也不是相关性收益。见[分布协议](rolling_distribution_protocol.md)。
 
-安装后使用 `semiconductor-logistics`，也可运行 `python -m semiconductor_logistics`。实验命令应在仓库目录运行，或用 `--workspace PATH` 指向包含配置与数据的仓库。
+### 复现
 
-| 命令 | 功能 |
-| --- | --- |
-| `generate` | 生成通知数据集 |
-| `evaluate` | 运行冻结规则与诊断对照 |
-| `verify-run` | 只读校验离线结果并重算 |
-| `workflow-audit` | 运行工具工作流；`--verify` 校验已有结果 |
-| `api` | 估算 API 运行预算；`--execute` 执行请求 |
-| `score-api` | 对已有 API 输出评分 |
-| `optimize` | 运行 ASML、Marvell 优化实验 |
-| `sensitivity` | 运行参数敏感性分析 |
-| `report` | 生成 `reports/study_report.md` |
-| `download-data` | 下载并校验外部原始数据 |
+入口为`python -m semiconductor_logistics`；各实验有独立run/verify入口，完整命令见[研究说明](research_guide.md)。`benchmark_results/`保存配置、逐例记录、检查点、源码身份和SHA256。验证器重建数据、重执行策略，并从动作独立核对库存/在途守恒、容量、碳和费用。计时单独保存和复算汇总，不要求重跑耗时相同。旧冻结记录保留原字节；新问题使用独立包。CI通过只说明指定提交的检查通过。
 
-## 结果组织
+## English
 
-| 目录 | 内容 |
-| --- | --- |
-| `benchmarks/notices_v1/` | 数据集、划分清单和规则冻结身份 |
-| `benchmark_results/notices_v1/` | 留出集预测、指标与哈希清单 |
-| `benchmark_results/workflow_development_v1/` | 任务、终局结果、工具轨迹和运行时间 |
-| `reports/` | 优化实验明细、归档汇总、敏感性结果和研究报告 |
-| `asml/results/`、`marvell/results/` | 对应场景的公开合成实验结果 |
+The project has three separately evaluated research lines: notice-to-parameter processing, paid queries with known orders, and rolling inventory control with unknown demand. They share a logistics setting and some solver code, but are not a validated end-to-end LLM decision system.
 
-离线验证器检查数据、源码和输出哈希，并重算预测与指标。工作流验证器重放任务并比较确定性输出；求解耗时单独保存，不参与逐字节相等比较。各结果集的统计范围见[基准与结果](benchmark.md)。
+### Modules and connections
 
-## 信息成本环境
+| Research line | Implemented connection | Code | Evidence scope |
+|---|---|---|---|
+| Notices/plans | Text/context → extraction → validation → allowlisted compilation → MILP → physical audit | `notice_benchmark/`, `shared/` | 400 distinct synthetic tests; fixed LLM/rules; transactional workflow |
+| Real excerpts | Official excerpt → clarification/quantities → assistant-reference scoring | `real_notice_eval/`, `notice_facts/` | 16 clarification and 8 quantity cases; no validated internal-route updates |
+| Information acquisition | Known orders/public priors → paid observation → belief update → transport optimization | `decision_benchmark/`, `coupled_decision/`, `budgeted_decision/` | Multiple SKUs, shared capacity, query budgets, strong search and matched compute budgets |
+| Query learning | Public features/candidates → BC/PPO query or commit → final MILP | `query_policy/`, `query_ppo/`, `query_study/`, `query_components/` | Five seeds, 1,000 frozen contexts, 27,000 evaluations; no stable PPO benefit |
+| Rolling inventory | History/stock/backlog/pipeline/carbon → forecast → first action → realized demand → next state | `rolling_inventory/`, `rolling_sensitivity/`, `rolling_forecast/` | Baselines, sensitivity and mean-forecast comparison; no rolling BC/PPO |
+| Demand distributions | Past residuals → dispersion estimate → scenarios → unchanged MPC | `rolling_distribution/` | Separate marginal-dispersion protocol and cross-SKU pairing audit; execution status is in the progress ledger |
 
-`decision_benchmark/`独立检验有费用的信息获取和规划选择，保持已知订单。策略接收公开观察，查询后更新延误信念，再选择名义、稳健或Bayes求解结果。真实物理结果与费用共同计入损失。新环境、基线和开发结果见[信息成本环境](decision_environment.md)，不改变原冻结工具环境。
+The diagram above represents separate implemented paths. No evaluated connection currently feeds extraction into learned queries or rolling MPC. Mapping real service names to internal routes, bookings and SKUs remains unresolved. Static company-inspired models and the synthetic rolling environment use different constraints, units and service definitions; their results cannot be combined into company savings.
 
-## 查询策略训练
+### Information and execution boundaries
 
-`query_policy/experiment.py`按上下文生成72/18/36个train/dev/pilot情境，精确规划器产生教师动作成本；`features.py`只接收公开信息，`model.py`训练共享候选评分器。评估时BC只选择查询或提交，运输分配仍由MILP完成。原始教师、检查点和逐情境轨迹随实验归档；验证器重算教师并重新训练、执行与评分。
+Extractors receive only `text/context`, never labels. `ToolWorkflowEnv` supports inspection, extraction, compilation, reading, solving, auditing, commitment and handoff. Recompilation invalidates old plans; commitment requires an audit. The visible audit uses the extracted configuration; hidden terminal evaluation uses the reference configuration.
 
-接口依据与未完成项见[参考框架对照](framework_comparison.md)，训练配置和结果见[BC开发实验](query_policy_results.md)。
+Query policies use 37 public features without hidden route states, expert values or task labels. BC uses a set loss over all exact-DP-optimal actions. PPO implements a separate state critic, trajectory-safe GAE, policy/value clipping, entropy and gradient clipping. The cost potential is fitted on training data and frozen. These are small NumPy structured policies, not trained LLMs. Frozen final tasks allow at most three queries; a MILP allocates shipments.
+
+Before dispatch at period `t`, rolling policies see only demand before `t`, current arrivals and known pipeline. Current demand is revealed afterwards. The 12-period environment has three SKUs, two capacity-sharing routes, lead times, backlog and cumulative carbon. Clairvoyance gives a bound, not a deployable teacher.
+
+### Optimization structure
+
+`shared/optimization.py` handles known orders; original static experiments enforce no backlog and a common final inventory floor. MPC in `rolling_sensitivity/planning.py` allows backlog, uses horizon six, replans each period and executes its first dispatch.
+
+Current scenario MPC shares the complete dispatch schedule across scenarios, with no scenario-dependent future recourse. Losses add across SKUs; capacity/carbon constrain dispatch only. Preserving each SKU's complete path multiset and changing cross-SKU pairing therefore preserves the sample-average objective of every feasible plan. Dependence can change joint forecast scores but cannot create expected-cost optimization gains in this structure. Different tied solutions are not dependence benefits. See the [distribution protocol](rolling_distribution_protocol.md).
+
+### Reproduction
+
+Use `python -m semiconductor_logistics`; independent studies expose run/verify commands, indexed in the [research guide](research_guide.md). `benchmark_results/` stores configurations, per-case records, checkpoints, source identities and SHA256 manifests. Verifiers regenerate data, reexecute policies, and independently audit inventory/pipeline conservation, capacity, carbon and costs from actions. Timing is archived separately and its summaries recomputed; new runtimes need not match. Frozen records retain their bytes; new questions use separate packages. Passing CI establishes checks on a specific commit only.

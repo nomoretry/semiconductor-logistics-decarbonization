@@ -70,3 +70,9 @@ R28的9项新测试覆盖未来需求隔离、原预测兼容、校准划分、�
 R28归档发布补充：新预测轨迹的公开上传被自动审批拒绝，要求针对新文件明确授权；已完成全部字段及物理台账审核。保留73份原证据文件与SHA256，见[清单](rolling_forecast_publication.md)，不重编码、拆分或跳过完整验收。
 
 R29在获得针对全部73份文件的明确授权后补齐预测归档。此前R28的上传阻塞已解除；不把旧CI或本地成功替代当前提交的远端验收。
+
+## 架构同步与分布预检 / Architecture update and distribution preflight
+
+问题：固定均值预测后，历史误差的离散度估计是否改善滚动成本？读代码发现情景MPC无情景追索且损失按SKU相加，跨SKU整段路径重排不改变目标。因此将研究分成边际离散度比较与相关性不变性审计，先固定[协议](rolling_distribution_protocol.md)、`rolling_distribution/config.json`和实现；不把重排引起的多最优解差异解释为收益。烟雾测试只使用独立小数据；正式16/16/64划分尚未运行。来源、指标、质量教师条件及尚未指定的计算时限均在协议中记录。旧冻结记录不改。
+
+Question: does past-error dispersion improve rolling cost with fixed means? Code inspection shows no scenario recourse and additive SKU losses, so whole-path cross-SKU permutations preserve the objective. Separate the marginal-dispersion comparison from the dependence-invariance audit. Fix the [protocol](rolling_distribution_protocol.md), config and implementation first; tie-breaking differences are not benefits. Smoke uses isolated small data; formal16/16/64 splits have not run. The protocol records sources, metrics, teacher screening and unspecified compute targets. Prior frozen records remain unchanged.
