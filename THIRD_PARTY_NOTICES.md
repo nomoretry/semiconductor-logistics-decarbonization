@@ -32,7 +32,7 @@ Source hashes, retrieval details, and scenario boundaries are retained in `data_
 
 ## Carrier notice excerpts
 
-- Files: `benchmarks/real_notices_v1/` (16 excerpts: Maersk 12, Hapag-Lloyd 3, CMA CGM 1) and `benchmarks/notice_facts_v1/` (24 excerpts: Maersk 15, Hapag-Lloyd 4, MSC 2, CMA CGM 2, CNC 1), plus evaluation records that repeat them as model inputs under `benchmark_results/real_notice_api/`, `benchmark_results/notice_facts_api/`, `benchmark_results/notice_facts_development/` and `benchmark_results/real_notices_v1/`.
+- Files: `benchmarks/real_notices_v1/` (16 excerpts: Maersk 12, Hapag-Lloyd 3, CMA CGM 1) and `benchmarks/notice_facts_v1/` (24 excerpts: its 16 development excerpts repeat `real_notices_v1`, and 8 further excerpts come from Maersk, MSC, CMA CGM, Hapag-Lloyd and CNC), so 24 distinct excerpts in total, plus evaluation records that repeat them as model inputs under `benchmark_results/real_notice_api/`, `benchmark_results/notice_facts_api/`, `benchmark_results/notice_facts_development/` and `benchmark_results/real_notices_v1/`.
 - Content: short verbatim excerpts of public operational notices, each with its source URL and retrieval details in the dataset files.
 - Rights: the text belongs to the respective carriers. It is quoted only to evaluate notice extraction and is **not** licensed under this project's MIT License. No endorsement by or affiliation with any carrier is implied.
 - The datasets are frozen and checked by hash, so the excerpts are kept unchanged. Notice text collected later for retrieval is not stored in the repository: only source links, retrieval dates, content hashes and the project's own annotations are committed, and a script downloads the originals locally.
