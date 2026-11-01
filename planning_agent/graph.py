@@ -8,7 +8,8 @@ only the control flow is expressed as a state graph:
                                           --untraceable number----> model (one rewrite)
 
 Compared with the loop, the graph adds three things a planning service needs:
-- a checkpointer keeps every conversation turn per thread, so follow-up questions see earlier tool results;
+- an in-process checkpointer (InMemorySaver) keeps the turns of each conversation while the process runs, so
+  follow-up questions see earlier tool results; nothing persists after the process exits;
 - an optional approval step pauses before tools run (human in the loop) and can decline them;
 - step-by-step streaming of node updates for a command line or web front end.
 """
