@@ -6,6 +6,8 @@ python -m planning_agent demo --output artifacts/planning_agent/demo
 python -m planning_agent eval --agent rule --output benchmark_results/planning_agent
 python -m planning_agent replay --output benchmark_results/planning_agent
 python -m planning_agent flow                       # notice -> parameters -> confirm -> plans -> memo
+python -m planning_agent flow --mode notice         # the same, with real carrier notices retrieved and cited
+python -m planning_agent corpus search "红海绕行"     # search the notice corpus (build, evaluate, fetch --yes)
 
 --agent auto uses the LLM agent when LLM_API_KEY is set, otherwise the offline rule agent.
 --agent graph runs the same model, tools and guardrail as a LangGraph state graph (needs the agent extra).
@@ -115,6 +117,54 @@ def _flow(args) -> int:
     return 0
 
 
+def _corpus(args) -> int:
+    from . import retrieval
+    notices = retrieval.load_notices()
+    if args.action == "build":
+        if args.check:
+            ok = retrieval.manifest_matches(notices=notices)
+            print(f"{retrieval.MANIFEST.name}: {'matches the datasets' if ok else 'differs from the datasets'}")
+            return 0 if ok else 1
+        print(f"wrote {retrieval.write_manifest(notices=notices)} ({len(notices)} documents, no notice text)")
+        return 0
+    if args.action == "search":
+        index = retrieval.default_index(args.full_text)
+        hits = index.search(args.query, k=args.k, use_glossary=not args.no_glossary)
+        used = retrieval.expand(args.query, index.glossary)[1] if not args.no_glossary else []
+        if used:
+            print("术语扩展：" + "，".join(f"{t}→{' '.join(index.glossary[t])}" for t in used))
+        for hit in hits:
+            n = hit.notice
+            where = "本地原文" if hit.local else "摘录"
+            print(f"{hit.rank}. [{n.id}] {hit.score}  {n.publisher}《{n.title}》{n.published or '发布日期未标注'}")
+            print(f"   {where}：{hit.passage}")
+            print(f"   链接：{n.url}  匹配词：{' '.join(hit.matched)}")
+        if not hits:
+            print("没有匹配的公告。")
+        return 0
+    if args.action == "evaluate":
+        result = retrieval.evaluate(notices)
+        if args.check:
+            ok = retrieval.results_match(result, args.output)
+            print(f"{args.output}: {'reproduced exactly' if ok else 'differs from the saved results'}")
+            return 0 if ok else 1
+        print(f"wrote {retrieval.write_results(result, args.output)}")
+        print(json.dumps(result["summary"]["results"], indent=2, ensure_ascii=False))
+        return 0
+    chosen = [n for n in notices if not args.ids or n.id in args.ids.split(",")]
+    if not args.yes:
+        print(f"将从船公司网站下载 {len(chosen)} 个网页到 {retrieval.RAW}（不进仓库）。没有 --yes，本命令不联网。")
+        for n in chosen:
+            print(f"  {n.id}  {n.url}")
+        return 2
+    records = retrieval.fetch(chosen, consent=True)
+    for r in records:
+        status = r.get("error") or f"HTTP {r['status']}, {r['bytes']} 字节, 摘录{'在' if r['excerpt_found'] else '不在'}页面中"
+        print(f"{r['id']}: {status}")
+    print(f"记录：{retrieval.RAW / 'fetch_log.json'}")
+    return 0 if all(r.get("status") == 200 for r in records) else 1
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="planning_agent", description=__doc__.splitlines()[0])
     parser.add_argument("--agent", choices=("auto", "rule", "llm", "graph"), default="auto")
@@ -146,6 +196,21 @@ def main(argv=None) -> int:
     p.add_argument("--max-tokens", type=int, help="live mode: approved token cap")
     p.add_argument("--yes", action="store_true", help="confirm without asking (scripts)")
     p.add_argument("--output", type=Path, default=Path("artifacts/planning_agent/flow"))
+    p = sub.add_parser("corpus", help="carrier notice corpus: build the manifest, search, evaluate, fetch pages")
+    corpus = p.add_subparsers(dest="action", required=True)
+    c = corpus.add_parser("build", help="rebuild data_sources/notice_corpus.json from the datasets (offline)")
+    c.add_argument("--check", action="store_true", help="only check that the committed manifest matches")
+    c = corpus.add_parser("search", help="BM25 search over the notice excerpts (offline)")
+    c.add_argument("query")
+    c.add_argument("-k", type=int, default=5)
+    c.add_argument("--no-glossary", action="store_true", help="do not expand Chinese terms into English")
+    c.add_argument("--full-text", action="store_true", help="also search pages downloaded by fetch")
+    c = corpus.add_parser("evaluate", help="rerun the retrieval evaluation (offline)")
+    c.add_argument("--output", type=Path, default=Path("benchmark_results/notice_retrieval_v1"))
+    c.add_argument("--check", action="store_true", help="only check that the saved results are reproduced")
+    c = corpus.add_parser("fetch", help="download the original notice pages locally; needs --yes")
+    c.add_argument("--yes", action="store_true", help="consent to contacting the carrier websites")
+    c.add_argument("--ids", help="comma-separated notice ids, e.g. R014,E02")
     p = sub.add_parser("replay", help="replay recorded model runs through the LangGraph agent (no API calls)")
     p.add_argument("--source", type=Path, default=Path("benchmark_results/planning_agent"))
     p.add_argument("--output", type=Path)
@@ -156,6 +221,8 @@ def main(argv=None) -> int:
 
     if args.command == "flow":
         return _flow(args)
+    if args.command == "corpus":
+        return _corpus(args)
     if args.command == "replay":
         from .graph import replay
         ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None

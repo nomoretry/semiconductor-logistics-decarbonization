@@ -34,7 +34,7 @@ include-package-data = false
 
 [tool.setuptools.package-data]
 network_planning = ["config.json"]
-planning_agent = ["eval_cases.json"]
+planning_agent = ["eval_cases.json", "notice_glossary.json"]
 
 [tool.ruff]
 line-length = 120
@@ -53,4 +53,4 @@ ignore_missing_imports = true
 follow_imports = "silent"
 strict = true
 # Modules join this list once they type-check strictly.
-files = ["planning_agent/graph.py", "planning_agent/workflow.py", "planning_agent/app.py"]
+files = ["planning_agent/graph.py", "planning_agent/workflow.py", "planning_agent/app.py", "planning_agent/retrieval.py"]

@@ -40,6 +40,27 @@ This document provides Chinese first and English second.
 4. 在业务流程里，命中的公告显示出处和链接；每个参数标明依据；公告缺少的信息逐条列出；备忘录附参考公告。公告里的近似值和区间（例如“7 到 14 天”）只作参考显示，不自动变成确定参数。
 5. 命令行和网页都能用；离线运行，不调用模型。
 
+### 实测结果（开发检查，执行一次，可用 `corpus evaluate --check` 逐字复算）
+
+| 方法 | 语言 | 首位命中 | 命中率@3 | recall@1 | recall@3 | MRR |
+|---|---|---:|---:|---:|---:|---:|
+| BM25 + 术语表 | 中文 | 19/19 | 19/19 | 0.886 | 0.974 | 1.000 |
+| BM25 + 术语表 | 英文 | 18/19 | 19/19 | 0.868 | 0.939 | 0.974 |
+| BM25，不扩展 | 中文 | 4/19 | 4/19 | 0.184 | 0.184 | 0.211 |
+| BM25，不扩展 | 英文 | 18/19 | 19/19 | 0.868 | 0.939 | 0.974 |
+| 随机排序（期望） | 两种 | 0.05 | 0.15 | 0.042 | 0.125 | 0.179 |
+
+- 术语表是中文问题能检索到英文公告的原因：不扩展时，中文问题只能靠 TP9、MECL、NEMO、Delta II 这类英文名称命中。
+- 这些数字偏乐观：语料只有 24 条，问题常带地名，术语表里的“停航→blank”“顺延→slide”这类对应是读过语料之后写的。
+- 已知弱点：公告摘录描述了事件却没写事件名称时很难找到。例如 R009（红海绕行使航程增加约 4,000 海里）没有出现“红海”，在中文红海问题里排第 14；英文的亚欧停航问题里，R002、R003 排第 9 和第 8。
+- 原始逐题结果：`benchmark_results/notice_retrieval_v1/cases.jsonl`；汇总：`summary.json`（记录了查询集、术语表和语料清单的哈希）。
+
+### 下一项验收条件
+
+- 由项目作者以外的人编写问题（TASKS V2），并加入语料之外的干扰问题；
+- 经你同意下载原文后，用全文段落重跑同一评测，比较摘录与全文；
+- 实时模型模式附上检索结果后的参数质量，需另行批准预算。
+
 ### 运行
 
 ```bash
@@ -48,6 +69,7 @@ python -m planning_agent corpus search "红海绕行对亚欧航线的影响"
 python -m planning_agent corpus evaluate        # 重算检索评测
 python -m planning_agent flow --mode notice --notice "红海绕行好望角，第4到12周海运延误2周，对 ASML 备件有什么影响？"
 python -m planning_agent corpus fetch --yes     # 下载原文到本地，需要你同意
+python -m streamlit run planning_agent/app.py   # 网页：侧栏选“公告检索 + 规则解析”
 ```
 
 ## English
@@ -87,6 +109,27 @@ Retrieval over real carrier notices is added to the [notice-to-memo workflow](de
 4. In the workflow, matched notices show their source and link, every parameter states its basis, missing information is listed, and the memo lists the notices used. Approximate values and ranges in notices (for example "7 to 14 days") are shown for reference and never become definite parameters automatically.
 5. Both the command line and the web page work offline without a model call.
 
+### Measured result (development check, run once; `corpus evaluate --check` reproduces it exactly)
+
+| Method | Language | First result right | Hit rate@3 | recall@1 | recall@3 | MRR |
+|---|---|---:|---:|---:|---:|---:|
+| BM25 + glossary | Chinese | 19/19 | 19/19 | 0.886 | 0.974 | 1.000 |
+| BM25 + glossary | English | 18/19 | 19/19 | 0.868 | 0.939 | 0.974 |
+| BM25, no expansion | Chinese | 4/19 | 4/19 | 0.184 | 0.184 | 0.211 |
+| BM25, no expansion | English | 18/19 | 19/19 | 0.868 | 0.939 | 0.974 |
+| Random ranking (expected) | both | 0.05 | 0.15 | 0.042 | 0.125 | 0.179 |
+
+- The glossary is what lets Chinese questions reach English notices: without it, Chinese questions only match English names such as TP9, MECL, NEMO and Delta II.
+- These numbers are optimistic: the corpus has 24 documents, questions often name places, and glossary pairs such as 停航→blank and 顺延→slide were written after reading the corpus.
+- Known weakness: an excerpt that describes an event without naming it is hard to find. R009 (the Red Sea diversion adds about 4,000 miles) never says "Red Sea" and ranks 14th for the Chinese Red Sea question; for the English Asia-Europe blank-sailing question, R002 and R003 rank 9th and 8th.
+- Raw per-question results: `benchmark_results/notice_retrieval_v1/cases.jsonl`; summary: `summary.json` (records the hashes of the question set, glossary and corpus manifest).
+
+### Next acceptance condition
+
+- Questions written by people other than the project author (TASKS V2), with distractor questions outside the corpus;
+- with consent to download the original pages, rerun the same evaluation over full-text passages and compare with the excerpts;
+- parameter quality of the live model mode with retrieved notices in the prompt, under a separately approved budget.
+
 ### How to run
 
 ```bash
@@ -95,4 +138,5 @@ python -m planning_agent corpus search "Red Sea diversion impact on Asia-Europe 
 python -m planning_agent corpus evaluate
 python -m planning_agent flow --mode notice --notice "Red Sea diversion via the Cape, weeks 4-12, ocean delayed by 2 weeks: impact on ASML spare parts?"
 python -m planning_agent corpus fetch --yes
+python -m streamlit run planning_agent/app.py
 ```
