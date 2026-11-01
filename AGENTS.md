@@ -6,7 +6,7 @@ For each substantive research change:
 
 1. Record the question, source evidence and assumptions before interpreting results.
 2. Save runnable code/configuration, raw per-case evidence, comparison baselines and a replay command.
-3. Update `docs/research_log.md` and the five-stage ledger in `docs/progress.md` in the same pull request. Link exact source and artifact paths. Preserve failed gates and negative results.
+3. In the same pull request, keep the material a public research conclusion depends on: methods, the experiment protocol, result evidence and reproduction instructions, plus a result-index entry in `docs/research_log.md` that states the problem, implementation, measured result and next acceptance condition. Link exact source and artifact paths. Preserve failed gates and negative results. Working process notes, personal task lists and session handoffs are kept outside this repository; existing records stay as they are.
 4. Label development, synthetic, exploratory, assistant-reviewed and human-reviewed evidence accurately. Count distinct cases separately from repeated calls, goals and seeds.
 5. Keep prior frozen API runners, prompts, data and archived ledgers unchanged. Extend with a separate version/package when the task contract changes.
 6. Run appropriate offline tests and artifact verification. Live API runs remain separate manual workflows with a bounded budget and repository Secret; do not add credentials to files.
