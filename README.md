@@ -22,6 +22,7 @@ A self-contained layer turns the study into a decision tool:
 
 - **[Network planning engine](docs/network_planning.md)** (`network_planning/`, PuLP + HiGHS): a fixed-charge multi-SKU, multi-modal MILP with disruption-dependent lead times and capacities, air block-space reservation, service floors and carbon caps or prices; two-stage stochastic programming with VSS/EVPI and MIP-gap-aware intervals; an epsilon-constraint frontier with marginal abatement cost and LP shadow prices; independent accounting of every solution.
 - **[Planning copilot agent](docs/planning_agent.md)** (`planning_agent/`): an OpenAI-compatible tool-calling agent with eight validated tools, a numeric faithfulness guardrail, decision memos and a 24-question evaluation; a rule agent is the offline fallback and baseline. Product framing: [PRD](docs/planning_agent_prd.md).
+- **[LangGraph orchestration](docs/planning_agent.md#langgraph-编排)** (`planning_agent/graph.py`, optional `agent` extra): the same model client, tools and guardrail as a state graph, with per-conversation memory, an optional approval step before tools run and streamed steps. Replaying the 24 recorded gpt-6.1-sol runs through the graph reproduces every case score offline (24/24 identical, 18/24 successes).
 
 Selected results with 12 synthetic SKUs per network over 16 weeks ([full report](benchmark_results/network_planning/report.md)):
 
@@ -37,6 +38,8 @@ python -m pip install -c constraints.txt -e ".[planning]"
 python -m network_planning solve --network asml --scenario red_sea --explain
 python -m planning_agent ask "How would a Red Sea diversion change ASML spare-parts cost and emissions?"
 python -m planning_agent demo
+python -m pip install -c constraints.txt -e ".[planning,agent]"
+python -m planning_agent replay --output artifacts/planning/replay
 ```
 
 ## Design and experiments

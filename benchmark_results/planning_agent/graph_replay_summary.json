@@ -1,0 +1,9 @@
+{
+  "source": "llm_rescored_cases.jsonl",
+  "cases": 24,
+  "identical": 24,
+  "recorded_successes": 18,
+  "graph_successes": 18,
+  "mismatches": [],
+  "method": "recorded tool calls replayed one per model turn on a fresh session; rewrites disabled; scored with the current guardrail and engine-computed gold numbers"
+}

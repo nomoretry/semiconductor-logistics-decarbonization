@@ -109,10 +109,10 @@ ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast 
 
 # Optional OR planning engine and planning agent (PuLP + HiGHS); runs offline without an LLM key.
 planning-sync:
-	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning]'
+	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning,agent]'
 
 planning-test:
-	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent -v
+	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph -v
 
 planning-report:
 	$(PYTHON) -m network_planning report --output benchmark_results/network_planning
@@ -124,3 +124,4 @@ planning-ci: planning-test
 	$(PYTHON) -m network_planning report --quick --output artifacts/planning/report
 	$(PYTHON) -m planning_agent --agent rule demo --output artifacts/planning/demo
 	$(PYTHON) -m planning_agent --agent rule eval --split dev --output artifacts/planning/eval
+	$(PYTHON) -m planning_agent replay --output artifacts/planning/replay
