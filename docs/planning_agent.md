@@ -46,7 +46,7 @@ flowchart LR
 
 在循环的基础上，图多了三项能力：
 
-- **会话记忆**：检查点按会话保存全部消息。追问时能直接引用上一轮的工具结果，不用重新求解。
+- **会话记忆**：检查点按会话保存全部消息，追问时能直接引用上一轮的工具结果，不用重新求解。目前用的是进程内检查点（InMemorySaver），程序退出后不保留；跨进程的持久记忆需要换成数据库检查点，尚未实现。
 - **人工审批**：可以在工具执行前暂停，由计划员批准或拒绝；被拒绝时，模型收到说明，改为提出澄清问题。
 - **逐步输出**：按节点流式返回进度，命令行或网页可以实时显示。
 
@@ -59,7 +59,7 @@ flowchart LR
   - 追问时能看到上一轮工具结果；
   - 审批时拒绝工具调用；
   - 图结构。
-- **离线回放**：把真实模型（gpt-6.1-sol）24 题评测里录下的工具调用和最终回答逐题经图回放，再用当前护栏和引擎金标准重新评分。结果 24/24 逐题与录制一致（成功与否、工具序列、命中的金标准数字、数字忠实度都相同），成功 18/24，与原循环的重评分结果相同。 不调用模型，不产生费用；证据在 [`graph_replay_summary.json`](../benchmark_results/planning_agent/graph_replay_summary.json) 和 [`graph_replay_cases.jsonl`](../benchmark_results/planning_agent/graph_replay_cases.jsonl)。
+- **离线回放**：把真实模型（gpt-6.1-sol）24 题评测里录下的工具调用和最终回答逐题经图回放，再用当前护栏和引擎金标准重新评分。结果：24 题的评分与录制逐题一致（成功与否、工具序列、命中的金标准数字、数字忠实度都相同），其中成功 18/24，与原循环的重评分结果相同。这验证的是编排与评分链路，不是一次新的模型问答，也不是 24 题全对。 不调用模型，不产生费用；证据在 [`graph_replay_summary.json`](../benchmark_results/planning_agent/graph_replay_summary.json) 和 [`graph_replay_cases.jsonl`](../benchmark_results/planning_agent/graph_replay_cases.jsonl)。
 - **尚未做**：用真实模型经图重新跑 24 题。这是付费运行。
 
 ### 工具
@@ -169,7 +169,7 @@ python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output
 
 **LangGraph orchestration.** `planning_agent/graph.py` expresses the same agent as a LangGraph state graph: model, tools, review (the numeric guardrail) and a step-cap stop node, with the same client, prompt, tools and guardrail as the loop. On top of the loop it adds three things:
 
-- per-conversation memory through a checkpointer, so follow-ups reuse earlier tool results;
+- per-conversation memory through an in-process checkpointer (InMemorySaver), so follow-ups reuse earlier tool results; it does not persist after the process exits;
 - an optional approval pause before tools run, so a planner can approve or decline;
 - node-by-node streaming.
 
@@ -182,7 +182,7 @@ Seven unit tests cover:
 - declined approvals;
 - the graph structure.
 
-Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool calls one per model turn, then the recorded answer, scored with the current guardrail and engine gold numbers) matches the recording on all 24 cases (success, tool sequence, gold numbers found and numeric faithfulness), with 18/24 successes, the same as the loop's rescored run; no model was called. Install with `pip install -c constraints.txt -e ".[planning,agent]"`; run `python -m planning_agent replay` (no key needed) or `--agent graph ask|eval` (needs a key). A live 24-case graph run is still to do; it is a paid run.
+Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool calls one per model turn, then the recorded answer, scored with the current guardrail and engine gold numbers) matches the recording on all 24 cases (success, tool sequence, gold numbers found and numeric faithfulness), with 18/24 successes, the same as the loop's rescored run. This checks orchestration and scoring, not a new model run, and it does not mean 24 correct answers; no model was called. Install with `pip install -c constraints.txt -e ".[planning,agent]"`; run `python -m planning_agent replay` (no key needed) or `--agent graph ask|eval` (needs a key). A live 24-case graph run is still to do; it is a paid run.
 
 **Design choices.** Tools do all arithmetic (`compare_plans` computes differences); validation errors are actionable feedback; every number in an answer must trace to a tool result or the user's words at the precision shown, otherwise one rewrite is requested and remaining issues are flagged; omitted scenario parameters become explicit assumptions; plans are referenced by id; one agent with tools rather than several agents; offline fallback without an API key.
 
