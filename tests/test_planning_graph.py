@@ -1,8 +1,8 @@
 import importlib.util
 import json
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
 PLANNING = all(importlib.util.find_spec(name) for name in ("pulp", "highspy"))
 GRAPH = PLANNING and importlib.util.find_spec("langgraph") is not None
@@ -96,7 +96,8 @@ class PlanningGraphTests(unittest.TestCase):
         self.assertEqual((result.error, result.steps, len(result.tool_calls)), ("max_steps", 3, 3))
 
         class Failing:
-            usage = {}
+            def __init__(self):
+                self.usage = {}
 
             def chat(self, messages, tools=None):
                 raise LLMError("HTTP 503")

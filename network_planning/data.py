@@ -104,7 +104,7 @@ class Scenario:
     def cost_factor(self, lane: Lane, week: int) -> float:
         return math.prod(d.cost_factor for d in self._active(lane.id, week))
 
-    def with_probability(self, probability: float) -> "Scenario":
+    def with_probability(self, probability: float) -> Scenario:
         return Scenario(self.name, probability, self.disruptions, self.demand_factor,
                         self.demand_weeks, self.description)
 
@@ -155,7 +155,7 @@ class Network:
         """Scenario set with probabilities normalised to one (default: the configured stochastic set)."""
         names = list(names or self.stochastic_set)
         result = [self.scenario(n) if probabilities is None else self.scenario(n, p)
-                  for n, p in zip(names, probabilities or [None] * len(names))]
+                  for n, p in zip(names, probabilities or [None] * len(names), strict=True)]
         total = sum(s.probability for s in result)
         if total <= 0:
             raise ValueError("scenario probabilities must sum to a positive number")

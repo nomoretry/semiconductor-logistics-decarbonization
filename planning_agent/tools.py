@@ -10,9 +10,9 @@ from __future__ import annotations
 import json
 import re
 import time
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Callable
 
 from network_planning.analysis import carbon_frontier, explain_plan, stochastic_value
 from network_planning.data import NETWORKS, Disruption, Scenario, build_network
@@ -148,10 +148,10 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
         lanes = list(item.get("lanes") or [])
         mode = item.get("mode")
         if mode:
-            lanes += [l for l, lane in net.lanes.items() if lane.mode == mode and l not in lanes]
+            lanes += [lane_id for lane_id, lane in net.lanes.items() if lane.mode == mode and lane_id not in lanes]
         if not lanes:
             raise ToolError(f"give 'mode' (air/ocean/road) or 'lanes' from {list(net.lanes)}")
-        missing = [l for l in lanes if l not in net.lanes]
+        missing = [lane_id for lane_id in lanes if lane_id not in net.lanes]
         if missing:
             raise ToolError(f"unknown lanes {missing}; {network} lanes are {list(net.lanes)}")
         try:
@@ -214,7 +214,7 @@ def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_
     result = _kpis(session.get(stored_id))
     if plan.feasible:
         result["cost_breakdown_usd"] = {k: round(v) for k, v in plan.kpis["cost_breakdown_usd"].items() if v > 0.5}
-        result["air_reservation_kg_per_week"] = {l: round(v, 1) for l, v in plan.solution["reserve"].items()}
+        result["air_reservation_kg_per_week"] = {lane: round(v, 1) for lane, v in plan.solution["reserve"].items()}
         if cap_kg is not None:
             result["uncapped_reference_plan_id"] = reference["plan_id"]
             result["carbon_cap_t"] = round(cap_kg / 1000, 2)
@@ -288,7 +288,7 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list | None
     if len(names) < 2:
         raise ToolError("hedging needs at least two scenarios")
     total = sum(float(p) for p in probabilities)
-    objects = [session.scenario(network, n, float(p) / total) for n, p in zip(names, probabilities)]
+    objects = [session.scenario(network, n, float(p) / total) for n, p in zip(names, probabilities, strict=True)]
     specs = dict(net.scenario_specs)
     for sc in objects:
         specs.setdefault(sc.name, sc.to_dict())

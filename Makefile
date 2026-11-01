@@ -1,10 +1,21 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m semiconductor_logistics
 
-.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit planning-sync planning-test planning-report planning-eval planning-ci
+.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit planning-sync planning-test planning-report planning-eval planning-ci lint typecheck quality
 
 sync:
 	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
+
+# Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
+LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py
+
+lint:
+	$(PYTHON) -m ruff check $(LINT_PATHS)
+
+typecheck:
+	$(PYTHON) -m mypy
+
+quality: lint typecheck
 
 test:
 	$(PYTHON) -m unittest discover -s tests -v
