@@ -23,6 +23,7 @@
 
 - **[网络规划引擎](docs/network_planning.md)**（`network_planning/`，PuLP + HiGHS）：固定费用的多 SKU、多式联运 MILP，扰动会改变提前期和运力；支持空运舱位预留、服务水平、碳上限或碳价；两阶段随机规划给出 VSS/EVPI 及考虑 MIP gap 的区间；ε-约束碳前沿给出边际减排成本和 LP 影子价格；每个解都做独立核算。
 - **[规划副驾驶 Agent](docs/planning_agent.md)**（`planning_agent/`）：OpenAI 兼容的工具调用 Agent，8 个带校验的工具、数字忠实度护栏、决策备忘录和 24 条评测问题；规则 Agent 作为离线兜底与基线。产品设计见 [PRD](docs/planning_agent_prd.md)。
+- **[LangGraph 编排](docs/planning_agent.md#langgraph-编排)**（`planning_agent/graph.py`，可选依赖 `agent`）：同一模型客户端、工具和护栏组成的状态图，支持进程内的会话记忆、工具执行前的人工审批和逐步输出。把真实模型（gpt-6.1-sol）录下的 24 题运行经图离线回放，每题评分都与录制相同（成功 18/24，与录制一致）；这验证的是编排，不是新的模型运行。
 
 主要结果（每个网络 12 个合成 SKU、16 周，[完整报告](benchmark_results/network_planning/report.md)）：
 
@@ -38,6 +39,8 @@ python -m pip install -c constraints.txt -e ".[planning]"
 python -m network_planning solve --network asml --scenario red_sea --explain
 python -m planning_agent ask "如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？"
 python -m planning_agent demo
+python -m pip install -c constraints.txt -e ".[planning,agent]"
+python -m planning_agent replay --output artifacts/planning/replay
 ```
 
 ## 设计与实验
