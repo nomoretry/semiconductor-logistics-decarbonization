@@ -1,0 +1,297 @@
+{
+  "audit_counts": {
+    "dependence": {
+      "forced_zero": 2,
+      "identical": 19,
+      "material": 3
+    },
+    "recourse": {
+      "forced_zero": 2,
+      "identical": 18,
+      "material": 4
+    }
+  },
+  "budget_rule": {
+    "max_solves": 300,
+    "max_wall_seconds": 3600,
+    "retries": 0,
+    "start_guard_seconds": 30
+  },
+  "confirmation": "not_generated_not_viewed",
+  "contrasts": [
+    {
+      "available": true,
+      "contrast": "M1-M2*",
+      "cost_difference": -12.549999999999955,
+      "cost_relative": -0.018599481289366365,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.007633587786259542,
+      "fill_difference": 0.025316455696202556,
+      "fill_guardrail": true,
+      "meets_practical_reference": false,
+      "path": "development-upshift-72001",
+      "question": "dependence"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B3",
+      "cost_difference": -3.75,
+      "cost_relative": -0.005631053382386064,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.007633587786259542,
+      "fill_difference": 0.012658227848101222,
+      "fill_guardrail": true,
+      "meets_practical_reference": false,
+      "path": "development-upshift-72001",
+      "question": "recourse"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B4",
+      "cost_difference": 77.05000000000007,
+      "cost_relative": 0.13167563872511334,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.007633587786259542,
+      "fill_difference": -0.05063291139240511,
+      "fill_guardrail": false,
+      "meets_practical_reference": false,
+      "path": "development-upshift-72001",
+      "question": "equal_time"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B1",
+      "cost_difference": -18.59999999999991,
+      "cost_relative": -0.027320799059929363,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.0,
+      "fill_difference": 0.0,
+      "fill_guardrail": true,
+      "meets_practical_reference": true,
+      "path": "development-upshift-72001",
+      "question": "anchor"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B0",
+      "cost_difference": -194.0,
+      "cost_relative": -0.22658257416491473,
+      "emissions_guardrail": false,
+      "emissions_relative": 0.13793103448275862,
+      "fill_difference": 0.15189873417721522,
+      "fill_guardrail": true,
+      "meets_practical_reference": true,
+      "path": "development-upshift-72001",
+      "question": "rule"
+    },
+    {
+      "available": true,
+      "contrast": "M1-M2*",
+      "cost_difference": -0.30000000000001137,
+      "cost_relative": -0.0008418689490669604,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.0,
+      "fill_difference": 0.0,
+      "fill_guardrail": true,
+      "meets_practical_reference": false,
+      "path": "development-volatile-72001",
+      "question": "dependence"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B3",
+      "cost_difference": -3.099999999999966,
+      "cost_relative": -0.008631491020464892,
+      "emissions_guardrail": true,
+      "emissions_relative": 0.0,
+      "fill_difference": 0.0,
+      "fill_guardrail": true,
+      "meets_practical_reference": false,
+      "path": "development-volatile-72001",
+      "question": "recourse"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B4",
+      "cost_difference": 124.15,
+      "cost_relative": 0.5353600689952566,
+      "emissions_guardrail": true,
+      "emissions_relative": -0.03488372093023256,
+      "fill_difference": -0.05555555555555547,
+      "fill_guardrail": false,
+      "meets_practical_reference": false,
+      "path": "development-volatile-72001",
+      "question": "equal_time"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B1",
+      "cost_difference": 54.94999999999999,
+      "cost_relative": 0.1824975091331783,
+      "emissions_guardrail": true,
+      "emissions_relative": -0.011904761904761904,
+      "fill_difference": -0.01851851851851849,
+      "fill_guardrail": false,
+      "meets_practical_reference": false,
+      "path": "development-volatile-72001",
+      "question": "anchor"
+    },
+    {
+      "available": true,
+      "contrast": "M1-B0",
+      "cost_difference": 2.9499999999999886,
+      "cost_relative": 0.00835457377513449,
+      "emissions_guardrail": false,
+      "emissions_relative": 0.09210526315789473,
+      "fill_difference": 0.03703703703703709,
+      "fill_guardrail": true,
+      "meets_practical_reference": false,
+      "path": "development-volatile-72001",
+      "question": "rule"
+    }
+  ],
+  "decision_timing": {
+    "B0": {
+      "decisions": 24,
+      "mean_online_seconds": 0.00041842083252655965,
+      "p95_online_seconds": 0.0007293049828149377
+    },
+    "B1": {
+      "decisions": 24,
+      "mean_online_seconds": 0.012601199996424839,
+      "p95_online_seconds": 0.02565625499846646
+    },
+    "B3": {
+      "decisions": 24,
+      "mean_online_seconds": 0.5369312958318915,
+      "p95_online_seconds": 1.9742410649923827
+    },
+    "B4": {
+      "decisions": 24,
+      "mean_online_seconds": 0.07902654583449475,
+      "p95_online_seconds": 0.24227502000139764
+    },
+    "M1": {
+      "decisions": 24,
+      "mean_online_seconds": 0.14522946249780944,
+      "p95_online_seconds": 0.6765398650226413
+    },
+    "M2*": {
+      "decisions": 24,
+      "mean_online_seconds": 0.7914561791694723,
+      "p95_online_seconds": 3.1513012949959367
+    }
+  },
+  "equal_time": {
+    "candidates": [
+      27,
+      54,
+      108,
+      216
+    ],
+    "chosen": 27,
+    "m1_mean_online_seconds": 0.0976450666882253,
+    "mean_online_seconds": {
+      "108": 0.5168846000063544,
+      "216": 0.7524576999906761,
+      "27": 0.061777066672220826,
+      "54": 0.16928366665767194
+    }
+  },
+  "fit": {
+    "fitted_variance": 0.07659418132480351,
+    "paths": 16,
+    "products": 576,
+    "seeds": [
+      71001,
+      71011,
+      71023,
+      71039
+    ],
+    "tasks_digest": "ff96e098dd6d0ae854f790ac5fb8df891a0e3bdbf23c3e70fc2a2ccb4d056cac"
+  },
+  "items": [
+    {
+      "kind": "anchor",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "anchor",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "LB",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "LB",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "calibration",
+      "path": null,
+      "status": "done"
+    },
+    {
+      "kind": "M1",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "M2*",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "B3",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "B4",
+      "path": "development-volatile-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "M1",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "M2*",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "B3",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    },
+    {
+      "kind": "B4",
+      "path": "development-upshift-72001",
+      "status": "complete"
+    }
+  ],
+  "learning_trained": false,
+  "scope": "development_diagnostic_not_confirmation_synthetic_not_company_data",
+  "solve_failures": [],
+  "solve_status_counts": {
+    "0": 280
+  },
+  "stop_reason": null,
+  "tree": {
+    "branching": 3,
+    "continuation": 3,
+    "depth": 2
+  },
+  "usage": {
+    "process_cpu_seconds": 80.09375,
+    "solves": 280,
+    "wall_seconds": 71.76400140000624
+  }
+}
