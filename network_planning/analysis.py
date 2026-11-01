@@ -152,9 +152,9 @@ def scale_benchmark(network: str = "asml", variants=SCALE_VARIANTS, *, weeks: in
 
 def lane_loads(net: Network, plan: Plan, k: int = 0) -> dict:
     loads = defaultdict(float)
-    for (kk, s, l, t), units in plan.solution["ship"].items():
+    for (kk, s, lane_id, t), units in plan.solution["ship"].items():
         if kk == k:
-            loads[l, t + 1] += net.skus[s].mass_kg * units
+            loads[lane_id, t + 1] += net.skus[s].mass_kg * units
     return loads
 
 
@@ -165,13 +165,13 @@ def explain_plan(net: Network, plan: Plan, scenario: str | None = None, top: int
         range(len(plan.scenarios)), key=lambda i: plan.scenarios[i].probability)
     sc, loads = plan.scenarios[k], lane_loads(net, plan, k)
     utilisation, mix = [], defaultdict(lambda: defaultdict(float))
-    for l, lane in net.lanes.items():
+    for lane_id, lane in net.lanes.items():
         for week in range(1, net.weeks + 1):
-            kg = loads.get((l, week), 0.0)
+            kg = loads.get((lane_id, week), 0.0)
             mix[week][lane.mode] += kg
-            capacity = sc.capacity(lane, week) + (plan.solution["reserve"].get(l, 0.0) if lane.is_air else 0.0)
+            capacity = sc.capacity(lane, week) + (plan.solution["reserve"].get(lane_id, 0.0) if lane.is_air else 0.0)
             if kg > 1e-6 and capacity > 0 and kg / capacity >= 0.95:
-                utilisation.append({"lane": l, "week": week, "load_kg": round(kg, 1),
+                utilisation.append({"lane": lane_id, "week": week, "load_kg": round(kg, 1),
                                     "capacity_kg": round(capacity, 1), "utilisation": round(kg / capacity, 3)})
     per = plan.per_scenario[sc.name]
     costs = sorted(per["cost_breakdown_usd"].items(), key=lambda item: -item[1])
@@ -182,7 +182,7 @@ def explain_plan(net: Network, plan: Plan, scenario: str | None = None, top: int
         "cost_drivers": [{"item": name, "usd": round(v, 2), "share": round(v / total, 4)}
                          for name, v in costs if v > 0][:top],
         "mode_kg_by_week": [{"week": w, **{m: round(v, 1) for m, v in mix[w].items()}} for w in sorted(mix)],
-        "air_reservation_kg_per_week": {l: round(v, 1) for l, v in plan.solution["reserve"].items()},
+        "air_reservation_kg_per_week": {lane_id: round(v, 1) for lane_id, v in plan.solution["reserve"].items()},
         "service_level": round(per["service_level"], 5),
         "backlog_unit_weeks": round(per["backlog_unit_weeks"], 2),
     }
@@ -199,11 +199,11 @@ def explain_plan(net: Network, plan: Plan, scenario: str | None = None, top: int
 def _first_stage_summary(net: Network, plan: Plan, reveal_week: int) -> dict:
     stage = plan.first_stage(reveal_week)
     units, kg = defaultdict(int), defaultdict(float)
-    for (s, l, _t), value in stage["ship"].items():
-        units[l] += value
-        kg[l] += value * net.skus[s].mass_kg
-    return {"air_reservation_kg_per_week": {l: round(v, 1) for l, v in stage["reserve"].items()},
-            "early_shipments_units": dict(units), "early_shipments_kg": {l: round(v, 1) for l, v in kg.items()}}
+    for (s, lane_id, _t), value in stage["ship"].items():
+        units[lane_id] += value
+        kg[lane_id] += value * net.skus[s].mass_kg
+    return {"air_reservation_kg_per_week": {lane_id: round(v, 1) for lane_id, v in stage["reserve"].items()},
+            "early_shipments_units": dict(units), "early_shipments_kg": {lane_id: round(v, 1) for lane_id, v in kg.items()}}
 
 
 def _lower(plan: Plan) -> float:

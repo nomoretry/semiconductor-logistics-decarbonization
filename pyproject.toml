@@ -46,9 +46,6 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 # so line length and "ambiguous character" checks would flag correct strings.
 ignore = ["E501", "RUF001", "RUF002", "RUF003"]
 
-[tool.ruff.lint.per-file-ignores]
-# Lane index `l` follows the formulation x[k,s,l,t] documented in network_planning/model.py.
-"network_planning/*.py" = ["E741"]
 
 [tool.mypy]
 python_version = "3.12"
