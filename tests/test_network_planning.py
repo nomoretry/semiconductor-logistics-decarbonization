@@ -74,11 +74,11 @@ class NetworkPlanningTests(unittest.TestCase):
         self.assertLessEqual(result["VSS_interval"][0], result["VSS"] + 1e-6)
         ship = result["plans"]["stochastic"].solution["ship"]
         early = {}
-        for (k, s, l, t), units in ship.items():
+        for (_k, s, lane, t), units in ship.items():
             if t < 2:
-                early.setdefault((s, l, t), set()).add(round(units, 6))
+                early.setdefault((s, lane, t), set()).add(round(units, 6))
         self.assertTrue(all(len(v) == 1 for v in early.values()))
-        counts = {(s, l, t): sum(1 for key in ship if key[1:] == (s, l, t)) for (s, l, t) in early}
+        counts = {key: sum(1 for k in ship if k[1:] == key) for key in early}
         self.assertTrue(all(c == len(result["scenarios"]) for c in counts.values()))
 
     def test_integer_shipments_are_integral(self):

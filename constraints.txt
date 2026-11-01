@@ -6,5 +6,8 @@ openpyxl==3.1.5
 # Optional planning extra (network_planning, planning_agent).
 pulp==3.3.2
 highspy==1.15.1
+# Quality gates (dev extra).
+ruff==0.17.1
+mypy==2.4.0
 # Optional agent extra (LangGraph orchestration of planning_agent).
 langgraph==1.2.16

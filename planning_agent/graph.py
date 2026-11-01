@@ -19,9 +19,11 @@ import operator
 import os
 import time
 import uuid
+from collections.abc import Callable, Collection
 from pathlib import Path
-from typing import Annotated, Any, Callable, TypedDict
+from typing import Annotated, Any, Protocol, TypedDict
 
+from langchain_core.runnables import RunnableConfig
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
 
@@ -34,23 +36,30 @@ MAX_STEPS_ANSWER = "已达到最大推理步数，未能完成。请把问题拆
 DECLINED = "计划员没有批准执行这个工具调用。请说明需要哪些信息，或换一种做法。"
 
 
+Message = dict[str, Any]
+
+
+class ChatClient(Protocol):
+    def chat(self, messages: list[Message], tools: list[Message] | None = None) -> Message: ...
+
+
 class TurnState(TypedDict, total=False):
-    messages: Annotated[list[dict], operator.add]  # chat-completions messages; appended across turns
+    messages: Annotated[list[Message], operator.add]  # chat-completions messages; appended across turns
     question: str
     answer: str
     steps: int  # model calls in this turn
     revisions: int
     rewrite: bool
     first_call: int  # index in session.calls where this turn's tool calls start
-    guardrail: dict
+    guardrail: dict[str, Any]
     error: str | None
 
 
 class PlanningGraph:
     """One planning conversation: a tool session, a model client and a compiled graph with memory."""
 
-    def __init__(self, session, client, *, max_steps: int | None = None, max_revisions: int = 1,
-                 approve: Callable[[list[dict]], bool] | None = None, thread_id: str | None = None):
+    def __init__(self, session: Any, client: ChatClient, *, max_steps: int | None = None, max_revisions: int = 1,
+                 approve: Callable[[list[Message]], bool] | None = None, thread_id: str | None = None) -> None:
         self.session, self.client, self.approve = session, client, approve
         self.max_steps = max_steps or int(os.getenv("LLM_MAX_STEPS") or 16)
         self.max_revisions = max_revisions
@@ -70,19 +79,19 @@ class PlanningGraph:
 
     # ------------------------------------------------------------------ nodes
 
-    def _model(self, state: TurnState) -> dict:
+    def _model(self, state: TurnState) -> dict[str, Any]:
         steps = state["steps"] + 1
         try:
             reply = self.client.chat(state["messages"], self.session.schemas())
         except LLMError as error:
             return {"steps": steps, "error": str(error), "answer": f"模型调用失败：{error}", "guardrail": NO_CHECK}
-        message: dict[str, Any] = {"role": "assistant", "content": reply["content"]}
+        message: Message = {"role": "assistant", "content": reply["content"]}
         if reply["tool_calls"]:
             message["tool_calls"] = reply["tool_calls"]
         answer = "" if reply["tool_calls"] else (reply["content"] or "").strip()
         return {"messages": [message], "steps": steps, "answer": answer, "rewrite": False}
 
-    def _tools(self, state: TurnState) -> dict:
+    def _tools(self, state: TurnState) -> dict[str, Any]:
         results = []
         for call in state["messages"][-1].get("tool_calls") or []:
             function = call.get("function") or {}
@@ -91,7 +100,7 @@ class PlanningGraph:
                             "content": json.dumps(result, ensure_ascii=False, default=str)})
         return {"messages": results}
 
-    def _review(self, state: TurnState) -> dict:
+    def _review(self, state: TurnState) -> dict[str, Any]:
         tool_results = [c["result"] for c in self.session.calls[state["first_call"]:]]
         check = check_answer(state["answer"], tool_results, state["question"])
         if check["ok"]:
@@ -104,7 +113,7 @@ class PlanningGraph:
         note = "\n\n> 自动审查提示：以下数字未能与工具结果核对：" + "、".join(check["unsupported"])
         return {"guardrail": check, "answer": state["answer"] + note}
 
-    def _stop(self, state: TurnState) -> dict:
+    def _stop(self, state: TurnState) -> dict[str, Any]:
         return {"answer": MAX_STEPS_ANSWER, "error": "max_steps", "guardrail": NO_CHECK}
 
     # ------------------------------------------------------------------ routing
@@ -122,16 +131,16 @@ class PlanningGraph:
 
     # ------------------------------------------------------------------ public interface
 
-    def config(self) -> dict:
+    def config(self) -> RunnableConfig:
         # Each model step is followed by at most one tools or review step.
-        return {"configurable": {"thread_id": self.thread_id}, "recursion_limit": 3 * self.max_steps + 10}
+        return RunnableConfig(configurable={"thread_id": self.thread_id}, recursion_limit=3 * self.max_steps + 10)
 
-    def ask(self, question: str, on_step: Callable[[str, dict], None] | None = None) -> AgentResult:
+    def ask(self, question: str, on_step: Callable[[str, dict[str, Any]], None] | None = None) -> AgentResult:
         """Answer one turn; earlier turns of this conversation stay in the checkpointed messages."""
         started, first, config = time.perf_counter(), len(self.session.calls), self.config()
         history = self.graph.get_state(config).values.get("messages") or []
         opening = [] if history else [{"role": "system", "content": SYSTEM_PROMPT}]
-        payload: dict | None = {"messages": opening + [{"role": "user", "content": question}],
+        payload: TurnState | None = {"messages": [*opening, {"role": "user", "content": question}],
                                 "question": question, "answer": "", "steps": 0, "revisions": 0,
                                 "rewrite": False, "first_call": first, "guardrail": NO_CHECK, "error": None}
         while True:
@@ -156,7 +165,7 @@ class PlanningGraph:
         return self.graph.get_graph().draw_mermaid()
 
 
-def run_graph(question: str, session, client, **options) -> AgentResult:
+def run_graph(question: str, session: Any, client: ChatClient, **options: Any) -> AgentResult:
     """Single-question entry point with the same signature as agent.run_llm."""
     return PlanningGraph(session, client, **options).ask(question)
 
@@ -172,7 +181,7 @@ class ReplayClient:
 
     model = "replay"
 
-    def __init__(self, tool_calls: list[dict], answer: str):
+    def __init__(self, tool_calls: list[Message], answer: str) -> None:
         self.turns = [{"content": "", "tool_calls": [{"id": f"call_{i}", "type": "function", "function": {
             "name": c["name"], "arguments": c["arguments"] if isinstance(c["arguments"], str)
             else json.dumps(c["arguments"], ensure_ascii=False)}}]} for i, c in enumerate(tool_calls)]
@@ -180,15 +189,16 @@ class ReplayClient:
         self.usage = {"prompt_tokens": 0, "cached_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0,
                       "calls": 0}
 
-    def chat(self, messages: list[dict], tools: list[dict] | None = None, temperature: float = 0.1) -> dict:
+    def chat(self, messages: list[Message], tools: list[Message] | None = None, temperature: float = 0.1) -> Message:
         if not self.turns:
             raise LLMError("replay exhausted")
         self.usage["calls"] += 1
         return {"role": "assistant", **self.turns.pop(0)}
 
 
-def replay(source: Path, output: Path | None = None, *, recorded: str = "llm_rescored", ids=None,
-           settings: dict | None = None, progress=None) -> dict:
+def replay(source: Path, output: Path | None = None, *, recorded: str = "llm_rescored",
+           ids: Collection[str] | None = None, settings: dict[str, Any] | None = None,
+           progress: Callable[[str], None] | None = None) -> dict[str, Any]:
     """Replay recorded model runs through the graph and compare per-case scores with the recording.
 
     Rewrites are disabled because the recorded answer is already final; the current guardrail then judges it,

@@ -199,7 +199,7 @@ def explain_plan(net: Network, plan: Plan, scenario: str | None = None, top: int
 def _first_stage_summary(net: Network, plan: Plan, reveal_week: int) -> dict:
     stage = plan.first_stage(reveal_week)
     units, kg = defaultdict(int), defaultdict(float)
-    for (s, l, t), value in stage["ship"].items():
+    for (s, l, _t), value in stage["ship"].items():
         units[l] += value
         kg[l] += value * net.skus[s].mass_kg
     return {"air_reservation_kg_per_week": {l: round(v, 1) for l, v in stage["reserve"].items()},
