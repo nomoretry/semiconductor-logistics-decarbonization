@@ -1,5 +1,8 @@
 from copy import deepcopy
 from itertools import product
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 import numpy as np
@@ -9,7 +12,7 @@ from rolling_inventory.experiment import audit as ledger_audit
 from rolling_inventory.planning import path_cost, solve as anchor_solve
 from rolling_tree import scenarios as sc
 from rolling_tree.experiment import (Budget, BudgetExhausted, Planner, base_configuration,
-                                     configuration, forced_zero, rollout)
+                                     configuration, forced_zero, pilot, rollout, verify)
 from rolling_tree.planning import Model, solve, tie_robust, tolerance
 
 RULE = {'relative': 1e-6, 'absolute': 1e-7}
@@ -263,6 +266,42 @@ class ScenarioTreeTests(unittest.TestCase):
     def test_last_period_is_forced_zero(self):
         self.assertTrue(forced_zero(state(11)))
         self.assertFalse(forced_zero(state(10)))
+
+    def smoke_configuration(self, max_solves):
+        cfg = configuration()
+        cfg['tree'] = {'depth': 1, 'branching': 2, 'continuation': 1}
+        cfg['fit_seeds'] = [99011]
+        cfg['pilot'].update({'split': 'smoke', 'seed': TEST_SEED, 'profiles': ['volatile'],
+                             'equal_time_candidates': [2, 4], 'equal_time_calibration_states': 1})
+        cfg['budget'] = {'max_solves': max_solves, 'max_wall_seconds': 600, 'start_guard_seconds': 0, 'retries': 0}
+        return cfg
+
+    def test_pilot_smoke_runs_end_to_end_and_verifies_without_solving(self):
+        with tempfile.TemporaryDirectory() as folder:
+            out = Path(folder)/'smoke'
+            result = pilot(out, self.smoke_configuration(200))
+            self.assertIsNone(result['stop_reason'])
+            summary = json.loads((out/'summary.json').read_text(encoding='utf-8'))
+            self.assertTrue(all(item['status'] in ('done', 'complete') for item in summary['items']))
+            self.assertEqual(sum(summary['audit_counts']['dependence'].values()), 12)
+            solves = [json.loads(x) for x in (out/'solves.jsonl').read_text(encoding='utf-8').splitlines()]
+            self.assertEqual(len(solves), summary['usage']['solves'])
+            self.assertEqual(verify(out, current_configuration=False)['solves_run'], 0)
+            with self.assertRaises(FileExistsError):
+                pilot(out, self.smoke_configuration(200))
+
+    def test_pilot_smoke_budget_stop_keeps_partial_records(self):
+        with tempfile.TemporaryDirectory() as folder:
+            out = Path(folder)/'smoke'
+            result = pilot(out, self.smoke_configuration(20))
+            self.assertEqual(result['stop_reason'], 'max_solves')
+            summary = json.loads((out/'summary.json').read_text(encoding='utf-8'))
+            self.assertEqual(summary['usage']['solves'], 20)
+            statuses = [item['status'] for item in summary['items']]
+            self.assertTrue(statuses[0].startswith('budget_exhausted'))
+            self.assertIn('not_run_budget', statuses)
+            self.assertIn('incomplete_budget', summary['audit_counts']['dependence'])
+            verify(out, current_configuration=False)
 
 
 if __name__ == '__main__':

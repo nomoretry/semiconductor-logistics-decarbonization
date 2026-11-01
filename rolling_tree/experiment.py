@@ -252,7 +252,9 @@ def rollout(task, method, planner, audits=None):
         except DecisionFailed as failure:
             status = f'failed_at_{t}'; rows.append({'t': t, 'failure': failure.info}); break
         except BudgetExhausted:
-            check_ledger(task, [x for x in rows if 'failure' not in x], False)
+            check_ledger(task, rows, False)
+            # Keep the interrupted state: its audit row and trees must stay reproducible.
+            rows.append({'t': t, 'observation': obs, 'interrupted': 'budget'})
             planner.partial = {'id': task['id'], 'method': method, 'rows': rows, 'status': f'budget_exhausted_at_{t}'}
             raise
         row = env.step(action); row['planning'] = info; rows.append(row)
@@ -379,12 +381,13 @@ def fitted_variance(cfg, base):
             'tasks_digest': digest_bytes(json.dumps(tasks, sort_keys=True).encode())}
 
 
-def pilot(output=DEFAULT):
+def pilot(output=DEFAULT, cfg=None):
+    """`cfg` overrides exist for smoke tests in a separate seed namespace only."""
     out = Path(output)
     if out.exists() and any(out.iterdir()):
         raise FileExistsError(f'output_not_empty:{out}')
     out.mkdir(parents=True, exist_ok=True)
-    cfg, base = configuration(), base_configuration()
+    cfg, base = cfg or configuration(), base_configuration()
     fit = fitted_variance(cfg, base); tasks = pilot_tasks(cfg, base)
     budget = Budget(cfg['budget']); planner = Planner(cfg, fit['fitted_variance'], budget)
     outcomes, traces, audits, items = [], [], [], []
@@ -460,7 +463,7 @@ def pilot(output=DEFAULT):
     return {'output': str(out), 'usage': usage, 'stop_reason': stop, 'audit_counts': summary['audit_counts']}
 
 
-def verify(output=DEFAULT):
+def verify(output=DEFAULT, current_configuration=True):
     """Recompute everything that needs no solver: tasks, trees, ledgers, metrics and hashes."""
     out = Path(output); cfg = json.loads((out/'config.json').read_text(encoding='utf-8'))
     manifest = json.loads((out/'manifest.json').read_text(encoding='utf-8'))
@@ -468,7 +471,7 @@ def verify(output=DEFAULT):
         if digest_bytes((out/name).read_bytes()) != value:
             raise ValueError(f'hash:{name}')
     tree_cfg, base = cfg['rolling_tree'], cfg['environment']
-    if tree_cfg != configuration() or base != base_configuration():
+    if base != base_configuration() or (current_configuration and tree_cfg != configuration()):
         raise ValueError('configuration_changed')
     summary = json.loads((out/'summary.json').read_text(encoding='utf-8'))
     fit = fitted_variance(tree_cfg, base)
@@ -481,7 +484,7 @@ def verify(output=DEFAULT):
     outcomes = json.loads((out/'outcomes.json').read_text(encoding='utf-8'))
     checked = 0
     for trace in traces:
-        rows = [r for r in trace['rows'] if 'failure' not in r]
+        rows = [r for r in trace['rows'] if 'failure' not in r and 'interrupted' not in r]
         outcome = next(x for x in outcomes if x['id'] == trace['id'] and x['method'] == trace['method'])
         check_ledger(by_id[trace['id']], rows, outcome['status'] == 'complete')
         for row in rows:
