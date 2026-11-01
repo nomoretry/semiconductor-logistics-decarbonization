@@ -304,7 +304,8 @@ def _mean(rows: list[dict[str, float]]) -> dict[str, float]:
 
 
 def _sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    """Hash of the text with LF line ends, so a checkout that converts line ends gives the same value."""
+    return hashlib.sha256(path.read_text(encoding="utf-8").encode("utf-8")).hexdigest()
 
 
 def evaluate(notices: Sequence[Notice] | None = None, queries: Sequence[dict[str, str]] | None = None,

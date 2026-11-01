@@ -58,17 +58,24 @@ def _answer(kind, client, question, session, history, conversation=None):
 
 def _flow(args) -> int:
     from . import workflow
-    notice = args.notice or workflow.DEMO_NOTICE
+    notice = args.notice or (workflow.NOTICE_QUESTION if args.mode == "notice" else workflow.DEMO_NOTICE)
     if args.mode == "rule":
         proposal = workflow.propose_from_rules(notice, args.network)
+    elif args.mode == "notice":
+        proposal = workflow.propose_from_notices(notice, args.network)
     elif args.mode == "replay":
         proposal = workflow.propose_from_recording(args.case)
     else:
         if not llm.configured():
             print("实时模式需要 LLM_API_KEY；本命令不会在没有 key 时调用模型。")
             return 2
+        references = []
+        if args.retrieve:
+            from .retrieval import default_index, reference
+            references = [reference(hit) for hit in default_index().search(notice, k=3)]
         proposal = workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=args.max_tokens,
-                                               network=args.network)
+                                               network=args.network, references=references)
+    original = proposal
     changes = {k: v for k, v in (("carbon_cap_pct", args.carbon_cap), ("hedge_probability_pct", args.probability))
                if v is not None}
     proposal = proposal.with_changes(**changes)
@@ -85,6 +92,9 @@ def _flow(args) -> int:
         for item in checked["assumptions"]:
             print(f"默认假设：{item}")
         if args.yes:
+            if checked["error"]:
+                print("参数不完整，没有求解：请用 --notice 写明周次和幅度，或去掉 --yes 逐项确认。")
+                return 1
             break
         answer = input("按以上参数求解？[y] 确认  [e] 修改第一个扰动  [n] 取消：").strip().lower()
         if answer == "y":
@@ -94,7 +104,7 @@ def _flow(args) -> int:
             continue
         print("已取消，没有求解。")
         return 1
-    outcome = workflow.run(proposal, session, confirmed=True)
+    outcome = workflow.run(proposal, session, confirmed=True, original=original)
     print()
     print("方案对比（确认后实时求解）：")
     for row in workflow.summary_rows(outcome):
@@ -124,8 +134,10 @@ def main(argv=None) -> int:
     p.add_argument("--rescore", action="store_true",
                    help="re-check saved answers with the current guardrail by replaying their tool calls (no API calls)")
     p = sub.add_parser("flow", help="notice -> parameters and assumptions -> confirmation -> plans -> memo")
-    p.add_argument("--mode", choices=("rule", "replay", "live"), default="rule",
-                   help="rule: offline parser; replay: recorded model output (no call); live: paid model call")
+    p.add_argument("--mode", choices=("rule", "notice", "replay", "live"), default="rule",
+                   help="rule: offline parser; notice: retrieve carrier notices + parser (no call); "
+                        "replay: recorded model output (no call); live: paid model call")
+    p.add_argument("--retrieve", action="store_true", help="live mode: quote retrieved notices in the prompt")
     p.add_argument("--notice", help="carrier notice or disruption text (rule and live modes)")
     p.add_argument("--case", default="D13", help="recorded case for replay mode")
     p.add_argument("--network", choices=("asml", "marvell"))
