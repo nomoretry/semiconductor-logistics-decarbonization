@@ -8,7 +8,7 @@ One formulation covers three uses:
   (non-anticipativity); later decisions adapt to the realised scenario;
 * evaluation of a given first stage (EEV) through ``fixed_first_stage``.
 
-Decisions per scenario k, SKU s, lane l and departure week t:
+Decisions per scenario k, SKU s, lane l (``lane_id`` in the code) and departure week t:
   x[k,s,l,t]  units shipped, arriving at t + lead(l, t, k); continuous by default
               (tactical flows), integer with ``integer_shipments=True``
   y[k,l,t]    binary lane-week activation (pays the lane's fixed cost)
@@ -96,7 +96,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     started = time.perf_counter()
     S, T, K, cut = len(net.skus), net.weeks, len(scenarios), reveal_week - 1
     lanes, skus = net.lanes, net.skus
-    users = {l: [s for s, sku in enumerate(skus) if l in sku.lanes] for l in lanes}
+    users = {lane_id: [s for s, sku in enumerate(skus) if lane_id in sku.lanes] for lane_id in lanes}
     demands = [net.demand_for(sc) for sc in scenarios]
     model = pulp.LpProblem("network_planning", pulp.LpMinimize)
 
@@ -112,14 +112,14 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
                 out.update({(k, *key): model.add_variable(f"{prefix}_{k}_{label}", **bounds) for k in range(K)})
         return out
 
-    ship_keys = [(s, l, t) for s, sku in enumerate(skus) for l in sku.lanes for t in range(T)]
-    air_keys = [(l, t) for l, lane in lanes.items() if lane.is_air for t in range(T)]
+    ship_keys = [(s, lane_id, t) for s, sku in enumerate(skus) for lane_id in sku.lanes for t in range(T)]
+    air_keys = [(lane_id, t) for lane_id, lane in lanes.items() if lane.is_air for t in range(T)]
     ship = staged("x", ship_keys, lowBound=0, cat="Integer" if integer_shipments else "Continuous")
-    act = staged("y", [(l, t) for l in lanes for t in range(T)], cat="Binary")
+    act = staged("y", [(lane_id, t) for lane_id in lanes for t in range(T)], cat="Binary")
     air_res = staged("ar", air_keys, lowBound=0)
     air_spot = staged("as", air_keys, lowBound=0)
     order = staged("z", ship_keys, cat="Binary") if sku_order_fee > 0 else {}
-    reserve = {l: model.add_variable(f"R_{l}", 0, lane.reservable_kg) for l, lane in lanes.items() if lane.is_air}
+    reserve = {lane_id: model.add_variable(f"R_{lane_id}", 0, lane.reservable_kg) for lane_id, lane in lanes.items() if lane.is_air}
     inv = {(k, s, t): model.add_variable(f"I_{k}_{s}_{t}", 0) for k in range(K) for s in range(S) for t in range(T)}
     back = {(k, s, t): model.add_variable(f"B_{k}_{s}_{t}", 0) for k in range(K) for s in range(S) for t in range(T)}
     short = {} if terminal_hard else {(k, s): model.add_variable(f"U_{k}_{s}", 0) for k in range(K) for s in range(S)}
@@ -132,8 +132,8 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
             for key, var in variables.items():
                 if key[0] == 0 and key[-1] < cut:
                     fix(var, fixed_first_stage.get(part, {}).get(key[1:], 0))
-        for l, var in reserve.items():
-            fix(var, fixed_first_stage.get("reserve", {}).get(l, 0.0))
+        for lane_id, var in reserve.items():
+            fix(var, fixed_first_stage.get("reserve", {}).get(lane_id, 0.0))
 
     capacity_rows = {}
     expected_cost, expected_emissions = [], []
@@ -141,9 +141,9 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
         demand = demands[k]
         arrivals = [[[] for _ in range(T)] for _ in range(S)]
         cost, emissions = [], []
-        for s, l, t in ship_keys:
-            lane, sku, week = lanes[l], skus[s], t + 1
-            x, lead = ship[k, s, l, t], sc.lead(lane, week)
+        for s, lane_id, t in ship_keys:
+            lane, sku, week = lanes[lane_id], skus[s], t + 1
+            x, lead = ship[k, s, lane_id, t], sc.lead(lane, week)
             if t + lead < T:
                 arrivals[s][t + lead].append(x)
             cost.append(sku.value_usd * net.carry_rate_week * lead * x)
@@ -157,31 +157,31 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
                 useful = max(d[s].sum() for d in demands) + net.terminal_target[s]
                 bound = int(min(room / sku.mass_kg, useful)) + 1
                 if order:
-                    model += (x <= bound * order[k, s, l, t], f"order_{k}_{s}_{l}_{t}")
+                    model += (x <= bound * order[k, s, lane_id, t], f"order_{k}_{s}_{lane_id}_{t}")
                 if tighten:
-                    model += (x <= bound * act[k, l, t], f"link_{k}_{s}_{l}_{t}")
+                    model += (x <= bound * act[k, lane_id, t], f"link_{k}_{s}_{lane_id}_{t}")
             if order:
-                cost.append(sku_order_fee * order[k, s, l, t])
-        for l, lane in lanes.items():
+                cost.append(sku_order_fee * order[k, s, lane_id, t])
+        for lane_id, lane in lanes.items():
             for t in range(T):
                 week = t + 1
-                cost.append(lane.fixed_usd * act[k, l, t])
+                cost.append(lane.fixed_usd * act[k, lane_id, t])
                 if lane.is_air:
                     cost.append(lane.freight_usd_per_kg * (
-                        air_res[k, l, t] + net.air_spot_premium * sc.cost_factor(lane, week) * air_spot[k, l, t]))
+                        air_res[k, lane_id, t] + net.air_spot_premium * sc.cost_factor(lane, week) * air_spot[k, lane_id, t]))
                 if k > 0 and t < cut:
                     continue  # shared decisions: their constraints are already in the model
-                load = pulp.lpSum(skus[s].mass_kg * ship[k, s, l, t] for s in users[l])
-                name = f"cap_{k}_{l}_{t}"
-                capacity_rows[name] = (sc.name, l, week)
+                load = pulp.lpSum(skus[s].mass_kg * ship[k, s, lane_id, t] for s in users[lane_id])
+                name = f"cap_{k}_{lane_id}_{t}"
+                capacity_rows[name] = (sc.name, lane_id, week)
                 if lane.is_air:
                     spot_cap = sc.capacity(lane, week)
-                    model += (load == air_res[k, l, t] + air_spot[k, l, t], f"air_{k}_{l}_{t}")
-                    model += (air_res[k, l, t] <= reserve[l], f"res_{k}_{l}_{t}")
-                    model += (air_spot[k, l, t] <= spot_cap, name)
-                    model += (load <= (lane.reservable_kg + spot_cap) * act[k, l, t], f"use_{k}_{l}_{t}")
+                    model += (load == air_res[k, lane_id, t] + air_spot[k, lane_id, t], f"air_{k}_{lane_id}_{t}")
+                    model += (air_res[k, lane_id, t] <= reserve[lane_id], f"res_{k}_{lane_id}_{t}")
+                    model += (air_spot[k, lane_id, t] <= spot_cap, name)
+                    model += (load <= (lane.reservable_kg + spot_cap) * act[k, lane_id, t], f"use_{k}_{lane_id}_{t}")
                 else:
-                    model += (load <= sc.capacity(lane, week) * act[k, l, t], name)
+                    model += (load <= sc.capacity(lane, week) * act[k, lane_id, t], name)
         for s, sku in enumerate(skus):
             prev_inv, prev_back = float(net.initial_inventory[s]), 0.0
             for t in range(T):
@@ -249,7 +249,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
 
     solution = {"ship": keep(ship, integer_shipments), "act": keep(act, True), "air_res": keep(air_res),
                 "air_spot": keep(air_spot), "order": keep(order, True),
-                "reserve": {l: value(v) for l, v in reserve.items()},
+                "reserve": {lane_id: value(v) for lane_id, v in reserve.items()},
                 "inv": np.array([[[value(inv[k, s, t]) for t in range(T)] for s in range(S)] for k in range(K)]),
                 "back": np.array([[[value(back[k, s, t]) for t in range(T)] for s in range(S)] for k in range(K)])}
     objective_value = float(pulp.value(model.objective))

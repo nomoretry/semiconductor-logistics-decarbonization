@@ -43,10 +43,13 @@ def write_memo(session, stored_plans: list, question: str, title: str | None = N
                   "|---|---|---:|---:|---:|---:|---:|---:|"]
         for p in single:
             k, b = p.plan.kpis, base.plan.kpis
-            lines.append(f"| {p.id} | {p.label} | {k['total_cost_usd']:,.0f} | "
-                         f"{100 * (k['total_cost_usd'] / b['total_cost_usd'] - 1):+.2f}% | {k['emissions_t']:.2f} | "
-                         f"{100 * (k['emissions_t'] / b['emissions_t'] - 1):+.2f}% | {100 * k['air_share_kg']:.1f}% | "
-                         f"{100 * k['service_level']:.2f}% |")
+            # Changes use the displayed (rounded) values, as compare_plans does, so the memo and the
+            # comparison table never disagree in the last digit.
+            cost, base_cost = round(k["total_cost_usd"]), round(b["total_cost_usd"])
+            emissions, base_emissions = round(k["emissions_t"], 2), round(b["emissions_t"], 2)
+            lines.append(f"| {p.id} | {p.label} | {cost:,} | {100 * (cost / base_cost - 1):+.2f}% | "
+                         f"{emissions:.2f} | {100 * (emissions / base_emissions - 1):+.2f}% | "
+                         f"{100 * k['air_share_kg']:.1f}% | {100 * k['service_level']:.2f}% |")
     if expected:
         names = expected[0].plan.scenario_names
         lines += ["", "## 对冲方案（按场景概率加权的期望值）", "",

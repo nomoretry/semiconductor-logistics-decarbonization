@@ -19,6 +19,7 @@ dependencies = [
 dev = ["build>=1.2.2,<2", "setuptools>=77,<85", "ruff>=0.17.1,<0.18", "mypy>=2.4,<2.5"]
 planning = ["pulp>=3.3,<4", "highspy>=1.7,<2"]
 agent = ["langgraph>=1.2.16,<1.3"]
+ui = ["streamlit>=1.66,<1.67"]
 
 [project.scripts]
 semiconductor-logistics = "semiconductor_logistics.cli:main"
@@ -45,9 +46,6 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 # so line length and "ambiguous character" checks would flag correct strings.
 ignore = ["E501", "RUF001", "RUF002", "RUF003"]
 
-[tool.ruff.lint.per-file-ignores]
-# Lane index `l` follows the formulation x[k,s,l,t] documented in network_planning/model.py.
-"network_planning/*.py" = ["E741"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -55,4 +53,4 @@ ignore_missing_imports = true
 follow_imports = "silent"
 strict = true
 # Modules join this list once they type-check strictly.
-files = ["planning_agent/graph.py"]
+files = ["planning_agent/graph.py", "planning_agent/workflow.py", "planning_agent/app.py"]

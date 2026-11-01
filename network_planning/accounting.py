@@ -33,45 +33,45 @@ def evaluate(net, scenarios, solution, *, carbon_price=0.0, sku_order_fee=0.0, c
         cost = dict.fromkeys(COST_KEYS, 0.0)
         cost["air_reservation"] = reservation
         transport_kg = 0.0
-        for (kk, s, l, t), units in solution["ship"].items():
+        for (kk, s, lane_id, t), units in solution["ship"].items():
             if kk != k or units <= 0:
                 continue
-            lane, week = net.lanes[l], t + 1
+            lane, week = net.lanes[lane_id], t + 1
             lead = sc.lead(lane, week)
             if t + lead < T:
                 arrivals[s, t + lead] += units
             kg = mass[s] * units
-            load[l, t] += kg
+            load[lane_id, t] += kg
             mode_kg[lane.mode] += kg
             cost["transit_capital"] += value[s] * net.carry_rate_week * lead * units
             transport_kg += kg / 1000 * sc.distance(lane, week) * lane.ef_kg_per_tkm
             if not lane.is_air:
                 cost["freight"] += lane.freight_usd_per_kg * sc.cost_factor(lane, week) * kg
-            if sku_order_fee and not solution.get("order", {}).get((k, s, l, t)):
-                issues.append(f"{sc.name}: shipment of SKU {s} on {l} week {week} without an order flag")
+            if sku_order_fee and not solution.get("order", {}).get((k, s, lane_id, t)):
+                issues.append(f"{sc.name}: shipment of SKU {s} on {lane_id} week {week} without an order flag")
         cost["order_fees"] = sku_order_fee * sum(1 for key, v in solution.get("order", {}).items()
                                                  if key[0] == k and v)
-        for l, lane in net.lanes.items():
+        for lane_id, lane in net.lanes.items():
             for t in range(T):
-                week, kg = t + 1, load.get((l, t), 0.0)
-                active = solution["act"].get((k, l, t), 0)
+                week, kg = t + 1, load.get((lane_id, t), 0.0)
+                active = solution["act"].get((k, lane_id, t), 0)
                 cost["fixed"] += lane.fixed_usd * active
                 tolerance = 1e-5 * max(1.0, kg)
                 if lane.is_air:
-                    res = solution["air_res"].get((k, l, t), 0.0)
-                    spot = solution["air_spot"].get((k, l, t), 0.0)
+                    res = solution["air_res"].get((k, lane_id, t), 0.0)
+                    spot = solution["air_spot"].get((k, lane_id, t), 0.0)
                     cost["freight"] += lane.freight_usd_per_kg * (
                         res + net.air_spot_premium * sc.cost_factor(lane, week) * spot)
                     if abs(res + spot - kg) > tolerance:
-                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} on {l} week {week}")
-                    if res > reserve.get(l, 0.0) + 1e-6:
-                        issues.append(f"{sc.name}: reserved air use exceeds reservation on {l} week {week}")
+                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} on {lane_id} week {week}")
+                    if res > reserve.get(lane_id, 0.0) + 1e-6:
+                        issues.append(f"{sc.name}: reserved air use exceeds reservation on {lane_id} week {week}")
                     if spot > sc.capacity(lane, week) + 1e-6:
-                        issues.append(f"{sc.name}: air spot capacity exceeded on {l} week {week}")
+                        issues.append(f"{sc.name}: air spot capacity exceeded on {lane_id} week {week}")
                 elif kg > sc.capacity(lane, week) + tolerance:
-                    issues.append(f"{sc.name}: capacity exceeded on {l} week {week}")
+                    issues.append(f"{sc.name}: capacity exceeded on {lane_id} week {week}")
                 if kg > 1e-9 and not active:
-                    issues.append(f"{sc.name}: shipment on inactive lane {l} week {week}")
+                    issues.append(f"{sc.name}: shipment on inactive lane {lane_id} week {week}")
         position = net.initial_inventory.astype(float).copy()
         inv, back = np.zeros((S, T)), np.zeros((S, T))
         for t in range(T):

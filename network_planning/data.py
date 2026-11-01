@@ -253,7 +253,7 @@ def build_network(name: str = "asml", n_skus: int | None = None, weeks: int | No
     pipeline = np.zeros((n_skus, weeks))
     for i, s in enumerate(skus):
         # Steady state before week 1: each SKU flowed on its cheapest lane (freight + transit capital).
-        nominal = min((lanes[l] for l in s.lanes),
+        nominal = min((lanes[lane_id] for lane_id in s.lanes),
                       key=lambda ln: ln.freight_usd_per_kg * s.mass_kg + s.value_usd * carry * ln.lead_weeks)
         pipeline[i, :min(nominal.lead_weeks, weeks)] = round(s.mean_demand)
     initial = np.ceil(means * common["initial_cover_weeks"])

@@ -22,6 +22,7 @@ A self-contained layer turns the study into a decision tool:
 
 - **[Network planning engine](docs/network_planning.md)** (`network_planning/`, PuLP + HiGHS): a fixed-charge multi-SKU, multi-modal MILP with disruption-dependent lead times and capacities, air block-space reservation, service floors and carbon caps or prices; two-stage stochastic programming with VSS/EVPI and MIP-gap-aware intervals; an epsilon-constraint frontier with marginal abatement cost and LP shadow prices; independent accounting of every solution.
 - **[Planning copilot agent](docs/planning_agent.md)** (`planning_agent/`): an OpenAI-compatible tool-calling agent with eight validated tools, a numeric faithfulness guardrail, decision memos and a 24-question evaluation; a rule agent is the offline fallback and baseline. Product framing: [PRD](docs/planning_agent_prd.md).
+- **[Notice-to-memo decision workflow](docs/decision_workflow.md)** (`planning_agent/workflow.py`, web page `planning_agent/app.py`, optional `ui` extra): enter a carrier notice, review the parsed parameters with their source text and default assumptions, confirm, then compare the normal and disrupted plans (cost, service level, emissions, air share) and download a decision memo. Parameters come from the offline rule parser, a recorded model run (labelled as a replay) or a live model call that needs a key and a token cap; plans are solved only after confirmation.
 - **[LangGraph orchestration](docs/planning_agent.md#langgraph-编排)** (`planning_agent/graph.py`, optional `agent` extra): the same model client, tools and guardrail as a state graph, with in-process conversation memory, an optional approval step before tools run and streamed steps. An offline replay of the 24 recorded gpt-6.1-sol runs scores every case the same as the recording (18/24 succeed, as in the recorded run); it checks orchestration, not a new model run.
 
 Selected results with 12 synthetic SKUs per network over 16 weeks ([full report](benchmark_results/network_planning/report.md)):
@@ -40,6 +41,9 @@ python -m planning_agent ask "How would a Red Sea diversion change ASML spare-pa
 python -m planning_agent demo
 python -m pip install -c constraints.txt -e ".[planning,agent]"
 python -m planning_agent replay --output artifacts/planning/replay
+python -m planning_agent flow
+python -m pip install -c constraints.txt -e ".[planning,agent,ui]"
+python -m streamlit run planning_agent/app.py
 ```
 
 ## Design and experiments
