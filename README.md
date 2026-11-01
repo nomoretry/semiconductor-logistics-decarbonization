@@ -228,3 +228,7 @@ All installed commands are also available through `python -m semiconductor_logis
 Orders, prices, shipment weights, capacities and storage parameters are simulation assumptions. Emission factors, route geometry and demand analogues have recorded sources and checksums. See the [ASML data audit](data_sources/data_audit_asml.md), [Marvell data audit](data_sources/data_audit_marvell.md), and [third-party notices](THIRD_PARTY_NOTICES.md).
 
 The base optimization uses known committed orders and announced disruptions. The query-policy experiments add uncertain route states with disclosed priors while retaining known orders. Results compare policies under these simulation assumptions; they are not measurements of company operations or emissions reductions, and they do not establish broad LLM generalization. A separate rolling environment now studies unknown demand, forecast error and pipeline evolution; these results are kept separate from the original known-order experiments.
+
+## License
+
+The original code and documentation are released under the [MIT License](LICENSE). Third-party datasets, verbatim carrier notice excerpts, stored outputs of external language models and one reference-code helper keep their own terms; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Citation metadata is in [CITATION.cff](CITATION.cff).
