@@ -3,7 +3,7 @@
     python -m streamlit run planning_agent/app.py
 
 The page only arranges inputs and outputs; parsing, confirmation, solving and the memo live in workflow.py.
-Rule and replay modes never call a model. Live mode needs LLM_API_KEY, a token cap and an explicit approval.
+Rule, notice and replay modes never call a model. Live mode needs LLM_API_KEY, a token cap and an explicit approval.
 """
 from __future__ import annotations
 
@@ -20,7 +20,7 @@ import streamlit as st
 # `streamlit run` puts this file's folder, not the repository root, on the import path.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from planning_agent import llm, workflow
+from planning_agent import llm, retrieval, workflow
 from planning_agent.tools import Session
 
 INTEGER_FIELDS = {"start_week", "end_week", "extra_lead_weeks"}
@@ -60,13 +60,24 @@ st.set_page_config(page_title="物流扰动决策", layout="wide")
 st.title("运输公告 → 参数确认 → 方案对比 → 决策备忘录")
 mode = st.sidebar.radio("参数来源", list(workflow.MODE_LABELS), format_func=workflow.MODE_LABELS.__getitem__,
                         key="mode")
-st.sidebar.caption("规则模式和录制回放模式都不调用大模型；只有实时模式会产生费用。所有方案都在你确认后实时求解。")
+st.sidebar.caption("规则、公告检索和录制回放模式都不调用大模型；只有实时模式会产生费用。所有方案都在你确认后实时求解。")
 
 if mode == "rule":
     notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="notice", height=110)
     network = st.selectbox("网络", ["自动识别", "asml", "marvell"], key="network")
     if st.button("解析参数", key="parse"):
         start(workflow.propose_from_rules(notice, None if network == "自动识别" else network))
+elif mode == "notice":
+    question = st.text_area("问题或扰动描述（会先检索真实船公司公告）", workflow.NOTICE_QUESTION, key="notice_question",
+                            height=110)
+    network = st.selectbox("网络", ["自动识别", "asml", "marvell"], key="notice_network")
+    downloaded = retrieval.RAW.exists() and any(retrieval.RAW.glob("*.html"))
+    full_text = st.checkbox("同时检索本地下载的公告原文", key="full_text", disabled=not downloaded,
+                            help=None if downloaded else "需要先运行 python -m planning_agent corpus fetch --yes")
+    st.caption("语料是仓库里已有的 24 条公告摘录（离线 BM25，不调用模型）；中文问题用术语表扩展成英文后检索。")
+    if st.button("检索公告并解析参数", key="retrieve"):
+        start(workflow.propose_from_notices(question, None if network == "自动识别" else network,
+                                            index=retrieval.default_index(full_text)))
 elif mode == "replay":
     cases = workflow.recorded_cases()
     case = st.selectbox("录制案例", sorted(cases), key="case",
@@ -79,9 +90,13 @@ else:
         st.warning("没有设置 LLM_API_KEY，实时模式不可用。规则模式和录制回放模式不需要 key。")
     else:
         cap = int(st.number_input("本次 token 上限（需事先批准）", min_value=0, value=0, step=1000, key="cap"))
+        rag = st.checkbox("把检索到的公告附在提示里（检索增强）", key="live_rag")
         approved = st.checkbox("我已批准这次付费调用的预算", key="approved")
         if st.button("调用模型提出参数", key="live", disabled=not (approved and cap > 0)):
-            start(workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=cap))
+            references = ([retrieval.reference(h) for h in retrieval.default_index().search(notice, k=3)]
+                          if rag else [])
+            start(workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=cap,
+                                              references=references))
 
 proposal: workflow.Proposal | None = st.session_state.get("proposal")
 if proposal is not None:
@@ -90,6 +105,14 @@ if proposal is not None:
     st.write(f"公告：{proposal.notice}")
     for note in proposal.notes:
         st.caption(note)
+    if proposal.references:
+        st.write(f"**检索到的公告**（{len(proposal.references)} 条，离线 BM25；文本权利属于各船公司）")
+        for r in proposal.references:
+            where = "本地原文" if r["local_full_text"] else "摘录"
+            st.markdown(f"- **{r['id']}** {r['publisher']}《[{r['title']}]({r['url']})》"
+                        f"{r['date'] or '发布日期未标注'}，得分 {r['score']}  \n  {where}：*{r['passage']}*")
+        if proposal.missing:
+            st.warning("公告没有给出、需要你确认的信息：" + "；".join(proposal.missing))
     left, right = st.columns([3, 2])
     with left:
         st.write(f"网络：**{proposal.network}**" + (f"；预设场景：**{proposal.preset}**" if proposal.preset else ""))
@@ -106,8 +129,13 @@ if proposal is not None:
     checked = workflow.preview(current, tool_session())
     with right:
         st.write("**原文依据**")
-        evidence = [{"参数": e["parameter"], "原文": e["text"]} for e in current.evidence]
-        st.table(pd.DataFrame(evidence or [{"参数": "（无）", "原文": ""}]))
+        evidence = [{"参数": e["parameter"], "来源": e.get("source", "原文"), "原文": e["text"]}
+                    for e in current.evidence]
+        st.table(pd.DataFrame(evidence or [{"参数": "（无）", "来源": "", "原文": ""}]))
+        basis = workflow.parameter_basis(current, proposal)
+        if basis:
+            st.write("**参数依据**")
+            st.table(pd.DataFrame(basis))
         st.write("**默认假设**")
         for item in checked["assumptions"] or ["（无）"]:
             st.write(f"- {item}")
@@ -115,7 +143,7 @@ if proposal is not None:
             st.error(f"参数不可用：{checked['error']}")
     if st.button("② 确认并求解", key="confirm", disabled=bool(checked["error"]), type="primary"):
         with st.spinner("正在求解正常方案与扰动方案…"):
-            st.session_state["outcome"] = workflow.run(current, tool_session(), confirmed=True)
+            st.session_state["outcome"] = workflow.run(current, tool_session(), confirmed=True, original=proposal)
 
 outcome: workflow.Outcome | None = st.session_state.get("outcome")
 if outcome is not None:
