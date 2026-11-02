@@ -115,7 +115,8 @@ class PlanningAgentTests(unittest.TestCase):
     def test_tools_reject_bad_arguments_with_actionable_messages(self):
         s = self.session()
         self.assertIn("unknown lanes", s.call("create_scenario", {
-            "network": "asml", "name": "x_test", "disruptions": [{"lanes": ["SG_rail"], "start_week": 2, "end_week": 3}]})["error"])
+            "network": "asml", "name": "x_test",
+            "disruptions": [{"lanes": ["SG_rail"], "start_week": 2, "end_week": 3}]})["error"])
         self.assertIn("unknown scenario", s.call("solve_plan", {"network": "asml", "scenario": "volcano"})["error"])
         self.assertIn("carbon_cap_pct", s.call("solve_plan", {"network": "asml", "carbon_cap_pct": 150})["error"])
         self.assertIn("unknown tool", s.call("delete_everything", {})["error"])
@@ -156,7 +157,8 @@ class PlanningAgentTests(unittest.TestCase):
 
                 if self.turn == 1:
                     return {"content": "", "tool_calls": [call(1, "solve_plan", {"network": "asml"}),
-                                                          call(2, "solve_plan", {"network": "asml", "scenario": "red_sea"})]}
+                                                          call(2, "solve_plan",
+                                                               {"network": "asml", "scenario": "red_sea"})]}
                 if self.turn == 2:
                     return {"content": "", "tool_calls": [call(3, "compare_plans", {"plan_ids": ["P1", "P2"]})]}
                 if self.turn == 3:
@@ -223,7 +225,8 @@ class PlanningAgentTests(unittest.TestCase):
                "unsupported_numbers": ["507.1"], "error": None, "tool_recall": 1.0, "tool_precision": 1.0,
                "args_met": "1/1", "facts_found": 2, "facts_total": 2, "gold": [ocean, air], "success": False,
                "tool_calls": [{"name": "describe_network", "arguments": {"network": "asml"}, "ok": True}],
-               "answer": f"海运周运力{ocean:,}kg，空运周运力{air:,}kg。\n\n> 自动审查提示：以下数字未能与工具结果核对：x"}
+               "answer": f"海运周运力{ocean:,}kg，空运周运力{air:,}kg。"
+                         "\n\n> 自动审查提示：以下数字未能与工具结果核对：x"}
         (out / "llm_cases.jsonl").write_text(json.dumps(row, ensure_ascii=False) + "\n", encoding="utf-8")
         (out / "llm_summary.json").write_text(json.dumps({"agent": "llm"}), encoding="utf-8")
         result = rescore("llm", out, settings=SETTINGS)

@@ -72,7 +72,8 @@ class PlanningGraphTests(unittest.TestCase):
                     {"content": "", "tool_calls": [call(3, "compare_plans", {"plan_ids": ["P1", "P2"]})]},
                     {"content": "成本上涨 99.99%。", "tool_calls": []},
                     lambda messages: {"content": "成本上涨 {}%。".format(json.loads(next(
-                        m["content"] for m in reversed(messages) if m["role"] == "tool"))["rows"][1]["cost_change_pct"]),
+                        m["content"] for m in reversed(messages) if m["role"] == "tool"))["rows"][1][
+                            "cost_change_pct"]),
                         "tool_calls": []}]
 
         loop_client, graph_client = ScriptedClient(replies()), ScriptedClient(replies())

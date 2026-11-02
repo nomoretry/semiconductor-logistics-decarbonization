@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Iterable
+from typing import Any
 
 # A number may follow Chinese text directly ("增加4,537美元"), so only ASCII word characters, dots and
 # commas block a match: they keep "P3" out and stop a match from starting inside "4,537" or "1.5".
@@ -39,7 +41,7 @@ def numbers_in(text: str) -> list[tuple[str, float, float]]:
     return found
 
 
-def grounded_values(sources) -> list[float]:
+def grounded_values(sources: Iterable[Any]) -> list[float]:
     values = set()
     for source in sources:
         text = source if isinstance(source, str) else json.dumps(source, ensure_ascii=False, default=str)
@@ -54,7 +56,7 @@ def supported(value: float, precision: float, grounded: list[float]) -> bool:
     return any(abs(target - g) <= precision / 2 + 1e-6 * max(1.0, g) for g in grounded)
 
 
-def check_answer(answer: str, tool_results, user_text: str = "") -> dict:
+def check_answer(answer: str, tool_results: Iterable[Any], user_text: str = "") -> dict[str, Any]:
     grounded = grounded_values([*tool_results, user_text])
     numbers = numbers_in(answer)
     unsupported = [raw for raw, value, precision in numbers if not supported(value, precision, grounded)]

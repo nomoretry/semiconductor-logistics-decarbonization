@@ -9,27 +9,33 @@ must agree with this recomputation and any violated constraint is reported.
 from __future__ import annotations
 
 from collections import defaultdict
+from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
+
+from .data import Network, Scenario
 
 COST_KEYS = ("freight", "transit_capital", "holding", "backlog", "terminal_shortfall",
              "fixed", "order_fees", "air_reservation")
 
 
-def evaluate(net, scenarios, solution, *, carbon_price=0.0, sku_order_fee=0.0, carbon_cap_kg=None,
-             service_level=None, terminal_hard=False) -> dict:
+def evaluate(net: Network, scenarios: Sequence[Scenario], solution: dict[str, Any], *, carbon_price: float = 0.0,
+             sku_order_fee: float = 0.0, carbon_cap_kg: float | None = None, service_level: float | None = None,
+             terminal_hard: bool = False) -> dict[str, Any]:
     S, T = len(net.skus), net.weeks
     mass = np.array([s.mass_kg for s in net.skus])
     value = np.array([s.value_usd for s in net.skus])
     penalty = np.array([s.backlog_usd for s in net.skus])
     reserve = solution.get("reserve", {})
     reservation = sum(net.reservation_usd_per_kg_week * T * kg for kg in reserve.values())
-    issues, per = [], {}
+    issues: list[str] = []
+    per: dict[str, dict[str, Any]] = {}
     for k, sc in enumerate(scenarios):
         demand = net.demand_for(sc)
         arrivals = np.zeros((S, T))
-        load = defaultdict(float)
-        mode_kg = defaultdict(float)
+        load: defaultdict[tuple[str, int], float] = defaultdict(float)
+        mode_kg: defaultdict[str, float] = defaultdict(float)
         cost = dict.fromkeys(COST_KEYS, 0.0)
         cost["air_reservation"] = reservation
         transport_kg = 0.0
@@ -63,7 +69,8 @@ def evaluate(net, scenarios, solution, *, carbon_price=0.0, sku_order_fee=0.0, c
                     cost["freight"] += lane.freight_usd_per_kg * (
                         res + net.air_spot_premium * sc.cost_factor(lane, week) * spot)
                     if abs(res + spot - kg) > tolerance:
-                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} on {lane_id} week {week}")
+                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} "
+                                      f"on {lane_id} week {week}")
                     if res > reserve.get(lane_id, 0.0) + 1e-6:
                         issues.append(f"{sc.name}: reserved air use exceeds reservation on {lane_id} week {week}")
                     if spot > sc.capacity(lane, week) + 1e-6:
@@ -120,8 +127,8 @@ def evaluate(net, scenarios, solution, *, carbon_price=0.0, sku_order_fee=0.0, c
             "objective": expected["total_cost_usd"] + expected["carbon_tax_usd"]}
 
 
-def _expected(per: dict) -> dict:
-    result: dict = {}
+def _expected(per: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
     for p in per.values():
         w = p["probability"]
         for key, value in p.items():

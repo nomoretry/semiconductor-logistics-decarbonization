@@ -9,8 +9,11 @@ from __future__ import annotations
 
 import csv
 import json
+from collections.abc import Callable, Collection, Sequence
 from pathlib import Path
+from typing import Any, cast
 
+from .agent import AgentResult
 from .guardrails import numbers_in
 from .tools import Session
 
@@ -18,7 +21,7 @@ CASES = Path(__file__).with_name("eval_cases.json")
 REFUSAL = ("超出", "范围", "无法", "不能", "outside", "can't", "cannot", "unable", "only help", "not able")
 
 
-def load_cases(split: str = "all", ids=None) -> list[dict]:
+def load_cases(split: str = "all", ids: Collection[str] | None = None) -> list[dict[str, Any]]:
     cases = json.loads(CASES.read_text(encoding="utf-8"))["cases"]
     return [c for c in cases if (split == "all" or c["split"] == split) and (ids is None or c["id"] in ids)]
 
@@ -26,22 +29,22 @@ def load_cases(split: str = "all", ids=None) -> list[dict]:
 class Gold:
     """Gold numbers from direct tool calls on a separate session with the same solver settings."""
 
-    def __init__(self, settings: dict):
+    def __init__(self, settings: dict[str, Any]) -> None:
         self.session = Session(**settings)
         self.custom = 0
 
-    def value(self, fact: dict) -> float:
+    def value(self, fact: dict[str, Any]) -> float:
         s, kind = self.session, fact["kind"]
         if kind == "lane":
             lanes = s.call("describe_network", {"network": fact["network"]})["lanes"]
-            return next(lane[fact["field"]] for lane in lanes if lane["id"] == fact["lane"])
+            return cast(float, next(lane[fact["field"]] for lane in lanes if lane["id"] == fact["lane"]))
         if kind == "frontier":
-            return s.call("carbon_frontier", {"network": fact["network"]})[fact["field"]]
+            return cast(float, s.call("carbon_frontier", {"network": fact["network"]})[fact["field"]])
         if kind == "hedge":
             args = {"network": fact["network"]}
             if "scenarios" in fact:
                 args.update(scenarios=fact["scenarios"], probabilities=fact["probabilities"])
-            return s.call("hedge_disruption_risk", args)[fact["field"]]
+            return cast(float, s.call("hedge_disruption_risk", args)[fact["field"]])
         scenario = fact.get("scenario", "normal")
         if fact.get("custom"):
             self.custom += 1
@@ -54,10 +57,10 @@ class Gold:
             target["carbon_cap_pct"] = fact["carbon_cap_pct"]
         plan = s.call("solve_plan", target)
         if kind == "shadow":
-            return plan["carbon_shadow_price_usd_per_t"]
+            return cast(float, plan["carbon_shadow_price_usd_per_t"])
         base = s.call("solve_plan", {"network": fact["network"]})
         row = s.call("compare_plans", {"plan_ids": [base["plan_id"], plan["plan_id"]]})["rows"][1]
-        return row[fact["metric"]]
+        return cast(float, row[fact["metric"]])
 
 
 def _has_number(answer: str, gold: float) -> bool:
@@ -65,7 +68,7 @@ def _has_number(answer: str, gold: float) -> bool:
     return any(abs(abs(value) - abs(gold)) <= tolerance for _, value, _ in numbers_in(answer))
 
 
-def _args_match(case: dict, calls: list) -> tuple[int, int]:
+def _args_match(case: dict[str, Any], calls: list[dict[str, Any]]) -> tuple[int, int]:
     created = {c["arguments"].get("name") for c in calls if c["name"] == "create_scenario" and c["ok"]}
     met = total = 0
     for tool, expected in case.get("expect_args", {}).items():
@@ -88,10 +91,10 @@ def _args_match(case: dict, calls: list) -> tuple[int, int]:
     return met, total
 
 
-def score(case: dict, result, gold: Gold) -> dict:
+def score(case: dict[str, Any], result: AgentResult, gold: Gold) -> dict[str, Any]:
     names = result.tool_names()
     answer = result.answer
-    row = {"id": case["id"], "split": case["split"], "question": case["question"], "tools": names,
+    row: dict[str, Any] = {"id": case["id"], "split": case["split"], "question": case["question"], "tools": names,
            "steps": len(names), "seconds": result.seconds, "faithful": result.guardrail["ok"],
            "unsupported_numbers": result.guardrail["unsupported"], "error": result.error}
     if case.get("expect_refusal") or case.get("expect_clarification"):
@@ -107,7 +110,8 @@ def score(case: dict, result, gold: Gold) -> dict:
     recall = len(expected & called) / len(expected) if expected else 1.0
     precision = len(expected & called) / len(called) if called else 0.0
     met, total = _args_match(case, result.tool_calls)
-    found, gold_values = 0, []
+    found = 0
+    gold_values: list[float] = []
     for fact in case.get("facts", []):
         value = gold.value(fact)
         gold_values.append(value)
@@ -119,8 +123,8 @@ def score(case: dict, result, gold: Gold) -> dict:
     return row
 
 
-def summarise(rows: list[dict]) -> dict:
-    def mean(values):
+def summarise(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    def mean(values: Sequence[Any]) -> float | None:
         values = [v for v in values if v is not None]
         return round(sum(values) / len(values), 4) if values else None
     facts_total = sum(r["facts_total"] for r in rows)
@@ -135,14 +139,15 @@ def summarise(rows: list[dict]) -> dict:
 USAGE_KEYS = ("prompt_tokens", "cached_tokens", "completion_tokens", "reasoning_tokens", "calls")
 
 
-def _tokens(usage: dict | None) -> int:
+def _tokens(usage: dict[str, Any] | None) -> int:
     """Billable tokens; providers count reasoning tokens inside completion tokens."""
     usage = usage or {}
-    return usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0)
+    return cast(int, usage.get("prompt_tokens", 0) + usage.get("completion_tokens", 0))
 
 
-def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = None, settings: dict | None = None,
-             client=None, resume: bool = False, max_tokens: int | None = None, progress=None) -> dict:
+def evaluate(agent: str, *, split: str = "all", ids: Collection[str] | None = None, output: Path | None = None,
+             settings: dict[str, Any] | None = None, client: Any = None, resume: bool = False,
+             max_tokens: int | None = None, progress: Callable[[str], None] | None = None) -> dict[str, Any]:
     """Run the cases, saving each row as soon as it is scored.
 
     resume skips cases already in <agent>_cases.jsonl, so an interrupted paid run is never repeated;
@@ -153,10 +158,10 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
     settings = settings or {}
     output = Path(output) if output else None
     path = output / f"{agent}_cases.jsonl" if output else None
-    rows = []
+    rows: list[dict[str, Any]] = []
     if path and resume and path.exists():
         rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
-    if path:
+    if path and output:
         output.mkdir(parents=True, exist_ok=True)
         if not resume:
             path.write_text("", encoding="utf-8")
@@ -210,7 +215,7 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
 GUARDRAIL_NOTE = "\n\n> 自动审查提示："
 
 
-def rescore(agent: str, output: Path, settings: dict | None = None) -> dict:
+def rescore(agent: str, output: Path, settings: dict[str, Any] | None = None) -> dict[str, Any]:
     """Re-check saved answers with the current guardrail without calling any model.
 
     Each case's recorded tool calls are replayed on a fresh session to rebuild the tool results the model
@@ -252,7 +257,7 @@ def rescore(agent: str, output: Path, settings: dict | None = None) -> dict:
     return {"summary": summary, "rows": rescored}
 
 
-def _write(output: Path, agent: str, summary: dict, rows: list[dict]) -> None:
+def _write(output: Path, agent: str, summary: dict[str, Any], rows: list[dict[str, Any]]) -> None:
     output.mkdir(parents=True, exist_ok=True)
     (output / f"{agent}_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8",
                                                 newline="\n")

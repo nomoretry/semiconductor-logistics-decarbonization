@@ -42,9 +42,9 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
-# Chinese user-facing text uses full-width punctuation, and it is measured at double width,
-# so line length and "ambiguous character" checks would flag correct strings.
-ignore = ["E501", "RUF001", "RUF002", "RUF003"]
+# Chinese user-facing text uses full-width punctuation, which the "ambiguous character" checks would flag.
+# Line length (E501) is checked; Chinese characters count as double width.
+ignore = ["RUF001", "RUF002", "RUF003"]
 
 
 [tool.mypy]
@@ -52,5 +52,5 @@ python_version = "3.12"
 ignore_missing_imports = true
 follow_imports = "silent"
 strict = true
-# Modules join this list once they type-check strictly.
-files = ["planning_agent/graph.py", "planning_agent/workflow.py", "planning_agent/app.py", "planning_agent/retrieval.py"]
+# Every module of the planning engine and the planning agent type-checks strictly.
+files = ["network_planning", "planning_agent"]
