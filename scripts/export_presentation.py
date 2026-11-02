@@ -146,7 +146,7 @@ def carbon_frontier(out: Path, version: str) -> list[Path]:
             if abs(p["level"] - 0.75) < 1e-9:
                 mac = p["mac_vs_baseline_usd_per_t"]
                 ax.annotate(f"减排 25%：成本 {yi:+.2f}%\n平均边际减排成本 {mac:,.0f} 美元/吨", (xi, yi),
-                            xytext=(14, -40) if net == "asml" else (-14, 22), textcoords="offset points",
+                            xytext=(28, 52) if net == "asml" else (-14, 22), textcoords="offset points",
                             ha="left" if net == "asml" else "right", fontsize=8, color=INK,
                             arrowprops={"arrowstyle": "-", "color": INK_2, "linewidth": 0.8},
                             bbox={"boxstyle": "round,pad=0.25", "facecolor": SURFACE, "edgecolor": GRID})
