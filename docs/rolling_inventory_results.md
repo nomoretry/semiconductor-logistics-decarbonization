@@ -58,11 +58,11 @@ python -m semiconductor_logistics rolling-inventory verify
 make verify-rolling
 ```
 
-前两个命令在新空目录重现，第三个核验仓库归档。所有命令离线运行，不调用LLM API。CI分开执行基础/既有训练、冻结千题、组件实验和本轮滚动实验，保留原全部验收项。
+前两个命令在新空目录重现，第三个核验仓库归档。所有命令离线运行，不调用LLM API。CI分开执行基础/既有训练、冻结千题、组件实验和滚动实验，保留原全部验收项。
 
 ### 下一项研究
 
-先检查碳预算均匀分配与规划截断的影响，再比较预测模型和情景数量在新开发路径上的稳定性；明确不可得信息造成的损失。当前不据这32个开发情境训练RL，也不把它们变成正式留出集。本轮在途时长固定、信息免费、供给无限、期末无残值；未与付费查询耦合，也未用企业真实订单或运输数据校准。长期连续运营需要终端价值/延长评估窗检验。历史文档双语补齐、完整依赖锁和正式发布仍待完成。
+先检查碳预算均匀分配与规划截断的影响，再比较预测模型和情景数量在新开发路径上的稳定性；明确不可得信息造成的损失。当前不据这32个开发情境训练RL，也不把它们变成正式留出集。本研究中在途时长固定、信息免费、供给无限、期末无残值；未与付费查询耦合，也未用企业真实订单或运输数据校准。长期连续运营需要终端价值/延长评估窗检验。
 
 ## English
 
@@ -123,4 +123,4 @@ The first two commands reproduce into a new empty directory; the third verifies 
 
 ### Next research step
 
-First isolate the effects of carbon pacing and truncated planning, then test forecast models and scenario counts on new development paths, distinguishing losses caused by unavailable information. Do not train RL from this 32-case result or relabel these cases as untouched final data. Lead times are fixed, information is free, supply is unlimited and final stock has no salvage value. Paid queries are not coupled and real corporate order/transport data do not calibrate this model. Continuous-operation studies require terminal-value or longer-window checks. Historical bilingual documentation, complete dependency locking and formal release remain unfinished.
+First isolate the effects of carbon pacing and truncated planning, then test forecast models and scenario counts on new development paths, distinguishing losses caused by unavailable information. Do not train RL from this 32-case result or relabel these cases as untouched final data. Lead times are fixed, information is free, supply is unlimited and final stock has no salvage value. Paid queries are not coupled and real corporate order/transport data do not calibrate this model. Continuous-operation studies require terminal-value or longer-window checks.

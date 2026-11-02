@@ -5,9 +5,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开证据已补齐：** 35份分布研究文件按用户明确批准的SHA256清单归档，实验数值不变。合并前须通过当前提交的七项CI；见[归档记录](rolling_distribution_publication.md)。
-
-当前问题、方法选择和交付标准以[研究设计](research_design.md)为准。早期框架对照的定位已纠正，来源历史保留。
+当前问题、方法选择和交付标准以[研究设计](research_design.md)为准；第三方方法、数据和代码的来源见[来源说明](source_history.md)。
 
 ### 研究问题
 
@@ -44,7 +42,7 @@ This document is available in Chinese and English; English follows Chinese.
 
 质量目标：新方法在相同可见信息下稳定优于强基线，同时报告服务和排放代价，才形成可进一步研究的教师。计算目标：先给出部署时限和允许质量损失，再研究BC替代优化计算。PPO需在这些强基线之后仍有实际顺序决策损失；模型规模、训练次数、参考项目结构或下界差距均不是充分理由。
 
-本轮分布研究预先固定质量筛选阈值，计算时限仍未指定；[协议](rolling_distribution_protocol.md)区分教师候选与已验证学习收益。即使筛选通过，滚动BC/PPO仍需单独研究。
+分布研究预先固定质量筛选阈值，计算时限仍未指定；[协议](rolling_distribution_protocol.md)区分教师候选与已验证学习收益。即使筛选通过，滚动BC/PPO仍需单独研究。
 
 ### 复现与交付
 
@@ -62,13 +60,11 @@ This document is available in Chinese and English; English follows Chinese.
 | `make verify-recourse` | 有限历史追索、最优平局和跨相关性策略重执行 |
 | `python -m scripts.check_research_progress` | 已保存结果与清单完整性，不重新做实验 |
 
-原协议被证据哈希绑定时保留原文，本文是贯通研究的双语说明，不替换冻结记录。[翻译索引](documentation_plan.md)明确哪些历史文档仍需逐篇补英文。尚无正式Release、完整依赖锁或跨平台验收；当前结果足以构成可复算研究原型，但不等于企业部署或完整LLM智能体系统。
+原协议被证据哈希绑定时保留原文，本文是贯通研究的双语说明，不替换冻结记录。部分较早的协议和结果文档只有中文。依赖由带哈希的锁文件（`requirements/`）固定；尚无正式Release或跨平台验收；当前结果足以构成可复算研究原型，但不等于企业部署或完整LLM智能体系统。
 
 ## English
 
-**Evidence publication complete:** all 35 distribution files are archived under the explicitly approved SHA256 manifest, with results unchanged. Require all seven checks on the current commit before merge; see the [publication record](rolling_distribution_publication.md).
-
-The [research design](research_design.md) defines current questions, method choices and acceptance. Earlier framework-comparison framing has been corrected with provenance retained.
+The [research design](research_design.md) defines current questions, method choices and acceptance; [provenance](source_history.md) records the sources of third-party methods, data and code.
 
 ### Research questions
 
@@ -111,4 +107,4 @@ The distribution [protocol](rolling_distribution_protocol.md) fixes teacher-scre
 
 Run `make sync` from the repository. `make test` runs offline tests; `make package-check` checks the Python distribution. The command table above gives read-only archived-evidence verification: core notice/query checks, frozen final checkpoints, components, rolling baselines, sensitivity, mean forecasts and distributions. None calls a model API. `python -m scripts.check_research_progress` inventories stored results and hashes without rerunning experiments.
 
-Hash-bound historical protocols retain their original bytes. This bilingual guide connects the research without replacing those records. The [translation index](documentation_plan.md) explicitly lists remaining per-document English work. A formal Release, full dependency lock and cross-platform acceptance remain unfinished. The repository is a reproducible research prototype, not enterprise deployment or a complete LLM agent system.
+Hash-bound historical protocols retain their original bytes. This bilingual guide connects the research without replacing those records. Some earlier protocol and result documents are in Chinese only. Dependencies are pinned by hash-locked files (`requirements/`); a formal Release and cross-platform acceptance remain unfinished. The repository is a reproducible research prototype, not enterprise deployment or a complete LLM agent system.

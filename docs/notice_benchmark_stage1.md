@@ -20,4 +20,4 @@
 - [正式模型对照](results/api_test.md)：400 条合成留出样本的成对比较与复测。
 - [真实公告](data/real_notices.md)：原文摘录、来源审核及参考边界。
 - [信息成本环境](decision_environment.md)：新工具任务与基线。
-- [进度记录](progress.md)：五步计划的验收状态。
+- [研究说明](research_guide.md)：各研究线的证据索引与复算命令。

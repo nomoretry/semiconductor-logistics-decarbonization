@@ -1,28 +1,36 @@
-# 来源与历史定位修正 / Sources and correction of earlier framing
+# 来源与归属 / Provenance and attribution
 
 本文提供中英文版本，中文在前，英文在后。
 This document provides Chinese first and English second.
 
 ## 中文
 
-用户要求匹配成熟研究项目的难度与完成度。此前维护过程中把这个要求写成了另一个仓库的“框架对照”，并在早期BC协议中引用其动态候选、公开输入和重执行设计。这个表述超出了用户希望的完成度比较，现予以纠正。
+### 早期查询策略协议
 
-当前[研究设计](research_design.md)从物流问题、信息价值、预测误差与资源约束出发，不使用其他仓库的模块表作为实现蓝本或验收条件。README与研究指南不再展示逐项项目对应关系。旧对照内容保留在[原Git提交](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/28ef2e92a553beaa6e74673dd7a06196dd568189/docs/framework_comparison.md)；[历史阅读清单](history/repository_reading.json)仅记录当时读过哪些文件。
+早期的查询策略 BC 协议（[`query_policy_protocol.md`](query_policy_protocol.md)）参考了另一个研究代码库 [agentic-tool-rl](https://github.com/Iams4kura/agentic-tool-rl)（阅读的是提交 `f5357240e66e969a50fe0be126a65c95f77d9e44`）的动态候选打分、公开输入和重执行设计。该协议及其后的冻结协议由实验证据的源码哈希绑定，原文保留；协议里指向的 [`framework_comparison.md`](framework_comparison.md) 作为旧链接保留。当时的逐项对照文档和阅读清单保存在 Git 历史中：[对照文档](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/28ef2e92a553beaa6e74673dd7a06196dd568189/docs/framework_comparison.md)、[阅读清单](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/fe8d27cf1609231de5d9715fbe5cdee9d60b6d70/docs/history/repository_reading.json)。
 
-不能据此声称早期从未受到参考实现影响。`docs/query_policy_protocol.md`及其他冻结协议由已有实验哈希绑定，保留原始字节；旧入口`framework_comparison.md`仅用于解释这段历史和指向当前设计。算法论文、真实数据来源和任何实际复用都应保留可核查归属。
+现行[研究设计](research_design.md)从物流问题、信息价值、预测误差与资源约束出发选择方法和验收条件，不以其他仓库的模块表作为实现蓝本。
 
-本次[有限代码检查](../data_sources/code_origin_check.json)比较本项目提交`28ef2e9`的132个Python文件和当时阅读的固定提交中的97个Python文件：没有整文件Git字节身份匹配，没有导入对方Python包。`pyproject.toml`列出的运行依赖是NumPy、SciPy、Matplotlib与OpenPyXL。此检查不判断局部复制、语义相似或思想来源，不能作为全面“无抄袭”证明。我们不会用移除引用的方式把通用方法或历史借鉴改称原创算法。
+### 代码来源检查
 
-项目自己的工作是具体的物流模型、信息边界、环境实现、决策对照和可复算分析。后续是否采用某种算法，取决于这些问题留下的实际缺口。新颖性需要通过文献与实验论证，不能由改名、换库或改变README获得。
+[有限代码检查](../data_sources/code_origin_check.json)比较了本项目提交 `28ef2e9` 的132个Python文件和上述参考提交中的97个Python文件：没有整文件Git字节身份匹配，也没有导入对方的Python包。此后又做了一次逐函数比较（规范化记号），只有 `scripts/download_source_data.py` 中的 `sha256_file` 与参考项目的 `_file_sha256` 结构相同（常见的分块哈希写法），[第三方声明](../THIRD_PARTY_NOTICES.md)附上了该项目的MIT许可声明。这些检查不判断语义相似或思想来源，不是完整的“无抄袭”证明。
+
+### 方法、数据与模型输出
+
+BC、PPO、GAE、BM25、混合整数规划、两阶段随机规划、ε-约束等是标准方法，出处写在各方法和协议文档中。第三方数据、船公司公告摘录和外部模型的输出列在[第三方声明](../THIRD_PARTY_NOTICES.md)，它们不适用本项目的MIT许可。项目自己的工作是具体的物流模型、信息边界、环境实现、决策对照和可复算分析；新颖性需要文献与实验支撑。
 
 ## English
 
-The user requested comparable research difficulty and completion. Earlier maintenance turned that into a repository-by-repository framework comparison, and the initial BC protocol referenced the reviewed project's candidate scoring, public inputs and replay design. This framing exceeded the intended comparison of completeness and is now corrected.
+### Early query-policy protocol
 
-The current [research design](research_design.md) starts from logistics questions, information value, forecast error and resource constraints. Another repository's module list is neither its blueprint nor its acceptance checklist. The README and guide no longer present a one-to-one project mapping. The former comparison remains in the linked original Git commit; the [historical reading inventory](history/repository_reading.json) records what was inspected.
+The early query-policy BC protocol ([`query_policy_protocol.md`](query_policy_protocol.md)) drew on the candidate scoring, public inputs and re-execution design of another research codebase, [agentic-tool-rl](https://github.com/Iams4kura/agentic-tool-rl) (commit `f5357240e66e969a50fe0be126a65c95f77d9e44` was read). That protocol and later frozen protocols are bound to experiment evidence by source hashes and keep their original text; the [`framework_comparison.md`](framework_comparison.md) link they contain is kept as a legacy entry. The item-by-item comparison and the reading inventory from that time are in the Git history: [comparison](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/28ef2e92a553beaa6e74673dd7a06196dd568189/docs/framework_comparison.md), [reading inventory](https://github.com/nomoretry/semiconductor-logistics-decarbonization/blob/fe8d27cf1609231de5d9715fbe5cdee9d60b6d70/docs/history/repository_reading.json).
 
-This does not assert that the early work had no conceptual influence. Existing evidence hashes bind `docs/query_policy_protocol.md` and other frozen protocols, so their original bytes remain. The legacy comparison URL explains this history and points to the current design. Algorithm papers, real data sources and any actual reuse must retain verifiable attribution.
+The current [research design](research_design.md) chooses methods and acceptance criteria from logistics questions, information value, forecast error and resource constraints; another repository's module list is not its blueprint.
 
-The [limited code check](../data_sources/code_origin_check.json) compares 132 Python files at project commit `28ef2e9` with 97 files at the historically reviewed commit: no exact whole-file Git identity matches and no imports of that Python package were found. Declared runtime dependencies are NumPy, SciPy, Matplotlib and OpenPyXL. This does not assess partial copying, semantic similarity or intellectual influence and is not a comprehensive plagiarism clearance. Removing citations cannot turn standard methods or past influences into original algorithms.
+### Code origin checks
 
-The project's own work comprises its logistics models, information boundaries, environments, decision comparisons and reproducible analyses. Subsequent algorithms must address gaps in these problems. Novelty requires literature and experimental support; renaming, changing libraries or rewriting a README cannot establish it.
+A [limited code check](../data_sources/code_origin_check.json) compared 132 Python files at project commit `28ef2e9` with 97 Python files at the reference commit above: no whole-file Git identity matches and no imports of that package. A later function-level comparison on normalized tokens found one structurally identical helper, `sha256_file` in `scripts/download_source_data.py`, which matches `_file_sha256` in the reference project (the common chunked-hash idiom); the [third-party notices](../THIRD_PARTY_NOTICES.md) reproduce that project's MIT notice. These checks do not assess semantic similarity or intellectual influence and are not a comprehensive plagiarism clearance.
+
+### Methods, data and model outputs
+
+BC, PPO, GAE, BM25, mixed-integer programming, two-stage stochastic programming and the epsilon-constraint method are standard methods, cited in the method and protocol documents. Third-party data, carrier notice excerpts and outputs of external models are listed in the [third-party notices](../THIRD_PARTY_NOTICES.md) and are not covered by the project's MIT License. The project's own work is its logistics models, information boundaries, environments, decision comparisons and reproducible analyses; novelty requires literature and experimental support.

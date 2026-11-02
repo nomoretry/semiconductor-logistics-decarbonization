@@ -58,11 +58,11 @@ make verify-components
 ```
 
 
-前两个命令在新的空目录重现，第三个核验仓库归档。`make ci`同时包含既有研究的完整检查与本轮20组重训；GitHub将二者放在独立job并行执行。所有命令均为离线数值计算，不调用模型API。
+前两个命令在新的空目录重现，第三个核验仓库归档。`make ci`同时包含既有研究的完整检查与本实验的20组重训；GitHub将二者放在独立job并行执行。所有命令均为离线数值计算，不调用模型API。
 
 ### 后续范围
 
-保留动作掩码作为查询合法性约束，保留BC和强搜索作为基线；本轮不把势函数加入默认正式方法。下一阶段为未知需求、预测误差及在途状态的滚动环境，先制定新任务与强规则验收，不沿用当前已查看的测试任务来挑选新方法。完整依赖锁、发布验收和历史文档双语补齐仍未完成。
+保留动作掩码作为查询合法性约束，保留BC和强搜索作为基线；本实验不把势函数加入默认正式方法。下一阶段为未知需求、预测误差及在途状态的滚动环境，先制定新任务与强规则验收，不沿用当前已查看的测试任务来挑选新方法。
 
 ## English
 
@@ -123,4 +123,4 @@ The first two commands reproduce into a new empty directory; the third verifies 
 
 ### Remaining scope
 
-Retain action masks for query legality, and retain BC and strong search as baselines. Do not add this potential to the default formal method. The next stage is a rolling environment with unknown demand, forecast error and evolving in-transit inventory, starting with a new task definition and strong-rule acceptance criteria. Do not select new methods using the already inspected final tasks. Complete dependency locking, release acceptance and historical bilingual documentation remain unfinished.
+Retain action masks for query legality, and retain BC and strong search as baselines. Do not add this potential to the default formal method. The next stage is a rolling environment with unknown demand, forecast error and evolving in-transit inventory, starting with a new task definition and strong-rule acceptance criteria. Do not select new methods using the already inspected final tasks.
