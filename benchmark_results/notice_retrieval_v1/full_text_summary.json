@@ -124,6 +124,9 @@
       "E08"
     ],
     "passages": 343,
+    "passage_mode": "all",
+    "passage_mode_rule": "every passage of a downloaded page is its own document; a notice scores by its best match",
+    "documents_from_pages": 343,
     "boilerplate": "passages found on more than one downloaded page are dropped",
     "page_sha256": {
       "R001": "94db92d6bb498fe3083ab3afcac1e1b18a69d8c1910415e74060859bfffa6996",
