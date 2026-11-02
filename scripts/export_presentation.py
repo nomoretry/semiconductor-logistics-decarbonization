@@ -19,10 +19,12 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 from typing import Any
 
 import matplotlib
+import matplotlib.ticker
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -81,6 +83,11 @@ def save(fig: plt.Figure, out: Path, stem: str) -> list[Path]:
     return paths
 
 
+def signed(value: float) -> str:
+    """Percent change with a sign, without a misleading "-0.0%"."""
+    return "0.0%" if abs(value) < 0.05 else f"{value:+.1f}%"
+
+
 def label_bars(ax: plt.Axes, bars: Any, texts: list[str]) -> None:
     for bar, text in zip(bars, texts, strict=True):
         height = bar.get_height()
@@ -103,20 +110,21 @@ def disruption_impact(out: Path, version: str) -> list[Path]:
         emissions = [r["emissions_change_pct"] for r in rows]
         b1 = ax.bar([i - width / 2 - 0.01 for i in x], cost, width, color=BLUE, label="总成本变化")
         b2 = ax.bar([i + width / 2 + 0.01 for i in x], emissions, width, color=ORANGE, label="排放变化")
-        label_bars(ax, b1, [f"{v:+.1f}%" for v in cost])
-        label_bars(ax, b2, [f"{v:+.1f}%" for v in emissions])
+        label_bars(ax, b1, [signed(v) for v in cost])
+        label_bars(ax, b2, [signed(v) for v in emissions])
         ax.set_xticks(list(x), [SCENARIO_NAMES.get(r["scenario"], r["scenario"]) for r in rows])
         ax.axhline(0, color=INK_2, linewidth=0.8)
         ax.set_title(label)
     axes[0].set_ylabel("相对正常方案的变化（%）")
-    axes[0].legend(frameon=False, loc="upper left")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, frameon=False, loc="upper center", bbox_to_anchor=(0.5, 0.925), ncol=2)
     settings = results["settings"]
     fig.suptitle("扰动场景对成本与排放的影响（每个场景单独重新优化，与正常方案比较）", fontsize=13, fontweight="bold")
     footer(fig, [f"配置：每个网络 {settings['n_skus']} 个合成 SKU、{settings['weeks']} 周、"
                  f"随机种子 {settings['seed']}；HiGHS 相对 MIP gap ≤ {settings['mip_gap']:.1%}。"
                  "订单、运力、费率和扰动幅度为合成假设。",
                  f"数据：{source}｜代码版本：{version}｜{MODE_SAVED}"])
-    fig.subplots_adjust(left=0.07, right=0.98, top=0.86, bottom=0.2, wspace=0.08)
+    fig.subplots_adjust(left=0.07, right=0.98, top=0.8, bottom=0.2, wspace=0.08)
     return save(fig, out, "01_disruption_impact")
 
 
@@ -135,9 +143,12 @@ def carbon_frontier(out: Path, version: str) -> list[Path]:
                     ha="right", fontsize=8, color=INK)
         for p, xi, yi in zip(points, x, y, strict=True):
             if abs(p["level"] - 0.75) < 1e-9:
-                ax.annotate(f"减排 25%：{yi:+.2f}%\n平均边际减排成本 {p['mac_vs_baseline_usd_per_t']:,.0f} 美元/吨",
-                            (xi, yi), xytext=(8, -2 if net == "asml" else 8), textcoords="offset points",
-                            fontsize=8, color=INK)
+                mac = p["mac_vs_baseline_usd_per_t"]
+                ax.annotate(f"减排 25%：成本 {yi:+.2f}%\n平均边际减排成本 {mac:,.0f} 美元/吨", (xi, yi),
+                            xytext=(14, -40) if net == "asml" else (-14, 22), textcoords="offset points",
+                            ha="left" if net == "asml" else "right", fontsize=8, color=INK,
+                            arrowprops={"arrowstyle": "-", "color": INK_2, "linewidth": 0.8},
+                            bbox={"boxstyle": "round,pad=0.25", "facecolor": SURFACE, "edgecolor": GRID})
     ax.invert_xaxis()
     ax.set_xlabel("排放上限（占不设上限方案排放的 %）")
     ax.set_ylabel("总成本增幅（%）")
@@ -172,8 +183,9 @@ def agent_evaluation(out: Path, version: str) -> list[Path]:
     ax.set_title("规划 Agent：24 个计划员问题的评测")
     footer(fig, ["24 题由同一作者编写；成功需工具调用、参数和事实数字都正确且通过数字护栏。模型评测只运行一次；",
                  "用 LangGraph Agent 回放录制运行，每题评分与录制一致（成功 18/24），回放不是新的模型运行。",
-                 f"数据：{rule_src}、{llm_src}｜代码版本：{version}｜{MODE_SAVED}"])
-    fig.subplots_adjust(left=0.1, right=0.97, top=0.92, bottom=0.36)
+                 f"数据：{rule_src}、{llm_src}",
+                 f"代码版本：{version}｜{MODE_SAVED}"])
+    fig.subplots_adjust(left=0.1, right=0.97, top=0.92, bottom=0.38)
     return save(fig, out, "03_planning_agent_evaluation")
 
 
@@ -200,8 +212,9 @@ def notice_retrieval(out: Path, version: str) -> list[Path]:
     ax.set_title("真实船公司公告检索：38 个问题、19 个事件分组的开发检查")
     footer(fig, ["语料：仓库中 24 条船公司公告摘录。问题与术语表由同一作者在读过语料后编写，结果偏乐观，不是独立测试。",
                  "全文一项使用本地下载的 15/24 个网页（9 个被网站拒绝），网页不随仓库发布，复算需要同样的页面。",
-                 f"数据：{src}、{full_src}｜代码版本：{version}｜{MODE_SAVED}"])
-    fig.subplots_adjust(left=0.09, right=0.98, top=0.92, bottom=0.36)
+                 f"数据：{src}、{full_src}",
+                 f"代码版本：{version}｜{MODE_SAVED}"])
+    fig.subplots_adjust(left=0.09, right=0.98, top=0.92, bottom=0.38)
     return save(fig, out, "04_notice_retrieval")
 
 
@@ -251,8 +264,12 @@ def example_comparison(example: dict[str, Any], out: Path, version: str) -> list
     for ax, (key, title, fmt) in zip(axes, metrics, strict=True):
         values = [float(plans[n][key]) for n in names]
         bars = ax.bar(range(2), values, 0.55, color=[BLUE, ORANGE])
-        change = 100 * (values[1] / values[0] - 1)
-        label_bars(ax, bars, [fmt.format(values[0]), f"{fmt.format(values[1])}（{change:+.2f}%）"])
+        if key == "air_share_pct":
+            change = f"{values[1] - values[0]:+.1f} 个百分点"
+        else:
+            change = f"{100 * (values[1] / values[0] - 1):+.2f}%"
+        label_bars(ax, bars, [fmt.format(values[0]), f"{fmt.format(values[1])}（{change}）"])
+        ax.yaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v:,.0f}"))
         ax.set_xticks(range(2), names)
         ax.set_title(title)
         ax.set_ylim(0, max(values) * 1.18)
@@ -428,11 +445,15 @@ th {{ background: #f3f2ef; }}
     paths = [page_path]
     if browser:
         pdf = out / "07_example_decision_memo.pdf"
-        subprocess.run([browser, "--headless", "--disable-gpu", "--no-pdf-header-footer",
-                        "--print-to-pdf-no-header", f"--print-to-pdf={pdf.resolve()}", page_path.resolve().as_uri()],
-                       check=True, capture_output=True, timeout=120)
+        # A throwaway profile keeps a running browser from absorbing the headless call.
+        with tempfile.TemporaryDirectory() as profile:
+            subprocess.run([browser, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={profile}",
+                            "--no-pdf-header-footer", f"--print-to-pdf={pdf.resolve()}",
+                            page_path.resolve().as_uri()], check=True, capture_output=True, timeout=120)
         if pdf.exists():
             paths.append(pdf)
+        else:
+            print("the browser did not write the PDF memo", file=sys.stderr)
     else:
         print("no Chromium-based browser found: PDF memo skipped", file=sys.stderr)
     return paths
