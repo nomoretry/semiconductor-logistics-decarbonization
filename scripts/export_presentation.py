@@ -478,6 +478,46 @@ def find_browser() -> str | None:
     return next((c for c in candidates if c and Path(c).exists()), None)
 
 
+PACK_ITEMS = (
+    ("01_disruption_impact", "各扰动场景下重新优化的方案相对正常方案的成本与排放变化",
+     "benchmark_results/network_planning/results.json", MODE_SAVED),
+    ("02_carbon_frontier", "逐级收紧排放上限时的成本增幅（碳约束前沿）",
+     "benchmark_results/network_planning/results.json", MODE_SAVED),
+    ("03_planning_agent_evaluation", "规划 Agent 在 24 个计划员问题上的成功率（规则与模型）",
+     "benchmark_results/planning_agent/rule_summary.json、llm_rescored_summary.json", MODE_SAVED),
+    ("04_notice_retrieval", "真实船公司公告检索的开发检查（首位命中率）",
+     "benchmark_results/notice_retrieval_v1/summary.json、full_text_lead5_summary.json", MODE_SAVED),
+    ("05_example_plan_comparison", "业务示例：正常方案与扰动方案的成本、排放、空运占比",
+     "运行 python -m planning_agent flow 的同一组参数", MODE_EXAMPLE),
+    ("06_example_weekly_flows", "业务示例两个方案逐周发运量与库存的动画（MP4，GIF 为预览，JSON 为数据）",
+     "业务示例的求解结果", MODE_EXAMPLE),
+    ("07_example_decision_memo", "业务示例的输入公告、参数与依据、确认说明和决策备忘录（PDF，HTML 同内容）",
+     "业务示例的求解结果", MODE_EXAMPLE),
+)
+
+
+def pack_readme(out: Path, version: str, names: list[str]) -> Path:
+    rows = []
+    for stem, purpose, source, mode in PACK_ITEMS:
+        present = ", ".join(n.removeprefix(stem) or n for n in names if n.startswith(stem)) or "（未生成）"
+        rows.append(f"| `{stem}` | {present} | {purpose} | {source} | {mode.removeprefix('展示模式：')} |")
+    text = "\n".join([
+        "# 半导体物流决策系统：可分享的展示成果", "",
+        f"代码版本 `{version}`，由 `python scripts/export_presentation.py` 生成。"
+        "图表和动画只使用归档证据或业务示例的求解结果，不做新实验；"
+        "所有订单、运力、费率和扰动幅度都是合成假设，ASML、Marvell 只是启发案例，不是企业数据。", "",
+        "| 文件 | 格式 | 内容 | 数据来源 | 展示模式 |", "|---|---|---|---|---|", *rows, "",
+        "“保存的历史结果”指图中数字取自已归档的评测或求解记录，本次没有重新计算；"
+        "“规则解析 + 实时优化”指用离线规则解析公告参数后实际调用 HiGHS 求解，没有调用大模型。"
+        "动画按周播放保存的求解结果，播放本身不重新求解。", "",
+        "English: shareable figures, an animation and an example decision memo for the semiconductor logistics "
+        "decision system. Figures use archived evidence; the example re-runs the documented rule-mode workflow. "
+        "All operational data are synthetic.", ""])
+    path = out / "00_README.md"
+    path.write_text(text, encoding="utf-8", newline="\n")
+    return path
+
+
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -501,6 +541,7 @@ def main(argv: list[str] | None = None) -> int:
     files += example_animation(example, out, version)
     files += memo_documents(example, out, version, args.browser or find_browser())
     shutil.rmtree(out / "_memo", ignore_errors=True)
+    files.append(pack_readme(out, version, [f.name for f in files]))
     manifest = {"code_version": version, "font": font, "command": "python scripts/export_presentation.py",
                 "files": [{"name": f.name, "bytes": f.stat().st_size, "sha256": sha256(f)} for f in files]}
     (out / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8",
