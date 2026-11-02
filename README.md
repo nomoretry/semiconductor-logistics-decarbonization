@@ -36,16 +36,15 @@ Selected results with 12 synthetic SKUs per network over 16 weeks ([full report]
 | Planning agent on 24 planner questions | Rule baseline: 14/14 development, 4/10 robustness. gpt-6.1-sol (xhigh): 9/14 and 9/10 after a guardrail fix, 100% numeric faithfulness | |
 
 ```bash
-python -m pip install -c constraints.txt -e ".[planning]"
+python -m pip install --require-hashes -r requirements/planning.txt
+python -m pip install --no-deps --no-build-isolation -e .
 python -m network_planning solve --network asml --scenario red_sea --explain
 python -m planning_agent ask "How would a Red Sea diversion change ASML spare-parts cost and emissions?"
 python -m planning_agent demo
-python -m pip install -c constraints.txt -e ".[planning,agent]"
 python -m planning_agent replay --output artifacts/planning/replay
 python -m planning_agent flow
 python -m planning_agent flow --mode notice
 python -m planning_agent corpus search "Rotterdam strike"
-python -m pip install -c constraints.txt -e ".[planning,agent,ui]"
 python -m streamlit run planning_agent/app.py
 ```
 
@@ -96,12 +95,13 @@ The [finite recourse check](docs/rolling_recourse_results.md) adds 36 constructe
 
 ## Quick start
 
-Python 3.12 is recommended. `constraints.txt` pins the numerical dependencies used for validation, replay and CI.
+Python 3.12 is recommended. `requirements/dev.txt` and `requirements/planning.txt` lock every dependency with hashes for all platforms; they are resolved from the tested versions in `constraints.txt`, CI installs from them, and `make lock` regenerates them.
 
 ```bash
 git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
 cd semiconductor-logistics-decarbonization
-python -m pip install -c constraints.txt -e ".[dev]"
+python -m pip install --require-hashes -r requirements/dev.txt
+python -m pip install --no-deps --no-build-isolation -e .
 make test
 make smoke
 ```

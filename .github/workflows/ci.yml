@@ -29,6 +29,7 @@ jobs:
           cache-dependency-path: |
             pyproject.toml
             constraints.txt
+            requirements/*.txt
       - name: Install the Python project
         run: make sync
       - name: Run offline tests, smoke replay, evidence verification and wheel checks
@@ -53,6 +54,7 @@ jobs:
           cache-dependency-path: |
             pyproject.toml
             constraints.txt
+            requirements/*.txt
       - name: Install the Python project
         run: make sync
       - name: Refit potential and replay all mask and shaping variants
@@ -177,4 +179,5 @@ jobs:
         with:
           python-version: '3.12'
       - run: make planning-sync
+      - run: make lock-check
       - run: make quality
