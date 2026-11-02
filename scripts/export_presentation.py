@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 from pathlib import Path
 from typing import Any
 
@@ -446,10 +447,18 @@ th {{ background: #f3f2ef; }}
     if browser:
         pdf = out / "07_example_decision_memo.pdf"
         # A throwaway profile keeps a running browser from absorbing the headless call.
+        pdf.unlink(missing_ok=True)
         with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as profile:
             subprocess.run([browser, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={profile}",
                             "--no-pdf-header-footer", f"--print-to-pdf={pdf.resolve()}",
                             page_path.resolve().as_uri()], check=True, capture_output=True, timeout=120)
+            # The launcher can exit before its child process has finished writing the file.
+            size, deadline = -1, time.monotonic() + 30
+            while time.monotonic() < deadline:
+                if pdf.exists() and pdf.stat().st_size == size > 0:
+                    break
+                size = pdf.stat().st_size if pdf.exists() else -1
+                time.sleep(1)
         if pdf.exists():
             paths.append(pdf)
         else:
