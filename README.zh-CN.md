@@ -1,243 +1,124 @@
-# Semiconductor Logistics Decarbonization
+# 半导体物流减碳
 
-[研究说明 / Research guide](docs/research_guide.md) · [系统结构 / Architecture](docs/architecture.md)
-[English](README.md) | 简体中文
+[English](README.md) | 简体中文 · [文档索引](docs/README.md)
 
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-面向半导体备件与成品物流的库存—运输联合优化框架。使用 SciPy/HiGHS 求解带交付、运输容量和碳预算约束的整数规划；提供固定 LLM 公告抽取评测、多步工具环境、查询策略行为克隆（BC）和结果复算。
+半导体备件和成品在少数几个站点之间，通过空运、海运和公路运输。每条线路每周运力有限，交付日期已经承诺，排放也有预算。船公司通知延误或削减舱位时，计划员要决定发什么、走哪条线路、什么时候发，并弄清这个变化在成本、服务和排放上的代价。
 
-两个案例共享求解器，分别保留业务约束：[ASML 备件物流](asml/README.md)与 [Marvell 成品物流](marvell/README.md)。
+本仓库从两方面处理这个问题：
 
-[分布确认研究](docs/rolling_distribution_results.md)固定均值预测和MPC，新增16拟合、16选参、64确认路径，共512轨迹。残差NB/Poisson成本275.8435/270.2820，差值区间跨零，教师筛选失败。768次审计验证：当前可分目标与共享计划结构无法利用跨SKU完整路径的配对信息。尚未训练滚动BC/PPO；公告抽取、查询学习和滚动控制仍分别验证。
+- **决策工具。** 规划引擎（混合整数规划与两阶段随机规划）和“公告到备忘录”流程，把船公司公告变成经人工确认的扰动场景，求解方案，对比成本、服务和排放，并生成决策备忘录。输出里的每个数字都来自求解器，每个参数都标明来源。
+- **可复现的研究。** 研究问题是：在共享运力、库存动态和碳约束下，获取信息和预测建模什么时候能足够改善物流决策、值得付出相应成本。每项研究都保留协议、配置、逐例证据和复算命令。
 
-[有限追索检查](docs/rolling_recourse_results.md)完成36个构造模型、36次MILP核对、1,920次物理重放。18组表面提升均被并列最优动作解释，108次跨相关性策略评估遗憾全为0；尚无新的有效教师。复算：`make verify-recourse`。
+适用对象：想看清扰动应对方案取舍的供应链计划员；想复算或扩展这些研究的运筹与机器学习研究者；开发工具调用型规划 Agent 的开发者。
 
-本轮35份分布证据已按明确批准的SHA256清单补齐，合并前需当前提交七项CI全部通过；见[归档记录](docs/rolling_distribution_publication.md)。
+两个案例 [ASML 启发的备件物流](asml/README.md)和 [Marvell 启发的成品物流](marvell/README.md)都是仿真。订单、价格、运力和扰动幅度是合成假设；距离和排放因子来自注明出处的公开资料。没有使用任何企业数据。
 
-核心问题是：在共享运输容量、库存演化和碳约束下，哪些信息值得获取，预测误差如何改变决策，信息处理与优化计算的成本是否值得付出？[研究设计](docs/research_design.md)据此定义方法选择、已有证据与尚未成立的贡献。
+## 快速开始：从船公司公告到决策备忘录
 
-## 运筹规划引擎与规划 Agent
-
-新增一层独立模块，把研究变成可以直接回答业务问题的决策工具：
-
-- **[网络规划引擎](docs/network_planning.md)**（`network_planning/`，PuLP + HiGHS）：固定费用的多 SKU、多式联运 MILP，扰动会改变提前期和运力；支持空运舱位预留、服务水平、碳上限或碳价；两阶段随机规划给出 VSS/EVPI 及考虑 MIP gap 的区间；ε-约束碳前沿给出边际减排成本和 LP 影子价格；每个解都做独立核算。
-- **[规划副驾驶 Agent](docs/planning_agent.md)**（`planning_agent/`）：OpenAI 兼容的工具调用 Agent，8 个带校验的工具、数字忠实度护栏、决策备忘录和 24 条评测问题；规则 Agent 作为离线兜底与基线。产品设计见 [PRD](docs/planning_agent_prd.md)。
-- **[公告到备忘录的决策流程](docs/decision_workflow.md)**（`planning_agent/workflow.py`，网页 `planning_agent/app.py`，可选依赖 `ui`）：输入运输公告，查看解析出的参数、对应原文和默认假设，确认后对比正常与扰动方案的成本、服务水平、排放和空运占比，并下载决策备忘录。参数来自离线规则、真实模型的录制输出（标明为回放）或需要 key 和 token 上限的实时模型；确认之前不做任何求解。
-- **[真实船公司公告检索](docs/notice_retrieval.md)**（`planning_agent/retrieval.py`）：决策流程的公告模式在仓库已有的 24 条船公司公告摘录里检索（BM25；中文问题经中英术语表扩展），显示每条公告的出处和链接，标明每个参数的依据，列出公告没有给出的信息，并在备忘录里引用公告。仓库只存链接和哈希（`data_sources/notice_corpus.json`），下载原文网页要先明确同意。在 19 个事件分组的 38 条问题上，37 条的第一条结果属于正确事件（不用术语表时，中文问题只有 4/19）。问题和术语表由同一作者在读过语料之后编写，这是开发检查，不是独立评测。
-- **[LangGraph 编排](docs/planning_agent.md#langgraph-编排)**（`planning_agent/graph.py`，可选依赖 `agent`）：同一模型客户端、工具和护栏组成的状态图，支持进程内的会话记忆、工具执行前的人工审批和逐步输出。把真实模型（gpt-6.1-sol）录下的 24 题运行经图离线回放，每题评分都与录制相同（成功 18/24，与录制一致）；这验证的是编排，不是新的模型运行。
-
-主要结果（每个网络 12 个合成 SKU、16 周，[完整报告](benchmark_results/network_planning/report.md)）：
-
-| 问题 | ASML 备件 | Marvell 芯片 |
-|---|---|---|
-| 扰动的成本影响 | 红海绕行：成本 +12.38%，排放 +28.4% | 台风：成本 +2.17% |
-| 减排 25% 的代价（服务水平 ≥ 98%） | +1.76%；平均边际减排成本 187 USD/t，影子价格 277 USD/t | +13.12%；平均边际减排成本 24,756 USD/t |
-| 两阶段随机方案的价值（VSS） | 864 USD（1.51%）：红海中断时便宜 6.0%，正常时贵 0.33% | 约为零（在 MIP gap 区间内）：名义方案已足够稳健 |
-| 规划 Agent，24 条计划员问题 | 规则基线：开发集 14/14、鲁棒性集 4/10；gpt-6.1-sol（xhigh）：修复护栏后 9/14 和 9/10，数字忠实度 100% | |
-
-```bash
-python -m pip install --require-hashes -r requirements/planning.txt
-python -m pip install --no-deps --no-build-isolation -e .
-python -m network_planning solve --network asml --scenario red_sea --explain
-python -m planning_agent ask "如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？"
-python -m planning_agent demo
-python -m planning_agent replay --output artifacts/planning/replay
-python -m planning_agent flow
-python -m planning_agent flow --mode notice
-python -m planning_agent corpus search "鹿特丹码头罢工"
-python -m streamlit run planning_agent/app.py
-```
-
-## 设计与实验
-
-| 模块 | 实现 | 实验与输出 |
-|---|---|---|
-| 库存与运输 | 整数发货、在途库存、到仓库存、积压守恒 | 60 份合成订单实例、360 次策略求解 |
-| 成本与碳预算 | 运费、资金占用、仓储成本和物流排放；三档碳约束 | 成本—排放对照、339 份可行计划、不可行实例 |
-| 公告抽取 | 固定提示词、JSON Schema、冻结规则和固定模型配置 | 120 条开发文本、400 条合成留出文本 |
-| LLM API | Responses API、调用预算、请求缓存和原始响应记录 | 400 条合成留出文本，主运行与复测均 400/400 |
-| 多步工具环境 | 检查公告、抽取、校验、读取状态、求解、审计和提交 | 200 组开发任务，逐步轨迹与确定性重放 |
-| 共享容量与查询 | 3–4个SKU、空海运分配、联合扰动先验、共用查询预算 | 120组开发情境、6种方法、720条运行及重放 |
-| 真实数量抽取 | 总时长/增减量、原单位、区间与限定语、原文证据 | 16条开发、8份新来源；模型7/8、规则6/8，未进行人工复核 |
-| 查询规模审计 | 4–12个SKU、2–6个扰动、跨路线容量池、整数规划 | 18个开发任务、72条运行；单步/两步平均成本差距0.5378%/0.0811% |
-| 同计算预算对照 | 每次决策MILP限额、中断回退、分支缓存隔离、完整路径记账 | 54个开发情境、1,080条运行；主预算最强方法平均差距0.6253%，尾部15.9217% |
-| 查询策略BC | 公开候选特征、多正例模仿、验证集选模、检查点重执行 | 72/18/36个训练/验证/开发评估情境；BC平均遗憾2.0833%，每任务一次最终MILP |
-| 查询策略PPO | 同一BC起点、成本奖励、GAE、策略/价值裁剪与验证选模 | 1训练种子、36个新开发情境；BC/PPO平均遗憾2.6486%/1.9416% |
-| 五种子冻结评测 | 独立训练BC起点；PPO、熵项和GAE衰减消融；种子/情境配对区间 | 1,000冻结情境、27,000评估；BC/PPO遗憾3.1179%/3.1477%，未证实稳定PPO增益 |
-| 掩码与成本势函数 | 同一BC起点、2×2设计、仅训练集拟合并冻结势函数 | 五种子、20组PPO、1,332开发评估；去掩码增加拒绝，有掩码时塑形未见稳定收益 |
-| 结果验证 | 输入与源码哈希、逐条预测复算、物流计划与训练重放 | 离线验证命令与自动测试 |
-
-原工具环境的固定工作流在开发任务中完成了 127 份可行计划和 73 次正确澄清交接。新增[信息成本环境](docs/decision_environment.md)检验查询、澄清和求解选择的实际代价；训练条件与后续工作见[进度记录](docs/progress.md)。
-
-[查询策略BC](docs/query_policy_results.md)已完成训练与开发评估：只用一次最终运输求解，平均成本遗憾2.0833%；预算13的两步搜索约需16.15次求解，遗憾0.3140%。模型降低了在线求解量，但尚未达到强搜索的决策质量。随后完成了[同起点PPO开发实验](docs/query_ppo_results.md)：36个新情境上，平均遗憾从BC的2.6486%降到1.9416%，每条路径仍只需一次最终MILP。6个情境改善、30个持平；单种子结果仍未达到强搜索质量。随后完成[五种子、冻结千题评测](docs/query_final_results.md)：BC/PPO平均遗憾3.1179%/3.1477%，PPO−BC差值+0.0298个百分点，近似95%配对区间[−0.1817,+0.2540]，未证实稳定PPO增益。两种强搜索的成本仍更低，负结果完整保留。
-
-[组件对照](docs/query_components_results.md)已完成：在36个已查看开发情境上，去掩码使含拒绝惩罚的遗憾从2.5362%升至4.6288%，拒绝概率14.3215%；有掩码时成本势函数为2.7956%，未见稳定收益。本轮不重评或改写千题结果。
-
-[同求解预算实验](docs/query_budget_results.md)的失败筛选保留原结论；BC另按[计算替代协议](docs/query_policy_protocol.md)开展。[研究设计](docs/research_design.md)定义本项目的物流问题、方法选择与验收标准；[研究记录](docs/research_log.md)保存每轮实现与证据。
-
-[真实数量评测](docs/results/notice_facts_api.md)已归档：模型7/8、规则6/8与助手参考一致。维护者选择不填写人工意见，结果保留为未进行人工复核的探索证据，不阻塞环境研究，也不重复调用API。需要手动操作的内容见[操作说明](docs/manual_steps.md)。
-
-详见[架构](docs/architecture.md)、[数据与评测](docs/benchmark.md)和[模型与复现](docs/methodology.md)。新增详细研究说明采用中文在前、英文在后的双语格式；历史说明在最终交付时补齐，见[文档计划](docs/documentation_plan.md)。
-
-## 快速开始
-
-推荐 Python 3.12。`requirements/dev.txt` 和 `requirements/planning.txt` 用哈希锁定全部依赖（覆盖各平台）；它们由 `constraints.txt` 中已验证的版本解析而来，CI 从这两个文件安装，`make lock` 重新生成。
+推荐 Python 3.12。`requirements/` 里的锁文件用哈希固定全部依赖。
 
 ```bash
 git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
 cd semiconductor-logistics-decarbonization
-python -m pip install --require-hashes -r requirements/dev.txt
+python -m pip install --require-hashes -r requirements/planning.txt
 python -m pip install --no-deps --no-build-isolation -e .
-make test
-make smoke
+python -m planning_agent flow
 ```
 
-Windows 没有 Make 时可直接使用 Python：
+最后一条命令用规则解析器离线运行，不需要 API key，也不调用模型。它会：
+
+1. 读取内置公告（红海绕行好望角，第 4–12 周海运延误 2 周，舱位削减 30%），显示解析出的场景、每个参数对应的公告原文和默认假设；
+2. 请你确认，回答 `y` 之前不做任何求解（`e` 修改扰动，`n` 取消）；
+3. 用 HiGHS 求解正常方案和扰动方案，对比总成本、服务水平、排放和空运占比；
+4. 生成 Markdown 决策备忘录并打印路径。
+
+默认设置下（12 个合成 SKU、16 周），扰动方案成本 60,711 美元，正常方案 55,253 美元（+9.88%）；排放 27.12 吨 CO2e，正常方案 20.82 吨（+30.26%）；服务水平 100%。命令行和网页界面是中文，文档有中英文两版。
+
+同一流程的其他运行方式：
 
 ```bash
-python -m unittest discover -s tests
-python -m semiconductor_logistics --help
-python -m semiconductor_logistics evaluate --output artifacts/rules
-python -m semiconductor_logistics verify-run --output artifacts/rules
+python -m planning_agent flow --mode notice              # 同时检索真实船公司公告并引用
+python -m planning_agent flow --mode replay --case D13   # 使用真实模型在录制评测中给出的参数
+python -m streamlit run planning_agent/app.py            # 网页，步骤相同
 ```
 
-默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境、小型BC/PPO训练和重放校验。
+`--mode live` 通过 LangGraph Agent 调用模型，需要 `LLM_API_KEY` 和 token 上限（`--max-tokens`），会产生费用。全部选项见[流程说明](docs/decision_workflow.md)。
 
-`make quality` 对规划引擎、规划 Agent 及其测试运行 Ruff（含 120 字符行长限制），并对 `network_planning`、`planning_agent` 的全部模块运行 strict mypy。按哈希冻结的研究包保持原样，不做格式化。
+## 现在能做什么
 
-## 运行优化实验
+| 组成部分 | 功能 | 验证方式 |
+|---|---|---|
+| [网络规划引擎](docs/network_planning.md)（`network_planning/`） | 固定费用的多 SKU、多式联运 MILP，提前期和运力随扰动变化，空运舱位预留，服务水平下限，碳上限或碳价；两阶段随机规划，含 VSS/EVPI 及 MIP gap 区间；碳前沿、边际减排成本和 LP 影子价格；对每个方案独立复核账目 | 单元测试和[归档报告](benchmark_results/network_planning/report.md) |
+| [公告到备忘录流程](docs/decision_workflow.md)（`planning_agent/workflow.py`、`app.py`） | 参数与假设 → 确认 → 方案对比 → 备忘录，可用命令行或网页；参数来源有 `rule`、`notice`、`replay`、`live` 四种 | 离线测试，含网页无头测试；`live` 只用脚本客户端测过 |
+| [公告检索](docs/notice_retrieval.md)（`planning_agent/retrieval.py`） | 在 24 条船公司公告摘录上做 BM25 检索，中文问题经中英术语表扩展；在流程和备忘录中给出出处、链接、每个参数的依据和缺失信息；可选本地全文（网页不存入仓库） | 38 条问题的开发检查（见下方结果） |
+| [规划 Agent](docs/planning_agent.md)（`planning_agent/`） | 调用 8 个经校验工具的 Agent，带数字忠实度护栏，另有 LangGraph 状态图版本；规则 Agent 作为离线后备和基线 | 24 题评测；录制模型运行的离线回放 |
+| 研究环境 | 公告抽取基准、工具流程、有预算的查询规划（BC/PPO）、未知需求下的滚动库存 | 归档证据和 `verify` 命令（见[研究说明](docs/research_guide.md)） |
+
+## 主要结果
+
+| 问题 | 结果 | 证据 |
+|---|---|---|
+| 扰动影响（规划引擎，12 个 SKU，16 周） | ASML 启发案例红海绕行：成本 +12.38%，CO2e +28.4%。Marvell 启发案例台风：成本 +2.17% | [报告](benchmark_results/network_planning/report.md) |
+| 服务水平 98% 下减排 25% 的代价 | ASML：成本 +1.76%，平均边际减排成本 187 美元/吨，影子价格 277 美元/吨。Marvell：+13.12%，平均边际减排成本 24,756 美元/吨 | [报告](benchmark_results/network_planning/report.md) |
+| 针对扰动场景做计划的价值（VSS） | ASML：864 美元（1.51%）。Marvell：约为零，在 MIP gap 区间内 | [报告](benchmark_results/network_planning/report.md) |
+| 规划 Agent，24 个计划员问题（开发 14、鲁棒性 10，同一作者编写） | 规则 Agent 14/14、4/10。gpt-6.1-sol（xhigh，运行一次，修复护栏后离线重评）9/14、9/10，数字忠实度 100%。用 LangGraph Agent 回放录制运行，每题评分都与录制一致（成功 18/24）；这不是新的模型运行 | [Agent](docs/planning_agent.md) |
+| 公告检索，19 个事件分组的 38 个问题 | 37/38 的第一条结果属于正确事件（不用术语表时中文问题 4/19）。问题由同一作者在读过语料后编写，是开发检查，不是独立测试 | [检索](docs/notice_retrieval.md) |
+| 400 条合成留出公告的抽取 | 固定模型 400/400（同一 400 条重复运行也是 400/400）；冻结规则 204/400 | [结果](docs/results/api_test.md) |
+| 真实船公司公告 | 16 条摘录全部需要澄清；模型和“始终澄清”都与参考 16/16 一致，因此不能说明抽取能力。8 条数量抽取：模型 7/8，规则 6/8。参考标签由助手编写，未经人工复核 | [语料](docs/data/real_notices.md)、[数量](docs/results/notice_facts_api.md) |
+| 查询策略，冻结千题，5 个训练种子 | 平均遗憾 BC 3.1179%、PPO 3.1477%；PPO−BC +0.0298 个百分点，95% 区间 [−0.1817, +0.2540]。两步搜索 0.6309%、迭代 DP 0.0528% 仍然更好。PPO 没有稳定收益 | [结果](docs/query_final_results.md) |
+| 未知需求下的滚动库存 | 32 条开发路径上情景 MPC 成本 282.2406，base-stock 330.6219，排放更高。更快的预测使成本上升（+7.19%、+8.48%）；负二项需求模型成本 +2.06%，区间跨零。没有训练滚动 BC/PPO | [基线](docs/rolling_inventory_results.md)、[预测](docs/rolling_forecast_results.md)、[分布](docs/rolling_distribution_results.md) |
+
+失败和负面结果都保留在结果文档里，包括同预算实验未通过的筛选和滚动教师未通过的筛选。
+
+## 限制
+
+- 所有运营数据都是合成的。结果是在给定假设下比较策略，不是企业运营或减排的实测。
+- 各研究线分别评估；没有端到端验证把公告抽取、学习查询和滚动控制连起来。
+- 真实公告评测规模小、属探索性质；参考标签未经人工复核，真实公告也很少给出可直接用于计划的参数；船公司航线没有对应到内部线路。
+- Agent 和检索评测由同一作者编写。Agent 评测的模型运行只执行过一次；流程的 `live` 模式没有用真实模型跑过。会话记忆只在单个进程内有效。
+- 工程方面：CI 只在 Ubuntu、Python 3.12 上运行；还没有打标签的 Release；Ruff 和 strict mypy 覆盖规划两个包，不覆盖归档的研究包；部分较早的协议和结果文档只有中文。
+
+## 复现与验证
 
 ```bash
-semiconductor-logistics download-data
-semiconductor-logistics optimize --project asml --smoke
-semiconductor-logistics optimize --project marvell --smoke
-semiconductor-logistics optimize --project both
-semiconductor-logistics sensitivity --project both
-semiconductor-logistics report
+python -m pip install --require-hashes -r requirements/dev.txt   # 只做研究复算时装这个锁文件即可
+python -m pip install --no-deps --no-build-isolation -e .
+make test          # 离线测试（装了 planning 锁文件时也运行规划测试）
+make planning-ci   # 规划测试、报告、规则评测、回放和两种流程模式
+make quality       # 对 network_planning 和 planning_agent 运行 Ruff 与 strict mypy
+make lock-check    # 锁文件仍与 pyproject.toml、constraints.txt 一致
+make verify-final  # 复算一项归档研究；全部 verify 命令见研究说明
 ```
 
-`download-data` 根据来源清单下载并校验第三方原始文件。完整优化实验包含外部汽车备件月度需求压力测试，因此需先下载数据。主实验会写入 `reports/`；单独运行一个案例会替换该目录的主实验汇总。公开仓库中的合成明细与外部压力测试汇总范围见[数据与评测](docs/benchmark.md)。
+没有 Make 时，运行 `python -m unittest discover -s tests` 以及[命令参考](docs/commands.md)中的 Python 命令。默认检查都不调用模型 API。
 
-Python 脚本生成 [Markdown 实验报告](reports/study_report.md)、CSV/JSON 结果和 Matplotlib 图表。
+## 文档
 
-## 公告抽取评测
+[文档索引](docs/README.md)按用途列出全部文档：使用指南、架构与设计、方法与协议、数据、结果、复现。建议从[架构](docs/architecture.md)、[研究设计](docs/research_design.md)和[研究说明](docs/research_guide.md)开始。
 
-| 方法 | 数据划分 | 文本数 | 整条公告抽取正确率 |
-|---|---|---:|---:|
-| 冻结规则 | 开发集 | 120 | 100% |
-| 冻结规则 | 合成留出集 | 400 | 51.0%（204/400） |
-| 总是请求澄清 | 合成留出集 | 400 | 44.0% |
-| 忽略公告 | 合成留出集 | 400 | 16.5% |
-| GPT-6 Luna | 合成留出集，主运行 | 400 | 100%（400/400） |
-| GPT-6 Luna | 同一留出集复测 | 400 | 100%（400/400） |
-
-主运行相对冻结规则提高 49.0 个百分点，复测的解析输出全部一致；两轮仍为同一批 400 条案例。逐条结果、分组区间及原始响应见[正式对照](docs/results/api_test.md)，20 条开发样本另存为[连接测试](docs/results/api_smoke.md)。
-
-[真实公告语料](docs/data/real_notices.md)包含16份官方运输材料短摘录，经两次助手审核。固定模型已完成16次调用，与助手参考一致率100%，始终澄清基线也是100%。原始记录已归档，人工复核未完成；这组全澄清结果不能证明真实更新抽取能力。[下一版协议](docs/real_fact_protocol.md)将来源事实抽取与内部路线更新分别评测。
-
-```bash
-semiconductor-logistics evaluate
-semiconductor-logistics verify-run
-semiconductor-logistics workflow-audit
-semiconductor-logistics workflow-audit --verify
-semiconductor-logistics compare-api --run benchmark_results/api_test --repeat-run benchmark_results/api_repeat
-semiconductor-logistics real-notices offline --dataset benchmarks/real_notices_v1/dataset.json --output artifacts/real_notices
-semiconductor-logistics decision-audit --tasks 200 --output artifacts/decision_audit
-semiconductor-logistics coupled-audit --contexts 120 --output artifacts/coupled_development
-python -m scripts.verify_real_notice_archive
-semiconductor-logistics notice-facts offline --output artifacts/notice_facts
-semiconductor-logistics scale-audit --verify --output benchmark_results/decision_scale
-semiconductor-logistics query-budget --verify --output benchmark_results/query_budget_development
-semiconductor-logistics query-bc --verify --output benchmark_results/query_bc_development
-semiconductor-logistics query-ppo --verify --output benchmark_results/query_ppo_development
-semiconductor-logistics query-study verify-development
-semiconductor-logistics query-study verify-final
-semiconductor-logistics query-components verify
-```
-
-API 命令默认只估算费用：
-
-```bash
-semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split test --max-calls 400 --output artifacts/notice_api
-```
-
-实际调用通过 GitHub Actions 手动运行，密钥保存在仓库 Secret。`smoke20` 使用开发集，`test400` 使用冻结留出集，设置步骤见 [API 配置](docs/secure_api_connection.md)。
-
-## 常用命令
-
-| 命令 | 用途 |
-|---|---|
-| `generate` | 生成公告开发集、留出集及校验信息 |
-| `optimize` | 运行 ASML、Marvell 的库存与运输策略 |
-| `evaluate` | 评测冻结规则与诊断基线 |
-| `api` | 估算或执行固定模型 API 抽取 |
-| `score-api` | 校验请求记录并复算 API 指标 |
-| `compare-api` | 复算固定模型与冻结规则的成对差值及复测 |
-| `real-notices` | 校验真实语料、运行离线基线、导出输入和复算响应 |
-| `decision-audit` | 检验信息成本、规划选择和强适应性基线 |
-| `coupled-audit` | 检验多SKU共享容量、查询预算、精确规划与前瞻基线 |
-| `notice-facts` | 验证真实数量数据、评分规则、估算/执行新字段API并复算 |
-| `scale-audit` | 重放较大SKU/扰动开发网格，核对期望成本、轨迹与整数计划 |
-| `query-budget` | 在同MILP调用上限下比较查询规划，复算完整策略树和计算台账 |
-| `query-bc` | 生成查询教师、训练BC、比较强搜索并重执行检查点 |
-| `query-ppo` | 从冻结BC训练PPO，重放采样轨迹、更新记录和检查点 |
-| `query-study` | 配对多种子重训、组件消融、新任务冻结和最终复算 |
-| `workflow-audit` | 运行或重放多步工具任务 |
-| `verify-run` | 校验离线数据、预测、指标和源码身份 |
-| `sensitivity` | 运行参数及排放边界敏感性实验 |
-| `report` | 生成 Markdown 报告、表格和图表 |
-
-安装后的命令也可通过 `python -m semiconductor_logistics` 调用。离开仓库目录运行实验时，使用 `--workspace /path/to/repository` 指定数据与配置所在的工作目录。
-
-## 仓库结构
+## 目录结构
 
 | 路径 | 内容 |
 |---|---|
-| `semiconductor_logistics/` | Python 命令行入口 |
-| `shared/` | 库存守恒、MILP 求解与实验调度 |
-| `notice_benchmark/` | 冻结合成公告、规则、API、指标和原工具环境 |
-| `real_notice_eval/` | 真实公告来源校验与探索性评测 |
-| `notice_facts/` | 单独的真实数量合同、冻结规则、预算API与原始响应复算 |
-| `decision_benchmark/` | 查询成本、物理物流结果与决策基线 |
-| `coupled_decision/` | 多SKU整数分配、共享容量、预算查询及完整重放 |
-| `budgeted_decision/` | 有限计算预算的查询规划、中断处理及逐分支复算 |
-| `query_policy/` | 公开特征、NumPy BC、教师生成和检查点绑定验证 |
-| `query_ppo/` | 轨迹隔离GAE、成本PPO、验证选模与完整训练复算 |
-| `query_study/` | 多种子训练、无损证据、任务/模型冻结及配对统计 |
-| `rolling_inventory/`、`rolling_sensitivity/` | 未知需求库存仿真、强基线规划及敏感性复算 |
-| `query_components/` | 掩码与成本势函数对照、拒绝语义、完整开发训练重放 |
-| `network_planning/` | 固定费用 MILP、两阶段随机规划、碳前沿与独立核算（PuLP + HiGHS） |
-| `planning_agent/` | 工具调用规划 Agent、工具层、数字护栏、规则基线、备忘录与评测 |
-| `asml/`、`marvell/` | 两个案例的参数配置 |
-| `benchmarks/` | 冻结公告集、规则身份及来源登记 |
-| `benchmark_results/` | 逐条预测、API 响应、工具轨迹和校验清单 |
-| `scripts/` | 数据获取、实验、报告与打包检查 |
-| `tests/` | 求解、抽取、重放与命令行测试 |
-| `docs/` | 架构、方法、评测和结果说明 |
+| `network_planning/` | 规划引擎：MILP、随机规划、碳前沿、账目复核和报告 |
+| `planning_agent/` | 决策流程和网页、公告检索、工具调用与 LangGraph Agent、规则 Agent、护栏、备忘录和评测 |
+| `semiconductor_logistics/` | 研究实验的命令行（`python -m semiconductor_logistics`） |
+| `shared/` | 原始案例研究的库存守恒、MILP 求解器和实验编排 |
+| `notice_benchmark/`、`notice_facts/`、`real_notice_eval/` | 公告抽取基准、真实公告校验和 API 评测 |
+| `decision_benchmark/`、`coupled_decision/`、`budgeted_decision/` | 查询与规划环境及强搜索基线 |
+| `query_policy/`、`query_ppo/`、`query_study/`、`query_components/` | 查询策略 BC 与 PPO、多种子研究和组件审计 |
+| `rolling_inventory/`、`rolling_sensitivity/`、`rolling_forecast/`、`rolling_distribution/`、`rolling_recourse/` | 未知需求下的滚动库存及后续研究 |
+| `asml/`、`marvell/` | 案例配置与说明 |
+| `benchmarks/`、`llm/` | 冻结数据集、提示词和问题集 |
+| `benchmark_results/`、`reports/`、`reviews/` | 归档的逐例证据、校验清单、生成的报告，以及真实公告标签尚未填写的审核表 |
+| `data_sources/` | 来源清单、选用的公开因子、数据审核和公告语料清单 |
+| `scripts/` | 数据下载、报告生成、证据审计和打包检查 |
+| `tests/` | 单元、回放和命令行测试 |
+| `requirements/`、`constraints.txt` | 带哈希的依赖锁文件，以及解析它们所依据的已验证版本 |
+| `docs/` | 使用指南、架构、方法、协议和结果 |
 
-## 数据与适用范围
+## 许可与来源
 
-订单、价格、质量、容量和仓储参数为仿真假设。排放因子、路线几何和类比需求保存来源与校验值，详见 [ASML 数据说明](data_sources/data_audit_asml.md)、[Marvell 数据说明](data_sources/data_audit_marvell.md)和[第三方数据声明](THIRD_PARTY_NOTICES.md)。
-
-当前优化使用已知承诺订单和已公告扰动，覆盖运输与库存环节。结果用于比较仿真条件下的策略，不代表企业实测减排；独立滚动环境现已加入未知需求、预测误差和在途库存演化，与原固定订单研究分开报告。
-
-## 未知需求滚动环境
-
-[滚动库存实验](docs/rolling_inventory_results.md)已完成：12个校准、32个开发需求路径，4个可部署基线及预知需求下界。情景MPC平均成本282.2406，base-stock为330.6219；服务改善伴随排放增加。均值MPC未在总体胜过补货规则，未训练新RL。复算：`python -m semiconductor_logistics rolling-inventory verify`。
-
-[滚动敏感性实验](docs/rolling_sensitivity_results.md)新增24条开发路径、3个采样种子和2,304条轨迹，量化碳分配、期末库存价值和情景数量。1→7情景成本降37.48%，7→21仅降0.36%且种子方向不一致；期末价值主要改变账面净成本。先验证预测分布及同信息教师，暂不训练滚动BC/PPO。复算：`python -m semiconductor_logistics rolling-sensitivity verify`。
-
-敏感性证据包已补齐，覆盖全部2,304条轨迹，详见[文件身份与验收](docs/rolling_sensitivity_publication.md)。合并以前须确认PR当前提交的CI通过。
-
-## 预测与滚动决策
-
-[预测对照](docs/rolling_forecast_results.md)已完成：12条校准与32条新开发路径，共352轨迹、4,224期。固定同一优化器后，快速EWMA和季节短窗成本比原EWMA分别高7.19%/8.48%，三个采样种子方向一致；两者均未通过描述性教师筛选。另有3条路径预测NLL改善而成本上升。保留原EWMA情景MPC，暂不训练滚动BC/PPO。
-
-运行 `make verify-forecast` 可重新选参、求解和核对全部证据；本轮不调用LLM API。
-
-本轮73份预测证据已获明确授权并按原SHA256归档，见[文件身份与验收](docs/rolling_forecast_publication.md)。合并前检查当前提交的全部六项CI。
-
-## 许可证
-
-项目原创的代码和文档采用 [MIT 许可证](LICENSE)。第三方数据集、船公司公告的逐字摘录、外部大模型的存档输出，以及一个与参考代码相同的辅助函数，按各自条款使用，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。引用信息见 [CITATION.cff](CITATION.cff)。
+项目代码和文档采用 [MIT 许可](LICENSE)，引用信息见 [CITATION.cff](CITATION.cff)。第三方数据集、船公司公告摘录、外部模型的保存输出和一处参考代码保留各自的条款，列在 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。[来源与归属](docs/source_history.md)说明了哪些外部设计和代码影响过本项目。
