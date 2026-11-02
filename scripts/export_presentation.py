@@ -327,11 +327,11 @@ def example_animation(example: dict[str, Any], out: Path, version: str) -> list[
         bottom.clear()
         bottom.set_facecolor(SURFACE)
         bottom.axvspan(d["start_week"] - 0.5, d["end_week"] + 0.5, color=BAND, zorder=0)
-        for name, color in zip(plans, (BLUE, ORANGE), strict=True):
+        for name, color, dy in zip(plans, (BLUE, ORANGE), (9, -11), strict=True):
             series = plans[name]["end_of_week_inventory_units"]
             bottom.plot(x[:shown], series[:shown], color=color, linewidth=2, marker="o", markersize=6,
                         markeredgecolor=SURFACE, label=name)
-            bottom.annotate(f"{series[shown - 1]:,.0f}", (shown, series[shown - 1]), xytext=(6, 0),
+            bottom.annotate(f"{series[shown - 1]:,.0f}", (shown, series[shown - 1]), xytext=(6, dy),
                             textcoords="offset points", fontsize=8, color=INK, va="center")
         bottom.set_xlim(0.5, weeks + 0.5)
         bottom.set_ylim(0, peak_inv)
@@ -339,7 +339,7 @@ def example_animation(example: dict[str, Any], out: Path, version: str) -> list[
         bottom.set_xlabel("周")
         bottom.set_ylabel("周末在库库存（件）")
         bottom.set_title("周末在库库存（全部 SKU 合计）", fontsize=11)
-        bottom.legend(frameon=False, loc="upper right", fontsize=8)
+        bottom.legend(frameon=False, loc="upper center", ncol=2, fontsize=8)
         bottom.grid(axis="y", color=GRID)
         title.set_text(f"红海绕行示例：正常方案与扰动方案的逐周运输和库存　第 {shown} / {weeks} 周")
 
