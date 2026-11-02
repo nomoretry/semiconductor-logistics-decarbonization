@@ -117,6 +117,8 @@ python -m semiconductor_logistics verify-run --output artifacts/rules
 
 Default checks use local synthetic data and do not call the API. `make smoke` exercises rule evaluation, tool environments, small BC/PPO training runs and replay verification.
 
+`make quality` runs Ruff, including the 120-character line limit, on the planning engine, the planning agent and their tests, and strict mypy on every module of `network_planning` and `planning_agent`. The hash-bound study packages keep their archived bytes and are not reformatted.
+
 ## Optimization experiments
 
 ```bash

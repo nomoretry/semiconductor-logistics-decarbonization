@@ -52,5 +52,5 @@ python_version = "3.12"
 ignore_missing_imports = true
 follow_imports = "silent"
 strict = true
-# Modules join this list once they type-check strictly.
-files = ["planning_agent/graph.py", "planning_agent/workflow.py", "planning_agent/app.py", "planning_agent/retrieval.py"]
+# Every module of the planning engine and the planning agent type-checks strictly.
+files = ["network_planning", "planning_agent"]

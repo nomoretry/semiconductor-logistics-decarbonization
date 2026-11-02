@@ -13,10 +13,11 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any, cast
 
 from network_planning.analysis import carbon_frontier, explain_plan, stochastic_value
-from network_planning.data import NETWORKS, Disruption, Scenario, build_network
-from network_planning.model import solve
+from network_planning.data import NETWORKS, Disruption, Network, Scenario, build_network
+from network_planning.model import Plan, solve
 
 
 class ToolError(ValueError):
@@ -27,10 +28,10 @@ class ToolError(ValueError):
 class Tool:
     name: str
     description: str
-    parameters: dict
-    run: Callable
+    parameters: dict[str, Any]
+    run: Callable[..., dict[str, Any]]
 
-    def schema(self) -> dict:
+    def schema(self) -> dict[str, Any]:
         return {"type": "function",
                 "function": {"name": self.name, "description": self.description, "parameters": self.parameters}}
 
@@ -40,8 +41,8 @@ class StoredPlan:
     id: str
     network: str
     label: str
-    plan: object
-    request: dict
+    plan: Plan
+    request: dict[str, Any]
 
 
 @dataclass
@@ -52,14 +53,14 @@ class Session:
     mip_gap: float = 2e-3
     time_limit: float = 30.0
     memo_dir: Path = Path("artifacts/planning_agent/memos")
-    networks: dict = field(default_factory=dict)
-    custom: dict = field(default_factory=dict)
-    plans: dict = field(default_factory=dict)
-    cache: dict = field(default_factory=dict)
-    calls: list = field(default_factory=list)
-    context: dict = field(default_factory=dict)  # last network/scenario, used by the rule agent's follow-ups
+    networks: dict[str, Network] = field(default_factory=dict)
+    custom: dict[tuple[str, str], Scenario] = field(default_factory=dict)
+    plans: dict[str, StoredPlan] = field(default_factory=dict)
+    cache: dict[str, dict[str, Any]] = field(default_factory=dict)
+    calls: list[dict[str, Any]] = field(default_factory=list)
+    context: dict[str, Any] = field(default_factory=dict)  # last network/scenario, used by the rule agent's follow-ups
 
-    def network(self, name):
+    def network(self, name: str) -> Network:
         if name not in NETWORKS:
             raise ToolError(f"unknown network '{name}'; use one of {list(NETWORKS)}")
         if name not in self.networks:
@@ -76,7 +77,7 @@ class Session:
                             "Create new ones with create_scenario.")
         return net.scenario(name, probability)
 
-    def store(self, network: str, label: str, plan, request: dict) -> str:
+    def store(self, network: str, label: str, plan: Plan, request: dict[str, Any]) -> str:
         plan_id = f"P{len(self.plans) + 1}"
         self.plans[plan_id] = StoredPlan(plan_id, network, label, plan, request)
         return plan_id
@@ -86,7 +87,7 @@ class Session:
             raise ToolError(f"unknown plan_id '{plan_id}'; existing: {list(self.plans)}")
         return self.plans[plan_id]
 
-    def call(self, name: str, arguments: dict | str | None) -> dict:
+    def call(self, name: str, arguments: dict[str, Any] | str | None) -> dict[str, Any]:
         started = time.perf_counter()
         try:
             if isinstance(arguments, str):
@@ -97,27 +98,27 @@ class Session:
             arguments = json.loads(json.dumps(arguments))  # private copy: the call log must not change later
             if name not in TOOLS:
                 raise ToolError(f"unknown tool '{name}'; available: {list(TOOLS)}")
-            result, ok = TOOLS[name].run(self, **arguments), True
+            result, ok = TOOLS[name].run(self, **cast(dict[str, Any], arguments)), True
         except (ToolError, ValueError, TypeError) as error:
             result, ok = {"error": str(error)}, False
         self.calls.append({"name": name, "arguments": arguments, "ok": ok, "result": result,
                            "seconds": round(time.perf_counter() - started, 3)})
         return result
 
-    def schemas(self) -> list[dict]:
+    def schemas(self) -> list[dict[str, Any]]:
         return [tool.schema() for tool in TOOLS.values()]
 
 
 # ---------------------------------------------------------------------------- helpers
 
-def _kpis(stored: StoredPlan) -> dict:
+def _kpis(stored: StoredPlan) -> dict[str, Any]:
     plan = stored.plan
-    row = {"plan_id": stored.id, "label": stored.label, "network": stored.network,
+    row: dict[str, Any] = {"plan_id": stored.id, "label": stored.label, "network": stored.network,
            "scenario": " + ".join(plan.scenario_names), "status": plan.status}
     if not plan.feasible:
         row["note"] = "no feasible plan under these constraints"
         return row
-    k = plan.kpis
+    k = plan.metrics
     row.update(total_cost_usd=round(k["total_cost_usd"]), emissions_t=round(k["emissions_t"], 2),
                air_share_pct=round(100 * k["air_share_kg"], 1), service_level_pct=round(100 * k["service_level"], 2))
     return row
@@ -125,7 +126,7 @@ def _kpis(stored: StoredPlan) -> dict:
 
 # ---------------------------------------------------------------------------- tools
 
-def describe_network(session: Session, network: str) -> dict:
+def describe_network(session: Session, network: str) -> dict[str, Any]:
     info = session.network(network).describe()
     for (w, name), sc in session.custom.items():
         if w == network:
@@ -133,15 +134,16 @@ def describe_network(session: Session, network: str) -> dict:
     return info
 
 
-def create_scenario(session: Session, network: str, name: str, disruptions: list | None = None,
-                    demand_change_pct: float | None = None, demand_weeks: list | None = None,
-                    description: str = "") -> dict:
+def create_scenario(session: Session, network: str, name: str, disruptions: list[Any] | None = None,
+                    demand_change_pct: float | None = None, demand_weeks: list[Any] | None = None,
+                    description: str = "") -> dict[str, Any]:
     net = session.network(network)
     if not re.fullmatch(r"[a-z][a-z0-9_]{1,40}", name or ""):
         raise ToolError("name must be snake_case letters/digits, 2-41 characters, starting with a letter")
     if name in net.scenario_specs:
         raise ToolError(f"'{name}' is a predefined scenario; choose another name")
-    built, assumptions = [], []
+    built: list[Disruption] = []
+    assumptions: list[str] = []
     for item in disruptions or []:
         if not isinstance(item, dict):
             raise ToolError("each disruption must be an object")
@@ -168,7 +170,8 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
                 assumptions.append(f"{'/'.join(lanes)} weeks {start}-{end}: {key} not given, assumed {default}")
         built.append(Disruption(tuple(lanes), start, end, int(item.get("extra_lead_weeks", 0)), capacity,
                                 float(item.get("distance_factor", 1.0)), cost))
-    factor, weeks = 1.0, None
+    factor = 1.0
+    weeks: tuple[int, ...] | None = None
     if demand_change_pct is not None:
         factor = 1 + float(demand_change_pct) / 100
         weeks = tuple(int(w) for w in demand_weeks) if demand_weeks else (1, net.weeks)
@@ -176,7 +179,8 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
             raise ToolError("demand_weeks must be [start, end]")
     if not built and factor == 1.0:
         raise ToolError("a scenario needs at least one disruption or a demand change")
-    scenario = Scenario(name, 1.0, tuple(built), factor, weeks, description or "custom scenario")
+    scenario = Scenario(name, 1.0, tuple(built), factor, cast(tuple[int, int] | None, weeks),
+                        description or "custom scenario")
     net.validate(scenario)
     session.custom[network, name] = scenario
     return {"scenario": name, "network": network, "definition": scenario.to_dict(), "assumptions": assumptions}
@@ -184,7 +188,7 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
 
 def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_cap_pct: float | None = None,
                carbon_price_usd_per_t: float | None = None, service_level_pct: float | None = None,
-               label: str | None = None) -> dict:
+               label: str | None = None) -> dict[str, Any]:
     net = session.network(network)
     sc = session.scenario(network, scenario)
     if carbon_cap_pct is not None and not 5 <= float(carbon_cap_pct) <= 100:
@@ -193,19 +197,19 @@ def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_
         raise ToolError("service_level_pct must be between 50 and 100")
     if carbon_price_usd_per_t is not None and not 0 <= float(carbon_price_usd_per_t) <= 20000:
         raise ToolError("carbon_price_usd_per_t must be between 0 and 20000")
-    request = {"network": network, "scenario": scenario, "carbon_cap_pct": carbon_cap_pct,
+    request: dict[str, Any] = {"network": network, "scenario": scenario, "carbon_cap_pct": carbon_cap_pct,
                "carbon_price_usd_per_t": carbon_price_usd_per_t, "service_level_pct": service_level_pct}
     key = json.dumps(request, sort_keys=True)
     if key in session.cache:
         return dict(session.cache[key], cached=True)
     service = None if service_level_pct is None else float(service_level_pct) / 100
-    options = dict(service_level=service, mip_gap=session.mip_gap, time_limit=session.time_limit)
+    options: dict[str, Any] = dict(service_level=service, mip_gap=session.mip_gap, time_limit=session.time_limit)
     cap_kg = None
     if carbon_cap_pct is not None:
         reference = solve_plan(session, network, scenario, service_level_pct=service_level_pct)
         if "emissions_t" not in reference:
             raise ToolError("the uncapped reference plan is infeasible, so a relative cap is undefined")
-        cap_kg = float(carbon_cap_pct) / 100 * session.get(reference["plan_id"]).plan.kpis["emissions_t"] * 1000
+        cap_kg = float(carbon_cap_pct) / 100 * session.get(reference["plan_id"]).plan.metrics["emissions_t"] * 1000
     plan = solve(net, [sc], carbon_cap_kg=cap_kg, carbon_price=float(carbon_price_usd_per_t or 0.0),
                  duals=cap_kg is not None, **options)
     parts = [scenario] + ([f"cap {carbon_cap_pct:g}%"] if carbon_cap_pct is not None else []) + (
@@ -213,7 +217,7 @@ def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_
     stored_id = session.store(network, label or " / ".join(parts), plan, request)
     result = _kpis(session.get(stored_id))
     if plan.feasible:
-        result["cost_breakdown_usd"] = {k: round(v) for k, v in plan.kpis["cost_breakdown_usd"].items() if v > 0.5}
+        result["cost_breakdown_usd"] = {k: round(v) for k, v in plan.metrics["cost_breakdown_usd"].items() if v > 0.5}
         result["air_reservation_kg_per_week"] = {lane: round(v, 1) for lane, v in plan.solution["reserve"].items()}
         if cap_kg is not None:
             result["uncapped_reference_plan_id"] = reference["plan_id"]
@@ -222,7 +226,7 @@ def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_
             if shadow is not None:
                 result["carbon_shadow_price_usd_per_t"] = round(shadow)
         if carbon_price_usd_per_t:
-            result["carbon_tax_usd"] = round(plan.kpis["carbon_tax_usd"])
+            result["carbon_tax_usd"] = round(plan.metrics["carbon_tax_usd"])
     result["mip_gap_pct"] = None if plan.stats.get("mip_gap") is None else round(100 * plan.stats["mip_gap"], 3)
     result["solve_seconds"] = plan.stats["solve_seconds"]
     if plan.issues:
@@ -231,12 +235,12 @@ def solve_plan(session: Session, network: str, scenario: str = "normal", carbon_
     return result
 
 
-def compare_plans(session: Session, plan_ids: list) -> dict:
+def compare_plans(session: Session, plan_ids: list[Any]) -> dict[str, Any]:
     if not isinstance(plan_ids, list) or not 2 <= len(plan_ids) <= 6:
         raise ToolError("plan_ids must list 2-6 plan ids; the first one is the baseline")
     stored = [session.get(pid) for pid in plan_ids]
     base = _kpis(stored[0])
-    rows = []
+    rows: list[dict[str, Any]] = []
     for item in stored:
         row = _kpis(item)
         if "total_cost_usd" in row and "total_cost_usd" in base:
@@ -250,7 +254,7 @@ def compare_plans(session: Session, plan_ids: list) -> dict:
 
 
 def carbon_frontier_tool(session: Session, network: str, scenario: str = "normal",
-                         levels_pct: list | None = None) -> dict:
+                         levels_pct: list[Any] | None = None) -> dict[str, Any]:
     net = session.network(network)
     session.scenario(network, scenario)
     levels = [float(x) for x in (levels_pct or [90, 75, 60])]
@@ -276,8 +280,8 @@ def carbon_frontier_tool(session: Session, network: str, scenario: str = "normal
                      "shadow price = LP dual of the cap at fixed lane activations.")}
 
 
-def hedge_disruption_risk(session: Session, network: str, scenarios: list | None = None,
-                          probabilities: list | None = None, reveal_week: int = 3) -> dict:
+def hedge_disruption_risk(session: Session, network: str, scenarios: list[Any] | None = None,
+                          probabilities: list[Any] | None = None, reveal_week: int = 3) -> dict[str, Any]:
     net = session.network(network)
     names = list(scenarios or net.stochastic_set)
     if probabilities is None:
@@ -305,7 +309,7 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list | None
                                   {"scenarios": names, "probabilities": probabilities, "reveal_week": reveal_week})
     nominal_id = session.store(network, "nominal plan, adapted after reveal", plans["nominal_evaluated"],
                                {"scenarios": names, "probabilities": probabilities, "fixed_first_stage": "nominal"})
-    per = []
+    per: list[dict[str, Any]] = []
     for name, v in result["per_scenario"].items():
         saving = v["nominal_plan_usd"] - v["stochastic_plan_usd"]
         per.append({"scenario": name, "probability_pct": round(100 * v["probability"], 1),
@@ -314,7 +318,7 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list | None
                     "saving_vs_nominal_usd": round(saving),
                     "saving_vs_nominal_pct": round(100 * saving / v["nominal_plan_usd"], 2)})
     stage = result["first_stage"]
-    recommendation = []
+    recommendation: list[str] = []
     for lane, kg in stage["stochastic"]["air_reservation_kg_per_week"].items():
         nominal_kg = stage["nominal"]["air_reservation_kg_per_week"].get(lane, 0.0)
         recommendation.append(f"reserve {kg:g} kg/week of {lane} block space (nominal plan: {nominal_kg:g})")
@@ -336,7 +340,7 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list | None
                     "EVPI = most one should pay for knowing the scenario in advance."}
 
 
-def explain_plan_tool(session: Session, plan_id: str, scenario: str | None = None) -> dict:
+def explain_plan_tool(session: Session, plan_id: str, scenario: str | None = None) -> dict[str, Any]:
     stored = session.get(plan_id)
     result = explain_plan(session.network(stored.network), stored.plan, scenario)
     result["plan_id"] = plan_id
@@ -344,7 +348,8 @@ def explain_plan_tool(session: Session, plan_id: str, scenario: str | None = Non
     return result
 
 
-def write_memo_tool(session: Session, plan_ids: list, question: str, title: str | None = None) -> dict:
+def write_memo_tool(session: Session, plan_ids: list[Any], question: str,
+                    title: str | None = None) -> dict[str, Any]:
     from .memo import write_memo
     if not isinstance(plan_ids, list) or not 1 <= len(plan_ids) <= 6:
         raise ToolError("plan_ids must list 1-6 plan ids")
@@ -352,13 +357,13 @@ def write_memo_tool(session: Session, plan_ids: list, question: str, title: str 
     return {"path": path.as_posix(), "headline": headline}
 
 
-def _r(value, digits=0):
+def _r(value: float | None, digits: int = 0) -> float | None:
     if value is None:
         return None
     return round(value) if digits == 0 else round(value, digits)
 
 
-NETWORK = {"type": "string", "enum": list(NETWORKS),
+NETWORK: dict[str, Any] = {"type": "string", "enum": list(NETWORKS),
            "description": "asml = ASML-inspired spare parts NL->Singapore; "
                           "marvell = Marvell-inspired chips Taiwan/Malaysia->Singapore"}
 TOOLS = {tool.name: tool for tool in (

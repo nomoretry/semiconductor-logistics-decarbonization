@@ -22,7 +22,9 @@ Weeks are 1-based in the API and 0-based inside this module.
 from __future__ import annotations
 
 import time
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
+from typing import Any, cast
 
 import numpy as np
 import pulp
@@ -40,12 +42,12 @@ class Plan:
     reveal_week: int
     status: str
     objective: float | None
-    kpis: dict | None
-    per_scenario: dict
-    solution: dict
-    duals: dict
-    stats: dict
-    settings: dict
+    kpis: dict[str, Any] | None
+    per_scenario: dict[str, Any]
+    solution: dict[str, Any]
+    duals: dict[str, Any]
+    stats: dict[str, Any]
+    settings: dict[str, Any]
     issues: list[str] = field(default_factory=list)
 
     @property
@@ -53,14 +55,28 @@ class Plan:
         return self.status in ("optimal", "feasible")
 
     @property
+    def metrics(self) -> dict[str, Any]:
+        """KPIs of a feasible plan; ``kpis`` is None when the solver found no plan."""
+        if self.kpis is None:
+            raise ValueError(f"no KPIs: solver status {self.status}")
+        return self.kpis
+
+    @property
+    def objective_usd(self) -> float:
+        """Objective of a feasible plan in USD; ``objective`` is None when the solver found no plan."""
+        if self.objective is None:
+            raise ValueError(f"no objective: solver status {self.status}")
+        return self.objective
+
+    @property
     def scenario_names(self) -> list[str]:
         return [s.name for s in self.scenarios]
 
-    def first_stage(self, reveal_week: int) -> dict:
+    def first_stage(self, reveal_week: int) -> dict[str, Any]:
         """Decisions departing before ``reveal_week`` (scenario 0) plus the air reservation."""
         cut = reveal_week - 1
 
-        def early(part):
+        def early(part: str) -> dict[Any, Any]:
             return {key[1:]: v for key, v in self.solution.get(part, {}).items() if key[0] == 0 and key[-1] < cut}
 
         return {"ship": early("ship"), "act": early("act"), "air_res": early("air_res"),
@@ -68,9 +84,10 @@ class Plan:
                 "reserve": dict(self.solution.get("reserve", {}))}
 
 
-def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: float | None = None,
-          carbon_price: float = 0.0, service_level: float | None = None, objective: str = "cost",
-          terminal_hard: bool = False, sku_order_fee: float = 0.0, fixed_first_stage: dict | None = None,
+def solve(net: Network, scenarios: Sequence[Scenario] | None = None, *, reveal_week: int = 1,
+          carbon_cap_kg: float | None = None, carbon_price: float = 0.0, service_level: float | None = None,
+          objective: str = "cost",
+          terminal_hard: bool = False, sku_order_fee: float = 0.0, fixed_first_stage: dict[str, Any] | None = None,
           duals: bool = False, tighten: bool = False, integer_shipments: bool = False,
           time_limit: float = 60.0, mip_gap: float = 1e-3) -> Plan:
     scenarios = list(scenarios) if scenarios else [net.scenario("normal")]
@@ -100,9 +117,9 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     demands = [net.demand_for(sc) for sc in scenarios]
     model = pulp.LpProblem("network_planning", pulp.LpMinimize)
 
-    def staged(prefix, keys, **bounds):
+    def staged(prefix: str, keys: Iterable[tuple[Any, ...]], **bounds: Any) -> dict[tuple[Any, ...], Any]:
         """One variable per scenario; a single shared variable for weeks before the reveal."""
-        out = {}
+        out: dict[tuple[Any, ...], Any] = {}
         for key in keys:
             label = "_".join(map(str, key))
             if key[-1] < cut:
@@ -126,7 +143,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     short = {} if terminal_hard else {(k, s): model.add_variable(f"U_{k}_{s}", 0) for k in range(K) for s in range(S)}
 
     if fixed_first_stage:
-        def fix(var, value):
+        def fix(var: Any, value: float) -> None:
             var.lowBound = var.upBound = value
         for part, variables in (("ship", ship), ("act", act), ("air_res", air_res),
                                 ("air_spot", air_spot), ("order", order)):
@@ -136,11 +153,11 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
         for lane_id, var in reserve.items():
             fix(var, fixed_first_stage.get("reserve", {}).get(lane_id, 0.0))
 
-    capacity_rows = {}
+    capacity_rows: dict[str, tuple[str, str, int]] = {}
     expected_cost, expected_emissions = [], []
     for k, sc in enumerate(scenarios):
         demand = demands[k]
-        arrivals = [[[] for _ in range(T)] for _ in range(S)]
+        arrivals: list[list[list[Any]]] = [[[] for _ in range(T)] for _ in range(S)]
         cost, emissions = [], []
         for s, lane_id, t in ship_keys:
             lane, sku, week = lanes[lane_id], skus[s], t + 1
@@ -239,11 +256,11 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     if status not in ("optimal", "feasible"):
         return Plan(net.name, scenarios, reveal_week, status, None, None, {}, {}, {}, stats, settings)
 
-    def value(var):
+    def value(var: Any) -> float:
         return 0.0 if var.varValue is None else float(var.varValue)
 
-    def keep(variables, integer=False):
-        out = {}
+    def keep(variables: dict[Any, Any], integer: bool = False) -> dict[Any, float]:
+        out: dict[Any, float] = {}
         for key, var in variables.items():
             v = value(var)
             if abs(v) > 1e-9:
@@ -265,7 +282,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
         if drift > 1e-6:
             issues.append(f"solver objective differs from independent accounting by {drift:.2e}")
 
-    dual_values = {}
+    dual_values: dict[str, Any] = {}
     if duals:
         dual_values = _duals(model, ship, act, order, capacity_rows, time_limit)
     return Plan(net.name, scenarios, reveal_week, status,
@@ -273,7 +290,8 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
                 accounting["expected"], accounting["per_scenario"], solution, dual_values, stats, settings, issues)
 
 
-def _duals(model, ship, act, order, capacity_rows, time_limit) -> dict:
+def _duals(model: Any, ship: dict[Any, Any], act: dict[Any, Any], order: dict[Any, Any],
+           capacity_rows: dict[str, tuple[str, str, int]], time_limit: float) -> dict[str, Any]:
     """Shadow prices of the LP obtained by fixing lane activations and order flags at the MIP optimum
     and relaxing shipment integrality. MIPs have no duals; this is the standard fix-and-price approach."""
     for var in set(ship.values()):
@@ -297,9 +315,9 @@ def _duals(model, ship, act, order, capacity_rows, time_limit) -> dict:
         ({"scenario": scenario, "lane": lane, "week": week, "usd_per_kg": round(-float(cap.pi), 4)}
          for name, (scenario, lane, week) in capacity_rows.items()
          if (cap := row(name)) is not None and cap.pi is not None and -cap.pi > 1e-6),
-        key=lambda item: -item["usd_per_kg"])
+        key=lambda item: -cast(float, item["usd_per_kg"]))
     return result
 
 
-def _finite(value):
+def _finite(value: Any) -> float | None:
     return None if value is None or not np.isfinite(value) else float(value)

@@ -10,9 +10,13 @@ from __future__ import annotations
 
 import re
 import time
+from typing import TYPE_CHECKING, Any
 
 from .agent import AgentResult
 from .guardrails import check_answer
+
+if TYPE_CHECKING:
+    from .tools import Session
 
 FLAGS = re.IGNORECASE
 SCENARIO_PATTERNS = (
@@ -48,14 +52,14 @@ OUT_OF_SCOPE = ("这个问题超出了我的范围。我能做的是：查看物
 NOTE = "说明：SKU、需求、容量、费率和扰动幅度为合成情景假设；距离与排放因子来自公开来源。"
 
 
-def _first(pattern, text):
+def _first(pattern: str, text: str) -> str | None:
     match = re.search(pattern, text, FLAGS)
     if not match:
         return None
     return next((g for g in match.groups() if g is not None), match.group(0))
 
 
-def parse(question: str, context: dict | None = None) -> dict:
+def parse(question: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
     context = context or {}
     scenario = next((name for name, pattern in SCENARIO_PATTERNS if re.search(pattern, question, FLAGS)), None)
     if re.search(MARVELL, question, FLAGS):
@@ -63,16 +67,16 @@ def parse(question: str, context: dict | None = None) -> dict:
     elif re.search(ASML, question, FLAGS):
         network = "asml"
     else:
-        network = NETWORK_OF.get(scenario) or context.get("network", "asml")
+        network = NETWORK_OF.get(scenario or "") or context.get("network", "asml")
     if scenario in NETWORK_OF and NETWORK_OF[scenario] != network:
         network = NETWORK_OF[scenario]
     weeks = re.search(WEEKS, question, FLAGS)
     delay, capacity = _first(DELAY, question), _first(CAPACITY, question)
-    custom = None
+    custom: dict[str, Any] | None = None
     if weeks and (delay or capacity):
         start, end = [int(g) for g in weeks.groups() if g is not None][:2]
         mode = next((m for m, pattern in MODES if re.search(pattern, question, FLAGS)), "ocean")
-        disruption = {"mode": mode, "start_week": start, "end_week": end}
+        disruption: dict[str, Any] = {"mode": mode, "start_week": start, "end_week": end}
         if delay:
             disruption["extra_lead_weeks"] = int(delay)
         if capacity:
@@ -100,10 +104,10 @@ def parse(question: str, context: dict | None = None) -> dict:
     return request
 
 
-def run_rules(question: str, session) -> AgentResult:
+def run_rules(question: str, session: Session) -> AgentResult:
     started, first = time.perf_counter(), len(session.calls)
     req = parse(question, session.context)
-    lines = []
+    lines: list[str] = []
     if not req["in_scope"]:
         return _result(question, OUT_OF_SCOPE, session, first, started)
     net = req["network"]
@@ -127,7 +131,7 @@ def run_rules(question: str, session) -> AgentResult:
                 lines.append("建模假设：" + "；".join(created["assumptions"]))
     if scenario:
         session.context["scenario"] = scenario
-    plan_ids = []
+    plan_ids: list[str] = []
     needs_plan = scenario or req["cap_pct"] or req["price"] or (req["explain"] and not req["hedge"]) or (
         req["memo"] and not session.plans)
     if needs_plan:
@@ -183,10 +187,10 @@ def run_rules(question: str, session) -> AgentResult:
                              f"{p['mac_avg_usd_per_t']:,} 美元/吨，影子价格 {p['shadow_price_usd_per_t']} 美元/吨")
         lines.append(f"在该服务水平下最多可减排 {fr['max_reduction_pct']}%（最低 {fr['min_emissions_t']} 吨）。")
     if req["hedge"]:
-        args = {"network": net}
-        target = req["scenario"] if req["scenario"] and req["scenario"] != "normal" else None
-        if req["probability_pct"] and target:
-            args.update(scenarios=["normal", target],
+        args: dict[str, Any] = {"network": net}
+        hedge_target = req["scenario"] if req["scenario"] and req["scenario"] != "normal" else None
+        if req["probability_pct"] and hedge_target:
+            args.update(scenarios=["normal", hedge_target],
                         probabilities=[100 - req["probability_pct"], req["probability_pct"]])
         hedge = session.call("hedge_disruption_risk", args)
         if "error" in hedge:
@@ -215,7 +219,7 @@ def run_rules(question: str, session) -> AgentResult:
     return _result(question, "\n".join(lines), session, first, started)
 
 
-def _result(question, answer, session, first, started) -> AgentResult:
+def _result(question: str, answer: str, session: Session, first: int, started: float) -> AgentResult:
     calls = session.calls[first:]
     check = check_answer(answer, [c["result"] for c in calls], question)
     return AgentResult(question, answer, "rule", calls, len(calls), check, round(time.perf_counter() - started, 2))

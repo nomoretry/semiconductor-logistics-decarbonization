@@ -104,6 +104,8 @@ python -m semiconductor_logistics verify-run --output artifacts/rules
 
 默认检查使用本地合成数据，不调用 API。`make smoke` 运行规则评测、工具环境、小型BC/PPO训练和重放校验。
 
+`make quality` 对规划引擎、规划 Agent 及其测试运行 Ruff（含 120 字符行长限制），并对 `network_planning`、`planning_agent` 的全部模块运行 strict mypy。按哈希冻结的研究包保持原样，不做格式化。
+
 ## 运行优化实验
 
 ```bash

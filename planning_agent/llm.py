@@ -22,6 +22,7 @@ import os
 import time
 import urllib.error
 import urllib.request
+from typing import Any, cast
 
 
 class LLMError(RuntimeError):
@@ -45,13 +46,16 @@ class OpenAICompatibleClient:
         self.timeout = timeout or float(os.getenv("LLM_TIMEOUT") or 600)
         self.retries = retries
         self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
-        self.usage = {"prompt_tokens": 0, "cached_tokens": 0, "completion_tokens": 0, "reasoning_tokens": 0, "calls": 0}
-        self._output_items = {}  # call_id -> raw Responses output items (reasoning + function calls) to replay
+        self.usage: dict[str, int] = {"prompt_tokens": 0, "cached_tokens": 0, "completion_tokens": 0,
+                                      "reasoning_tokens": 0, "calls": 0}
+        # call_id -> raw Responses output items (reasoning + function calls) to replay
+        self._output_items: dict[str, list[dict[str, Any]]] = {}
 
-    def chat(self, messages: list[dict], tools: list[dict] | None = None, temperature: float = 0.1) -> dict:
+    def chat(self, messages: list[dict[str, Any]], tools: list[dict[str, Any]] | None = None,
+             temperature: float = 0.1) -> dict[str, Any]:
         if self.api_style == "responses":
             return self._responses(messages, tools)
-        body = {"model": self.model, "messages": messages}
+        body: dict[str, Any] = {"model": self.model, "messages": messages}
         if self.send_temperature:
             body["temperature"] = temperature
         if self.reasoning_effort:
@@ -80,8 +84,9 @@ class OpenAICompatibleClient:
         return {"role": "assistant", "content": message.get("content") or "",
                 "tool_calls": message.get("tool_calls") or []}
 
-    def _responses(self, messages, tools) -> dict:
-        body = {"model": self.model, "input": self._to_input(messages)}
+    def _responses(self, messages: list[dict[str, Any]],
+                   tools: list[dict[str, Any]] | None) -> dict[str, Any]:
+        body: dict[str, Any] = {"model": self.model, "input": self._to_input(messages)}
         if tools:
             body["tools"] = [{"type": "function", **t["function"]} for t in tools]
         if self.reasoning_effort:
@@ -106,8 +111,9 @@ class OpenAICompatibleClient:
                 self._output_items[call["id"]] = replay
         return {"role": "assistant", "content": "".join(text), "tool_calls": calls}
 
-    def _to_input(self, messages) -> list:
-        items, replayed = [], set()
+    def _to_input(self, messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        items: list[dict[str, Any]] = []
+        replayed: set[str] = set()
         for m in messages:
             role = m.get("role")
             if role == "tool":
@@ -126,14 +132,14 @@ class OpenAICompatibleClient:
                 items.append({"role": role, "content": m["content"]})
         return items
 
-    def _post(self, path: str, body: dict) -> dict:
+    def _post(self, path: str, body: dict[str, Any]) -> dict[str, Any]:
         request = urllib.request.Request(
             f"{self.base_url}/{path}", data=json.dumps(body).encode("utf-8"),
             headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"})
         for attempt in range(self.retries + 1):
             try:
                 with urllib.request.urlopen(request, timeout=self.timeout) as response:
-                    return json.load(response)
+                    return cast(dict[str, Any], json.load(response))
             except urllib.error.HTTPError as error:
                 if error.code in (429, 500, 502, 503, 504) and attempt < self.retries:
                     time.sleep(2 ** attempt)

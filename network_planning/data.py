@@ -13,8 +13,10 @@ from __future__ import annotations
 
 import json
 import math
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, cast
 
 import numpy as np
 
@@ -89,7 +91,7 @@ class Scenario:
     demand_weeks: tuple[int, int] | None = None
     description: str = ""
 
-    def _active(self, lane: str, week: int):
+    def _active(self, lane: str, week: int) -> list[Disruption]:
         return [d for d in self.disruptions if d.active(lane, week)]
 
     def lead(self, lane: Lane, week: int) -> int:
@@ -108,13 +110,13 @@ class Scenario:
         return Scenario(self.name, probability, self.disruptions, self.demand_factor,
                         self.demand_weeks, self.description)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> dict[str, Any]:
         return {"name": self.name, "probability": self.probability, "description": self.description,
                 "demand_factor": self.demand_factor, "demand_weeks": self.demand_weeks,
                 "disruptions": [d.__dict__ | {"lanes": list(d.lanes)} for d in self.disruptions]}
 
 
-def scenario_from_spec(name: str, spec: dict, probability: float | None = None) -> Scenario:
+def scenario_from_spec(name: str, spec: dict[str, Any], probability: float | None = None) -> Scenario:
     disruptions = tuple(Disruption(tuple(d["lanes"]), int(d["start_week"]), int(d["end_week"]),
                                    int(d.get("extra_lead_weeks", 0)), float(d.get("capacity_factor", 1.0)),
                                    float(d.get("distance_factor", 1.0)), float(d.get("cost_factor", 1.0)))
@@ -143,7 +145,7 @@ class Network:
     air_spot_premium: float
     reservation_usd_per_kg_week: float
     terminal_penalty_weeks: float
-    scenario_specs: dict
+    scenario_specs: dict[str, dict[str, Any]]
     stochastic_set: tuple[str, ...]
 
     def scenario(self, name: str, probability: float | None = None) -> Scenario:
@@ -151,7 +153,8 @@ class Network:
             raise ValueError(f"unknown scenario '{name}' for {self.name}; known: {sorted(self.scenario_specs)}")
         return scenario_from_spec(name, self.scenario_specs[name], probability)
 
-    def scenarios(self, names=None, probabilities=None) -> list[Scenario]:
+    def scenarios(self, names: Sequence[str] | None = None,
+                  probabilities: Sequence[float | None] | None = None) -> list[Scenario]:
         """Scenario set with probabilities normalised to one (default: the configured stochastic set)."""
         names = list(names or self.stochastic_set)
         result = [self.scenario(n) if probabilities is None else self.scenario(n, p)
@@ -167,7 +170,7 @@ class Network:
         start, end = scenario.demand_weeks or (1, self.weeks)
         demand = self.demand.astype(float).copy()
         demand[:, start - 1:end] *= scenario.demand_factor
-        return np.rint(demand).astype(int)
+        return cast(np.ndarray, np.rint(demand).astype(int))
 
     def validate(self, scenario: Scenario) -> None:
         for d in scenario.disruptions:
@@ -190,7 +193,7 @@ class Network:
         if not 0 <= scenario.demand_factor <= 3:
             raise ValueError("demand_factor must be between 0 and 3")
 
-    def describe(self) -> dict:
+    def describe(self) -> dict[str, Any]:
         kg = self.demand * np.array([s.mass_kg for s in self.skus])[:, None]
         density = [s.value_usd / s.mass_kg for s in self.skus]
         return {
@@ -224,16 +227,16 @@ def build_network(name: str = "asml", n_skus: int | None = None, weeks: int | No
     routes, factors, jitter = case["routes"], emission_factors(), common["sku_jitter"]
     rng = np.random.default_rng(seed)
 
-    skus = []
+    skus: list[Sku] = []
     for i in range(n_skus):
         k = i % len(case["sku_names"])
-        lanes = tuple(r["name"] for j, r in enumerate(routes) if case["eligibility"][j][k])
-        origin = next(r["origin"] for r in routes if r["name"] == lanes[0])
+        sku_lanes = tuple(r["name"] for j, r in enumerate(routes) if case["eligibility"][j][k])
+        origin = next(r["origin"] for r in routes if r["name"] == sku_lanes[0])
         value = round(case["unit_value_usd"][k] * rng.uniform(*jitter["value"]), -1)
         skus.append(Sku(id=f"{case['sku_names'][k]}_{i + 1:03d}", template=case["sku_names"][k], origin=origin,
                         mass_kg=round(case["mass_kg"][k] * rng.uniform(*jitter["mass"]), 2), value_usd=value,
                         mean_demand=round(case["mean_order_units"][k] * rng.uniform(*jitter["demand"]), 2),
-                        backlog_usd=round(spec["backlog_rate_per_week"] * value, 2), lanes=lanes))
+                        backlog_usd=round(spec["backlog_rate_per_week"] * value, 2), lanes=sku_lanes))
     # Same generator family as shared/experiments.synthetic_orders: Poisson orders with
     # a zero-order probability, rescaled so the mean matches the SKU's mean demand.
     p0 = case["zero_demand_probability"]
@@ -241,7 +244,7 @@ def build_network(name: str = "asml", n_skus: int | None = None, weeks: int | No
     demand = rng.poisson(means / (1 - p0), size=(weeks, n_skus)).T
     demand[rng.random(demand.shape) < p0] = 0
 
-    lanes = {}
+    lanes: dict[str, Lane] = {}
     for r in routes:
         lane_spec = spec["lanes"][r["name"]]
         base_kg = sum(s.mean_demand * s.mass_kg for s in skus if r["name"] in s.lanes)

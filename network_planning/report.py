@@ -7,6 +7,7 @@ import json
 import platform
 from importlib import metadata
 from pathlib import Path
+from typing import Any
 
 from .analysis import (
     SCALE_VARIANTS,
@@ -17,17 +18,18 @@ from .analysis import (
     scenario_impact,
     stochastic_value,
 )
-from .data import CONFIG, NETWORKS, ROOT, build_network
+from .data import CONFIG, NETWORKS, ROOT, Network, build_network
 from .model import solve
 
 PRICES = (0, 50, 100, 200, 400, 800, 1600, 3200, 6400)
-QUICK_SCALE = (("continuous_flows", {}, (10, 25)), ("integer_units", {"integer_shipments": True}, (10,)))
+QUICK_SCALE: tuple[tuple[str, dict[str, Any], tuple[int, ...]], ...] = (
+    ("continuous_flows", {}, (10, 25)), ("integer_units", {"integer_shipments": True}, (10,)))
 
 
-def run(output: Path, *, n_skus: int = 12, weeks: int = 16, seed: int = 7, quick: bool = False) -> dict:
+def run(output: Path, *, n_skus: int = 12, weeks: int = 16, seed: int = 7, quick: bool = False) -> dict[str, Any]:
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
-    results = {"settings": {"n_skus": n_skus, "weeks": weeks, "seed": seed, "quick": quick,
+    results: dict[str, Any] = {"settings": {"n_skus": n_skus, "weeks": weeks, "seed": seed, "quick": quick,
                             "mip_gap": 1e-3, "reveal_week": 3, "frontier_service_level": 0.98},
                "networks": {}}
     for name in NETWORKS:
@@ -49,29 +51,30 @@ def run(output: Path, *, n_skus: int = 12, weeks: int = 16, seed: int = 7, quick
     return results
 
 
-def _integrality(net) -> list[dict]:
+def _integrality(net: Network) -> list[dict[str, Any]]:
     """Objective and time with integer versus continuous shipment units."""
-    rows = []
+    rows: list[dict[str, Any]] = []
     base = solve(net, service_level=0.98, terminal_hard=True)
-    cases = (("uncapped", {"service_level": 0.98, "terminal_hard": True}),
+    cases: tuple[tuple[str, dict[str, Any]], ...] = (("uncapped", {"service_level": 0.98, "terminal_hard": True}),
              ("cap_60pct", {"service_level": 0.98, "terminal_hard": True,
-                            "carbon_cap_kg": 0.6 * base.kpis["emissions_t"] * 1000}),
+                            "carbon_cap_kg": 0.6 * base.metrics["emissions_t"] * 1000}),
              ("stochastic", {"scenarios": net.scenarios(), "reveal_week": 3}))
     for label, options in cases:
         continuous = solve(net, **options)
         integer = solve(net, integer_shipments=True, **options)
-        rows.append({"case": label, "continuous_usd": round(continuous.objective, 2),
-                     "integer_usd": round(integer.objective, 2),
-                     "integer_premium_pct": round(100 * (integer.objective / continuous.objective - 1), 4),
+        rows.append({"case": label, "continuous_usd": round(continuous.objective_usd, 2),
+                     "integer_usd": round(integer.objective_usd, 2),
+                     "integer_premium_pct": round(100 * (integer.objective_usd / continuous.objective_usd - 1), 4),
                      "continuous_seconds": continuous.stats["solve_seconds"],
                      "integer_seconds": integer.stats["solve_seconds"], "integer_status": integer.status})
     return rows
 
 
-def _write(output: Path, results: dict) -> None:
+def _write(output: Path, results: dict[str, Any]) -> None:
     (output / "results.json").write_text(json.dumps(results, indent=2, ensure_ascii=False, default=_json),
                                          encoding="utf-8", newline="\n")
-    tables = {"scenario_impact.csv": [], "frontier.csv": [], "price_sweep.csv": [], "integrality.csv": []}
+    tables: dict[str, list[dict[str, Any]]] = {"scenario_impact.csv": [], "frontier.csv": [], "price_sweep.csv": [],
+                                               "integrality.csv": []}
     for name, block in results["networks"].items():
         tables["scenario_impact.csv"] += [{"network": name, **row} for row in block["scenario_impact"]]
         tables["frontier.csv"] += [{"network": name, **row} for row in block["frontier"]["points"]]
@@ -98,7 +101,7 @@ def _write(output: Path, results: dict) -> None:
                                           newline="\n")
 
 
-def _figures(output: Path, results: dict) -> None:
+def _figures(output: Path, results: dict[str, Any]) -> None:
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -140,7 +143,7 @@ def _figures(output: Path, results: dict) -> None:
     plt.close(fig)
 
 
-def _markdown(results: dict) -> str:
+def _markdown(results: dict[str, Any]) -> str:
     s = results["settings"]
     lines = ["# 网络规划引擎实验报告 / Network planning engine report", "",
              "本文提供中英文版本，中文在前，英文在后。",
@@ -235,7 +238,7 @@ def _markdown(results: dict) -> str:
     return "\n".join(lines)
 
 
-def _csv(path: Path, rows: list[dict]) -> None:
+def _csv(path: Path, rows: list[dict[str, Any]]) -> None:
     keys = list(dict.fromkeys(k for row in rows for k in row))
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=keys, lineterminator="\n")
@@ -254,7 +257,7 @@ def _version(package: str) -> str | None:
         return None
 
 
-def _json(value):
+def _json(value: Any) -> Any:
     if hasattr(value, "item"):
         return value.item()
     if hasattr(value, "tolist"):
@@ -264,17 +267,17 @@ def _json(value):
     raise TypeError(f"not JSON serialisable: {type(value).__name__}")
 
 
-def _pairs(mapping: dict) -> str:
+def _pairs(mapping: dict[str, float]) -> str:
     return "、".join(f"{key} {value:,.1f}" for key, value in mapping.items()) or "无"
 
 
-def _num(value, digits):
+def _num(value: float | None, digits: int) -> str:
     return "–" if value is None else f"{value:,.{digits}f}"
 
 
-def _pct(value):
+def _pct(value: float | None) -> str:
     return "–" if value is None else f"{value:+.2f}%"
 
 
-def _share(value):
+def _share(value: float | None) -> str:
     return "–" if value is None else f"{value:.1%}"
