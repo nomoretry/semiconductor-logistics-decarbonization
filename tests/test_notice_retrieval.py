@@ -1,0 +1,184 @@
+import hashlib
+import itertools
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+from planning_agent import retrieval
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class NoticeCorpusTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.notices = retrieval.load_notices()
+        cls.by_id = {n.id: n for n in cls.notices}
+
+    def test_corpus_has_24_distinct_excerpts_in_19_event_groups(self):
+        self.assertEqual(len(self.notices), 24)
+        self.assertEqual(len(self.by_id), 24)
+        self.assertEqual(len({n.text_sha256 for n in self.notices}), 24)
+        self.assertEqual(len({n.group for n in self.notices}), 19)
+        facts = json.loads((ROOT / retrieval.FACTS_DATASET).read_text(encoding="utf-8"))
+        development = {item["text_sha256"] for item in facts["splits"]["development"]}
+        real = {n.text_sha256 for n in self.notices if n.id.startswith("R")}
+        self.assertEqual(development, real)  # the development split only repeats real_notices_v1
+
+    def test_manifest_matches_the_datasets_and_holds_no_notice_text(self):
+        self.assertTrue(retrieval.manifest_matches(notices=self.notices))
+        text = retrieval.MANIFEST.read_text(encoding="utf-8")
+        for notice in self.notices:
+            self.assertNotIn(notice.text[:30], text, notice.id)
+        documents = json.loads(text)["documents"]
+        self.assertEqual([d["excerpt_sha256"] for d in documents], [n.text_sha256 for n in self.notices])
+        self.assertTrue(all(d["url"].startswith("https://") for d in documents))
+
+    def test_tokens_split_english_words_and_chinese_bigrams(self):
+        self.assertEqual(retrieval.tokenize("Blank voyages and delays at the ports"),
+                         ["blank", "voyage", "delay", "port"])
+        self.assertEqual(retrieval.tokenize("码头罢工"), ["码头", "头罢", "罢工"])
+        tokens, used = retrieval.expand("鹿特丹罢工", retrieval.load_glossary())
+        self.assertIn("rotterdam", tokens)
+        self.assertIn("strike", tokens)
+        self.assertEqual(sorted(used), ["罢工", "鹿特丹"])
+
+    def test_search_finds_the_event_and_the_glossary_carries_chinese_questions(self):
+        index = retrieval.Index(self.notices)
+        self.assertEqual(index.search("Red Sea diversion via the Cape of Good Hope")[0].notice.id, "R014")
+        self.assertEqual(index.search("红海绕行好望角")[0].notice.id, "R014")
+        self.assertEqual(index.search("红海绕行好望角", use_glossary=False), [])
+        hits = index.search("鹿特丹码头罢工", k=3)
+        self.assertEqual(hits[0].notice.id, "R006")
+        self.assertEqual([h.rank for h in hits], [1, 2, 3])
+        self.assertIn("strike", hits[0].matched)
+
+    def test_random_expectation_matches_enumeration(self):
+        n, relevant = 5, 2
+        orders = list(itertools.permutations(range(n)))
+        for k in (1, 3, 5):
+            expected = retrieval.random_expectation(n, relevant, k)
+            hits = sum(any(i < relevant for i in order[:k]) for order in orders) / len(orders)
+            recall = sum(sum(i < relevant for i in order[:k]) / relevant for order in orders) / len(orders)
+            self.assertAlmostEqual(expected["hit"], hits)
+            self.assertAlmostEqual(expected["recall"], recall)
+        mrr = sum(1 / (1 + min(order.index(i) for i in range(relevant))) for order in orders) / len(orders)
+        self.assertAlmostEqual(retrieval.random_expectation(n, relevant, 1)["mrr"], mrr)
+
+    def test_saved_evaluation_is_reproduced_and_names_its_inputs(self):
+        result = retrieval.evaluate(self.notices)
+        self.assertTrue(retrieval.results_match(result))
+        summary = result["summary"]
+        self.assertEqual(summary["queries"], {"en": 19, "zh": 19})
+        self.assertEqual(summary["independent_cases"], 19)
+        self.assertEqual(summary["inputs"]["queries_sha256"], retrieval._sha256(retrieval.QUERIES))
+        self.assertIn("development check", summary["status"])
+
+
+class NoticeFetchTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.raw = Path(self.tmp.name)
+        notices = {n.id: n for n in retrieval.load_notices()}
+        self.picked = [notices["R014"], notices["R006"]]
+
+    def test_fetch_refuses_without_consent_and_contacts_nothing(self):
+        calls = []
+        with self.assertRaises(PermissionError):
+            retrieval.fetch(self.picked, self.raw, consent=False, get=lambda url: calls.append(url) or (200, "", b""))
+        self.assertEqual(calls, [])
+        self.assertFalse(any(self.raw.iterdir()))
+
+    def test_fetch_saves_pages_and_logs_hashes_with_a_fake_network(self):
+        page = (f"<html><head><title>x</title><script>var a = 1;</script></head><body><p>Intro</p>"
+                f"<p>{self.picked[0].text}</p></body></html>").encode()
+
+        def fake(url):
+            if url == self.picked[0].url:
+                return 200, "text/html", page
+            raise OSError("connection refused")
+
+        records = retrieval.fetch(self.picked, self.raw, consent=True, get=fake, pause=0)
+        first, second = records
+        self.assertEqual(first["status"], 200)
+        self.assertEqual(first["bytes"], len(page))
+        self.assertTrue(first["excerpt_found"])
+        self.assertEqual((self.raw / "R014.html").read_bytes(), page)
+        self.assertEqual(first["sha256"], hashlib.sha256(page).hexdigest())
+        self.assertIsNone(second["status"])
+        self.assertIn("connection refused", second["error"])
+        log = json.loads((self.raw / "fetch_log.json").read_text(encoding="utf-8"))
+        self.assertEqual([r["id"] for r in log], ["R014", "R006"])
+
+    def test_downloaded_pages_become_searchable_passages(self):
+        body = ("<p>Short</p><style>p {}</style><p>Lashing crews will hold an extended action affecting zebrafish "
+                "terminals for several days, according to the carrier.</p>")
+        self.assertNotIn("p {}", retrieval.page_text(body))
+        (self.raw / "R006.html").write_text(body, encoding="utf-8")
+        extra = retrieval.local_passages(self.picked, self.raw)
+        self.assertEqual(len(extra), 1)  # the short paragraph is dropped
+        index = retrieval.Index(self.picked, extra=extra)
+        hit = index.search("zebrafish")[0]
+        self.assertEqual((hit.notice.id, hit.local), ("R006", True))
+
+    def test_text_shared_by_several_pages_is_dropped_as_boilerplate(self):
+        menu = "<p>Subscribe to our newsletter for logistics news and rate announcements from the carrier.</p>"
+        for notice, story in zip(self.picked, ("Cape routing adds two weeks to the Asia to Europe voyage, says the "
+                                               "carrier in its update.", "Lashing crews in Rotterdam extend their "
+                                               "action into a second week, the carrier said."), strict=True):
+            (self.raw / f"{notice.id}.html").write_text(f"{menu}<p>{story}</p>", encoding="utf-8")
+        extra = retrieval.local_passages(self.picked, self.raw)
+        self.assertEqual(len(extra), 2)
+        self.assertFalse(any("newsletter" in passage for _, passage in extra))
+        pages = retrieval.downloaded_pages(self.picked, self.raw)
+        self.assertEqual(pages["R014"], hashlib.sha256((self.raw / "R014.html").read_bytes()).hexdigest())
+
+    def test_full_text_evaluation_names_its_pages_and_keeps_excerpt_results_apart(self):
+        notices = retrieval.load_notices()
+        r009 = next(n for n in notices if n.id == "R009")
+        extra = [(r009, "Vessels keep sailing around the Cape of Good Hope because of the Red Sea security situation.")]
+        full = retrieval.evaluate(notices, extra=extra, pages={"R009": "0" * 64})
+        plain = retrieval.evaluate(notices)
+        self.assertNotIn("full_text", plain["summary"])
+        self.assertEqual(full["summary"]["full_text"]["pages"], 1)
+        self.assertIn("R014", full["summary"]["full_text"]["notices_without_page"])
+        rank = {c["id"]: c for c in full["cases"]}["G06-zh"]["bm25_glossary_full_text"]["relevant_ranks"]
+        before = {c["id"]: c for c in plain["cases"]}["G06-zh"]["bm25_glossary"]["relevant_ranks"]
+        self.assertLess(rank[0], before[0])  # R009 is found once its page names the Red Sea
+        self.assertEqual(full["summary"]["full_text"]["passage_mode"], "all")
+        with tempfile.TemporaryDirectory() as folder:
+            retrieval.write_results(full, Path(folder), "full_text_")
+            self.assertTrue(retrieval.results_match(full, Path(folder), "full_text_"))
+            self.assertFalse((Path(folder) / "summary.json").exists())
+
+    def test_passage_modes_limit_how_many_chances_a_long_page_gets(self):
+        long, short = self.picked
+        extra = [(long, f"Paragraph {i} about the Cape route and vessel schedules in detail.") for i in range(8)]
+        extra.append((short, "Lashing crews in Rotterdam stop work for two days this week."))
+        self.assertEqual(len(retrieval.arrange(extra, "all")), 9)
+        self.assertEqual([n.id for n, _ in retrieval.arrange(extra, "lead5")], ["R014"] * 5 + ["R006"])
+        joined = retrieval.arrange(extra, "page")
+        self.assertEqual(len(joined), 2)
+        hit = retrieval.Index(self.picked, extra=joined).search("paragraph 7 cape")[0]
+        self.assertEqual(hit.passage, "Paragraph 7 about the Cape route and vessel schedules in detail.")
+        with self.assertRaises(ValueError):
+            retrieval.arrange(extra, "best")
+
+    def test_search_uses_the_mode_the_saved_comparison_selected(self):
+        saved = json.loads((retrieval.RESULTS / "full_text_comparison.json").read_text(encoding="utf-8"))
+        self.assertEqual(saved["selected"], retrieval.FULL_TEXT_MODE)
+        self.assertEqual(saved["selected"], retrieval.select_mode(saved["excerpts_only"], saved["with_full_text"]))
+
+    def test_selection_rule_needs_no_loss_against_excerpts(self):
+        base = {"recall@3": 0.95, "hit@1": 0.97, "mrr": 0.98}
+        modes = {"all": {"recall@3": 0.94, "hit@1": 1.0, "mrr": 1.0},  # better first hit, lower recall: out
+                 "lead5": {"recall@3": 0.96, "hit@1": 0.97, "mrr": 0.98},
+                 "page": {"recall@3": 0.96, "hit@1": 1.0, "mrr": 0.99}}
+        self.assertEqual(retrieval.select_mode(base, modes), "page")  # equal recall@3, higher MRR
+        self.assertIsNone(retrieval.select_mode(base, {"all": modes["all"]}))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,455 @@
+{
+  "corpus": "notice_corpus_v1",
+  "text_policy": "No notice text is stored here. Excerpts stay in the frozen datasets named by `dataset`; full pages are downloaded locally by `python -m planning_agent corpus fetch --yes` into data_sources/raw/notices/ and never committed.",
+  "rights": "Notice text belongs to the respective carriers; see THIRD_PARTY_NOTICES.md.",
+  "documents": [
+    {
+      "id": "R001",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Capacity Adjustment Changes Far East Asia to Europe Services",
+      "url": "https://www.maersk.com/news/articles/2024/06/05/capacity-adjustment-changes-far-east-asia-to-europe-services",
+      "published_date": "2024-06-05",
+      "accessed_date": "2026-10-29",
+      "event_group": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R001",
+      "excerpt_sha256": "aaa994b2ca546ce2160f067720f64fd04ad2c0cbae7e6b1ceb9ec4c0340c1314",
+      "event_kind": "voyage_slide",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R002",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Blanking Far East Asia to Med Services",
+      "url": "https://www.maersk.com/news/articles/2024/06/03/blanking-far-east-asia-to-med-services",
+      "published_date": "2024-06-03",
+      "accessed_date": "2026-10-29",
+      "event_group": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R002",
+      "excerpt_sha256": "22978ec37c359ad7903a5778509750ab102b809249655bee8a4ba60b55264084",
+      "event_kind": "blank_sailings",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R003",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Voyage Slide - Far East Asia to Med Services",
+      "url": "https://www.maersk.com/news/articles/2024/07/25/voyage-slide-far-east-asia-to-med-services",
+      "published_date": "2024-07-25",
+      "accessed_date": "2026-10-29",
+      "event_group": "asia_europe_congestion_schedule_changes_2024q2q3",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R003",
+      "excerpt_sha256": "568dfe93d18191c28f0f6a2e39a979907957ddcaf34c365b4e6215423e30f2e5",
+      "event_kind": "voyage_slide",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R004",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "North Europe Port Update",
+      "url": "https://www.maersk.com/news/articles/2025/04/17/north-europe-port-update",
+      "published_date": "2025-04-17",
+      "accessed_date": "2026-10-29",
+      "event_group": "north_europe_terminal_congestion_easter_2025",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R004",
+      "excerpt_sha256": "bc3495a452af6dfafe836b392986f5e40ae84dce7ed4fbfc53c3315f503b7958",
+      "event_kind": "port_congestion",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R005",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Slow Operations at Hutchinson Port Delta II in Rotterdam",
+      "url": "https://www.maersk.com/news/articles/2025/02/11/slow-operations-at-hutchinson-port-delta-in-rotterdam",
+      "published_date": "2025-02-11",
+      "accessed_date": "2026-10-29",
+      "event_group": "rotterdam_delta_ii_labour_disruption_2025febmar",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R005",
+      "excerpt_sha256": "d67b59b80bd8f0a5651448cb45ab910f9e5907cd449bab19d395c53e3f0ccba4",
+      "event_kind": "contingency_withdrawal",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R006",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Customer advisory: Strike action of lashing companies in Rotterdam",
+      "url": "https://www.maersk.com/news/articles/2025/10/08/strike-action-of-lashing-companies-in-rotterdam",
+      "published_date": "2025-10-08",
+      "accessed_date": "2026-10-29",
+      "event_group": "rotterdam_lashers_strike_2025oct",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R006",
+      "excerpt_sha256": "d54a09e416594d674d1ff4167e09cc2dcc03ce45727cd8cc07f9b3bee5c59579",
+      "event_kind": "strike_announcement",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R007",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Customer Advisory – AE12 Voyage Slide",
+      "url": "https://www.maersk.com/news/articles/2025/09/18/ca-ae12-voyage-slide",
+      "published_date": "2025-09-18",
+      "accessed_date": "2026-10-29",
+      "event_group": "gemini_adriatic_schedule_disruption_2025q3q4",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R007",
+      "excerpt_sha256": "ce28e5a6911c83106a64db974bedc10e4e9c8ad93668f070d3c90f7754b014cc",
+      "event_kind": "network_delay",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R008",
+      "publisher": "Hapag-Lloyd",
+      "title": "Shipping between Asia and the South Europe? Here’s an important service update",
+      "url": "https://www.hapag-lloyd.com/en/services-information/news/2025/09/shipping-between-asia-and-the-south-europe--here-s-an-important-.html",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "event_group": "gemini_adriatic_schedule_disruption_2025q3q4",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R008",
+      "excerpt_sha256": "7ef14e1c17e11c861e23ac98da6eb3092e0e63c635f9e72499f904cbc08d1c5c",
+      "event_kind": "port_rotation_change",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R009",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Maersk Asia Pacific Market Update - June 2024",
+      "url": "https://www.maersk.com/news/articles/2024/06/12/navigating-challenges-in-red-sea-and-beyond",
+      "published_date": "2024-06-12",
+      "accessed_date": "2026-10-29",
+      "event_group": "red_sea_cape_diversion_2024",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R009",
+      "excerpt_sha256": "e16c7324426d7b8a7872274531b43440a11ee8e2ae2008d55604feff63e8141c",
+      "event_kind": "route_distance_extension",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [
+        "additional_voyage_distance: 4000 mile (approximately)"
+      ],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R010",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Update to Vessel blockage in the Suez Canal",
+      "url": "https://www.maersk.com/news/articles/2021/03/24/vessel-blockage-in-the-suez-canal",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "event_group": "suez_canal_blockage_2021marapr",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R010",
+      "excerpt_sha256": "2dcfdcae257f4b689a43f47ff0930734c240949348dc8704d7304cc9c4d53929",
+      "event_kind": "inbound_vessel_delay_target",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [
+        "delay: 1–2 day (aim_for_new_inbound_vessels)"
+      ],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R011",
+      "publisher": "CMA CGM",
+      "title": "CUSTOMER ADVISORY –NEMO SERVICE – Change of rotation in North Europe",
+      "url": "https://www.cma-cgm.com/local/netherlands/news/711/customer-advisory-nemo-service-change-of-rotation-in-north-europe",
+      "published_date": "2025-03-20",
+      "accessed_date": "2026-10-29",
+      "event_group": "nemo_rotterdam_omission_2025spring",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R011",
+      "excerpt_sha256": "a73950d3da25ae25e632dcca83bb4223fd577283288de91060fb17503f28679a",
+      "event_kind": "port_call_unavailable",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R012",
+      "publisher": "Hapag-Lloyd",
+      "title": "Belgian National Strike Disrupts Port Operations and Logistics Chain",
+      "url": "https://www.hapag-lloyd.com/en/services-information/offices-localinfo/local-news/2025/11/belgian-national-strike-disrupts-port-operations-and-logistics-c.html",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "event_group": "antwerp_national_strike_2025nov",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R012",
+      "excerpt_sha256": "6e51ace683b0e52b980d79ed8f391551adde416742573c4f6d95c8fc0b262569",
+      "event_kind": "partial_recovery_with_congestion",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R013",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "East Asia network recovery: Update 3",
+      "url": "https://www.maersk.com/news/articles/2026/10/20/east-asia-network-recovery-update-3",
+      "published_date": "2026-10-20",
+      "accessed_date": "2026-10-29",
+      "event_group": "east_asia_typhoon_network_recovery_2026",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R013",
+      "excerpt_sha256": "213189c0886edaea8df923b38f4ed25d72b739c15be31ec00e991a417963d7c8",
+      "event_kind": "intermittent_network_delay",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R014",
+      "publisher": "Hapag-Lloyd",
+      "title": "FAQ for the Red Sea situation",
+      "url": "https://www.hapag-lloyd.com/en/services-information/news/2023/12/faq-for-the-suez-canal-situation.html",
+      "published_date": null,
+      "accessed_date": "2026-10-29",
+      "event_group": "red_sea_cape_diversion_2024",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R014",
+      "excerpt_sha256": "8763ed9e21a14e6f174d5345f22b9d0a9783e2f5570225c9a450c70a10968a4e",
+      "event_kind": "journey_extension_range",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [
+        "additional_journey_duration: 7–14 day (range)"
+      ],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R015",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Structural changes to MECL",
+      "url": "https://www.maersk.com/news/articles/2026/07/09/structural-changes-to-mecl",
+      "published_date": "2026-07-09",
+      "accessed_date": "2026-10-29",
+      "event_group": "mecl_trans_suez_return_2026jul",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R015",
+      "excerpt_sha256": "cfdea75db20660e9c4bd58296b6dd378300329d39002d49fbfd6e4c4daccae11",
+      "event_kind": "transit_time_improvement",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [
+        "transit_time_reduction: 14 day (average_eastbound)"
+      ],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "R016",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Maersk enhances ME2 service between India and North Europe ensuring shorter transit times",
+      "url": "https://www.maersk.com/news/articles/2024/04/19/maersk-enhances-me2-service-between-india-and-north-europe",
+      "published_date": "2024-04-19",
+      "accessed_date": "2026-10-29",
+      "event_group": "me2_india_north_europe_rotation_upgrade_2024apr",
+      "dataset": "benchmarks/real_notices_v1/dataset.json#R016",
+      "excerpt_sha256": "4fe8afea68e2b027cdd27af770d33ead117d97f0bd045db266d16dfe5f5c97a6",
+      "event_kind": "transit_time_improvement",
+      "annotation": "assistant annotation, human review pending",
+      "stated_quantities": [
+        "transit_time_reduction: 5–7 day (range)"
+      ],
+      "missing_information": [
+        "service_to_internal_route_mapping",
+        "affected_dispatch_calendar",
+        "exact_incremental_lead_weeks"
+      ]
+    },
+    {
+      "id": "E01",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "New Transpacific Gemini Service",
+      "url": "https://www.maersk.com/news/articles/2025/05/26/new-transpacific-gemini-service",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "tp9_2025",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E01",
+      "excerpt_sha256": "36ab5460e0a28b150a80a1db2e5657897ebeba473f586c04ad59c2254d3bf879",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 14 day (stated)"
+      ],
+      "missing_information": []
+    },
+    {
+      "id": "E02",
+      "publisher": "CNC",
+      "title": "Revamp BBX2 Service",
+      "url": "https://www.cnc-line.com/news/271/revamp-bbx2-service-service-assurance-and-enhancements",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "bbx2_2024",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E02",
+      "excerpt_sha256": "d18819f70b6a7df54cb9cb75a4b31560c5458f4f9732ba06fd99c225c12e783f",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 14 day (stated)"
+      ],
+      "missing_information": []
+    },
+    {
+      "id": "E03",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "Express Service Tunisia Italy",
+      "url": "https://www.maersk.com.cn/news/articles/2025/11/18/express-service-tunisia-italy-2d-7h",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "tunisia_italy_2025",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E03",
+      "excerpt_sha256": "41cb43c932464408a66330064cf8870378111e769458a24c353fc56992e95ea9",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 2 day (stated)",
+        "transit_time: 7 hour (stated)"
+      ],
+      "missing_information": []
+    },
+    {
+      "id": "E04",
+      "publisher": "MSC",
+      "title": "MSC MEDUSEC enhancement",
+      "url": "https://www.msc.com/de/newsroom/customer-advisories/2025/february/msc-enhances-two-transatlantic-services-with-industry-leading-9day-genoa-to-new-york-transit-time",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "medusec_2025",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E04",
+      "excerpt_sha256": "a31351bd6d47778f147e040e7fc226477b2b7746880620922d6cb3e237ef87d2",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 9 day (stated)"
+      ],
+      "missing_information": []
+    },
+    {
+      "id": "E05",
+      "publisher": "MSC",
+      "title": "Return of the Lion Service",
+      "url": "https://www.msc.com/tr/newsroom/news/local-news/united-kingdom/2026/february/return-of-the-lion-service",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "lion_2026",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E05",
+      "excerpt_sha256": "2d4b84a94fb5d182bc856fb59ee93a0f337f13662d39e6751f3cadb6cb788192",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 27 day (stated)",
+        "transit_time: 29 day (stated)"
+      ],
+      "missing_information": []
+    },
+    {
+      "id": "E06",
+      "publisher": "A.P. Moller - Maersk",
+      "title": "TP9 service suspension",
+      "url": "https://www.maersk.com/news/articles/2025/09/10/asia-to-us-west-coast-services-service-suspension-tp9",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "tp9_2025",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E06",
+      "excerpt_sha256": "66482f5c65a6675bc28a8d099a20effd9f183a1896a2a67f4f048a7cf9d88765",
+      "event_kind": null,
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [],
+      "missing_information": []
+    },
+    {
+      "id": "E07",
+      "publisher": "Hapag-Lloyd",
+      "title": "Gemini network service enhancements",
+      "url": "https://www.hapag-lloyd.com/en/services-information/news/2026/02/gemini-network-2026---service-enhancements-in-2026.headless.html",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "gemini_se3_capacity_2026",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E07",
+      "excerpt_sha256": "df7658f9af9a83a5961edf7711250ebab4f980b881bbad014403424e1d3efba3",
+      "event_kind": null,
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [],
+      "missing_information": []
+    },
+    {
+      "id": "E08",
+      "publisher": "CMA CGM",
+      "title": "CMA CGM Transatlantic North Europe network",
+      "url": "https://www.cma-cgm.com/news/4947/2025-cma-cgm-transatlantic-north-europe-network?cat=servicesupdates",
+      "published_date": null,
+      "accessed_date": "2026-10-30",
+      "event_group": "cma_transatlantic_2025",
+      "dataset": "benchmarks/notice_facts_v1/dataset.json#E08",
+      "excerpt_sha256": "75758c38d249aa0f40fab02d95fe99e7115314e47f040f963df341b31dec4852",
+      "event_kind": "transit_time",
+      "annotation": "curated by the implementer, human review pending",
+      "stated_quantities": [
+        "transit_time: 9 day (stated)"
+      ],
+      "missing_information": []
+    }
+  ]
+}
