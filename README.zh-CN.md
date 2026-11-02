@@ -37,16 +37,15 @@
 | 规划 Agent，24 条计划员问题 | 规则基线：开发集 14/14、鲁棒性集 4/10；gpt-6.1-sol（xhigh）：修复护栏后 9/14 和 9/10，数字忠实度 100% | |
 
 ```bash
-python -m pip install -c constraints.txt -e ".[planning]"
+python -m pip install --require-hashes -r requirements/planning.txt
+python -m pip install --no-deps --no-build-isolation -e .
 python -m network_planning solve --network asml --scenario red_sea --explain
 python -m planning_agent ask "如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？"
 python -m planning_agent demo
-python -m pip install -c constraints.txt -e ".[planning,agent]"
 python -m planning_agent replay --output artifacts/planning/replay
 python -m planning_agent flow
 python -m planning_agent flow --mode notice
 python -m planning_agent corpus search "鹿特丹码头罢工"
-python -m pip install -c constraints.txt -e ".[planning,agent,ui]"
 python -m streamlit run planning_agent/app.py
 ```
 
@@ -83,12 +82,13 @@ python -m streamlit run planning_agent/app.py
 
 ## 快速开始
 
-推荐 Python 3.12。`constraints.txt` 固定已验证的数值计算依赖，供实验重放与 CI 使用。
+推荐 Python 3.12。`requirements/dev.txt` 和 `requirements/planning.txt` 用哈希锁定全部依赖（覆盖各平台）；它们由 `constraints.txt` 中已验证的版本解析而来，CI 从这两个文件安装，`make lock` 重新生成。
 
 ```bash
 git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
 cd semiconductor-logistics-decarbonization
-python -m pip install -c constraints.txt -e ".[dev]"
+python -m pip install --require-hashes -r requirements/dev.txt
+python -m pip install --no-deps --no-build-isolation -e .
 make test
 make smoke
 ```
