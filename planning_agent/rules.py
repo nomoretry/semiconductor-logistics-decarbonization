@@ -41,7 +41,8 @@ DESCRIBE = r"网络概况|介绍.{0,8}网络|有哪些.{0,6}(?:线路|航线|运
 MEMO = r"备忘录|memo|汇报|写.{0,4}(?:总结|报告)"
 FOLLOW_UP = r"这种情况|此情况|在此基础上|同样的情况|这个场景|this scenario|same scenario"
 PROBABILITY = r"(\d{1,2})\s*%\s*(?:的)?(?:概率|可能)|(?:概率|可能性?)\D{0,4}(\d{1,2})\s*%"
-MODES = (("air", r"空运|航空|air"), ("road", r"公路|陆运|卡车|road|truck"), ("ocean", r"海运|海路|船|航运|ocean|sea|vessel"))
+MODES = (("air", r"空运|航空|air"), ("road", r"公路|陆运|卡车|road|truck"),
+         ("ocean", r"海运|海路|船|航运|ocean|sea|vessel"))
 OUT_OF_SCOPE = ("这个问题超出了我的范围。我能做的是：查看物流网络，评估运输中断（如红海绕行、台风、边境拥堵）"
                 "对成本和排放的影响，计算减排的成本与边际减排成本，做中断风险对冲（两阶段随机规划），以及生成决策备忘录。")
 NOTE = "说明：SKU、需求、容量、费率和扰动幅度为合成情景假设；距离与排放因子来自公开来源。"
@@ -109,7 +110,8 @@ def run_rules(question: str, session) -> AgentResult:
     session.context["network"] = net
     if req["describe"]:
         info = session.call("describe_network", {"network": net})
-        lines.append(f"{net} 网络：{info['skus']} 个 SKU，{info['weeks']} 周承诺需求 {info['demand_units']:,} 件。线路：")
+        lines.append(f"{net} 网络：{info['skus']} 个 SKU，"
+                     f"{info['weeks']} 周承诺需求 {info['demand_units']:,} 件。线路：")
         for lane in info["lanes"]:
             lines.append(f"- {lane['id']}（{lane['mode']}）：提前期 {lane['lead_weeks']} 周，运费 "
                          f"{lane['freight_usd_per_kg']} 美元/kg，周运力 {lane['weekly_capacity_kg']:,} kg，"
@@ -148,7 +150,8 @@ def run_rules(question: str, session) -> AgentResult:
                 change = "增加" if row["cost_change_usd"] >= 0 else "减少"
                 lines.append(f"方案 {plan['plan_id']}（{plan['label']}）：总物流成本 {row['total_cost_usd']:,} 美元，"
                              f"比正常方案 {base['plan_id']} {change} {abs(row['cost_change_usd']):,} 美元"
-                             f"（{row['cost_change_pct']:+.2f}%）；排放 {row['emissions_t']} 吨（{row['emissions_change_pct']:+.2f}%）；"
+                             f"（{row['cost_change_pct']:+.2f}%）；"
+                             f"排放 {row['emissions_t']} 吨（{row['emissions_change_pct']:+.2f}%）；"
                              f"空运占比 {row['air_share_pct']}%；服务水平 {row['service_level_pct']}%。")
                 if "carbon_shadow_price_usd_per_t" in plan:
                     lines.append(f"碳约束的影子价格约 {plan['carbon_shadow_price_usd_per_t']:,} 美元/吨，"
@@ -175,7 +178,8 @@ def run_rules(question: str, session) -> AgentResult:
             if p["cost_increase_pct"] is None:
                 lines.append(f"- 排放上限 {p['emission_cap_pct']}%：{p['status']}")
             else:
-                lines.append(f"- 排放上限 {p['emission_cap_pct']}%：成本 {p['cost_increase_pct']:+.2f}%，平均边际减排成本 "
+                lines.append(f"- 排放上限 {p['emission_cap_pct']}%："
+                             f"成本 {p['cost_increase_pct']:+.2f}%，平均边际减排成本 "
                              f"{p['mac_avg_usd_per_t']:,} 美元/吨，影子价格 {p['shadow_price_usd_per_t']} 美元/吨")
         lines.append(f"在该服务水平下最多可减排 {fr['max_reduction_pct']}%（最低 {fr['min_emissions_t']} 吨）。")
     if req["hedge"]:
@@ -189,7 +193,8 @@ def run_rules(question: str, session) -> AgentResult:
             lines.append(f"对冲分析失败：{hedge['error']}")
         else:
             e = hedge["expected_cost_usd"]
-            lines.append(f"两阶段随机方案（第 {hedge['reveal_week']} 周才知道是否中断）：期望成本 {e['stochastic_RP']:,} 美元；"
+            lines.append(f"两阶段随机方案（第 {hedge['reveal_week']} 周才知道是否中断）："
+                         f"期望成本 {e['stochastic_RP']:,} 美元；"
                          f"按正常预测计划、事后再应变为 {e['nominal_EEV']:,} 美元；VSS = {hedge['VSS_usd']:,} 美元"
                          f"（{hedge['VSS_pct']}%），EVPI = {hedge['EVPI_usd']:,} 美元（{hedge['EVPI_pct']}%）。")
             for row in hedge["per_scenario"]:

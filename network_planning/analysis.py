@@ -203,7 +203,8 @@ def _first_stage_summary(net: Network, plan: Plan, reveal_week: int) -> dict:
         units[lane_id] += value
         kg[lane_id] += value * net.skus[s].mass_kg
     return {"air_reservation_kg_per_week": {lane_id: round(v, 1) for lane_id, v in stage["reserve"].items()},
-            "early_shipments_units": dict(units), "early_shipments_kg": {lane_id: round(v, 1) for lane_id, v in kg.items()}}
+            "early_shipments_units": dict(units),
+            "early_shipments_kg": {lane_id: round(v, 1) for lane_id, v in kg.items()}}
 
 
 def _lower(plan: Plan) -> float:

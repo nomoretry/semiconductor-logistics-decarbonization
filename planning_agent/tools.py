@@ -272,7 +272,8 @@ def carbon_frontier_tool(session: Session, network: str, scenario: str = "normal
                 result["baseline_emissions_t"], 2), "points": points,
             "min_emissions_t": _r(result.get("min_emissions_t"), 2),
             "max_reduction_pct": _r(result.get("max_reduction_pct"), 1),
-            "note": "MAC = extra logistics cost per tonne avoided; shadow price = LP dual of the cap at fixed lane activations."}
+            "note": ("MAC = extra logistics cost per tonne avoided; "
+                     "shadow price = LP dual of the cap at fixed lane activations.")}
 
 
 def hedge_disruption_risk(session: Session, network: str, scenarios: list | None = None,
@@ -283,7 +284,8 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list | None
         if scenarios is not None and set(names) != set(net.stochastic_set):
             raise ToolError("give probabilities for a custom scenario set")
         probabilities = [net.scenario_specs[n]["probability"] for n in names]
-    if len(probabilities) != len(names) or any(float(p) < 0 for p in probabilities) or sum(map(float, probabilities)) <= 0:
+    if (len(probabilities) != len(names) or any(float(p) < 0 for p in probabilities)
+            or sum(map(float, probabilities)) <= 0):
         raise ToolError("probabilities must be non-negative, one per scenario, with a positive sum")
     if len(names) < 2:
         raise ToolError("hedging needs at least two scenarios")
@@ -391,9 +393,12 @@ TOOLS = {tool.name: tool for tool in (
          {"type": "object", "properties": {
              "network": NETWORK,
              "scenario": {"type": "string", "description": "predefined or created scenario name; default normal"},
-             "carbon_cap_pct": {"type": "number", "description": "75 = emissions at most 75% of the uncapped plan for the same scenario; omit for no cap"},
+             "carbon_cap_pct": {"type": "number", "description": "75 = emissions at most 75% of the uncapped plan "
+                                                                 "for the same scenario; omit for no cap"},
              "carbon_price_usd_per_t": {"type": "number"},
-             "service_level_pct": {"type": "number", "description": "floor on 1 - backlog unit-weeks / demand, 50-100; omit for no floor"},
+             "service_level_pct": {"type": "number",
+                                   "description": "floor on 1 - backlog unit-weeks / demand, 50-100; "
+                                                  "omit for no floor"},
              "label": {"type": "string"}},
           "required": ["network"]}, solve_plan),
     Tool("compare_plans",
@@ -406,7 +411,8 @@ TOOLS = {tool.name: tool for tool in (
          "(USD per tonne CO2e) and LP shadow prices, at a 98% service floor.",
          {"type": "object", "properties": {
              "network": NETWORK, "scenario": {"type": "string"},
-             "levels_pct": {"type": "array", "items": {"type": "number"}, "description": "emission caps in % of the uncapped plan; default [90, 75, 60]"}},
+             "levels_pct": {"type": "array", "items": {"type": "number"},
+                            "description": "emission caps in % of the uncapped plan; default [90, 75, 60]"}},
           "required": ["network"]}, carbon_frontier_tool),
     Tool("hedge_disruption_risk",
          "Two-stage stochastic plan when it is unknown which scenario will happen: early shipments and air "
@@ -415,8 +421,13 @@ TOOLS = {tool.name: tool for tool in (
          {"type": "object", "properties": {
              "network": NETWORK,
              "scenarios": {"type": "array", "items": {"type": "string"}, "description": "default: configured set"},
-             "probabilities": {"type": "array", "items": {"type": "number"}, "description": "one per scenario, normalised to sum to 1; default: the configured probabilities"},
-             "reveal_week": {"type": "integer", "minimum": 1, "description": "week in which the realised scenario becomes known; default 3, i.e. shipments departing in weeks 1-2 and the air reservation are fixed first"}},
+             "probabilities": {"type": "array", "items": {"type": "number"},
+                               "description": "one per scenario, normalised to sum to 1; "
+                                              "default: the configured probabilities"},
+             "reveal_week": {"type": "integer", "minimum": 1,
+                             "description": "week in which the realised scenario becomes known; default 3, "
+                                            "i.e. shipments departing in weeks 1-2 and the air reservation "
+                                            "are fixed first"}},
           "required": ["network"]}, hedge_disruption_risk),
     Tool("explain_plan",
          "Explain a plan: binding capacities, cost drivers, weekly mode mix, air reservation and shadow prices.",

@@ -30,7 +30,8 @@ def write_memo(session, stored_plans: list, question: str, title: str | None = N
     nominal = next((p for p in expected if p.request.get("fixed_first_stage") == "nominal"), None)
     if stochastic and nominal:
         vss = nominal.plan.kpis["total_cost_usd"] - stochastic.plan.kpis["total_cost_usd"]
-        lines.append(f"- 对冲：两阶段随机方案 {stochastic.id} 的期望成本 {stochastic.plan.kpis['total_cost_usd']:,.0f} 美元，"
+        lines.append(f"- 对冲：两阶段随机方案 {stochastic.id} 的期望成本 "
+                     f"{stochastic.plan.kpis['total_cost_usd']:,.0f} 美元，"
                      f"按名义预测计划再应变（{nominal.id}）为 {nominal.plan.kpis['total_cost_usd']:,.0f} 美元，"
                      f"差额（VSS）{vss:,.0f} 美元。")
         headline.append(f"VSS {vss:,.0f} USD")
@@ -67,7 +68,8 @@ def write_memo(session, stored_plans: list, question: str, title: str | None = N
         drivers = "，".join(f"{d['item']} {100 * d['share']:.1f}%" for d in info["cost_drivers"][:3])
         binding = "，".join(f"{b['lane']} 第 {b['week']} 周" for b in info["binding_capacity"][:3]) or "无"
         reserve = "，".join(f"{lane} {kg:g} kg/周" for lane, kg in info["air_reservation_kg_per_week"].items()) or "无"
-        lines.append(f"- **{p.id}**（{info['scenario']} 场景）：成本构成 {drivers}；接近满载 {binding}；空运舱位预留 {reserve}。")
+        lines.append(f"- **{p.id}**（{info['scenario']} 场景）：成本构成 {drivers}；"
+                     f"接近满载 {binding}；空运舱位预留 {reserve}。")
     lines += ["", "## 假设与局限", "",
               "- SKU、承诺需求、运力、费率和扰动幅度为合成情景假设；距离与排放因子来自公开来源（见 data_sources/）。",
               "- 优化为期望成本最小（风险中性），需求为已知承诺订单；结果用于比较策略，不代表企业实测。",

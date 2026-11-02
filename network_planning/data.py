@@ -205,7 +205,8 @@ class Network:
             "scenarios": {name: {"probability": spec.get("probability", 1.0),
                                  "description": spec.get("description", "")}
                           for name, spec in self.scenario_specs.items()},
-            "data_note": "Synthetic SKUs, demand, capacities and disruption factors; sourced distances and emission factors.",
+            "data_note": ("Synthetic SKUs, demand, capacities and disruption factors; "
+                          "sourced distances and emission factors."),
         }
 
 

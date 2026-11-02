@@ -119,7 +119,8 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     air_res = staged("ar", air_keys, lowBound=0)
     air_spot = staged("as", air_keys, lowBound=0)
     order = staged("z", ship_keys, cat="Binary") if sku_order_fee > 0 else {}
-    reserve = {lane_id: model.add_variable(f"R_{lane_id}", 0, lane.reservable_kg) for lane_id, lane in lanes.items() if lane.is_air}
+    reserve = {lane_id: model.add_variable(f"R_{lane_id}", 0, lane.reservable_kg)
+               for lane_id, lane in lanes.items() if lane.is_air}
     inv = {(k, s, t): model.add_variable(f"I_{k}_{s}_{t}", 0) for k in range(K) for s in range(S) for t in range(T)}
     back = {(k, s, t): model.add_variable(f"B_{k}_{s}_{t}", 0) for k in range(K) for s in range(S) for t in range(T)}
     short = {} if terminal_hard else {(k, s): model.add_variable(f"U_{k}_{s}", 0) for k in range(K) for s in range(S)}
@@ -168,7 +169,8 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
                 cost.append(lane.fixed_usd * act[k, lane_id, t])
                 if lane.is_air:
                     cost.append(lane.freight_usd_per_kg * (
-                        air_res[k, lane_id, t] + net.air_spot_premium * sc.cost_factor(lane, week) * air_spot[k, lane_id, t]))
+                        air_res[k, lane_id, t]
+                        + net.air_spot_premium * sc.cost_factor(lane, week) * air_spot[k, lane_id, t]))
                 if k > 0 and t < cut:
                     continue  # shared decisions: their constraints are already in the model
                 load = pulp.lpSum(skus[s].mass_kg * ship[k, s, lane_id, t] for s in users[lane_id])
@@ -203,7 +205,8 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     total_cost = net.reservation_usd_per_kg_week * T * pulp.lpSum(reserve.values()) + pulp.lpSum(expected_cost)
     total_emissions = pulp.lpSum(expected_emissions)
     if service_level is not None:
-        allowed = (1 - service_level) * sum(sc.probability * float(d.sum()) for sc, d in zip(scenarios, demands, strict=True))
+        allowed = (1 - service_level) * sum(sc.probability * float(d.sum())
+                                            for sc, d in zip(scenarios, demands, strict=True))
         model += (pulp.lpSum(sc.probability * pulp.lpSum(back[k, s, t] for s in range(S) for t in range(T))
                              for k, sc in enumerate(scenarios)) <= allowed, "service")
     if carbon_cap_kg is not None:

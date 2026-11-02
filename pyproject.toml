@@ -42,9 +42,9 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
-# Chinese user-facing text uses full-width punctuation, and it is measured at double width,
-# so line length and "ambiguous character" checks would flag correct strings.
-ignore = ["E501", "RUF001", "RUF002", "RUF003"]
+# Chinese user-facing text uses full-width punctuation, which the "ambiguous character" checks would flag.
+# Line length (E501) is checked; Chinese characters count as double width.
+ignore = ["RUF001", "RUF002", "RUF003"]
 
 
 [tool.mypy]

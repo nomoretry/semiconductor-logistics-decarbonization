@@ -37,7 +37,8 @@ def run(output: Path, *, n_skus: int = 12, weeks: int = 16, seed: int = 7, quick
         results["networks"][name] = {
             "description": net.describe(),
             "scenario_impact": scenario_impact(net),
-            "frontier": carbon_frontier(net, levels=(0.9, 0.75, 0.6) if quick else (0.9, 0.8, 0.75, 0.7, 0.6, 0.5, 0.4)),
+            "frontier": carbon_frontier(net, levels=(0.9, 0.75, 0.6) if quick
+                                        else (0.9, 0.8, 0.75, 0.7, 0.6, 0.5, 0.4)),
             "price_sweep": carbon_price_sweep(net, prices=(0, 400) if quick else PRICES),
             "stochastic": stochastic,
             "stochastic_plan_explained": explain_plan(net, plans["stochastic"], "normal"),
@@ -146,8 +147,9 @@ def _markdown(results: dict) -> str:
              "This report is available in Chinese and English; the English summary follows the Chinese text.", "",
              "## 中文", "",
              f"设置：每个网络 {s['n_skus']} 个合成 SKU、{s['weeks']} 周、种子 {s['seed']}；HiGHS 相对 MIP gap ≤ "
-             f"{s['mip_gap']:.1%}；随机规划在第 {s['reveal_week']} 周揭示扰动。发货量为连续流量，线路周启用为 0/1 变量；"
-             "整数发货对照见“整数性代价”。距离、排放因子来自仓库已有来源；SKU、需求、容量、费率和扰动幅度均为情景假设。", ""]
+             f"{s['mip_gap']:.1%}；随机规划在第 {s['reveal_week']} 周揭示扰动。"
+             "发货量为连续流量，线路周启用为 0/1 变量；整数发货对照见“整数性代价”。"
+             "距离、排放因子来自仓库已有来源；SKU、需求、容量、费率和扰动幅度均为情景假设。", ""]
     for name, block in results["networks"].items():
         d, st, fr = block["description"], block["stochastic"], block["frontier"]
         lines += [f"### {name}：{d['label']}", "",
@@ -160,7 +162,8 @@ def _markdown(results: dict) -> str:
                          f"{r.get('cost_change_pct', 0):+.2f}% | {r.get('emissions_t', float('nan')):.2f} | "
                          f"{r.get('air_share_kg', 0):.1%} | {r.get('service_level', 0):.2%} |")
         lines += ["", "**碳约束前沿（服务水平 ≥ 98%，期末库存硬约束）**", "",
-                  "| 排放上限 | 状态 | 成本增幅 | 排放 t | 空运占比 | 平均边际减排成本 USD/t | 分段 USD/t | LP 影子价格 USD/t |",
+                  "| 排放上限 | 状态 | 成本增幅 | 排放 t | 空运占比 | "
+                  "平均边际减排成本 USD/t | 分段 USD/t | LP 影子价格 USD/t |",
                   "|---:|---|---:|---:|---:|---:|---:|---:|"]
         for p in fr["points"]:
             lines.append(f"| {p['level']:.0%} | {p['status']} | {_pct(p.get('cost_increase_pct'))} | "
@@ -185,17 +188,21 @@ def _markdown(results: dict) -> str:
             lines.append(f"| {sc} | {v['probability']:.0%} | {v['stochastic_plan_usd']:,.0f} | "
                          f"{v['nominal_plan_usd']:,.0f} | {v['perfect_information_usd']:,.0f} |")
         fs = st["first_stage"]
-        lines += ["", f"第一阶段差异：空运舱位预留（kg/周）随机方案 {_pairs(fs['stochastic']['air_reservation_kg_per_week'])}，"
+        lines += ["", "第一阶段差异：空运舱位预留（kg/周）随机方案 "
+                      f"{_pairs(fs['stochastic']['air_reservation_kg_per_week'])}，"
                       f"名义方案 {_pairs(fs['nominal']['air_reservation_kg_per_week'])}；揭示前发货（kg）随机方案 "
-                      f"{_pairs(fs['stochastic']['early_shipments_kg'])}，名义方案 {_pairs(fs['nominal']['early_shipments_kg'])}。", "",
+                      f"{_pairs(fs['stochastic']['early_shipments_kg'])}，"
+                      f"名义方案 {_pairs(fs['nominal']['early_shipments_kg'])}。", "",
                   "**整数性代价**", "", "| 情形 | 连续 USD | 整数 USD | 整数溢价 | 连续 s | 整数 s |",
                   "|---|---:|---:|---:|---:|---:|"]
         for r in block["integrality"]:
             lines.append(f"| {r['case']} | {r['continuous_usd']:,.0f} | {r['integer_usd']:,.0f} | "
-                         f"{r['integer_premium_pct']:+.3f}% | {r['continuous_seconds']:.2f} | {r['integer_seconds']:.2f} |")
+                         f"{r['integer_premium_pct']:+.3f}% | {r['continuous_seconds']:.2f} | "
+                         f"{r['integer_seconds']:.2f} |")
         lines.append("")
     lines += ["### 规模测试（ASML 网络，16 周，单场景）", "",
-              "| 变体 | SKU | 变量 | 整数变量 | 约束 | 建模 s | 求解 s | 状态 | gap |", "|---|---:|---:|---:|---:|---:|---:|---|---:|"]
+              "| 变体 | SKU | 变量 | 整数变量 | 约束 | 建模 s | 求解 s | 状态 | gap |",
+              "|---|---:|---:|---:|---:|---:|---:|---|---:|"]
     for r in results["scale"]:
         lines.append(f"| {r['variant']} | {r['skus']} | {r['variables']:,} | {r['integer_variables']:,} | "
                      f"{r['constraints']:,} | {r['build_seconds']:.2f} | {r['solve_seconds']:.2f} | {r['status']} | "
@@ -206,8 +213,9 @@ def _markdown(results: dict) -> str:
               "- 风险中性（期望成本）；未建模 CVaR 等尾部风险偏好。",
               "- 单一目的仓（新加坡）；未做多仓选址。容量、费率和扰动幅度为情景假设，不代表企业实测。", "",
               "## English", "",
-              f"Setting: {s['n_skus']} synthetic SKUs per network, {s['weeks']} weeks, seed {s['seed']}, HiGHS relative "
-              f"MIP gap <= {s['mip_gap']:.1%}, disruptions revealed in week {s['reveal_week']}. Shipments are continuous "
+              f"Setting: {s['n_skus']} synthetic SKUs per network, {s['weeks']} weeks, seed {s['seed']}, "
+              f"HiGHS relative MIP gap <= {s['mip_gap']:.1%}, disruptions revealed in week {s['reveal_week']}. "
+              "Shipments are continuous "
               "flows with binary lane-week activations; the integrality table compares integer units. Distances and "
               "emission factors reuse the repository's sourced inputs; SKUs, demand, capacities, rates and disruption "
               "magnitudes are scenario assumptions.", ""]

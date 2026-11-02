@@ -95,7 +95,8 @@ class OpenAICompatibleClient:
         text, calls = [], []
         for item in output:
             if item.get("type") == "message":
-                text += [part.get("text", "") for part in item.get("content") or [] if part.get("type") == "output_text"]
+                text += [part.get("text", "") for part in item.get("content") or []
+                         if part.get("type") == "output_text"]
             elif item.get("type") == "function_call":
                 calls.append({"id": item["call_id"], "type": "function",
                               "function": {"name": item["name"], "arguments": item.get("arguments") or "{}"}})

@@ -30,7 +30,8 @@ class DecisionWorkflowTests(unittest.TestCase):
         proposal = workflow.propose_from_rules(workflow.DEMO_NOTICE)
         self.assertEqual(proposal.mode, "rule")
         self.assertEqual(proposal.network, "asml")
-        self.assertEqual(proposal.disruptions, [{"mode": "ocean", "start_week": 4, "end_week": 12, "extra_lead_weeks": 2,
+        self.assertEqual(proposal.disruptions, [{"mode": "ocean", "start_week": 4, "end_week": 12,
+                                                 "extra_lead_weeks": 2,
                                                  "capacity_change_pct": -30, "distance_factor": 1.4183}])
         evidence = {e["parameter"]: e["text"] for e in proposal.evidence}
         self.assertEqual(evidence["周次"], "第4到12周")
@@ -59,7 +60,8 @@ class DecisionWorkflowTests(unittest.TestCase):
         direct.call("create_scenario", args)
         ids = [direct.call("solve_plan", {"network": "asml"})["plan_id"],
                direct.call("solve_plan", {"network": "asml", "scenario": args["name"]})["plan_id"],
-               direct.call("solve_plan", {"network": "asml", "scenario": args["name"], "carbon_cap_pct": 80})["plan_id"]]
+               direct.call("solve_plan", {"network": "asml", "scenario": args["name"],
+                                          "carbon_cap_pct": 80})["plan_id"]]
         expected = direct.call("compare_plans", {"plan_ids": ids})["rows"]
         for got, want in zip(outcome.rows, expected, strict=True):
             for key in ("total_cost_usd", "emissions_t", "service_level_pct", "air_share_pct"):
@@ -176,7 +178,8 @@ class DecisionWorkflowTests(unittest.TestCase):
             def chat(self, messages, tools=None):
                 seen.append(messages)
                 return {"content": "", "tool_calls": [call(1, "create_scenario", {
-                    "network": "asml", "name": "x", "disruptions": [{"mode": "ocean", "start_week": 4, "end_week": 12}]})]}
+                    "network": "asml", "name": "x",
+                    "disruptions": [{"mode": "ocean", "start_week": 4, "end_week": 12}]})]}
 
         references = [retrieval.reference(h) for h in retrieval.default_index().search("红海绕行好望角", k=2)]
         proposal = workflow.propose_from_model("红海绕行，对备件有什么影响？", Scripted(), max_tokens=5000,

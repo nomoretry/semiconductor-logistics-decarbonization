@@ -63,7 +63,8 @@ def evaluate(net, scenarios, solution, *, carbon_price=0.0, sku_order_fee=0.0, c
                     cost["freight"] += lane.freight_usd_per_kg * (
                         res + net.air_spot_premium * sc.cost_factor(lane, week) * spot)
                     if abs(res + spot - kg) > tolerance:
-                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} on {lane_id} week {week}")
+                        issues.append(f"{sc.name}: air split {res + spot:.3f} != load {kg:.3f} "
+                                      f"on {lane_id} week {week}")
                     if res > reserve.get(lane_id, 0.0) + 1e-6:
                         issues.append(f"{sc.name}: reserved air use exceeds reservation on {lane_id} week {week}")
                     if spot > sc.capacity(lane, week) + 1e-6:

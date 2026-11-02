@@ -46,7 +46,8 @@ READ_ONLY_TOOLS = {"describe_network"}
 # Notice wording may select a preset only where the preset models that event; the border_congestion preset is a
 # Malaysia-Singapore border, so congestion at a European port must not trigger it.
 NOTICE_PRESETS = ("red_sea", "typhoon")
-FIELD_EVIDENCE = {"start_week": "周次", "end_week": "周次", "extra_lead_weeks": "延误", "capacity_change_pct": "运力或舱位"}
+FIELD_EVIDENCE = {"start_week": "周次", "end_week": "周次", "extra_lead_weeks": "延误",
+                  "capacity_change_pct": "运力或舱位"}
 PLANNER = "计划员输入"
 NOTICE_QUANTITY = "公告数值（仅供参考，不自动成为参数）"
 
@@ -197,7 +198,7 @@ def _cite(item: dict[str, str] | None) -> str | None:
 
 
 def parameter_basis(proposal: Proposal, original: Proposal | None = None) -> list[dict[str, str]]:
-    """Where each parameter came from: the planner's words, a notice, a preset, a default, or an edit at confirmation."""
+    """Where each parameter came from: the planner's words, a notice, a preset, a default or an edit at confirmation."""
     original = original or proposal
     evidence: dict[str, dict[str, str]] = {}
     for item in proposal.evidence:

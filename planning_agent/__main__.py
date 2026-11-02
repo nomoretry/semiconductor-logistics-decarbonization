@@ -181,7 +181,8 @@ def _corpus(args) -> int:
         return 2
     records = retrieval.fetch(chosen, consent=True)
     for r in records:
-        status = r.get("error") or f"HTTP {r['status']}, {r['bytes']} 字节, 摘录{'在' if r['excerpt_found'] else '不在'}页面中"
+        status = r.get("error") or (f"HTTP {r['status']}, {r['bytes']} 字节, "
+                                    f"摘录{'在' if r['excerpt_found'] else '不在'}页面中")
         print(f"{r['id']}: {status}")
     print(f"记录：{retrieval.RAW / 'fetch_log.json'}")
     return 0 if all(r.get("status") == 200 for r in records) else 1
@@ -204,7 +205,8 @@ def main(argv=None) -> int:
     p.add_argument("--resume", action="store_true", help="skip cases already saved in the output folder")
     p.add_argument("--max-tokens", type=int, help="stop between cases once billable tokens reach this budget")
     p.add_argument("--rescore", action="store_true",
-                   help="re-check saved answers with the current guardrail by replaying their tool calls (no API calls)")
+                   help="re-check saved answers with the current guardrail by replaying their tool calls "
+                        "(no API calls)")
     p = sub.add_parser("flow", help="notice -> parameters and assumptions -> confirmation -> plans -> memo")
     p.add_argument("--mode", choices=("rule", "notice", "replay", "live"), default="rule",
                    help="rule: offline parser; notice: retrieve carrier notices + parser (no call); "
@@ -277,7 +279,8 @@ def main(argv=None) -> int:
             tools = ", ".join(f"`{c['name']}({json.dumps(c['arguments'], ensure_ascii=False)})`"
                               for c in result.tool_calls) or "（无）"
             lines += [f"## 问：{question}", "", f"**工具调用**：{tools}", "", result.answer, "",
-                      f"*护栏：{'通过' if result.guardrail['ok'] else '未通过 ' + str(result.guardrail['unsupported'])}；"
+                      "*护栏："
+                      f"{'通过' if result.guardrail['ok'] else '未通过 ' + str(result.guardrail['unsupported'])}；"
                       f"{result.seconds} 秒*", ""]
             print(f"> {question}\n{result.answer}\n")
         (args.output / "transcript.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
