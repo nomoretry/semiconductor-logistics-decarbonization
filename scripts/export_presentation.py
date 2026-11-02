@@ -446,7 +446,7 @@ th {{ background: #f3f2ef; }}
     if browser:
         pdf = out / "07_example_decision_memo.pdf"
         # A throwaway profile keeps a running browser from absorbing the headless call.
-        with tempfile.TemporaryDirectory() as profile:
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as profile:
             subprocess.run([browser, "--headless=new", "--disable-gpu", "--no-first-run", f"--user-data-dir={profile}",
                             "--no-pdf-header-footer", f"--print-to-pdf={pdf.resolve()}",
                             page_path.resolve().as_uri()], check=True, capture_output=True, timeout=120)
