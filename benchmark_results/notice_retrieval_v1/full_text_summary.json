@@ -1,0 +1,147 @@
+{
+  "benchmark": "notice_retrieval_v1",
+  "status": "development check: one author wrote the questions and the glossary after reading the corpus",
+  "corpus_documents": 24,
+  "event_groups": 19,
+  "queries": {
+    "en": 19,
+    "zh": 19
+  },
+  "independent_cases": 19,
+  "method": {
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "fields": "publisher, title, excerpt; plus passages of downloaded pages, a notice scoring by its best match",
+    "tokens": "English words with plural s removed; Chinese character bigrams",
+    "ties": "corpus order",
+    "unscored_documents": "not retrieved (rank none)"
+  },
+  "inputs": {
+    "queries_sha256": "3e805ff001ffc7a2b738fcb088daa49edb3a40e79dae496f4efe413cdbdc8f2c",
+    "glossary_sha256": "2f9bab8d15f079438211752ccd59ee7e0d0ca2411bbf7faeeb2132cf83adeb4b",
+    "manifest_sha256": "4298e8146929f4a02625aba804d1254ac9722ade9e2743808263bb4e2f0875f7"
+  },
+  "results": {
+    "bm25_glossary_full_text": {
+      "en": {
+        "recall@1": 0.886,
+        "hit@1": 1.0,
+        "recall@3": 0.9386,
+        "hit@3": 1.0,
+        "recall@5": 0.9649,
+        "hit@5": 1.0,
+        "mrr": 1.0
+      },
+      "zh": {
+        "recall@1": 0.886,
+        "hit@1": 1.0,
+        "recall@3": 0.9474,
+        "hit@3": 1.0,
+        "recall@5": 1.0,
+        "hit@5": 1.0,
+        "mrr": 1.0
+      },
+      "all": {
+        "recall@1": 0.886,
+        "hit@1": 1.0,
+        "recall@3": 0.943,
+        "hit@3": 1.0,
+        "recall@5": 0.9825,
+        "hit@5": 1.0,
+        "mrr": 1.0
+      }
+    },
+    "bm25_plain_full_text": {
+      "en": {
+        "recall@1": 0.886,
+        "hit@1": 1.0,
+        "recall@3": 0.9386,
+        "hit@3": 1.0,
+        "recall@5": 0.9649,
+        "hit@5": 1.0,
+        "mrr": 1.0
+      },
+      "zh": {
+        "recall@1": 0.1842,
+        "hit@1": 0.2105,
+        "recall@3": 0.2105,
+        "hit@3": 0.2105,
+        "recall@5": 0.2105,
+        "hit@5": 0.2105,
+        "mrr": 0.2105
+      },
+      "all": {
+        "recall@1": 0.5351,
+        "hit@1": 0.6053,
+        "recall@3": 0.5746,
+        "hit@3": 0.6053,
+        "recall@5": 0.5877,
+        "hit@5": 0.6053,
+        "mrr": 0.6053
+      }
+    },
+    "random": {
+      "en": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      },
+      "zh": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      },
+      "all": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      }
+    }
+  },
+  "full_text": {
+    "pages": 15,
+    "notices_without_page": [
+      "R008",
+      "R011",
+      "R012",
+      "R014",
+      "E02",
+      "E04",
+      "E05",
+      "E07",
+      "E08"
+    ],
+    "passages": 343,
+    "boilerplate": "passages found on more than one downloaded page are dropped",
+    "page_sha256": {
+      "R001": "94db92d6bb498fe3083ab3afcac1e1b18a69d8c1910415e74060859bfffa6996",
+      "R002": "13b020ccb01128e42afdf1a7f4b6b53d719f076d882613656113d813ae727006",
+      "R003": "7fe4ba6b4b63750299fe96a26086d78b66a668f2a4a6e7acf2ff4215078869bd",
+      "R004": "0cf5eb2bba057b15fd9bad2490e520dfe0e52f150c12214c5407753369034e11",
+      "R005": "f5100ae22eeda65aada891cd1e7d22900744e0dad667367eecf53d3ac72fe145",
+      "R006": "b5da646ef389a66229e64f7815c507e12780159b043154f558bd57c54da04e31",
+      "R007": "176c31342c0544d9350d702598971e1f89672017c27982dcb2a8bf35030c59f7",
+      "R009": "e83384809c2a79223dd9c4b72efdfdb4035b05ad0b388fa1fe29876a4e65888a",
+      "R010": "8fc5181b3229f5553fde8694cc4cb955e20d1b375bf39060733a566d04fcbe01",
+      "R013": "09a242ee1726f9d8169f7495eb1eb0c2fad6eca9023af2a66c4a986b09c57f26",
+      "R015": "12e03e99e6b67260541edbc8d589f18c11f07d0b66dd1dde966551e749e18567",
+      "R016": "b07380fa956e81bf2e197fcb40eb5fcbaafea5f0598896e01f994844e1b1a93f",
+      "E01": "652e16798ec441cdacc912dd8caca6568135f50e555b1f2b117fa1da8c2931c9",
+      "E03": "43a95ff8161153d81c0fa234ba9a0299d891cc7cac40583b967cd6d8a87e5c3b",
+      "E06": "2146f120a63195a7985d0bfe7ccd095d917ad71b9ed9c4547ebe2af493e298e7"
+    },
+    "reproduce": "needs the same pages: python -m planning_agent corpus fetch --yes, then compare page_sha256"
+  }
+}
