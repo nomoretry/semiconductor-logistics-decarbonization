@@ -309,15 +309,21 @@ def _sha256(path: Path) -> str:
 
 
 def evaluate(notices: Sequence[Notice] | None = None, queries: Sequence[dict[str, str]] | None = None,
-             glossary: dict[str, tuple[str, ...]] | None = None) -> dict[str, Any]:
-    """Rank every notice for every question, with and without the glossary, and compare with random ranking."""
+             glossary: dict[str, tuple[str, ...]] | None = None, extra: Sequence[tuple[Notice, str]] = (),
+             pages: dict[str, str] | None = None) -> dict[str, Any]:
+    """Rank every notice for every question, with and without the glossary, and compare with random ranking.
+
+    ``extra`` adds passages of downloaded pages (a notice scores by its best passage or excerpt); ``pages`` gives
+    their hashes, so a result that depends on local pages says which pages it used.
+    """
     notices = list(notices or load_notices())
     queries = list(queries or load_queries())
-    index = Index(notices, glossary=glossary)
+    index = Index(notices, glossary=glossary, extra=extra)
     groups: dict[str, list[str]] = {}
     for n in notices:
         groups.setdefault(n.group, []).append(n.id)
-    configs = {"bm25_glossary": True, "bm25_plain": False}
+    suffix = "_full_text" if extra else ""
+    configs = {f"bm25_glossary{suffix}": True, f"bm25_plain{suffix}": False}
     cases: list[dict[str, Any]] = []
     per: dict[str, dict[str, list[dict[str, float]]]] = {name: {} for name in (*configs, "random")}
     for query in queries:
@@ -352,6 +358,16 @@ def evaluate(notices: Sequence[Notice] | None = None, queries: Sequence[dict[str
                            "all": _mean([r for rows in by_lang.values() for r in rows])}
                     for name, by_lang in per.items()},
     }
+    if extra:
+        pages = pages or {}
+        summary["method"]["fields"] += "; plus passages of downloaded pages, a notice scoring by its best match"
+        summary["full_text"] = {
+            "pages": len(pages), "notices_without_page": [n.id for n in notices if n.id not in pages],
+            "passages": len(extra),
+            "boilerplate": "passages found on more than one downloaded page are dropped",
+            "page_sha256": pages,
+            "reproduce": "needs the same pages: python -m planning_agent corpus fetch --yes, then compare page_sha256",
+        }
     return {"summary": summary, "cases": cases}
 
 
@@ -361,18 +377,19 @@ def results_text(result: dict[str, Any]) -> tuple[str, str]:
     return summary, cases
 
 
-def write_results(result: dict[str, Any], out: Path = RESULTS) -> Path:
+def write_results(result: dict[str, Any], out: Path = RESULTS, prefix: str = "") -> Path:
     out.mkdir(parents=True, exist_ok=True)
     summary, cases = results_text(result)
-    (out / "summary.json").write_text(summary, encoding="utf-8", newline="\n")
-    (out / "cases.jsonl").write_text(cases, encoding="utf-8", newline="\n")
+    (out / f"{prefix}summary.json").write_text(summary, encoding="utf-8", newline="\n")
+    (out / f"{prefix}cases.jsonl").write_text(cases, encoding="utf-8", newline="\n")
     return out
 
 
-def results_match(result: dict[str, Any], out: Path = RESULTS) -> bool:
+def results_match(result: dict[str, Any], out: Path = RESULTS, prefix: str = "") -> bool:
     summary, cases = results_text(result)
-    return ((out / "summary.json").exists() and (out / "summary.json").read_text(encoding="utf-8") == summary
-            and (out / "cases.jsonl").read_text(encoding="utf-8") == cases)
+    saved, rows = out / f"{prefix}summary.json", out / f"{prefix}cases.jsonl"
+    return (saved.exists() and saved.read_text(encoding="utf-8") == summary
+            and rows.read_text(encoding="utf-8") == cases)
 
 
 # ---------------------------------------------------------------------------- local full text (needs consent)
@@ -433,13 +450,21 @@ def _normalized(text: str) -> str:
 
 
 def local_passages(notices: Sequence[Notice], raw: Path = RAW) -> list[tuple[Notice, str]]:
-    out = []
+    """Passages of the downloaded pages. Text found on more than one page (menus, forms, related-news lists) is
+    site boilerplate and is dropped, so it cannot match a question on every page of one carrier."""
+    pages = []
     for notice in notices:
         path = raw / f"{notice.id}.html"
         if path.exists():
-            text = page_text(path.read_bytes().decode("utf-8", errors="replace"))
-            out += [(notice, p) for p in passages(text)]
-    return out
+            pages.append((notice, passages(page_text(path.read_bytes().decode("utf-8", errors="replace")))))
+    shared = Counter(p for _, found in pages for p in set(found))
+    return [(notice, p) for notice, found in pages for p in found if shared[p] == 1]
+
+
+def downloaded_pages(notices: Sequence[Notice], raw: Path = RAW) -> dict[str, str]:
+    """Notice id -> SHA-256 of the downloaded page, for results that depend on local pages."""
+    return {n.id: hashlib.sha256((raw / f"{n.id}.html").read_bytes()).hexdigest()
+            for n in notices if (raw / f"{n.id}.html").exists()}
 
 
 def _http_get(url: str) -> tuple[int, str, bytes]:

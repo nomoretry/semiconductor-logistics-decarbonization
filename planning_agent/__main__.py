@@ -143,12 +143,18 @@ def _corpus(args) -> int:
             print("没有匹配的公告。")
         return 0
     if args.action == "evaluate":
-        result = retrieval.evaluate(notices)
+        extra, pages, prefix = [], None, ""
+        if args.full_text:
+            extra, pages, prefix = retrieval.local_passages(notices), retrieval.downloaded_pages(notices), "full_text_"
+            if not pages:
+                print("没有本地下载的公告网页：先运行 python -m planning_agent corpus fetch --yes")
+                return 2
+        result = retrieval.evaluate(notices, extra=extra, pages=pages)
         if args.check:
-            ok = retrieval.results_match(result, args.output)
+            ok = retrieval.results_match(result, args.output, prefix)
             print(f"{args.output}: {'reproduced exactly' if ok else 'differs from the saved results'}")
             return 0 if ok else 1
-        print(f"wrote {retrieval.write_results(result, args.output)}")
+        print(f"wrote {retrieval.write_results(result, args.output, prefix)}")
         print(json.dumps(result["summary"]["results"], indent=2, ensure_ascii=False))
         return 0
     chosen = [n for n in notices if not args.ids or n.id in args.ids.split(",")]
@@ -208,6 +214,8 @@ def main(argv=None) -> int:
     c = corpus.add_parser("evaluate", help="rerun the retrieval evaluation (offline)")
     c.add_argument("--output", type=Path, default=Path("benchmark_results/notice_retrieval_v1"))
     c.add_argument("--check", action="store_true", help="only check that the saved results are reproduced")
+    c.add_argument("--full-text", action="store_true",
+                   help="also index the pages downloaded by fetch (results go to full_text_*.json)")
     c = corpus.add_parser("fetch", help="download the original notice pages locally; needs --yes")
     c.add_argument("--yes", action="store_true", help="consent to contacting the carrier websites")
     c.add_argument("--ids", help="comma-separated notice ids, e.g. R014,E02")

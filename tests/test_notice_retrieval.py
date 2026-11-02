@@ -123,6 +123,35 @@ class NoticeFetchTests(unittest.TestCase):
         hit = index.search("zebrafish")[0]
         self.assertEqual((hit.notice.id, hit.local), ("R006", True))
 
+    def test_text_shared_by_several_pages_is_dropped_as_boilerplate(self):
+        menu = "<p>Subscribe to our newsletter for logistics news and rate announcements from the carrier.</p>"
+        for notice, story in zip(self.picked, ("Cape routing adds two weeks to the Asia to Europe voyage, says the "
+                                               "carrier in its update.", "Lashing crews in Rotterdam extend their "
+                                               "action into a second week, the carrier said."), strict=True):
+            (self.raw / f"{notice.id}.html").write_text(f"{menu}<p>{story}</p>", encoding="utf-8")
+        extra = retrieval.local_passages(self.picked, self.raw)
+        self.assertEqual(len(extra), 2)
+        self.assertFalse(any("newsletter" in passage for _, passage in extra))
+        pages = retrieval.downloaded_pages(self.picked, self.raw)
+        self.assertEqual(pages["R014"], hashlib.sha256((self.raw / "R014.html").read_bytes()).hexdigest())
+
+    def test_full_text_evaluation_names_its_pages_and_keeps_excerpt_results_apart(self):
+        notices = retrieval.load_notices()
+        r009 = next(n for n in notices if n.id == "R009")
+        extra = [(r009, "Vessels keep sailing around the Cape of Good Hope because of the Red Sea security situation.")]
+        full = retrieval.evaluate(notices, extra=extra, pages={"R009": "0" * 64})
+        plain = retrieval.evaluate(notices)
+        self.assertNotIn("full_text", plain["summary"])
+        self.assertEqual(full["summary"]["full_text"]["pages"], 1)
+        self.assertIn("R014", full["summary"]["full_text"]["notices_without_page"])
+        rank = {c["id"]: c for c in full["cases"]}["G06-zh"]["bm25_glossary_full_text"]["relevant_ranks"]
+        before = {c["id"]: c for c in plain["cases"]}["G06-zh"]["bm25_glossary"]["relevant_ranks"]
+        self.assertLess(rank[0], before[0])  # R009 is found once its page names the Red Sea
+        with tempfile.TemporaryDirectory() as folder:
+            retrieval.write_results(full, Path(folder), "full_text_")
+            self.assertTrue(retrieval.results_match(full, Path(folder), "full_text_"))
+            self.assertFalse((Path(folder) / "summary.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main()
