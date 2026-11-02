@@ -297,7 +297,11 @@ def select_mode(excerpts: dict[str, float], modes: dict[str, dict[str, float]]) 
     return min(qualifying, key=lambda m: (-modes[m]["recall@3"], -modes[m]["mrr"], order.index(m)))
 
 
-def default_index(full_text: bool = False, root: Path = ROOT, mode: str = "all") -> Index:
+# Selected by SELECTION_RULE in benchmark_results/notice_retrieval_v1/full_text_comparison.json.
+FULL_TEXT_MODE = "lead5"
+
+
+def default_index(full_text: bool = False, root: Path = ROOT, mode: str = FULL_TEXT_MODE) -> Index:
     notices = load_notices(root)
     extra = arrange(local_passages(notices), mode) if full_text else []
     return Index(notices, extra=extra)

@@ -74,7 +74,8 @@ elif mode == "notice":
     downloaded = retrieval.RAW.exists() and any(retrieval.RAW.glob("*.html"))
     full_text = st.checkbox("同时检索本地下载的公告原文", key="full_text", disabled=not downloaded,
                             help=None if downloaded else "需要先运行 python -m planning_agent corpus fetch --yes")
-    st.caption("语料是仓库里已有的 24 条公告摘录（离线 BM25，不调用模型）；中文问题用术语表扩展成英文后检索。")
+    st.caption("语料是仓库里已有的 24 条公告摘录（离线 BM25，不调用模型）；中文问题用术语表扩展成英文后检索。"
+               "勾选原文时，每个下载页面只用前 5 段，避免长页面占优。")
     if st.button("检索公告并解析参数", key="retrieve"):
         start(workflow.propose_from_notices(question, None if network == "自动识别" else network,
                                             index=retrieval.default_index(full_text)))

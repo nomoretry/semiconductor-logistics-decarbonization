@@ -166,6 +166,11 @@ class NoticeFetchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             retrieval.arrange(extra, "best")
 
+    def test_search_uses_the_mode_the_saved_comparison_selected(self):
+        saved = json.loads((retrieval.RESULTS / "full_text_comparison.json").read_text(encoding="utf-8"))
+        self.assertEqual(saved["selected"], retrieval.FULL_TEXT_MODE)
+        self.assertEqual(saved["selected"], retrieval.select_mode(saved["excerpts_only"], saved["with_full_text"]))
+
     def test_selection_rule_needs_no_loss_against_excerpts(self):
         base = {"recall@3": 0.95, "hit@1": 0.97, "mrr": 0.98}
         modes = {"all": {"recall@3": 0.94, "hit@1": 1.0, "mrr": 1.0},  # better first hit, lower recall: out

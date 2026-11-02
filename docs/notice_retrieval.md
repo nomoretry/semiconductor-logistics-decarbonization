@@ -76,11 +76,23 @@ This document provides Chinese first and English second.
 - 三种段落用法：`all` 每段单独作为文档（上一节的结果）；`lead5` 每页只用前 5 段；`page` 一页的所有段落合成一个文档，BM25 的长度归一作用在整页上。
 - 选择规则：在全部 38 条问题上（用术语表），只有 recall@3 和首位命中都不低于只用摘录的方案才算合格；合格方案里取 recall@3 最高的，再比 MRR，再按 all、lead5、page 的顺序。没有合格方案时，检索默认只用摘录。
 - 这是在同一套问题上做选择，被选中方案的数字偏乐观。命令：`python -m planning_agent corpus evaluate --compare`，结果写入 `full_text_comparison.json`。
+- 结果（执行一次）：
+
+| 段落用法 | 首位命中 | recall@3 | recall@5 | MRR | 是否合格 |
+|---|---:|---:|---:|---:|---|
+| 只用摘录（对照） | 37/38 | 0.956 | 0.956 | 0.987 | — |
+| `all` | 38/38 | 0.943 | 0.982 | 1.000 | 否（recall@3 降低） |
+| `lead5` | 38/38 | 0.956 | 0.982 | 1.000 | **是，被选中** |
+| `page` | 38/38 | 0.947 | 0.969 | 1.000 | 否（recall@3 降低） |
+
+- `lead5` 保住了全文的好处（R009 中文红海问题第 14 → 第 4，英文未检到 → 第 3），recall@3 与只用摘录持平；但长页面的影响没有完全消除：英文亚欧问题里 R002、R003 仍从第 9、8 降到第 12、11，R007 在英文问题里从第 3 降到第 5（都在前 3 名之外，所以 recall@3 不变）。
+- 观察到的例子（单条临时问题，不计入评测）：问“红海绕行，运输时间增加多少”时，全文检索把 R015（MECL 恢复经红海通行，方向相反的事件）排在第一，因为它的页面多次提到 Red Sea。全文能对上话题，但分不清事件方向；参数依据仍以规划员确认为准。
+- 网页和 `corpus search --full-text` 默认使用 `lead5`（`retrieval.FULL_TEXT_MODE`，测试核对它与对比文件一致）。
 
 ### 下一项验收条件
 
 - 由项目作者以外的人编写问题（TASKS V2），并加入语料之外的干扰问题；
-- 抑制长页面的优势（例如按页面长度归一或只取每页前几个段落），在不降低 recall@3 的前提下保留全文对 R009 这类公告的帮助；
+- 在他人编写、包含干扰问题的新问题集上检验 `lead5` 的选择是否仍成立（本次选择用的是同一套问题）；
 - 实时模型模式附上检索结果后的参数质量，需另行批准预算。
 
 ### 运行
@@ -167,11 +179,23 @@ Retrieval over real carrier notices is added to the [notice-to-memo workflow](de
 - Three passage modes: `all`, every passage is its own document (the result above); `lead5`, only the first five passages of each page; `page`, all passages of a page form one document, so BM25 length normalisation applies to the whole page.
 - Selection rule: with the glossary, over all 38 questions, a mode qualifies only if its recall@3 and hit@1 are at least those of the excerpts alone; among qualifying modes the highest recall@3 wins, then MRR, then the order all, lead5, page. If no mode qualifies, search keeps the excerpts only by default.
 - The choice is made on the same questions, so the selected mode's numbers are optimistic. Command: `python -m planning_agent corpus evaluate --compare`; the comparison is written to `full_text_comparison.json`.
+- Result (run once):
+
+| Passage mode | First result right | recall@3 | recall@5 | MRR | Qualifies |
+|---|---:|---:|---:|---:|---|
+| Excerpts only (reference) | 37/38 | 0.956 | 0.956 | 0.987 | — |
+| `all` | 38/38 | 0.943 | 0.982 | 1.000 | no (lower recall@3) |
+| `lead5` | 38/38 | 0.956 | 0.982 | 1.000 | **yes, selected** |
+| `page` | 38/38 | 0.947 | 0.969 | 1.000 | no (lower recall@3) |
+
+- `lead5` keeps the gain from full text (R009 rises from 14th to 4th for the Chinese Red Sea question, and from not retrieved to 3rd for the English one) with the same recall@3 as the excerpts. The long-page effect is not gone: for the English Asia-Europe question R002 and R003 still fall from 9th and 8th to 12th and 11th, and R007 falls from 3rd to 5th for the English Adriatic question (all outside the top three, so recall@3 is unchanged).
+- An observed example (one ad-hoc question, not part of the evaluation): for "Red Sea diversion, how much longer is transit", full-text search ranks R015 first (the MECL service returning to the Red Sea, the opposite event) because its page mentions the Red Sea repeatedly. Full text matches the topic but not the direction of the event; parameters still rest on the planner's confirmation.
+- The web page and `corpus search --full-text` use `lead5` by default (`retrieval.FULL_TEXT_MODE`; a test checks it against the comparison file).
 
 ### Next acceptance condition
 
 - Questions written by people other than the project author (TASKS V2), with distractor questions outside the corpus;
-- limit the advantage of long pages (for example by normalising for page length or keeping only the first passages of a page) while keeping the gain for notices like R009 and without lowering recall@3;
+- check on a new question set written by other people, with distractors, whether the `lead5` choice still holds (this choice used the same questions);
 - parameter quality of the live model mode with retrieved notices in the prompt, under a separately approved budget.
 
 ### How to run
