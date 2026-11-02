@@ -55,10 +55,25 @@ This document provides Chinese first and English second.
 - 已知弱点：公告摘录描述了事件却没写事件名称时很难找到。例如 R009（红海绕行使航程增加约 4,000 海里）没有出现“红海”，在中文红海问题里排第 14；英文的亚欧停航问题里，R002、R003 排第 9 和第 8。
 - 原始逐题结果：`benchmark_results/notice_retrieval_v1/cases.jsonl`；汇总：`summary.json`（记录了查询集、术语表和语料清单的哈希）。
 
+### 全文段落（下载 15 个网页后，执行一次）
+
+- 下载：`corpus fetch --yes` 请求 24 个网页，15 个成功（全部是 Maersk 的页面），9 个被网站拒绝（HTTP 403：Hapag-Lloyd 4、CMA CGM 2、MSC 2、CNC 1）。没有绕过拒绝。15 个成功的页面里都还能找到冻结数据集中的摘录。
+- 处理：页面切成段落（至少 60 个字符）；在两个及以上页面出现的段落（订阅表单、隐私声明、“相关公告”列表）当作网站模板去掉，剩 343 段。这条规则在看结果之前提交。每条公告按摘录和段落中的最高分排序。
+- 结果（`corpus evaluate --full-text`，写入 `full_text_summary.json`、`full_text_cases.jsonl`；要复算需要同样的页面，哈希记录在 summary 里）：
+
+| 方法 | 首位命中 | 命中率@3 | recall@3 | MRR |
+|---|---:|---:|---:|---:|
+| BM25 + 术语表，只用摘录 | 37/38 | 38/38 | 0.956 | 0.987 |
+| BM25 + 术语表，摘录 + 全文 | 38/38 | 38/38 | 0.943 | 1.000 |
+
+- 全文帮到的：R009 页面写明了红海，在中文红海问题里从第 14 升到第 4，英文问题从没检到升到第 2；英文亚欧问题的首位换成相关的 R001。
+- 全文伤到的：长页面（R009、R010、R015）能对上更多问题，把只有短页面或没有页面的公告往后挤：R007 从第 3 降到第 4、5，R002、R003 在英文亚欧问题里从第 9、8 降到第 14、12。
+- 比较不完全公平：9 条公告没有页面，只能靠摘录参加排序。
+
 ### 下一项验收条件
 
 - 由项目作者以外的人编写问题（TASKS V2），并加入语料之外的干扰问题；
-- 经你同意下载原文后，用全文段落重跑同一评测，比较摘录与全文；
+- 抑制长页面的优势（例如按页面长度归一或只取每页前几个段落），在不降低 recall@3 的前提下保留全文对 R009 这类公告的帮助；
 - 实时模型模式附上检索结果后的参数质量，需另行批准预算。
 
 ### 运行
@@ -124,10 +139,25 @@ Retrieval over real carrier notices is added to the [notice-to-memo workflow](de
 - Known weakness: an excerpt that describes an event without naming it is hard to find. R009 (the Red Sea diversion adds about 4,000 miles) never says "Red Sea" and ranks 14th for the Chinese Red Sea question; for the English Asia-Europe blank-sailing question, R002 and R003 rank 9th and 8th.
 - Raw per-question results: `benchmark_results/notice_retrieval_v1/cases.jsonl`; summary: `summary.json` (records the hashes of the question set, glossary and corpus manifest).
 
+### Full-text passages (15 pages downloaded, run once)
+
+- Download: `corpus fetch --yes` requested 24 pages; 15 succeeded (all of them Maersk pages) and 9 were refused by the sites (HTTP 403: Hapag-Lloyd 4, CMA CGM 2, MSC 2, CNC 1). The refusals were not circumvented. Every one of the 15 downloaded pages still contains the excerpt in the frozen dataset.
+- Processing: pages are split into passages of at least 60 characters; passages found on two or more pages (subscription forms, privacy text, related-news lists) are site boilerplate and are dropped, leaving 343 passages. This rule was committed before the result. Each notice ranks by the best score of its excerpt and passages.
+- Result (`corpus evaluate --full-text`, written to `full_text_summary.json` and `full_text_cases.jsonl`; recomputing needs the same pages, whose hashes are in the summary):
+
+| Method | First result right | Hit rate@3 | recall@3 | MRR |
+|---|---:|---:|---:|---:|
+| BM25 + glossary, excerpts only | 37/38 | 38/38 | 0.956 | 0.987 |
+| BM25 + glossary, excerpts + full text | 38/38 | 38/38 | 0.943 | 1.000 |
+
+- Where full text helps: the R009 page names the Red Sea, so R009 rises from 14th to 4th for the Chinese Red Sea question and from not retrieved to 2nd for the English one; the first result for the English Asia-Europe question becomes the relevant R001.
+- Where it hurts: long pages (R009, R010, R015) match more questions and push down notices with short pages or no page: R007 falls from 3rd to 4th and 5th, and R002 and R003 fall from 9th and 8th to 14th and 12th for the English Asia-Europe question.
+- The comparison is not fully even: 9 notices have no page and compete with their excerpts only.
+
 ### Next acceptance condition
 
 - Questions written by people other than the project author (TASKS V2), with distractor questions outside the corpus;
-- with consent to download the original pages, rerun the same evaluation over full-text passages and compare with the excerpts;
+- limit the advantage of long pages (for example by normalising for page length or keeping only the first passages of a page) while keeping the gain for notices like R009 and without lowering recall@3;
 - parameter quality of the live model mode with retrieved notices in the prompt, under a separately approved budget.
 
 ### How to run
