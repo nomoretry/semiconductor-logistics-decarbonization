@@ -327,11 +327,13 @@ def example_animation(example: dict[str, Any], out: Path, version: str) -> list[
         bottom.clear()
         bottom.set_facecolor(SURFACE)
         bottom.axvspan(d["start_week"] - 0.5, d["end_week"] + 0.5, color=BAND, zorder=0)
-        for name, color, dy in zip(plans, (BLUE, ORANGE), (9, -11), strict=True):
+        current = {n: plans[n]["end_of_week_inventory_units"][shown - 1] for n in plans}
+        for name, color in zip(plans, (BLUE, ORANGE), strict=True):
             series = plans[name]["end_of_week_inventory_units"]
             bottom.plot(x[:shown], series[:shown], color=color, linewidth=2, marker="o", markersize=6,
                         markeredgecolor=SURFACE, label=name)
-            bottom.annotate(f"{series[shown - 1]:,.0f}", (shown, series[shown - 1]), xytext=(6, dy),
+            higher = current[name] >= max(v for n, v in current.items() if n != name)
+            bottom.annotate(f"{series[shown - 1]:,.0f}", (shown, series[shown - 1]), xytext=(6, 9 if higher else -11),
                             textcoords="offset points", fontsize=8, color=INK, va="center")
         bottom.set_xlim(0.5, weeks + 0.5)
         bottom.set_ylim(0, peak_inv)
