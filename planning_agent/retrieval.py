@@ -256,13 +256,50 @@ class Index:
         for rank, (score, i) in enumerate(ranked, 1):
             notice, passage, local = self.docs[i]
             matched = tuple(sorted(t for t in set(tokens) if t in self.terms[i]))
+            if local and "\n" in passage:  # a whole page: show the paragraph that matches best
+                passage = max(passage.split("\n"), key=lambda part: len(set(tokenize(part)) & set(tokens)))
             hits.append(Hit(notice, round(score, 4), rank, passage, matched, local))
         return hits
 
 
-def default_index(full_text: bool = False, root: Path = ROOT) -> Index:
+PASSAGE_MODES = {
+    "all": "every passage of a downloaded page is its own document; a notice scores by its best match",
+    "lead5": "only the first five passages of each page, each its own document",
+    "page": "all passages of a page form one document, so BM25 length normalisation applies to the whole page",
+}
+SELECTION_RULE = (
+    "Fixed before the comparison: with the glossary, over all questions, a passage mode qualifies only if its "
+    "recall@3 and hit@1 are at least those of the excerpts alone. Among qualifying modes the highest recall@3 wins, "
+    "then the highest MRR, then the order all, lead5, page. If no mode qualifies, search keeps the excerpts only.")
+
+
+def arrange(extra: Sequence[tuple[Notice, str]], mode: str = "all") -> list[tuple[Notice, str]]:
+    """Turn page passages into search documents according to a passage mode (see PASSAGE_MODES)."""
+    if mode == "all":
+        return list(extra)
+    pages: dict[str, tuple[Notice, list[str]]] = {}
+    for notice, passage in extra:
+        pages.setdefault(notice.id, (notice, []))[1].append(passage)
+    if mode == "lead5":
+        return [(notice, p) for notice, found in pages.values() for p in found[:5]]
+    if mode == "page":
+        return [(notice, "\n".join(found)) for notice, found in pages.values()]
+    raise ValueError(f"unknown passage mode {mode!r}; choose from {sorted(PASSAGE_MODES)}")
+
+
+def select_mode(excerpts: dict[str, float], modes: dict[str, dict[str, float]]) -> str | None:
+    """Apply SELECTION_RULE to overall metrics (with the glossary); None keeps the excerpts only."""
+    order = list(PASSAGE_MODES)
+    qualifying = [m for m in modes if modes[m]["recall@3"] >= excerpts["recall@3"]
+                  and modes[m]["hit@1"] >= excerpts["hit@1"]]
+    if not qualifying:
+        return None
+    return min(qualifying, key=lambda m: (-modes[m]["recall@3"], -modes[m]["mrr"], order.index(m)))
+
+
+def default_index(full_text: bool = False, root: Path = ROOT, mode: str = "all") -> Index:
     notices = load_notices(root)
-    extra = local_passages(notices) if full_text else []
+    extra = arrange(local_passages(notices), mode) if full_text else []
     return Index(notices, extra=extra)
 
 
@@ -310,19 +347,20 @@ def _sha256(path: Path) -> str:
 
 def evaluate(notices: Sequence[Notice] | None = None, queries: Sequence[dict[str, str]] | None = None,
              glossary: dict[str, tuple[str, ...]] | None = None, extra: Sequence[tuple[Notice, str]] = (),
-             pages: dict[str, str] | None = None) -> dict[str, Any]:
+             pages: dict[str, str] | None = None, mode: str = "all") -> dict[str, Any]:
     """Rank every notice for every question, with and without the glossary, and compare with random ranking.
 
-    ``extra`` adds passages of downloaded pages (a notice scores by its best passage or excerpt); ``pages`` gives
-    their hashes, so a result that depends on local pages says which pages it used.
+    ``extra`` adds passages of downloaded pages, arranged by ``mode`` (PASSAGE_MODES); ``pages`` gives their
+    hashes, so a result that depends on local pages says which pages it used.
     """
     notices = list(notices or load_notices())
     queries = list(queries or load_queries())
-    index = Index(notices, glossary=glossary, extra=extra)
+    documents = arrange(extra, mode)
+    index = Index(notices, glossary=glossary, extra=documents)
     groups: dict[str, list[str]] = {}
     for n in notices:
         groups.setdefault(n.group, []).append(n.id)
-    suffix = "_full_text" if extra else ""
+    suffix = ("_full_text" if mode == "all" else f"_full_text_{mode}") if extra else ""
     configs = {f"bm25_glossary{suffix}": True, f"bm25_plain{suffix}": False}
     cases: list[dict[str, Any]] = []
     per: dict[str, dict[str, list[dict[str, float]]]] = {name: {} for name in (*configs, "random")}
@@ -363,12 +401,36 @@ def evaluate(notices: Sequence[Notice] | None = None, queries: Sequence[dict[str
         summary["method"]["fields"] += "; plus passages of downloaded pages, a notice scoring by its best match"
         summary["full_text"] = {
             "pages": len(pages), "notices_without_page": [n.id for n in notices if n.id not in pages],
-            "passages": len(extra),
+            "passages": len(extra), "passage_mode": mode, "passage_mode_rule": PASSAGE_MODES[mode],
+            "documents_from_pages": len(documents),
             "boilerplate": "passages found on more than one downloaded page are dropped",
             "page_sha256": pages,
             "reproduce": "needs the same pages: python -m planning_agent corpus fetch --yes, then compare page_sha256",
         }
     return {"summary": summary, "cases": cases}
+
+
+def mode_prefix(mode: str) -> str:
+    return "full_text_" if mode == "all" else f"full_text_{mode}_"
+
+
+def compare_modes(notices: Sequence[Notice], extra: Sequence[tuple[Notice, str]],
+                  pages: dict[str, str]) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
+    """Evaluate every passage mode once and apply SELECTION_RULE against the excerpts alone."""
+    results = {mode: evaluate(notices, extra=extra, pages=pages, mode=mode) for mode in PASSAGE_MODES}
+    excerpts = evaluate(notices)["summary"]["results"]["bm25_glossary"]["all"]
+    overall = {mode: r["summary"]["results"][next(iter(r["summary"]["results"]))]["all"]
+               for mode, r in results.items()}
+    comparison = {
+        "status": "development selection on the same questions; the selected mode's numbers are optimistic",
+        "rule": SELECTION_RULE, "modes": PASSAGE_MODES, "excerpts_only": excerpts, "with_full_text": overall,
+        "selected": select_mode(excerpts, overall), "page_sha256": pages,
+    }
+    return results, comparison
+
+
+def comparison_text(comparison: dict[str, Any]) -> str:
+    return json.dumps(comparison, indent=2, ensure_ascii=False) + "\n"
 
 
 def results_text(result: dict[str, Any]) -> tuple[str, str]:

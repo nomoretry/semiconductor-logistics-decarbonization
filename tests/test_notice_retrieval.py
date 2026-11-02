@@ -147,10 +147,32 @@ class NoticeFetchTests(unittest.TestCase):
         rank = {c["id"]: c for c in full["cases"]}["G06-zh"]["bm25_glossary_full_text"]["relevant_ranks"]
         before = {c["id"]: c for c in plain["cases"]}["G06-zh"]["bm25_glossary"]["relevant_ranks"]
         self.assertLess(rank[0], before[0])  # R009 is found once its page names the Red Sea
+        self.assertEqual(full["summary"]["full_text"]["passage_mode"], "all")
         with tempfile.TemporaryDirectory() as folder:
             retrieval.write_results(full, Path(folder), "full_text_")
             self.assertTrue(retrieval.results_match(full, Path(folder), "full_text_"))
             self.assertFalse((Path(folder) / "summary.json").exists())
+
+    def test_passage_modes_limit_how_many_chances_a_long_page_gets(self):
+        long, short = self.picked
+        extra = [(long, f"Paragraph {i} about the Cape route and vessel schedules in detail.") for i in range(8)]
+        extra.append((short, "Lashing crews in Rotterdam stop work for two days this week."))
+        self.assertEqual(len(retrieval.arrange(extra, "all")), 9)
+        self.assertEqual([n.id for n, _ in retrieval.arrange(extra, "lead5")], ["R014"] * 5 + ["R006"])
+        joined = retrieval.arrange(extra, "page")
+        self.assertEqual(len(joined), 2)
+        hit = retrieval.Index(self.picked, extra=joined).search("paragraph 7 cape")[0]
+        self.assertEqual(hit.passage, "Paragraph 7 about the Cape route and vessel schedules in detail.")
+        with self.assertRaises(ValueError):
+            retrieval.arrange(extra, "best")
+
+    def test_selection_rule_needs_no_loss_against_excerpts(self):
+        base = {"recall@3": 0.95, "hit@1": 0.97, "mrr": 0.98}
+        modes = {"all": {"recall@3": 0.94, "hit@1": 1.0, "mrr": 1.0},  # better first hit, lower recall: out
+                 "lead5": {"recall@3": 0.96, "hit@1": 0.97, "mrr": 0.98},
+                 "page": {"recall@3": 0.96, "hit@1": 1.0, "mrr": 0.99}}
+        self.assertEqual(retrieval.select_mode(base, modes), "page")  # equal recall@3, higher MRR
+        self.assertIsNone(retrieval.select_mode(base, {"all": modes["all"]}))
 
 
 if __name__ == "__main__":

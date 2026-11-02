@@ -143,19 +143,35 @@ def _corpus(args) -> int:
             print("没有匹配的公告。")
         return 0
     if args.action == "evaluate":
-        extra, pages, prefix = [], None, ""
-        if args.full_text:
-            extra, pages, prefix = retrieval.local_passages(notices), retrieval.downloaded_pages(notices), "full_text_"
+        runs = {"": retrieval.evaluate(notices)}
+        comparison = None
+        if args.full_text or args.compare:
+            pages = retrieval.downloaded_pages(notices)
             if not pages:
                 print("没有本地下载的公告网页：先运行 python -m planning_agent corpus fetch --yes")
                 return 2
-        result = retrieval.evaluate(notices, extra=extra, pages=pages)
+            extra = retrieval.local_passages(notices)
+            if args.compare:
+                by_mode, comparison = retrieval.compare_modes(notices, extra, pages)
+            else:
+                by_mode = {args.mode: retrieval.evaluate(notices, extra=extra, pages=pages, mode=args.mode)}
+            runs = {retrieval.mode_prefix(mode): result for mode, result in by_mode.items()}
+        compared = args.output / "full_text_comparison.json"
         if args.check:
-            ok = retrieval.results_match(result, args.output, prefix)
+            ok = all(retrieval.results_match(result, args.output, prefix) for prefix, result in runs.items())
+            if comparison is not None:
+                ok = ok and compared.exists() and compared.read_text(encoding="utf-8") == retrieval.comparison_text(
+                    comparison)
             print(f"{args.output}: {'reproduced exactly' if ok else 'differs from the saved results'}")
             return 0 if ok else 1
-        print(f"wrote {retrieval.write_results(result, args.output, prefix)}")
-        print(json.dumps(result["summary"]["results"], indent=2, ensure_ascii=False))
+        for prefix, result in runs.items():
+            retrieval.write_results(result, args.output, prefix)
+            print(f"wrote {args.output / (prefix + 'summary.json')}")
+        if comparison is not None:
+            compared.write_text(retrieval.comparison_text(comparison), encoding="utf-8", newline="\n")
+            print(json.dumps({k: comparison[k] for k in ("excerpts_only", "with_full_text", "selected")}, indent=2))
+        else:
+            print(json.dumps(next(iter(runs.values()))["summary"]["results"], indent=2, ensure_ascii=False))
         return 0
     chosen = [n for n in notices if not args.ids or n.id in args.ids.split(",")]
     if not args.yes:
@@ -216,6 +232,9 @@ def main(argv=None) -> int:
     c.add_argument("--check", action="store_true", help="only check that the saved results are reproduced")
     c.add_argument("--full-text", action="store_true",
                    help="also index the pages downloaded by fetch (results go to full_text_*.json)")
+    c.add_argument("--mode", choices=("all", "lead5", "page"), default="all", help="how page passages are indexed")
+    c.add_argument("--compare", action="store_true",
+                   help="evaluate every passage mode and apply the fixed selection rule (full_text_comparison.json)")
     c = corpus.add_parser("fetch", help="download the original notice pages locally; needs --yes")
     c.add_argument("--yes", action="store_true", help="consent to contacting the carrier websites")
     c.add_argument("--ids", help="comma-separated notice ids, e.g. R014,E02")

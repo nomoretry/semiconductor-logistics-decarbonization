@@ -70,6 +70,13 @@ This document provides Chinese first and English second.
 - 全文伤到的：长页面（R009、R010、R015）能对上更多问题，把只有短页面或没有页面的公告往后挤：R007 从第 3 降到第 4、5，R002、R003 在英文亚欧问题里从第 9、8 降到第 14、12。
 - 比较不完全公平：9 条公告没有页面，只能靠摘录参加排序。
 
+### 抑制长页面优势（方案和规则在结果之前提交）
+
+- 原因：每条公告按“摘录或任一段落”的最高分排序，段落多的长页面相当于有更多次机会。
+- 三种段落用法：`all` 每段单独作为文档（上一节的结果）；`lead5` 每页只用前 5 段；`page` 一页的所有段落合成一个文档，BM25 的长度归一作用在整页上。
+- 选择规则：在全部 38 条问题上（用术语表），只有 recall@3 和首位命中都不低于只用摘录的方案才算合格；合格方案里取 recall@3 最高的，再比 MRR，再按 all、lead5、page 的顺序。没有合格方案时，检索默认只用摘录。
+- 这是在同一套问题上做选择，被选中方案的数字偏乐观。命令：`python -m planning_agent corpus evaluate --compare`，结果写入 `full_text_comparison.json`。
+
 ### 下一项验收条件
 
 - 由项目作者以外的人编写问题（TASKS V2），并加入语料之外的干扰问题；
@@ -153,6 +160,13 @@ Retrieval over real carrier notices is added to the [notice-to-memo workflow](de
 - Where full text helps: the R009 page names the Red Sea, so R009 rises from 14th to 4th for the Chinese Red Sea question and from not retrieved to 2nd for the English one; the first result for the English Asia-Europe question becomes the relevant R001.
 - Where it hurts: long pages (R009, R010, R015) match more questions and push down notices with short pages or no page: R007 falls from 3rd to 4th and 5th, and R002 and R003 fall from 9th and 8th to 14th and 12th for the English Asia-Europe question.
 - The comparison is not fully even: 9 notices have no page and compete with their excerpts only.
+
+### Limiting the advantage of long pages (modes and rule committed before the result)
+
+- Cause: a notice ranks by the best score of its excerpt or any passage, so a long page with many passages gets more chances.
+- Three passage modes: `all`, every passage is its own document (the result above); `lead5`, only the first five passages of each page; `page`, all passages of a page form one document, so BM25 length normalisation applies to the whole page.
+- Selection rule: with the glossary, over all 38 questions, a mode qualifies only if its recall@3 and hit@1 are at least those of the excerpts alone; among qualifying modes the highest recall@3 wins, then MRR, then the order all, lead5, page. If no mode qualifies, search keeps the excerpts only by default.
+- The choice is made on the same questions, so the selected mode's numbers are optimistic. Command: `python -m planning_agent corpus evaluate --compare`; the comparison is written to `full_text_comparison.json`.
 
 ### Next acceptance condition
 
