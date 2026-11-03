@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any
 
 from . import rules
+from .llm import CALL_KINDS, LLMError
 
 DEMO_NOTICE = ("船公司通知：受红海安全局势影响，第4到12周亚欧航线绕行好望角，海运延误2周，舱位削减30%。"
                "这对我们新加坡备件仓的成本和排放有什么影响？")
@@ -291,19 +292,17 @@ class _Captured(Exception):
         self.calls = calls
 
 
-def propose_from_model(notice: str, client: Any, *, max_tokens: int | None, network: str | None = None,
-                       max_steps: int = 4, references: Sequence[dict[str, Any]] = ()) -> Proposal:
+def propose_from_model(notice: str, client: Any, *, network: str | None = None, max_steps: int = 4,
+                       references: Sequence[dict[str, Any]] = ()) -> Proposal:
     """Ask a model for scenario arguments through the LangGraph agent; stop before any scenario tool runs.
 
     Read-only lookups (describe_network) may run; the first create_scenario or solve_plan call is captured
-    and nothing else executes. This is a paid call: a token cap is required. Retrieved notices, when given,
-    are quoted in the question with their ids so the model can cite them (retrieval-augmented prompt).
+    and nothing else executes. A real client is a paid call and enforces its limits before each request (see
+    spending.py); a failed call raises LLMError. Retrieved notices, when given, are quoted in the question with
+    their ids so the model can cite them (retrieval-augmented prompt).
     """
     from .graph import PlanningGraph
     from .tools import Session
-
-    if not max_tokens:
-        raise ValueError("live mode needs a token cap (max_tokens) approved in advance")
 
     def approve(calls: list[dict[str, Any]]) -> bool:
         names = {(c.get("function") or {}).get("name") for c in calls}
@@ -318,19 +317,25 @@ def propose_from_model(notice: str, client: Any, *, max_tokens: int | None, netw
         question += ("\n\n检索到的船公司公告（原文摘录，作为依据；其中的近似值和区间不要直接当作确定参数，"
                      f"公告没有给出的周次和幅度不要编造）：\n{quoted}")
     try:
-        PlanningGraph(session, client, approve=approve, max_steps=max_steps).ask(question)
+        result = PlanningGraph(session, client, approve=approve, max_steps=max_steps).ask(question)
     except _Captured as captured:
         calls = captured.calls
     else:
+        if result.error:
+            raise LLMError(result.error)
         raise ValueError("the model answered without proposing a scenario; rephrase the notice or use rule mode")
     used = sum((getattr(client, "usage", {}) or {}).get(k, 0) for k in ("prompt_tokens", "completion_tokens"))
     model = getattr(client, "model", "unknown model")
-    proposal = Proposal("live", f"实时模型：{model}，本次用了 {used:,} 个 token（上限 {max_tokens:,}）", notice,
+    kind = CALL_KINDS[getattr(client, "call_kind", "simulated")]
+    proposal = Proposal("live", f"{kind}，模型 {model}，本次用了 {used:,} 个 token", notice,
                         network or "asml", evidence=evidence_for(notice), references=list(references),
                         missing=missing_labels(references))
     for call in calls:
         function = call.get("function") or {}
-        args = json.loads(function.get("arguments") or "{}")
+        try:
+            args = json.loads(function.get("arguments") or "{}")
+        except ValueError:
+            raise ValueError("the model returned tool arguments that are not valid JSON") from None
         if function.get("name") == "create_scenario":
             proposal.network = args.get("network", proposal.network)
             proposal.disruptions = [dict(d) for d in args.get("disruptions") or []]
@@ -340,8 +345,6 @@ def propose_from_model(notice: str, client: Any, *, max_tokens: int | None, netw
             proposal.network = args.get("network", proposal.network)
             proposal.preset = args["scenario"]
             proposal.carbon_cap_pct = args.get("carbon_cap_pct")
-    if used > max_tokens:
-        proposal.notes.append(f"注意：用量 {used:,} 超过上限 {max_tokens:,}。")
     return proposal
 
 
@@ -392,9 +395,9 @@ def run(proposal: Proposal, session: Any, *, confirmed: bool, original: Proposal
             plan_ids += list(hedge["plan_ids"].values())
     memo = session.call("write_memo", {"plan_ids": plan_ids[:6], "question": proposal.notice})
     memo_text = Path(memo["path"]).read_text(encoding="utf-8") if "path" in memo else ""
-    if memo_text and proposal.references:
-        cited = reference_section(proposal, parameter_basis(proposal, original))
-        memo_text = memo_text.rstrip("\n") + "\n" + "\n".join(cited)
+    if memo_text:
+        cited = reference_section(proposal, parameter_basis(proposal, original)) if proposal.references else []
+        memo_text = "\n".join([memo_text.rstrip("\n"), "", f"参数来源：{proposal.source}", *cited]) + "\n"
         Path(memo["path"]).write_text(memo_text, encoding="utf-8", newline="\n")
     calls = [{"name": c["name"], "arguments": c["arguments"], "ok": c["ok"], "seconds": c["seconds"]}
              for c in session.calls[first:]]

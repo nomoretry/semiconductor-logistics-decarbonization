@@ -37,6 +37,7 @@ class LLMClientTests(unittest.TestCase):
         from unittest import mock
 
         from planning_agent.llm import OpenAICompatibleClient
+        from planning_agent.spending import Limits
         bodies = []
 
         def fake_urlopen(request, timeout):
@@ -51,8 +52,9 @@ class LLMClientTests(unittest.TestCase):
                                "prompt_tokens_details": {"cached_tokens": 3}}}
             return io.BytesIO(json.dumps(reply).encode("utf-8"))
 
-        client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
-        with mock.patch("urllib.request.urlopen", fake_urlopen):
+        client = OpenAICompatibleClient(api_key="test", model="reasoning-model",
+                                        limits=Limits(100, 1_000_000, 1000))
+        with mock.patch("planning_agent.llm._open", fake_urlopen):
             self.assertEqual(client.chat([{"role": "user", "content": "hi"}])["content"], "ok")
             client.chat([{"role": "user", "content": "again"}])
         self.assertEqual(["temperature" in b for b in bodies], [True, False, False])
@@ -65,6 +67,7 @@ class LLMClientTests(unittest.TestCase):
         from unittest import mock
 
         from planning_agent.llm import OpenAICompatibleClient
+        from planning_agent.spending import Limits
         sent = []
         replies = [
             {"output": [{"type": "reasoning", "id": "rs_1", "summary": []},
@@ -86,8 +89,9 @@ class LLMClientTests(unittest.TestCase):
 
         tools = [{"type": "function", "function": {"name": "solve_plan", "description": "d", "parameters": {}}}]
         messages = [{"role": "system", "content": "sys"}, {"role": "user", "content": "q"}]
-        client = OpenAICompatibleClient(api_key="test", model="reasoning-model")
-        with mock.patch("urllib.request.urlopen", fake_urlopen):
+        client = OpenAICompatibleClient(api_key="test", model="reasoning-model",
+                                        limits=Limits(100, 1_000_000, 1000))
+        with mock.patch("planning_agent.llm._open", fake_urlopen):
             first = client.chat(messages, tools)
             messages += [{"role": "assistant", "content": "", "tool_calls": first["tool_calls"]},
                          {"role": "tool", "tool_call_id": "call_1", "content": "{\"plan_id\": \"P1\"}"}]
