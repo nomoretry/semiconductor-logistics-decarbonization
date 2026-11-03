@@ -140,7 +140,7 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
     net = session.network(network)
     if not re.fullmatch(r"[a-z][a-z0-9_]{1,40}", name or ""):
         raise ToolError("name must be snake_case letters/digits, 2-41 characters, starting with a letter")
-    if name in net.scenario_specs:
+    if name in net.scenario_specs and (network, name) not in session.custom:  # a hedge also registers custom ones
         raise ToolError(f"'{name}' is a predefined scenario; choose another name")
     built: list[Disruption] = []
     assumptions: list[str] = []
@@ -297,7 +297,10 @@ def hedge_disruption_risk(session: Session, network: str, scenarios: list[Any] |
     objects = [session.scenario(network, n, float(p) / total) for n, p in zip(names, probabilities, strict=True)]
     specs = dict(net.scenario_specs)
     for sc in objects:
-        specs.setdefault(sc.name, sc.to_dict())
+        if (network, sc.name) in session.custom:  # the current definition, if the name was created again
+            specs[sc.name] = sc.to_dict()
+        else:
+            specs.setdefault(sc.name, sc.to_dict())
     net.scenario_specs = specs
     result = stochastic_value(net, names, [sc.probability for sc in objects], reveal_week=int(reveal_week),
                               nominal="normal" if "normal" in names else names[0],
