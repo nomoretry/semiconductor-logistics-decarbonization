@@ -72,7 +72,8 @@ modes = [m for m in workflow.MODE_LABELS if m != "live" or access.open]
 mode = st.sidebar.radio("参数来源", modes, format_func=workflow.MODE_LABELS.__getitem__, key="mode")
 live_note = "实时模型模式会产生费用，需要访问码，额度由服务端限定。" if access.open else "实时模型模式没有开放。"
 st.sidebar.caption(f"规则、公告检索和录制回放模式都不调用大模型。所有方案都在你确认后实时求解。{live_note}")
-st.caption(f"当前模式：{workflow.MODE_LABELS[mode]}")  # the sidebar starts collapsed on a phone
+# The sidebar starts collapsed on a phone, so the mode is also stated here.
+st.caption(f"当前模式：{workflow.MODE_LABELS[mode]}。网络、需求和费率都是合成假设；这是公开演示，请不要输入保密信息。")
 
 if mode == "rule":
     notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="notice", height=110,
