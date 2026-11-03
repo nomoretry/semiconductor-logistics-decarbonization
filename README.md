@@ -44,7 +44,7 @@ python -m planning_agent flow --mode replay --case D13   # parameters a real mod
 python -m streamlit run planning_agent/app.py            # web page with the same steps
 ```
 
-`--mode live` asks a model through the LangGraph agent; it needs `LLM_API_KEY` and a token cap (`--max-tokens`) and is a paid call. See the [workflow guide](docs/decision_workflow.md) for all options.
+`--mode live` asks a model through the LangGraph agent; it is a paid call and needs a key, a model id and [spending limits](docs/live_model_safety.md). See the [workflow guide](docs/decision_workflow.md) for all options.
 
 ## What works today
 

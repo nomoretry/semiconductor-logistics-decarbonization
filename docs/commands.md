@@ -29,7 +29,7 @@ python -m planning_agent corpus evaluate --check              # 复算检索评�
 python -m planning_agent corpus fetch --yes                   # 下载公告原文到本地（访问船公司网站）
 ```
 
-`--agent llm`、`--agent graph` 和 `flow --mode live` 需要环境变量 `LLM_API_KEY`，会产生费用；`flow --mode live` 还需要 `--max-tokens`。
+`--agent llm`、`--agent graph` 和 `flow --mode live` 会产生费用，需要 `LLM_API_KEY`、`LLM_MODEL_ID` 和限额变量，缺一项就不调用；`python -m planning_agent llm-check` 检查配置（不联网）。见[实时模型调用的配置与限额](live_model_safety.md)。
 
 ### 研究实验
 
@@ -113,7 +113,7 @@ python -m planning_agent corpus evaluate --check              # recompute the re
 python -m planning_agent corpus fetch --yes                   # download original notice pages locally (contacts carrier sites)
 ```
 
-`--agent llm`, `--agent graph` and `flow --mode live` need the `LLM_API_KEY` environment variable and are paid calls; `flow --mode live` also needs `--max-tokens`.
+`--agent llm`, `--agent graph` and `flow --mode live` are paid calls and need `LLM_API_KEY`, `LLM_MODEL_ID` and the limit variables; without any of them nothing is called. `python -m planning_agent llm-check` checks the configuration without touching the network. See [live model calls: configuration and limits](live_model_safety.md).
 
 ### Research studies
 

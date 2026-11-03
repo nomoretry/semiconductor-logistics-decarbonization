@@ -11,6 +11,7 @@ This document provides Chinese first and English second.
 
 - [命令参考](commands.md)：规划引擎、决策流程、研究实验和校验命令。
 - [公告到备忘录的决策流程](decision_workflow.md)：参数与假设、人工确认、方案对比和备忘录；四种参数来源。
+- [实时模型调用的配置与限额](live_model_safety.md)：密钥、请求前生效的限额、公开网页的开关和三种证据的区分。
 - [规划 Agent](planning_agent.md)：工具、数字护栏、LangGraph 编排、24 题评测与回放。
 - [网络规划引擎](network_planning.md)：模型、随机规划、碳前沿和独立核算。
 - [真实公告检索](notice_retrieval.md)：语料、检索方法、评测和下载原文的方式。
@@ -65,6 +66,7 @@ Documents are grouped by purpose. "Chinese only" marks earlier documents; "froze
 
 - [Command reference](commands.md): planning engine, decision workflow, research studies and verification commands.
 - [Notice-to-memo decision workflow](decision_workflow.md): parameters and assumptions, confirmation, plan comparison and memo; four parameter sources.
+- [Live model calls: configuration and limits](live_model_safety.md): the key, limits applied before a request, the switch on the public page and how evidence is labelled.
 - [Planning agent](planning_agent.md): tools, numeric guardrail, LangGraph orchestration, 24-question evaluation and replay.
 - [Network planning engine](network_planning.md): model, stochastic planning, carbon frontier and independent accounting.
 - [Notice retrieval](notice_retrieval.md): corpus, method, evaluation and how to download the original pages.

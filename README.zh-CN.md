@@ -44,7 +44,7 @@ python -m planning_agent flow --mode replay --case D13   # 使用真实模型在
 python -m streamlit run planning_agent/app.py            # 网页，步骤相同
 ```
 
-`--mode live` 通过 LangGraph Agent 调用模型，需要 `LLM_API_KEY` 和 token 上限（`--max-tokens`），会产生费用。全部选项见[流程说明](docs/decision_workflow.md)。
+`--mode live` 通过 LangGraph Agent 调用模型，会产生费用，需要密钥、模型名和[限额](docs/live_model_safety.md)。全部选项见[流程说明](docs/decision_workflow.md)。
 
 ## 现在能做什么
 
