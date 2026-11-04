@@ -1,0 +1,23 @@
+{
+  "label": "post_fix_development_retest",
+  "tasks": ["A04"],
+  "repeats": 3,
+  "model": "gpt-6.1-sol",
+  "api_style": "responses",
+  "reasoning_effort": "max",
+  "reasoning_mode": "standard",
+  "service_tier": "default",
+  "max_steps": 16,
+  "session": {},
+  "timeout_seconds": 1800,
+  "client_retries": 4,
+  "run_attempts": 3,
+  "max_requests": 60,
+  "max_total_tokens": 2000000,
+  "max_output_tokens": 25000,
+  "max_input_tokens": 400000,
+  "max_usd": 1.0,
+  "prices": {"input": 2.0, "cached_input": 0.1, "cache_write": 2.5, "output": 10.0, "unit": "USD per million tokens", "source": "developers.openai.com/api/docs/models/gpt-6.1-sol, read 2026-11-04", "tier": "Standard"},
+  "meter_prices": {"input": 2.5, "output": 10.0, "note": "The stop check uses the higher cache-write rate for all input, so it cannot run behind the listed prices."},
+  "note": "Same model, API, reasoning and step limit as the 60 runs. The output cap is 25,000 per request instead of 64,000 so that a US$1 limit leaves room for reservations; the highest output seen in the 60 runs was 2,578."
+}
