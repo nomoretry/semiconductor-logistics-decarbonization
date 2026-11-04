@@ -1,7 +1,8 @@
 """Audit the saved 20-task evaluation and write its tables, sensitivity analysis and exploratory check.
 
 Everything is computed from the saved raw runs; no model is called and no plan is solved. The official scores are
-never changed here: `sensitivity.json` is a post-hoc reading, labelled as such, of what the frozen scorer's known defects mean.
+never changed here: `sensitivity.json` is a post-hoc reading, labelled as such, of what the frozen scorer's known
+defects mean.
 
     python -m planning_agent eval-v2 analyze
     python scripts/report_planning_agent_v2.py
@@ -10,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import statistics
 import sys
 from collections import Counter
@@ -115,8 +117,9 @@ def audit(results: Path, model_folder: str) -> dict[str, Any]:
     producing = [s for s in sessions if s["started_at"] >= max(before)]  # the starts that produced scored runs
     seconds, costs = sorted(r["seconds"] for r in rows), sorted(r["cost_usd_at_list_price"] for r in rows)
     text = "\n".join(p.read_text(encoding="utf-8") for p in model_dir.rglob("*") if p.is_file())
-    leaks = {word: word in text for word in ("Bearer ", "Authorization", "27788", "C:\\\\Users", "D:\\\\coding",
-                                             "dusanhanz")}
+    leaks = {name: bool(re.search(pattern, text)) for name, pattern in (
+        ("authorization header", r"Bearer\s|Authorization"), ("api key", r"sk-[A-Za-z0-9_-]{16,}"),
+        ("windows user path", r"[A-Za-z]:\+Users"), ("home path", r"/(?:home|Users)/[A-Za-z0-9_-]+/"))}
     return {
         "runs_saved": len(rows), "runs_expected": len(expected),
         "missing_runs": sorted(f"{c} r{r}" for c, r in expected - set(keys)),
