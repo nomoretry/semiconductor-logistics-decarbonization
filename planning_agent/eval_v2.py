@@ -33,7 +33,7 @@ from typing import Any, cast
 
 from .agent import SYSTEM_PROMPT, AgentResult
 from .evaluate import REFUSAL, Gold, _has_number
-from .llm import OpenAICompatibleClient
+from .llm import OpenAICompatibleClient, usable_key
 from .spending import Limits, LLMError, Meter
 from .tools import Session
 
@@ -715,6 +715,16 @@ def write_manifest(output: Path = RESULTS) -> Path:
 
 # ---------------------------------------------------------------------------- command line
 
+def read_key(attempts: int = 3) -> str:
+    """Ask for the key with hidden input. In a Windows console Ctrl+V gives a control character instead of pasting."""
+    for _ in range(attempts):
+        key = getpass.getpass("LLM_API_KEY (hidden; paste with a right-click, not Ctrl+V): ").strip()
+        if key and usable_key(key):
+            return key
+        print("That input is empty or holds control characters, so nothing was sent. Paste it with a right-click.")
+    raise SystemExit("no usable key entered; nothing was sent")
+
+
 def add_arguments(parser: argparse.ArgumentParser) -> None:
     actions = parser.add_subparsers(dest="action", required=True)
     actions.add_parser("freeze", help="record hashes of the tasks, configuration, scorer and agent code")
@@ -752,7 +762,7 @@ def command(args: argparse.Namespace) -> int:
         config = json.loads(CONFIG.read_text(encoding="utf-8"))
         output = args.output or RESULTS / ("rule" if args.agent == "rule" else config["result_folder"])
         ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None
-        key = getpass.getpass("LLM_API_KEY (input stays hidden): ").strip() if args.prompt_key else None
+        key = read_key() if args.prompt_key else None
         try:
             report = run_evaluation(args.agent, output, repeats=args.repeats, ids=ids, api_key=key,
                                     base_url=args.base_url, execute=args.execute)

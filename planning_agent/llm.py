@@ -118,6 +118,10 @@ def _retry_delay(error: urllib.error.HTTPError, attempt: int) -> float:
     return min(max(asked, 2.0 ** attempt), 120.0)
 
 
+def usable_key(key: str) -> bool:
+    return key.isascii() and key.isprintable() and " " not in key
+
+
 def configured() -> bool:
     return bool(os.getenv("LLM_API_KEY"))
 
@@ -160,6 +164,8 @@ class OpenAICompatibleClient:
         self._api_key = api_key or os.getenv("LLM_API_KEY")
         if not self._api_key:
             raise LLMError("LLM_API_KEY is not set")
+        if not usable_key(self._api_key):  # a pasted control character reaches the service as a bare HTTP 400
+            raise LLMError("the API key holds spaces or control characters; enter it again")
         self.base_url = check_base_url(base_url or os.getenv("LLM_BASE_URL") or DEFAULT_BASE_URL)
         self.model = model or os.getenv("LLM_MODEL_ID")
         if not self.model:

@@ -58,6 +58,10 @@ C 组抽取规则：`real_notices_v1` 的 16 条按参考答案是否含数量�
 
 运行开始后不修改题目、评分规则、提示词或优化约束。发现确实需要修复的实现错误时，保存原始结果，另存新版本并说明差异。
 
+### 运行前的修改记录
+
+第一次启动时只发出 1 个请求，服务返回内容为空的 HTTP 400，没有模型回复，0 token（记录在结果目录的 `attempts.jsonl`、`ledger.jsonl`）。原因是 Windows 控制台的隐藏输入不支持 Ctrl+V，把控制字符当成了密钥（用占位密钥和控制字符分别请求，复现了 401 和这个 400）。修复：发送前检查密钥格式，提示用鼠标右键粘贴。题目、评分规则、提示词和优化约束都没有改，重新记录了 `freeze.json`。
+
 ## English
 
 ### Question
@@ -112,3 +116,7 @@ The run stops only for an exhausted budget, an unavailable key or model, an actu
 ### Not done
 
 Once running, tasks, scoring rules, prompts and optimisation constraints do not change. If a real implementation error needs fixing, the original results stay, a new version is saved separately and the difference is explained.
+
+### Changes before the run
+
+The first start sent one request and received an HTTP 400 with an empty body: no model reply and 0 tokens (recorded in `attempts.jsonl` and `ledger.jsonl` in the results folder). The cause was that hidden input in a Windows console does not paste with Ctrl+V and took a control character as the key (requests with a placeholder key and with a control character reproduced the 401 and this 400). The fix checks the key's format before sending and tells the user to paste with a right-click. Tasks, scoring rules, prompts and optimisation constraints did not change; `freeze.json` was recorded again.

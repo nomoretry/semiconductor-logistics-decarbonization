@@ -300,6 +300,21 @@ class RunBookkeepingTests(Base):
         self.assertEqual(len(self.runs()), 2)
         self.assertEqual(len(fake.requests), 2)
 
+    def test_a_key_with_a_control_character_is_refused_before_anything_is_sent(self):
+        from planning_agent import eval_v2
+        from planning_agent.llm import OpenAICompatibleClient
+        from planning_agent.spending import Limits, LLMError
+        fake = self.provider()
+        for bad in ("\x16", "sk-abc def", "sk-密钥"):
+            with self.subTest(bad), self.assertRaisesRegex(LLMError, "spaces or control characters"):
+                OpenAICompatibleClient(api_key=bad, base_url=fake.url, model="m", limits=Limits(1, 1000, 10))
+        self.assertEqual(fake.requests, [])
+        with mock.patch("getpass.getpass", side_effect=["\x16", "", KEY]), mock.patch("builtins.print"):
+            self.assertEqual(eval_v2.read_key(), KEY)
+        with mock.patch("getpass.getpass", return_value="\x16"), mock.patch("builtins.print"), \
+                self.assertRaises(SystemExit):
+            eval_v2.read_key()
+
     def test_a_model_run_needs_the_explicit_switch(self):
         from planning_agent import eval_v2
         with self.assertRaises(SystemExit):
