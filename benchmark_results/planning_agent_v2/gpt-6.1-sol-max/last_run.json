@@ -1,18 +1,13 @@
 {
-  "finished_at": "2026-11-04T10:03:58+00:00",
-  "stopped": {
-    "reason": "service: HTTP 400 from https://api.openai.com/v1/responses: ",
-    "at": "A01 r1",
-    "completed": 0,
-    "remaining": 60
-  },
-  "runs_saved": 0,
-  "cost_usd_at_list_price": 0,
+  "finished_at": "2026-11-04T13:20:06+00:00",
+  "stopped": null,
+  "runs_saved": 60,
+  "cost_usd_at_list_price": 2.5045,
   "meter": {
-    "requests": 1,
-    "tokens": 0,
-    "usd": 0.0,
-    "unconfirmed_requests": 0,
+    "requests": 254,
+    "tokens": 1381855,
+    "usd": 5.387095,
+    "unconfirmed_requests": 1,
     "overrun_tokens": 0,
     "limit_requests": 1500,
     "limit_tokens": 25000000,

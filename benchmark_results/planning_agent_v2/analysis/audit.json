@@ -1,0 +1,133 @@
+{
+  "runs_saved": 60,
+  "runs_expected": 60,
+  "missing_runs": [],
+  "duplicate_runs": [],
+  "distinct_run_ids": 60,
+  "attempt_numbers": {
+    "1": 60
+  },
+  "attempts_not_scored": [
+    {
+      "case": "A01",
+      "error": "HTTP 400 from https://api.openai.com/v1/responses: ",
+      "requests": [
+        "HTTP 400"
+      ]
+    },
+    {
+      "case": "A01",
+      "error": "HTTP 401 from https://api.openai.com/v1/responses: {\n  \"error\": {\n    \"message\": \"Incorrec",
+      "requests": [
+        "URLError",
+        "HTTP 401"
+      ]
+    }
+  ],
+  "call_kinds": {
+    "real": 60
+  },
+  "effective_per_request": {
+    "endpoint": {
+      "responses": 251
+    },
+    "model": {
+      "gpt-6.1-sol": 251
+    },
+    "reasoning_effort": {
+      "max": 251
+    },
+    "reasoning_mode": {
+      "standard": 251
+    },
+    "service_tier": {
+      "default": 251
+    },
+    "status": {
+      "completed": 251
+    }
+  },
+  "first_scored_run": "2026-11-04T10:19:12+00:00",
+  "last_scored_run": "2026-11-04T13:19:13+00:00",
+  "sessions": [
+    {
+      "started_at": "2026-11-04T10:03:55+00:00",
+      "commit": "97f6ea2",
+      "modified_paths": [],
+      "frozen_match": false,
+      "config_model": "gpt-6.1-sol",
+      "effort": "max"
+    },
+    {
+      "started_at": "2026-11-04T10:16:02+00:00",
+      "commit": "5157d2c",
+      "modified_paths": [],
+      "frozen_match": true,
+      "config_model": "gpt-6.1-sol",
+      "effort": "max"
+    },
+    {
+      "started_at": "2026-11-04T10:19:06+00:00",
+      "commit": "fdc8901",
+      "modified_paths": [],
+      "frozen_match": true,
+      "config_model": "gpt-6.1-sol",
+      "effort": "max"
+    },
+    {
+      "started_at": "2026-11-04T13:19:07+00:00",
+      "commit": "fdc8901",
+      "modified_paths": [],
+      "frozen_match": true,
+      "config_model": "gpt-6.1-sol",
+      "effort": "max"
+    }
+  ],
+  "scoring_sessions": {
+    "commits": [
+      "fdc8901"
+    ],
+    "no_uncommitted_changes": true,
+    "all_match_freeze": true
+  },
+  "run_statistics": {
+    "median_seconds": 72.83,
+    "p90_seconds": 174.08,
+    "max_seconds": 267.53,
+    "median_cost_usd": 0.0342,
+    "p90_cost_usd": 0.097868,
+    "max_cost_usd": 0.15194,
+    "tool_seconds_total": 94.6,
+    "rule_seconds_total": 14.6
+  },
+  "runs_with_errors": [
+    "A04 r1: max_steps"
+  ],
+  "tool_calls": {
+    "total": 278,
+    "failed": [
+      "A02 r2 solve_plan: service_level_pct must be between 50 and 100",
+      "B02 r3 solve_plan: service_level_pct must be between 50 and 100",
+      "B02 r3 solve_plan: service_level_pct must be between 50 and 100"
+    ],
+    "by_tool": {
+      "describe_network": 42,
+      "create_scenario": 55,
+      "solve_plan": 99,
+      "compare_plans": 37,
+      "explain_plan": 30,
+      "carbon_frontier": 3,
+      "hedge_disruption_risk": 3,
+      "write_memo": 9
+    }
+  },
+  "rule_runs": 60,
+  "rule_runs_identical_across_repeats": true,
+  "text_scan_hits": {},
+  "model_requests_with_all_optional_arguments": {
+    "solve_plan_calls": 99,
+    "with_carbon_cap_service_price_and_label": 99,
+    "disruptions": 58,
+    "with_both_mode_and_lanes": 58
+  }
+}

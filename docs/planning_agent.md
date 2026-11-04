@@ -157,9 +157,14 @@ python -m planning_agent --agent llm eval --ids D03,D13,H05 --output benchmark_r
 python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output benchmark_results/planning_agent
 ```
 
+### 评测 v2（真实调用）
+
+20 道新题、每题 3 次，LangGraph 流程真实调用 `gpt-6.1-sol`（`max`）：模型 52/60，规则 6/60。见[评测 v2 报告](results/planning_agent_v2.md)。上面的 24 题结果作为历史保留。
+
 ### 局限与下一步
 
-- 评测集小（24 条）且同一作者编写；下一步扩充到 100 条，并请业务同事独立出题。
+- 两轮评测（24 题、20 题）都由同一作者编写；下一步扩充到 100 条，并请业务同事独立出题。
+- 已知缺陷：`create_scenario` 同时收到 `mode` 和 `lanes` 时会相加；Responses API 请求没有明确 `strict`，模型会填满所有可选字段。详见评测 v2 报告。
 - 护栏只检查数字能否追溯，不检查推理是否正确；推理质量靠事实准确率和人工抽查。
 - 还没有 Web 界面；计划用 Streamlit 做“对话 + KPI 卡片 + 前沿图”。
 - LangGraph 版本已实现（见上），真实模型经图的 24 题评测待运行；工具层仍与框架无关，也可以作为 MCP 工具暴露。
@@ -195,4 +200,6 @@ Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool call
 
 **Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 
-**Limitations and next steps.** Small single-author test set (expand to 100 independent questions); the guardrail checks traceability, not reasoning; no web UI yet; the LangGraph version exists (above) but has not been run live; the framework-neutral tools could also be exposed as MCP tools.
+**Evaluation v2 (real calls).** Twenty new tasks with three runs each, through LangGraph with `gpt-6.1-sol` at `max`: model 52/60, rules 6/60. See the [evaluation v2 report](results/planning_agent_v2.md). The 24-question results above are kept as history.
+
+**Limitations and next steps.** Both evaluations are single-author (expand to 100 independent questions); the guardrail checks traceability, not reasoning; `create_scenario` adds `mode` and `lanes` when given both, and Responses API requests do not state `strict`, so the model fills every optional field (see the report); the framework-neutral tools could also be exposed as MCP tools.

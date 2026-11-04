@@ -27,6 +27,9 @@ python -m planning_agent replay --output artifacts/planning/replay              
 python -m planning_agent corpus search "鹿特丹码头罢工"          # 公告检索
 python -m planning_agent corpus evaluate --check              # 复算检索评测
 python -m planning_agent corpus fetch --yes                   # 下载公告原文到本地（访问船公司网站）
+python -m planning_agent eval-v2 run --agent rule             # 20 题评测的规则基线（不调用模型）
+python -m planning_agent eval-v2 analyze                      # 由保存的运行计算统计（不调用模型）
+python -m planning_agent eval-v2 verify                       # 重新评分并核对哈希（不调用模型）
 ```
 
 `--agent llm`、`--agent graph` 和 `flow --mode live` 会产生费用，需要 `LLM_API_KEY`、`LLM_MODEL_ID` 和限额变量，缺一项就不调用；`python -m planning_agent llm-check` 检查配置（不联网）。见[实时模型调用的配置与限额](live_model_safety.md)。
@@ -111,6 +114,9 @@ python -m planning_agent replay --output artifacts/planning/replay              
 python -m planning_agent corpus search "Rotterdam strike"     # notice retrieval
 python -m planning_agent corpus evaluate --check              # recompute the retrieval evaluation
 python -m planning_agent corpus fetch --yes                   # download original notice pages locally (contacts carrier sites)
+python -m planning_agent eval-v2 run --agent rule             # rule baseline of the 20-task evaluation (no model)
+python -m planning_agent eval-v2 analyze                      # statistics from saved runs (no model)
+python -m planning_agent eval-v2 verify                       # re-score and check hashes (no model)
 ```
 
 `--agent llm`, `--agent graph` and `flow --mode live` are paid calls and need `LLM_API_KEY`, `LLM_MODEL_ID` and the limit variables; without any of them nothing is called. `python -m planning_agent llm-check` checks the configuration without touching the network. See [live model calls: configuration and limits](live_model_safety.md).

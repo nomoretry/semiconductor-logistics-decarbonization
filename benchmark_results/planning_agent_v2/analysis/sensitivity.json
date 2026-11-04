@@ -1,0 +1,63 @@
+{
+  "note": "Post-hoc. Not a replacement for the pre-specified scores; the corrections were chosen after seeing the failures.",
+  "official": {
+    "runs_succeeded": 52,
+    "runs": 60,
+    "estimate": 0.8667,
+    "ci95": [
+      0.7167,
+      1.0
+    ],
+    "tasks": 20,
+    "unit": "task",
+    "minus_rule": {
+      "estimate": 0.7667,
+      "ci95": [
+        0.5333,
+        0.95
+      ],
+      "tasks": 20,
+      "unit": "task"
+    }
+  },
+  "with_B06_apostrophe_read_correctly": {
+    "runs_succeeded": 54,
+    "runs": 60,
+    "estimate": 0.9,
+    "ci95": [
+      0.75,
+      1.0
+    ],
+    "tasks": 20,
+    "unit": "task",
+    "minus_rule": {
+      "estimate": 0.8,
+      "ci95": [
+        0.6,
+        0.95
+      ],
+      "tasks": 20,
+      "unit": "task"
+    }
+  },
+  "and_with_C03_read_by_hand": {
+    "runs_succeeded": 57,
+    "runs": 60,
+    "estimate": 0.95,
+    "ci95": [
+      0.85,
+      1.0
+    ],
+    "tasks": 20,
+    "unit": "task",
+    "minus_rule": {
+      "estimate": 0.85,
+      "ci95": [
+        0.7,
+        1.0
+      ],
+      "tasks": 20,
+      "unit": "task"
+    }
+  }
+}

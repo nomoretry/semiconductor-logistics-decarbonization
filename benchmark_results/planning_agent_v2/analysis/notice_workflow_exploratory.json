@@ -1,0 +1,112 @@
+{
+  "note": "Exploratory and outside the pre-specified comparison: workflow.propose_from_notices, no model.",
+  "tasks": 7,
+  "proposed_no_parameters": 6,
+  "listed_missing_information": 7,
+  "rows": [
+    {
+      "case": "A08",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R001",
+        "R016"
+      ]
+    },
+    {
+      "case": "C01",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R009",
+        "R003",
+        "R007"
+      ]
+    },
+    {
+      "case": "C02",
+      "disruptions": [],
+      "preset": "red_sea",
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R015",
+        "R016",
+        "R014"
+      ]
+    },
+    {
+      "case": "C03",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R016",
+        "E08",
+        "R004"
+      ]
+    },
+    {
+      "case": "C04",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R011",
+        "R008",
+        "R005"
+      ]
+    },
+    {
+      "case": "C05",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R003",
+        "R002",
+        "R007"
+      ]
+    },
+    {
+      "case": "C06",
+      "disruptions": [],
+      "preset": null,
+      "missing_listed": [
+        "公告里的航线对应我们哪条内部线路",
+        "受影响的是计划期里哪几周的发运",
+        "确定增加几周运输时间（公告只给近似值、区间或没有给）"
+      ],
+      "references": [
+        "R008",
+        "R011",
+        "R016"
+      ]
+    }
+  ]
+}

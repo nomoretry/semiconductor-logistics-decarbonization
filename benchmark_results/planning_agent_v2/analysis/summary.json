@@ -1,0 +1,2388 @@
+{
+  "method": "Means are over tasks after averaging repeats within each task; intervals are percentile bootstraps over tasks (10,000 resamples), so repeats of a task are not treated as independent.",
+  "authorship": "Tasks written by the project author; not an independent evaluation.",
+  "tasks": 20,
+  "runs": {
+    "model": 60,
+    "rule": 60
+  },
+  "overall": {
+    "task_success": {
+      "model": {
+        "estimate": 0.8667,
+        "ci95": [
+          0.7167,
+          1.0
+        ],
+        "tasks": 20,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.1,
+        "ci95": [
+          0.0,
+          0.25
+        ],
+        "tasks": 20,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.7667,
+        "ci95": [
+          0.5333,
+          0.95
+        ],
+        "tasks": 20,
+        "unit": "task"
+      }
+    },
+    "tool_selection": {
+      "model": {
+        "estimate": 0.9231,
+        "ci95": [
+          0.7692,
+          1.0
+        ],
+        "tasks": 13,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.2308,
+        "ci95": [
+          0.0,
+          0.4615
+        ],
+        "tasks": 13,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.6923,
+        "ci95": [
+          0.4615,
+          0.9231
+        ],
+        "tasks": 13,
+        "unit": "task"
+      }
+    },
+    "tool_call_ok": {
+      "model": {
+        "estimate": 0.9922,
+        "ci95": [
+          0.9784,
+          1.0
+        ],
+        "tasks": 16,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 6,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": -0.0159,
+        "ci95": [
+          -0.0476,
+          0.0
+        ],
+        "tasks": 6,
+        "unit": "task"
+      }
+    },
+    "params_exact": {
+      "model": {
+        "estimate": 0.8571,
+        "ci95": [
+          0.5714,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.8571,
+        "ci95": [
+          0.5714,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      }
+    },
+    "param_field_accuracy": {
+      "model": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.0238,
+        "ci95": [
+          0.0,
+          0.0714
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.9762,
+        "ci95": [
+          0.9286,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      }
+    },
+    "states_missing": {
+      "model": {
+        "estimate": 0.8571,
+        "ci95": [
+          0.5714,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.8571,
+        "ci95": [
+          0.5714,
+          1.0
+        ],
+        "tasks": 7,
+        "unit": "task"
+      }
+    },
+    "invented_parameter": {
+      "model": {
+        "estimate": 0.0714,
+        "ci95": [
+          0.0,
+          0.2143
+        ],
+        "tasks": 14,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.0714,
+        "ci95": [
+          0.0,
+          0.2143
+        ],
+        "tasks": 14,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.0,
+        "ci95": [
+          -0.2143,
+          0.2143
+        ],
+        "tasks": 14,
+        "unit": "task"
+      }
+    },
+    "gold_numbers_found": {
+      "model": {
+        "estimate": 0.9167,
+        "ci95": [
+          0.75,
+          1.0
+        ],
+        "tasks": 12,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.2292,
+        "ci95": [
+          0.0417,
+          0.4583
+        ],
+        "tasks": 12,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.6875,
+        "ci95": [
+          0.4375,
+          0.9167
+        ],
+        "tasks": 12,
+        "unit": "task"
+      }
+    },
+    "numeric_faithfulness": {
+      "model": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 20,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 20,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "tasks": 20,
+        "unit": "task"
+      }
+    },
+    "assumption_flagged": {
+      "model": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 1,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 1.0,
+        "ci95": [
+          1.0,
+          1.0
+        ],
+        "tasks": 1,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "tasks": 1,
+        "unit": "task"
+      }
+    },
+    "cites_notice_quantity": {
+      "model": {
+        "estimate": 0.7778,
+        "ci95": [
+          0.3333,
+          1.0
+        ],
+        "tasks": 3,
+        "unit": "task"
+      },
+      "rule": {
+        "estimate": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "tasks": 3,
+        "unit": "task"
+      },
+      "model_minus_rule": {
+        "estimate": 0.7778,
+        "ci95": [
+          0.3333,
+          1.0
+        ],
+        "tasks": 3,
+        "unit": "task"
+      }
+    }
+  },
+  "groups": {
+    "A": {
+      "task_success": {
+        "model": {
+          "estimate": 0.875,
+          "ci95": [
+            0.625,
+            1.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.875,
+          "ci95": [
+            0.625,
+            1.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        }
+      },
+      "tool_selection": {
+        "model": {
+          "estimate": 0.8571,
+          "ci95": [
+            0.5714,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.1429,
+          "ci95": [
+            0.0,
+            0.4286
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.7143,
+          "ci95": [
+            0.4286,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        }
+      },
+      "tool_call_ok": {
+        "model": {
+          "estimate": 0.9957,
+          "ci95": [
+            0.987,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 2,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 2,
+          "unit": "task"
+        }
+      },
+      "params_exact": {
+        "model": {
+          "estimate": 0.8571,
+          "ci95": [
+            0.5714,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.8571,
+          "ci95": [
+            0.5714,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        }
+      },
+      "param_field_accuracy": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0238,
+          "ci95": [
+            0.0,
+            0.0714
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.9762,
+          "ci95": [
+            0.9286,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        }
+      },
+      "states_missing": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        }
+      },
+      "invented_parameter": {
+        "model": {
+          "estimate": 0.125,
+          "ci95": [
+            0.0,
+            0.375
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.125,
+          "ci95": [
+            0.0,
+            0.375
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            -0.375,
+            0.375
+          ],
+          "tasks": 8,
+          "unit": "task"
+        }
+      },
+      "gold_numbers_found": {
+        "model": {
+          "estimate": 0.8571,
+          "ci95": [
+            0.5714,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0714,
+          "ci95": [
+            0.0,
+            0.2143
+          ],
+          "tasks": 7,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.7857,
+          "ci95": [
+            0.5,
+            1.0
+          ],
+          "tasks": 7,
+          "unit": "task"
+        }
+      },
+      "numeric_faithfulness": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 8,
+          "unit": "task"
+        }
+      },
+      "assumption_flagged": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 1,
+          "unit": "task"
+        }
+      },
+      "cites_notice_quantity": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      }
+    },
+    "B": {
+      "task_success": {
+        "model": {
+          "estimate": 0.8889,
+          "ci95": [
+            0.6667,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.3333,
+          "ci95": [
+            0.0,
+            0.6667
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.5556,
+          "ci95": [
+            -0.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "tool_selection": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.3333,
+          "ci95": [
+            0.0,
+            0.6667
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.6667,
+          "ci95": [
+            0.3333,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "tool_call_ok": {
+        "model": {
+          "estimate": 0.981,
+          "ci95": [
+            0.9429,
+            1.0
+          ],
+          "tasks": 5,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 4,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": -0.0238,
+          "ci95": [
+            -0.0714,
+            0.0
+          ],
+          "tasks": 4,
+          "unit": "task"
+        }
+      },
+      "params_exact": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "param_field_accuracy": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "states_missing": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "invented_parameter": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "gold_numbers_found": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 5,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.45,
+          "ci95": [
+            0.05,
+            0.85
+          ],
+          "tasks": 5,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.55,
+          "ci95": [
+            0.15,
+            0.95
+          ],
+          "tasks": 5,
+          "unit": "task"
+        }
+      },
+      "numeric_faithfulness": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "assumption_flagged": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "cites_notice_quantity": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      }
+    },
+    "C": {
+      "task_success": {
+        "model": {
+          "estimate": 0.8333,
+          "ci95": [
+            0.5,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.8333,
+          "ci95": [
+            0.5,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "tool_selection": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "tool_call_ok": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 4,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "params_exact": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "param_field_accuracy": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "states_missing": {
+        "model": {
+          "estimate": 0.8333,
+          "ci95": [
+            0.5,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.8333,
+          "ci95": [
+            0.5,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "invented_parameter": {
+        "model": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "gold_numbers_found": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "numeric_faithfulness": {
+        "model": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 6,
+          "unit": "task"
+        }
+      },
+      "assumption_flagged": {
+        "model": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        },
+        "model_minus_rule": {
+          "estimate": null,
+          "ci95": null,
+          "tasks": 0
+        }
+      },
+      "cites_notice_quantity": {
+        "model": {
+          "estimate": 0.7778,
+          "ci95": [
+            0.3333,
+            1.0
+          ],
+          "tasks": 3,
+          "unit": "task"
+        },
+        "rule": {
+          "estimate": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "tasks": 3,
+          "unit": "task"
+        },
+        "model_minus_rule": {
+          "estimate": 0.7778,
+          "ci95": [
+            0.3333,
+            1.0
+          ],
+          "tasks": 3,
+          "unit": "task"
+        }
+      }
+    }
+  },
+  "task_level_comparison": {
+    "model_better": 16,
+    "rule_better": 1,
+    "tied": 3
+  },
+  "failure_labels": {
+    "model": {
+      "max_steps": 1,
+      "param_error": 3,
+      "tool_selection_error": 2,
+      "gold_number_missing": 2,
+      "refusal_failed": 2,
+      "missing_info_not_stated": 3
+    },
+    "rule": {
+      "tool_selection_error": 30,
+      "gold_number_missing": 30,
+      "param_error": 3,
+      "missing_info_not_stated": 21
+    }
+  },
+  "stability": {
+    "model": {
+      "tasks": 20,
+      "tasks_with_same_outcome_every_run": 19,
+      "tasks_with_identical_tools_and_parameters": 10,
+      "per_case": {
+        "A01": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 3
+        },
+        "A02": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "A03": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A04": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 3
+        },
+        "A05": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "A06": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A07": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A08": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B01": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B02": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "B03": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "B04": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "B05": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "B06": {
+          "successes": [
+            false,
+            false,
+            true
+          ],
+          "same_outcome": false,
+          "distinct_signatures": 1
+        },
+        "C01": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C02": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C03": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        },
+        "C04": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C05": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C06": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 2
+        }
+      }
+    },
+    "rule": {
+      "tasks": 20,
+      "tasks_with_same_outcome_every_run": 20,
+      "tasks_with_identical_tools_and_parameters": 20,
+      "per_case": {
+        "A01": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A02": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A03": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A04": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A05": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A06": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A07": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "A08": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B01": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B02": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B03": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B04": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B05": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "B06": {
+          "successes": [
+            true,
+            true,
+            true
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C01": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C02": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C03": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C04": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C05": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        },
+        "C06": {
+          "successes": [
+            false,
+            false,
+            false
+          ],
+          "same_outcome": true,
+          "distinct_signatures": 1
+        }
+      }
+    }
+  },
+  "resources": {
+    "model": {
+      "runs_scored": 60,
+      "attempts_not_scored": 2,
+      "requests_answered": 251,
+      "requests_failed": 3,
+      "failure_types": {
+        "HTTP 400": 1,
+        "URLError": 1,
+        "HTTP 401": 1
+      },
+      "input_tokens": 1116271,
+      "cached_input_tokens": 925995,
+      "cache_write_tokens": 189523,
+      "output_tokens": 193661,
+      "reasoning_tokens": 142398,
+      "cost_usd_at_list_price": 2.5045,
+      "cost_per_run_usd": {
+        "median": 0.034524,
+        "p90": 0.097868,
+        "max": 0.15194
+      },
+      "seconds_per_run": {
+        "median": 72.86,
+        "p90": 174.08,
+        "max": 267.53,
+        "total": 4969.5
+      },
+      "request_seconds_total": 4880.0,
+      "effective": {
+        "endpoints": [
+          "responses"
+        ],
+        "models": [
+          "gpt-6.1-sol"
+        ],
+        "reasoning_efforts": [
+          "max"
+        ],
+        "reasoning_modes": [
+          "standard"
+        ],
+        "service_tiers": [
+          "default"
+        ]
+      },
+      "meter": {
+        "requests": 254,
+        "tokens": 1381855,
+        "usd": 5.387095,
+        "unconfirmed_requests": 1,
+        "overrun_tokens": 0,
+        "limit_requests": 1500,
+        "limit_tokens": 25000000,
+        "limit_usd": 30.0,
+        "window": "all"
+      }
+    }
+  },
+  "per_case": [
+    {
+      "case": "A01",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        117.73,
+        153.79,
+        106.12
+      ],
+      "model_cost_usd": [
+        0.055855,
+        0.079753,
+        0.051035
+      ],
+      "model_requests": [
+        5,
+        9,
+        5
+      ]
+    },
+    {
+      "case": "A02",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        76.53,
+        111.26,
+        81.61
+      ],
+      "model_cost_usd": [
+        0.037591,
+        0.054092,
+        0.041911
+      ],
+      "model_requests": [
+        5,
+        8,
+        5
+      ]
+    },
+    {
+      "case": "A03",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        131.84,
+        92.02,
+        98.94
+      ],
+      "model_cost_usd": [
+        0.066269,
+        0.042019,
+        0.046585
+      ],
+      "model_requests": [
+        7,
+        6,
+        5
+      ]
+    },
+    {
+      "case": "A04",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        false,
+        false,
+        false
+      ],
+      "model_labels": [
+        [
+          "max_steps",
+          "param_error"
+        ],
+        [
+          "tool_selection_error",
+          "param_error",
+          "gold_number_missing"
+        ],
+        [
+          "tool_selection_error",
+          "param_error",
+          "gold_number_missing"
+        ]
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        174.08,
+        267.53,
+        222.65
+      ],
+      "model_cost_usd": [
+        0.097868,
+        0.144667,
+        0.123605
+      ],
+      "model_requests": [
+        16,
+        14,
+        13
+      ]
+    },
+    {
+      "case": "A05",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "param_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        72.93,
+        72.86,
+        83.69
+      ],
+      "model_cost_usd": [
+        0.037876,
+        0.042395,
+        0.047467
+      ],
+      "model_requests": [
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "case": "A06",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        107.11,
+        110.03,
+        90.02
+      ],
+      "model_cost_usd": [
+        0.054363,
+        0.055439,
+        0.045995
+      ],
+      "model_requests": [
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "case": "A07",
+      "group": "A",
+      "kind": "scenario",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        132.6,
+        101.6,
+        107.89
+      ],
+      "model_cost_usd": [
+        0.06842,
+        0.050768,
+        0.060255
+      ],
+      "model_requests": [
+        8,
+        5,
+        7
+      ]
+    },
+    {
+      "case": "A08",
+      "group": "A",
+      "kind": "clarify",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        31.29,
+        30.85,
+        29.8
+      ],
+      "model_cost_usd": [
+        0.011915,
+        0.011511,
+        0.010701
+      ],
+      "model_requests": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case": "B01",
+      "group": "B",
+      "kind": "tool",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        16.55,
+        16.78,
+        19.25
+      ],
+      "model_cost_usd": [
+        0.009036,
+        0.00757,
+        0.00758
+      ],
+      "model_requests": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "case": "B02",
+      "group": "B",
+      "kind": "tool",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        true,
+        true,
+        true
+      ],
+      "rule_labels": [],
+      "model_seconds": [
+        36.54,
+        68.68,
+        57.24
+      ],
+      "model_cost_usd": [
+        0.017067,
+        0.030291,
+        0.026097
+      ],
+      "model_requests": [
+        4,
+        5,
+        5
+      ]
+    },
+    {
+      "case": "B03",
+      "group": "B",
+      "kind": "tool",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        56.11,
+        51.72,
+        81.34
+      ],
+      "model_cost_usd": [
+        0.025345,
+        0.024167,
+        0.040444
+      ],
+      "model_requests": [
+        2,
+        2,
+        4
+      ]
+    },
+    {
+      "case": "B04",
+      "group": "B",
+      "kind": "tool",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error",
+        "gold_number_missing"
+      ],
+      "model_seconds": [
+        110.24,
+        115.66,
+        105.63
+      ],
+      "model_cost_usd": [
+        0.045653,
+        0.045875,
+        0.046419
+      ],
+      "model_requests": [
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "case": "B05",
+      "group": "B",
+      "kind": "tool",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "tool_selection_error"
+      ],
+      "model_seconds": [
+        204.11,
+        217.87,
+        230.79
+      ],
+      "model_cost_usd": [
+        0.121905,
+        0.140984,
+        0.15194
+      ],
+      "model_requests": [
+        9,
+        10,
+        11
+      ]
+    },
+    {
+      "case": "B06",
+      "group": "B",
+      "kind": "refuse",
+      "model_successes": [
+        false,
+        false,
+        true
+      ],
+      "model_labels": [
+        [
+          "refusal_failed"
+        ],
+        [
+          "refusal_failed"
+        ],
+        []
+      ],
+      "rule_successes": [
+        true,
+        true,
+        true
+      ],
+      "rule_labels": [],
+      "model_seconds": [
+        9.7,
+        7.95,
+        9.19
+      ],
+      "model_cost_usd": [
+        0.003998,
+        0.00313,
+        0.00379
+      ],
+      "model_requests": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case": "C01",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        73.88,
+        71.55,
+        73.1
+      ],
+      "model_cost_usd": [
+        0.03517,
+        0.033839,
+        0.031782
+      ],
+      "model_requests": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "case": "C02",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        57.61,
+        50.35,
+        68.88
+      ],
+      "model_cost_usd": [
+        0.025246,
+        0.022707,
+        0.030349
+      ],
+      "model_requests": [
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "case": "C03",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        false,
+        false,
+        false
+      ],
+      "model_labels": [
+        [
+          "missing_info_not_stated"
+        ],
+        [
+          "missing_info_not_stated"
+        ],
+        [
+          "missing_info_not_stated"
+        ]
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        41.72,
+        49.57,
+        72.8
+      ],
+      "model_cost_usd": [
+        0.018658,
+        0.023166,
+        0.034524
+      ],
+      "model_requests": [
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "case": "C04",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        50.75,
+        51.19,
+        37.76
+      ],
+      "model_cost_usd": [
+        0.018788,
+        0.018273,
+        0.013323
+      ],
+      "model_requests": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case": "C05",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        37.5,
+        26.34,
+        30.61
+      ],
+      "model_cost_usd": [
+        0.016715,
+        0.012283,
+        0.013524
+      ],
+      "model_requests": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "case": "C06",
+      "group": "C",
+      "kind": "notice",
+      "model_successes": [
+        true,
+        true,
+        true
+      ],
+      "model_labels": [
+        [],
+        [],
+        []
+      ],
+      "rule_successes": [
+        false,
+        false,
+        false
+      ],
+      "rule_labels": [
+        "missing_info_not_stated"
+      ],
+      "model_seconds": [
+        60.07,
+        43.02,
+        52.71
+      ],
+      "model_cost_usd": [
+        0.023505,
+        0.018203,
+        0.024822
+      ],
+      "model_requests": [
+        1,
+        1,
+        2
+      ]
+    }
+  ]
+}
