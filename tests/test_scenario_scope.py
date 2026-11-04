@@ -98,6 +98,19 @@ class ScenarioScopeTests(unittest.TestCase):
             else:
                 self.assertIn("not 'road' lanes", self.error(item))
 
+    def test_on_a04_the_wrong_scope_happens_to_give_the_same_totals(self):
+        from planning_agent.tools import Session
+        session = Session()
+        disruption = {"start_week": 7, "end_week": 9, "capacity_change_pct": -100 / 3, "cost_change_pct": 15}
+        totals = []
+        for name, scope in (("taiwan", ["TW_air"]), ("wider", ["TW_air", "MY_air"])):
+            session.call("create_scenario", {"network": "marvell", "name": name,
+                                             "disruptions": [{"lanes": scope, **disruption}]})
+            plan = session.call("solve_plan", {"network": "marvell", "scenario": name})
+            totals.append((plan["total_cost_usd"], float(plan["emissions_t"])))
+        self.assertEqual(totals[0], (467188, 9.76))
+        self.assertEqual(totals[0], totals[1])
+
     def test_recorded_runs_can_still_be_replayed_with_the_behaviour_they_saw(self):
         self.assertEqual(self.covered({"mode": "air", "lanes": ["TW_air"], **WEEKS}, additive_mode_lanes=True),
                          [["TW_air", "MY_air"]])

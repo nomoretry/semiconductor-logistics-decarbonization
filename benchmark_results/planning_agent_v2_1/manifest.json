@@ -1,0 +1,14 @@
+{
+  "sha256": {
+    "a04_retest/a04_retest.csv": "7dd5743088fc16a81aa26993880832de02a2b152363d9f75681f51d5e4f42209",
+    "a04_retest/last_run.json": "ace930c00f6c3ab99286674134f369a99be1b8507420ce14262ce68596dec2ad",
+    "a04_retest/ledger.jsonl": "afc96fb28d87171f967d3fae246441a4b201ce443fd7c02346a8a5035c5b6af8",
+    "a04_retest/original_response_evidence.json": "f377d27a57db7ba9a114f3945ac2964d7e2b0bc14191f88fe75e7114e88af85e",
+    "a04_retest/runs.jsonl": "4e32d667e2831f71dcbb7f4545cb71c28ec1ebdac0e8872e5dbf57356d6a6aea",
+    "a04_retest/sessions.jsonl": "18476d3d0f36552bf021890ca0c26d054f712b87d2f35cab36b737a2cecdb874",
+    "a04_retest/summary.json": "dbfaa2e9a56c259dd766689e800b41e8429c4cf7e4039a761c775e93207d6526",
+    "rescore/scores.csv": "e229a30917ebe6a7fb4e98982ff6f1b85409f519911ef0a108d7ac116c3295a9",
+    "rescore/summary.json": "cfac2d4e347670d488d7fb2c6254f607df50cba15723cdb304805e075560291a",
+    "results_20x3.csv": "22573c98cca649eb147100f4616fb3a19cae7af40b4ffaac1a0987c2651d234e"
+  }
+}

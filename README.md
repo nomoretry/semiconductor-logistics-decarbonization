@@ -50,7 +50,8 @@ The agent decides which tools to call; the solver computes every number. The ear
 | Disruption impact (12 synthetic SKUs, 16 weeks) | ASML-inspired Red Sea diversion: cost +12.38%, CO2e +28.39%. Marvell-inspired typhoon: cost +2.18% | [Report](benchmark_results/network_planning/report.md); tested, not independently verified |
 | Cost of a 25% CO2e cut at 98% service | ASML +1.76%, average MAC 187 USD/t. Marvell +13.12%, 24,756 USD/t | Same |
 | Value of planning for disruptions (VSS) | ASML 864 USD (1.51%). Marvell about zero, inside the bound interval | Same |
-| Agent evaluation v2: 20 new tasks × 3 runs, gpt-6.1-sol at `max`, real calls | Model 52/60 (86.7%, 95% interval over tasks [71.7, 100.0]); rule agent 6/60 (10.0%). Difference +76.7 points [+53.3, +95.0]. Numeric review 100% for both. USD 2.50 at list prices, median 73 s per run | [Report](docs/results/planning_agent_v2.md); one author, **not independent**; includes failures from a tool interface defect and two scorer limits |
+| Agent evaluation v2: 20 new tasks × 3 runs, gpt-6.1-sol at `max`, real calls | Model 52/60 (86.7%, 95% interval over tasks [71.7, 100.0]); rule agent 6/60 (10.0%). Difference +76.7 points [+53.3, +95.0]. Numeric review 100% for both. USD 2.50 at list prices, median 73 s per run | [Report](docs/results/planning_agent_v2.md); one author, **not independent**; the conclusion is limited to better than the current frozen rules on this task set |
+| After evaluation v2: corrected scoring and the A04 retest after the fix (the row above does not change) | The same answers rescored offline give model 54/60 and rules 6/60, with no model called. After the tool fix only A04 was rerun three times: 3/3 (was 0/3), the other 19 tasks not rerun | [Follow-up report](docs/results/planning_agent_v2_followup.md); a development retest, not merged into the 60 runs; C03 is [pending human review](docs/results/c03_review_case.md) |
 | Older agent evaluation, 24 questions already seen | Rule agent 14/14 and 4/10. gpt-6.1-sol (xhigh, one run, re-scored after a guardrail fix) 9/14 and 9/10 | [Agent](docs/planning_agent.md); kept as history |
 | Notice retrieval, 38 questions over 19 event groups | First result in the right event group for 37/38 (Chinese without the glossary: 4/19) | [Retrieval](docs/notice_retrieval.md); one author, optimistic |
 | Notice extraction, 400 synthetic hold-out notices | Fixed model 400/400; frozen rules 204/400 | [Results](docs/results/api_test.md); synthetic. Real quantity cases: 7/8 vs 6/8 with unreviewed references |
@@ -96,6 +97,7 @@ make lock-check      # the lock files still match pyproject.toml and constraints
 make verify-final    # replay one archived study; the research guide lists all verify commands
 python -m planning_agent replay            # recorded model runs through LangGraph, no model call
 python -m planning_agent eval-v2 verify    # re-score saved evaluation runs and check hashes, no model call
+python -m planning_agent eval-followup verify    # check the corrected scoring and the A04 retest, no model call
 ```
 
 No default check calls a model API. Without Make, run the Python commands in the [command reference](docs/commands.md).
@@ -105,7 +107,8 @@ No default check calls a model API. Without Make, run the Python commands in the
 - All operational data are synthetic. Results compare policies under stated assumptions; they are not measurements of company operations or emission reductions.
 - Research lines are evaluated separately; there is no end-to-end validation across them.
 - Evaluation tasks were written by one author, and real-notice references are assistant-written and not reviewed by a person. Nothing here has been independently verified.
-- The workflow's `live` mode has not been run against a real model (the evaluation calls the LangGraph agent directly). A known tool interface defect (`mode` and `lanes` add up) is documented in the report and not yet fixed.
+- The workflow's `live` mode has not been fully run against a real model (the evaluation calls the LangGraph agent directly). The Streamlit app is built and pending deployment.
+- Task completion is not logistics decision benefit, which is not measured.
 - CI runs on Ubuntu with Python 3.12 only. On Windows the full test suite has 17 known failures in frozen modules; macOS is not verified. There is no tagged release, and some earlier documents exist in Chinese only.
 - Instances reach 26,065 variables with few binaries; there is no commercial solver comparison and no decomposition method.
 

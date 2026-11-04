@@ -159,15 +159,15 @@ python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output
 
 ### 评测 v2（真实调用）
 
-20 道新题、每题 3 次，LangGraph 流程真实调用 `gpt-6.1-sol`（`max`）：模型 52/60，规则 6/60。见[评测 v2 报告](results/planning_agent_v2.md)。上面的 24 题结果作为历史保留。
+20 道新题、每题 3 次，LangGraph 流程真实调用 `gpt-6.1-sol`（`max`）：官方成绩模型 52/60，规则 6/60。见[评测 v2 报告](results/planning_agent_v2.md)。上面的 24 题结果作为历史保留。之后的修复和复算单独记录（[后续报告](results/planning_agent_v2_followup.md)）：修正评分离线重评模型 54/60、规则 6/60；只重跑 A04 的开发复测 3/3，不并入 60 次。
 
 ### 局限与下一步
 
 - 两轮评测（24 题、20 题）都由同一作者编写；下一步扩充到 100 条，并请业务同事独立出题。
-- 已知缺陷：`create_scenario` 同时收到 `mode` 和 `lanes` 时会相加；Responses API 请求没有明确 `strict`，模型会填满所有可选字段。详见评测 v2 报告。
+- `create_scenario` 的线路语义：`lanes` 决定范围，只给 `mode` 表示该方式的全部线路，两者冲突时报错。修复后只重跑了 A04，另外 19 题的影响未知。
 - 护栏只检查数字能否追溯，不检查推理是否正确；推理质量靠事实准确率和人工抽查。
-- 还没有 Web 界面；计划用 Streamlit 做“对话 + KPI 卡片 + 前沿图”。
-- LangGraph 版本已实现（见上），真实模型经图的 24 题评测待运行；工具层仍与框架无关，也可以作为 MCP 工具暴露。
+- Streamlit 网页已实现（见[业务闭环](decision_workflow.md)），尚未公开部署。
+- 流程的 `flow --mode live` 还没有用真实模型完整跑过（评测直接调用 LangGraph Agent）；工具层仍与框架无关，也可以作为 MCP 工具暴露。
 
 ## English
 
@@ -200,6 +200,6 @@ Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool call
 
 **Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 
-**Evaluation v2 (real calls).** Twenty new tasks with three runs each, through LangGraph with `gpt-6.1-sol` at `max`: model 52/60, rules 6/60. See the [evaluation v2 report](results/planning_agent_v2.md). The 24-question results above are kept as history.
+**Evaluation v2 (real calls).** Twenty new tasks with three runs each, through LangGraph with `gpt-6.1-sol` at `max`: official scores model 52/60, rules 6/60. See the [evaluation v2 report](results/planning_agent_v2.md). The 24-question results above are kept as history. The fix and recomputation that followed are recorded separately ([follow-up report](results/planning_agent_v2_followup.md)): corrected offline rescoring gives model 54/60 and rules 6/60; a development retest of only A04 gets 3/3 and is not merged into the 60 runs.
 
-**Limitations and next steps.** Both evaluations are single-author (expand to 100 independent questions); the guardrail checks traceability, not reasoning; `create_scenario` adds `mode` and `lanes` when given both, and Responses API requests do not state `strict`, so the model fills every optional field (see the report); the framework-neutral tools could also be exposed as MCP tools.
+**Limitations and next steps.** Both evaluations are single-author (expand to 100 independent questions); the guardrail checks traceability, not reasoning; after the `create_scenario` fix only A04 was rerun, so the effect on the other 19 tasks is unknown; `flow --mode live` has not been fully run with a real model, and the Streamlit app is built but not publicly deployed; the framework-neutral tools could also be exposed as MCP tools.

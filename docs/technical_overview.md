@@ -105,7 +105,11 @@ flowchart LR
 #### 3.3 目标函数
 
 $$
-\min\ \alpha T\sum_{l\in L^a}R_l+\sum_{k}\pi_k\Big[\sum_{s,l,t}v_s h\,\ell_{ltk}x_{sltk}+\sum_{l\notin L^a}\sum_{s,t}c_l\phi_{ltk}m_s x_{sltk}+\sum_{l\in L^a}\sum_t c_l\big(a^{r}_{ltk}+\rho\,\phi_{ltk}a^{s}_{ltk}\big)+\sum_{l,t}f_l y_{ltk}+\sum_{s,t}\big((v_s h+w^{h})I_{stk}+p_s B_{stk}\big)+\sum_s p_s\tau U_{sk}\Big]+\frac{\lambda}{1000}E
+\begin{aligned}
+\min\ & \alpha T\sum_{l\in L^a}R_l+\sum_{k}\pi_k\Big[\sum_{s,l,t}v_s h\,\ell_{ltk}x_{sltk}+\sum_{l\notin L^a}\sum_{s,t}c_l\phi_{ltk}m_s x_{sltk}\\
+& +\sum_{l\in L^a}\sum_t c_l\big(a^{r}_{ltk}+\rho\,\phi_{ltk}a^{s}_{ltk}\big)+\sum_{l,t}f_l y_{ltk}\\
+& +\sum_{s,t}\big((v_s h+w^{h})I_{stk}+p_s B_{stk}\big)+\sum_s p_s\tau U_{sk}\Big]+\frac{\lambda}{1000}E
+\end{aligned}
 $$
 
 各项依次是：预留费、在途资金占用、海运和公路运费、空运运费、固定费用、库存和积压、期末缺口罚金、可选碳价 $\lambda$（美元/吨）。
@@ -173,7 +177,7 @@ MIP 只解到一定 gap，所以用 HiGHS 对偶界给出区间：VSS ∈ [EEV �
 
 **四种东西不要混淆。** 数学优化求解器（HiGHS）算出所有计划和数字。规则 Agent（`rules.py`）用正则选工具，不学习也不调用模型。LLM Agent 由大模型选工具和提参数，自己不做计算。学习策略（BC、PPO，第 5 节）是另一条研究线的小型神经网络，决定查询和停止，和 LLM Agent 没有连接。
 
-**模型接口。** `llm.py` 的 `OpenAICompatibleClient` 只用标准库。`LLM_API_STYLE=responses` 走 OpenAI Responses API：`reasoning.effort`、`reasoning.mode`、`service_tier`、`max_output_tokens` 随请求发送；工具调用后把推理条目和函数调用条目原样回传。部分模型不允许在 Chat Completions 上工具调用，客户端遇到相应的 400 会自动切换。每个 HTTP 请求记录服务返回的实际模型名、推理配置、处理档位、状态和 token 明细。**已知缺陷**：请求没有明确 `strict`，Responses API 会尝试严格模式，记录显示模型填满了所有可选字段；再加上 `create_scenario` 把 `mode` 和 `lanes` 相加，无法表达“只影响同类线路中的一条”（见[评测报告](results/planning_agent_v2.md)第 9 节）。
+**模型接口。** `llm.py` 的 `OpenAICompatibleClient` 只用标准库。`LLM_API_STYLE=responses` 走 OpenAI Responses API：`reasoning.effort`、`reasoning.mode`、`service_tier`、`max_output_tokens` 随请求发送；工具调用后把推理条目和函数调用条目原样回传。部分模型不允许在 Chat Completions 上工具调用，客户端遇到相应的 400 会自动切换。每个 HTTP 请求记录服务返回的实际模型名、推理配置、处理档位、状态和 token 明细。工具请求明确写 `strict: false`，因为可选字段缺省时有含义（没有给，并作为假设报告）。60 次评测时还没有这样做：服务按默认值走严格模式（从服务端读回的原始请求确认），模型必须填满所有可选字段；同时 `create_scenario` 把 `mode` 和 `lanes` 相加，所以 A04 表达不出“只影响同类线路中的一条”。这个缺陷已修复，语义是：`lanes` 决定范围，只给 `mode` 表示该方式的全部线路，两者冲突时报错，`null` 视为没有给（见 `tools.py` 的 `disruption_lanes` 和[后续报告](results/planning_agent_v2_followup.md)）。录制的旧运行回放时仍用录制时的行为。
 
 **八个工具**（`tools.py`）。工具校验参数，错误用模型能看懂的文字返回，模型可以据此改正。
 
@@ -309,7 +313,9 @@ PPO − BC = +0.0298 个百分点，配对种子 × 分层情境自助法的近�
 
 **逐项对比。** 模型的优势在没见过的措辞、组合参数、工具选择和判断公告能否使用。规则能解析的题两者相同。数字审查都是 100%。模型只有 10/20 题三次的工具和参数完全相同。不调用模型的公告检索流程在“说明缺失信息”上也能做到大部分（探索性）。
 
-**失败。** A04 的 3 次是工具接口问题：模型读对了参数，但 `mode` 和 `lanes` 相加，把范围扩大到马来西亚，它也无法恢复。B06 的 2 次和 C03 的 3 次，读原文后认为回答合理，是冻结评分规则判为失败；事后读法下成功次数是 54/60 和 57/60，官方成绩不变。
+**失败。** A04 的 3 次是工具接口问题：模型读对了参数，但 `mode` 和 `lanes` 相加，把范围扩大到马来西亚，它也无法恢复。B06 的 2 次是评分器不认弯引号。C03 的 3 次，回答在业务上看来合理，但不符合原评分规则，待人工复核。
+
+**评测之后（不改变官方成绩）。** 三种成绩不能相加：官方 52/60；同一批保存回答用修正评分器离线重评，模型 54/60、规则 6/60，没有调用模型；工具修复后只重跑 A04 的开发复测 3/3（原 0/3），单独保存，不并入 60 次，另外 19 题没有重跑。结论只限于本题集上优于当前冻结规则。任务完成率、数字可追溯性和物流决策收益是三件事，物流决策收益没有测量。详见[后续报告](results/planning_agent_v2_followup.md)，结果表见[评分说明](results/planning_agent_v2_scoring.md)。
 
 #### 6.6 负结果与统计限制
 
@@ -432,7 +438,11 @@ This section describes only the planning engine. The earlier known-order model a
 #### 3.3 Objective
 
 $$
-\min\ \alpha T\sum_{l\in L^a}R_l+\sum_{k}\pi_k\Big[\sum_{s,l,t}v_s h\,\ell_{ltk}x_{sltk}+\sum_{l\notin L^a}\sum_{s,t}c_l\phi_{ltk}m_s x_{sltk}+\sum_{l\in L^a}\sum_t c_l\big(a^{r}_{ltk}+\rho\,\phi_{ltk}a^{s}_{ltk}\big)+\sum_{l,t}f_l y_{ltk}+\sum_{s,t}\big((v_s h+w^{h})I_{stk}+p_s B_{stk}\big)+\sum_s p_s\tau U_{sk}\Big]+\frac{\lambda}{1000}E
+\begin{aligned}
+\min\ & \alpha T\sum_{l\in L^a}R_l+\sum_{k}\pi_k\Big[\sum_{s,l,t}v_s h\,\ell_{ltk}x_{sltk}+\sum_{l\notin L^a}\sum_{s,t}c_l\phi_{ltk}m_s x_{sltk}\\
+& +\sum_{l\in L^a}\sum_t c_l\big(a^{r}_{ltk}+\rho\,\phi_{ltk}a^{s}_{ltk}\big)+\sum_{l,t}f_l y_{ltk}\\
+& +\sum_{s,t}\big((v_s h+w^{h})I_{stk}+p_s B_{stk}\big)+\sum_s p_s\tau U_{sk}\Big]+\frac{\lambda}{1000}E
+\end{aligned}
 $$
 
 In order: reservation fee, capital in transit, ocean and road freight, air freight, fixed costs, stock and backlog, end-shortfall penalty, optional carbon price $\lambda$ (USD per tonne).
@@ -500,7 +510,7 @@ The scale table is from `benchmark_results/network_planning/results.json`. It sh
 
 **Four things not to confuse.** The optimisation solver (HiGHS) computes every plan and number. The rule agent (`rules.py`) chooses tools with regular expressions and neither learns nor calls a model. The LLM agent has a large model choose tools and extract parameters, and does no computing itself. Learned policies (BC, PPO, section 5) are small neural networks in another research line that decide queries and stopping, with no connection to the LLM agent.
 
-**Model interface.** `OpenAICompatibleClient` in `llm.py` uses only the standard library. `LLM_API_STYLE=responses` uses the OpenAI Responses API: `reasoning.effort`, `reasoning.mode`, `service_tier` and `max_output_tokens` go with each request, and reasoning items and function calls are passed back as received. Some models refuse tool calls on Chat Completions, and the client switches on the matching 400. Each HTTP request records the model, reasoning settings, processing tier, status and token details that the service returned. **Known defect**: requests do not state `strict`, so the Responses API attempts strict mode, and the records show the model filling every optional field; with `create_scenario` adding `mode` and `lanes`, "only one lane of this mode" cannot be expressed (see section 9 of the [evaluation report](results/planning_agent_v2.md)).
+**Model interface.** `OpenAICompatibleClient` in `llm.py` uses only the standard library. `LLM_API_STYLE=responses` uses the OpenAI Responses API: `reasoning.effort`, `reasoning.mode`, `service_tier` and `max_output_tokens` go with each request, and reasoning items and function calls are passed back as received. Some models refuse tool calls on Chat Completions, and the client switches on the matching 400. Each HTTP request records the model, reasoning settings, processing tier, status and token details that the service returned. Tool requests state `strict: false`, because the absence of an optional field has a meaning (not given, and reported as an assumption). This was not yet so during the 60 runs: the service applied strict mode by default (confirmed from the original requests read back from the service), so the model had to fill every optional field; and `create_scenario` added `mode` and `lanes`, so A04 could not express "only one lane of this mode". The defect is fixed, with these semantics: `lanes` decide the scope, `mode` alone means every lane of that mode, a conflict is an error, and `null` means not given (see `disruption_lanes` in `tools.py` and the [follow-up report](results/planning_agent_v2_followup.md)). Recorded runs replay with the behaviour they were recorded under.
 
 **The eight tools** (`tools.py`). Tools validate arguments and return errors as text the model can act on.
 
@@ -636,7 +646,9 @@ Configuration: `gpt-6.1-sol`, Responses API, `reasoning.effort=max`, `reasoning.
 
 **Compared.** The model's advantage lies in unseen wording, combined parameters, tool choice and judging whether a notice can be used. Both agree on the task the rules can parse. Numeric review is 100% for both. The model uses identical tools and parameters across three runs on only 10/20 tasks. The model-free notice workflow also manages most of "state what is missing" (exploratory).
 
-**Failures.** The 3 on A04 are a tool interface problem: the model read the parameters correctly, but `mode` and `lanes` add up, widening the scope to Malaysia, and it could not recover. The 2 on B06 and 3 on C03 read as reasonable answers failed by the frozen scoring rules; post-hoc readings give 54/60 and 57/60, and the official scores do not change.
+**Failures.** The 3 on A04 are a tool interface problem: the model read the parameters correctly, but `mode` and `lanes` added up, widening the scope to Malaysia, and it could not recover. The 2 on B06 are the scorer not recognising a typographic apostrophe. The 3 on C03 look reasonable for the business but do not meet the original scoring rule, and are pending human review.
+
+**After the evaluation (the official score does not change).** Three scores that cannot be added together: official 52/60; the same saved answers rescored offline with a corrected scorer, model 54/60 and rules 6/60, with no model called; a development retest of only A04 after the tool fix, 3/3 (was 0/3), saved separately and not merged into the 60 runs, with the other 19 tasks not rerun. The conclusion is limited to better than the current frozen rules on this task set. Task completion, numeric traceability and logistics decision benefit are three different things, and logistics decision benefit is not measured. See the [follow-up report](results/planning_agent_v2_followup.md) and the results table in the [scoring notes](results/planning_agent_v2_scoring.md).
 
 #### 6.6 Negative results and statistical limits
 

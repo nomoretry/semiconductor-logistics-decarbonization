@@ -45,7 +45,7 @@ This document provides Chinese first and English second.
 
 ### 结果
 
-- 规划 Agent：[评测 v2（20 题，每题 3 次，真实模型）](results/planning_agent_v2.md)及其[协议](../benchmarks/planning_agent_v2/PROTOCOL.md)。
+- 规划 Agent：[评测 v2（20 题，每题 3 次，真实模型）](results/planning_agent_v2.md)及其[协议](../benchmarks/planning_agent_v2/PROTOCOL.md)；[后续报告](results/planning_agent_v2_followup.md)（A04 修复与复测、修正评分）；[20×3 结果表与评分说明](results/planning_agent_v2_scoring.md)；[C03 待人工复核案例](results/c03_review_case.md)。
 - 规划引擎：[网络规划报告](../benchmark_results/network_planning/report.md)。原始案例研究：[实验报告](../reports/study_report.md)。
 - 公告抽取：[合成留出集](results/api_test.md)（仅中文）、[连接测试](results/api_smoke.md)（仅中文）、[真实数量抽取](results/notice_facts_api.md)（仅中文）。
 - 查询规划：[规模审计](decision_scale.md)（仅中文）、[计算预算](query_budget_results.md)（仅中文）、[BC](query_policy_results.md)（仅中文）、[PPO](query_ppo_results.md)、[多种子开发](query_study_development_results.md)、[冻结千题](query_final_results.md)、[组件对照](query_components_results.md)。
@@ -103,7 +103,7 @@ Documents are grouped by purpose. "Chinese only" marks earlier documents; "froze
 
 ### Results
 
-- Planning agent: [evaluation v2 (20 tasks, three runs each, real model)](results/planning_agent_v2.md) and its [protocol](../benchmarks/planning_agent_v2/PROTOCOL.md).
+- Planning agent: [evaluation v2 (20 tasks, three runs each, real model)](results/planning_agent_v2.md) and its [protocol](../benchmarks/planning_agent_v2/PROTOCOL.md); [follow-up report](results/planning_agent_v2_followup.md) (the A04 fix and retest, corrected scoring); [the 20 × 3 table and scoring notes](results/planning_agent_v2_scoring.md); [C03 case pending human review](results/c03_review_case.md).
 - Planning engine: [network planning report](../benchmark_results/network_planning/report.md). Original case studies: [study report](../reports/study_report.md).
 - Notice extraction: [synthetic held-out set](results/api_test.md) (Chinese only), [connection smoke test](results/api_smoke.md) (Chinese only), [real quantity extraction](results/notice_facts_api.md) (Chinese only).
 - Query planning: [scale audit](decision_scale.md) (Chinese only), [computation budgets](query_budget_results.md) (Chinese only), [BC](query_policy_results.md) (Chinese only), [PPO](query_ppo_results.md), [multi-seed development](query_study_development_results.md), [frozen 1,000 contexts](query_final_results.md), [components](query_components_results.md).

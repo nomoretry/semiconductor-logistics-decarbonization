@@ -164,30 +164,34 @@ def carbon_frontier(out: Path, version: str) -> list[Path]:
 
 
 def agent_evaluation(out: Path, version: str) -> list[Path]:
-    rule_src = "benchmark_results/planning_agent/rule_summary.json"
-    llm_src = "benchmark_results/planning_agent/llm_rescored_summary.json"
-    rule, llm = load(rule_src)["splits"], load(llm_src)["splits"]
-    groups = (("dev", "开发集"), ("holdout", "鲁棒性集"))
-    fig, ax = plt.subplots(figsize=(8.5, 5.2))
+    src = "benchmark_results/planning_agent_v2/analysis/summary.json"
+    data = load(src)
+    groups = (("A", "A 公告参数与假设（8 题）", 8), ("B", "B 工具选择与业务理解（6 题）", 6),
+              ("C", "C 真实公告理解（6 题）", 6))
+    fig, ax = plt.subplots(figsize=(9.5, 5.6))
     width = 0.36
-    for offset, data, label, color in ((-width / 2 - 0.01, rule, "规则 Agent（离线）", BLUE),
-                                       (width / 2 + 0.01, llm, "gpt-6.1-sol（xhigh，运行一次，修复护栏后离线重评）",
-                                        ORANGE)):
-        rates = [100 * data[g]["success_rate"] for g, _ in groups]
-        counts = [round(data[g]["success_rate"] * data[g]["cases"]) for g, _ in groups]
-        bars = ax.bar([i + offset for i in range(len(groups))], rates, width, color=color, label=label)
-        label_bars(ax, bars, [f"{c}/{data[g]['cases']}" for c, (g, _) in zip(counts, groups, strict=True)])
-    ax.set_xticks(range(len(groups)), [f"{name}（{rule[g]['cases']} 题）" for g, name in groups])
-    ax.set_ylim(0, 110)
-    ax.set_ylabel("成功率（%）")
-    ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.1), ncol=1)
-    ax.set_title("规划 Agent：24 个计划员问题的评测")
-    footer(fig, ["24 题由同一作者编写；成功需工具调用、参数和事实数字都正确且通过数字护栏。模型评测只运行一次；",
-                 "用 LangGraph Agent 回放录制运行，每题评分与录制一致（成功 18/24），回放不是新的模型运行。",
-                 f"数据：{rule_src}、{llm_src}",
+    for offset, agent, label, color in ((-width / 2 - 0.01, "rule", "规则 Agent（确定性，三次相同）", BLUE),
+                                        (width / 2 + 0.01, "model", "gpt-6.1-sol（max，真实调用）", ORANGE)):
+        rates = [data["groups"][g]["task_success"][agent]["estimate"] for g, _, _ in groups]
+        rates.append(data["overall"]["task_success"][agent]["estimate"])
+        totals = [n * 3 for _, _, n in groups] + [60]
+        bars = ax.bar([i + offset for i in range(4)], [100 * r for r in rates], width, color=color, label=label)
+        label_bars(ax, bars, [f"{round(r * t)}/{t}" for r, t in zip(rates, totals, strict=True)])
+    ax.set_xticks(range(4), [name for _, name, _ in groups] + ["全部（20 题）"])
+    ax.set_ylim(0, 112)
+    ax.set_ylabel("成功率（%，事前冻结的评分规则）")
+    ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.09), ncol=2)
+    ax.set_title("规划 Agent 评测 v2：20 道题、每题 3 次（官方成绩）")
+    model, rule = data["overall"]["task_success"]["model"], data["overall"]["task_success"]["rule"]
+    footer(fig, ["20 道题由同一作者编写，每题 3 次，不是独立评测；重复不是独立样本，区间按题计算："
+                 f"模型 [{100 * model['ci95'][0]:.1f}, {100 * model['ci95'][1]:.1f}]，"
+                 f"规则 [{100 * rule['ci95'][0]:.1f}, {100 * rule['ci95'][1]:.1f}]。规则三次相同，实际只通过 2/20 题。",
+                 "结论只限：本题集上优于当前冻结规则。任务完成率不等于物流决策收益，后者本次没有测量。",
+                 "费用 US$2.50 按官方标价折算，不是账单对账结果。修正评分和 A04 复测另行报告，不改变本图。",
+                 f"数据：{src}",
                  f"代码版本：{version}｜{MODE_SAVED}"])
-    fig.subplots_adjust(left=0.1, right=0.97, top=0.92, bottom=0.38)
-    return save(fig, out, "03_planning_agent_evaluation")
+    fig.subplots_adjust(left=0.09, right=0.97, top=0.92, bottom=0.36)
+    return save(fig, out, "03_planning_agent_evaluation_v2")
 
 
 def notice_retrieval(out: Path, version: str) -> list[Path]:
@@ -483,8 +487,8 @@ PACK_ITEMS = (
      "benchmark_results/network_planning/results.json", MODE_SAVED),
     ("02_carbon_frontier", "逐级收紧排放上限时的成本增幅（碳约束前沿）",
      "benchmark_results/network_planning/results.json", MODE_SAVED),
-    ("03_planning_agent_evaluation", "规划 Agent 在 24 个计划员问题上的成功率（规则与模型）",
-     "benchmark_results/planning_agent/rule_summary.json、llm_rescored_summary.json", MODE_SAVED),
+    ("03_planning_agent_evaluation_v2", "规划 Agent 评测 v2：20 道题、每题 3 次的官方成绩（规则与模型）",
+     "benchmark_results/planning_agent_v2/analysis/summary.json", MODE_SAVED),
     ("04_notice_retrieval", "真实船公司公告检索的开发检查（首位命中率）",
      "benchmark_results/notice_retrieval_v1/summary.json、full_text_lead5_summary.json", MODE_SAVED),
     ("05_example_plan_comparison", "业务示例：正常方案与扰动方案的成本、排放、空运占比",
@@ -494,6 +498,27 @@ PACK_ITEMS = (
     ("07_example_decision_memo", "业务示例的输入公告、参数与依据、确认说明和决策备忘录（PDF，HTML 同内容）",
      "业务示例的求解结果", MODE_EXAMPLE),
 )
+
+
+def evaluation_summary() -> list[str]:
+    """The evaluation in the words the evidence supports, computed from the saved results."""
+    official = load("benchmark_results/planning_agent_v2/analysis/summary.json")["overall"]["task_success"]
+    rescored = load("benchmark_results/planning_agent_v2_1/rescore/summary.json")
+    retest = load("benchmark_results/planning_agent_v2_1/a04_retest/summary.json")
+    percent = lambda x: f"{100 * x['estimate']:.1f}% [{100 * x['ci95'][0]:.1f}, {100 * x['ci95'][1]:.1f}]"  # noqa: E731
+    return [
+        "## Agent 评测结果摘要", "",
+        "20 道题由同一作者编写，每题 3 次，共 60 次；不是独立评测。费用 US$2.50 按官方标价折算，不是账单对账结果。"
+        "结论只限“本题集上优于当前冻结规则”。任务完成率、数字可追溯性和物流决策收益是三件事：前两者有测量，"
+        "第三件本次没有测量。", "",
+        "| 成绩 | 来源与条件 | 模型 | 规则 |", "|---|---|---:|---:|",
+        f"| 官方（事前冻结） | 60 次原始运行，冻结评分器 | {rescored['model']['runs_old']}，{percent(official['model'])} "
+        f"| {rescored['rule']['runs_old']}，{percent(official['rule'])} |",
+        f"| 修正评分 | 同一批保存的回答离线重评，没有调用模型；A04、C03 不变 | {rescored['model']['runs_new']}，"
+        f"{percent(rescored['model']['new_mean_over_tasks'])} | {rescored['rule']['runs_new']}，"
+        f"{percent(rescored['rule']['new_mean_over_tasks'])} |",
+        f"| A04 修复后复测 | 只重跑 A04 三次的开发复测，单独保存，不并入 60 次 | {retest['successes']} | — |", "",
+        "C03 的 3 次回答在业务上合理但不符合原评分规则，待人工复核，不计为已验证的成功。", ""]
 
 
 def pack_readme(out: Path, version: str, names: list[str]) -> Path:
@@ -510,6 +535,7 @@ def pack_readme(out: Path, version: str, names: list[str]) -> Path:
         "“保存的历史结果”指图中数字取自已归档的评测或求解记录，本次没有重新计算；"
         "“规则解析 + 实时优化”指用离线规则解析公告参数后实际调用 HiGHS 求解，没有调用大模型。"
         "动画按周播放保存的求解结果，播放本身不重新求解。", "",
+        *evaluation_summary(),
         "English: shareable figures, an animation and an example decision memo for the semiconductor logistics "
         "decision system. Figures use archived evidence; the example re-runs the documented rule-mode workflow. "
         "All operational data are synthetic.", ""])

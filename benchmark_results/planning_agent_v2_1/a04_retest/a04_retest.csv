@@ -1,0 +1,4 @@
+﻿task,run,success,labels,fields,numbers_found,requests,tool_calls,lanes_built,seconds,cost_usd_at_list_price
+A04,1,True,,6/6,2/2,5,describe_network|solve_plan|create_scenario|solve_plan|compare_plans|explain_plan,"[[""TW_air""]]",75.22,0.039384
+A04,2,True,,6/6,2/2,5,describe_network|solve_plan|create_scenario|solve_plan|compare_plans|explain_plan,"[[""TW_air""]]",90.19,0.043042
+A04,3,True,,6/6,2/2,5,describe_network|solve_plan|create_scenario|solve_plan|compare_plans|explain_plan,"[[""TW_air""]]",75.98,0.036636

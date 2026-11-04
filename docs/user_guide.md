@@ -181,6 +181,7 @@ python -m planning_agent replay
 python -m planning_agent --agent rule eval --output artifacts/planning_agent/eval
 python -m planning_agent corpus evaluate --check
 python -m planning_agent eval-v2 verify
+python -m planning_agent eval-followup verify
 python -m network_planning report --quick --output artifacts/planning/report
 make verify-final
 ```
@@ -195,7 +196,7 @@ make verify-final
 | 参数不可用：`没有可用的扰动参数` | 公告没有周次和幅度，规则解析不出来；在 `--notice` 里写明，或者在网页表格里填写 |
 | `output stopped at the cap` | 输出上限太小，推理 token 也算在内；调高 `LLM_MAX_OUTPUT_TOKENS` |
 | `pip` 报路径太长（WinError 206） | 把虚拟环境放在较短的路径下 |
-| 指定只影响一条线路，结果却多了同类线路 | 已知缺陷：`create_scenario` 把 `mode` 和 `lanes` 相加。手工调用时只传 `lanes`；大模型会两个都传，见[评测报告](results/planning_agent_v2.md) |
+| `lanes [...] are not 'road' lanes` 或类似报错 | `create_scenario` 的 `mode` 和 `lanes` 相互矛盾。只影响部分线路时给 `lanes`；影响一种方式的全部线路时给 `mode`。旧版本把两者相加，见[后续报告](results/planning_agent_v2_followup.md) |
 | 全量 `make test` 在 Windows 上有 17 个失败 | 已知问题，来自冻结模块的路径和源码身份检查；规划相关测试不受影响 |
 
 ### 11. 获取可分享的成果
@@ -391,6 +392,7 @@ python -m planning_agent replay
 python -m planning_agent --agent rule eval --output artifacts/planning_agent/eval
 python -m planning_agent corpus evaluate --check
 python -m planning_agent eval-v2 verify
+python -m planning_agent eval-followup verify
 python -m network_planning report --quick --output artifacts/planning/report
 make verify-final
 ```
@@ -405,7 +407,7 @@ make verify-final
 | `参数不可用：没有可用的扰动参数` | The notice has no weeks or sizes for the rule parser; state them in `--notice` or fill in the table on the page |
 | `output stopped at the cap` | The output cap is too low, and reasoning tokens count; raise `LLM_MAX_OUTPUT_TOKENS` |
 | `pip` says a path is too long (WinError 206) | Put the virtual environment on a shorter path |
-| A disruption meant for one lane also affects another lane of that mode | Known defect: `create_scenario` adds `mode` and `lanes`. Pass only `lanes` when calling it by hand; a large model passes both, see the [evaluation report](results/planning_agent_v2.md) |
+| `lanes [...] are not 'road' lanes` or a similar error | `mode` and `lanes` of `create_scenario` contradict each other. Give `lanes` to affect some lanes, or `mode` for every lane of a mode. Earlier versions added the two, see the [follow-up report](results/planning_agent_v2_followup.md) |
 | 17 failures in the full `make test` on Windows | A known issue from path and source-identity checks of frozen modules; the planning tests are not affected |
 
 ### 11. Getting shareable results

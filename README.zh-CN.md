@@ -50,7 +50,8 @@ Agent 决定调用哪些工具，所有数字都由求解器算出。早期研�
 | 扰动影响（12 个合成 SKU，16 周） | ASML 启发案例红海绕行：成本 +12.38%，CO2e +28.39%。Marvell 启发案例台风：成本 +2.18% | [报告](benchmark_results/network_planning/report.md)；已测试，未独立验证 |
 | 服务水平 98% 下减排 25% 的代价 | ASML +1.76%，平均 MAC 187 美元/吨。Marvell +13.12%，24,756 美元/吨 | 同上 |
 | 针对扰动做计划的价值（VSS） | ASML 864 美元（1.51%）。Marvell 约为零，在对偶界区间内 | 同上 |
-| Agent 评测 v2：20 道新题 × 3 次，gpt-6.1-sol `max`，真实调用 | 模型 52/60（86.7%，按题 95% 区间 [71.7, 100.0]）；规则 Agent 6/60（10.0%）。差值 +76.7 个百分点 [+53.3, +95.0]。数字审查都是 100%。按标价 US$2.50，每次中位 73 秒 | [报告](docs/results/planning_agent_v2.md)；同一作者，**不是独立评测**；失败中包括一处工具接口缺陷和两处评分局限 |
+| Agent 评测 v2：20 道新题 × 3 次，gpt-6.1-sol `max`，真实调用 | 模型 52/60（86.7%，按题 95% 区间 [71.7, 100.0]）；规则 Agent 6/60（10.0%）。差值 +76.7 个百分点 [+53.3, +95.0]。数字审查都是 100%。按标价 US$2.50，每次中位 73 秒 | [报告](docs/results/planning_agent_v2.md)；同一作者，**不是独立评测**；结论只限本题集上优于当前冻结规则 |
+| 评测 v2 之后：修正评分和 A04 修复后复测（不改变上一行） | 同一批回答离线重评，模型 54/60、规则 6/60，没有调用模型。工具修复后只重跑 A04 三次，3/3（原 0/3），另外 19 题未重跑 | [后续报告](docs/results/planning_agent_v2_followup.md)；开发复测，不并入 60 次；C03 [待人工复核](docs/results/c03_review_case.md) |
 | 旧版 Agent 评测，24 题已看过 | 规则 Agent 14/14、4/10。gpt-6.1-sol（xhigh，运行一次，修复护栏后重评）9/14、9/10 | [Agent](docs/planning_agent.md)；作为历史保留 |
 | 公告检索，19 个事件分组 38 个问题 | 37/38 的第一条结果属于正确事件（不用术语表时中文 4/19） | [检索](docs/notice_retrieval.md)；同一作者，偏乐观 |
 | 公告抽取，400 条合成留出公告 | 固定模型 400/400；冻结规则 204/400 | [结果](docs/results/api_test.md)；合成数据。真实数量案例 7/8 对 6/8，参考答案未经复核 |
@@ -96,6 +97,7 @@ make lock-check      # 锁文件仍与 pyproject.toml、constraints.txt 一致
 make verify-final    # 复算一项归档研究；全部 verify 命令见研究说明
 python -m planning_agent replay            # 用 LangGraph 回放录制的模型运行，不调用模型
 python -m planning_agent eval-v2 verify    # 重新评分保存的评测运行并核对哈希，不调用模型
+python -m planning_agent eval-followup verify    # 核对修正评分和 A04 复测，不调用模型
 ```
 
 默认检查都不调用模型 API。没有 Make 时，运行[命令参考](docs/commands.md)中的 Python 命令。
@@ -105,7 +107,8 @@ python -m planning_agent eval-v2 verify    # 重新评分保存的评测运行�
 - 所有运营数据都是合成的。结果是在给定假设下比较策略，不是企业运营或减排的实测。
 - 各研究线分别评估，没有跨研究线的端到端验证。
 - 评测题目由同一作者编写，真实公告的参考答案由助手编写，未经人工复核。这里没有任何结果经过独立验证。
-- 流程的 `live` 模式没有用真实模型跑过（评测直接调用 LangGraph Agent）。一处已知的工具接口缺陷（`mode` 和 `lanes` 相加）写在报告里，尚未修复。
+- 流程的 `live` 模式没有用真实模型完整跑过（评测直接调用 LangGraph Agent）。Streamlit 网页已实现，待部署。
+- 任务完成率不等于物流决策收益，后者没有测量。
 - CI 只在 Ubuntu、Python 3.12 上运行。Windows 上全量测试有 17 个已知失败，都在冻结模块里；macOS 未验证。没有打标签的 Release，部分较早的文档只有中文。
 - 实例最大 26,065 个变量，0/1 变量很少；没有商业求解器对比，也没有分解方法。
 
