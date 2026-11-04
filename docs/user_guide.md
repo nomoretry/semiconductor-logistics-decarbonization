@@ -55,7 +55,7 @@ python -m pip install --no-deps --no-build-isolation -e .
 **Windows（PowerShell）**
 
 ```powershell
-git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
+git clone -c core.autocrlf=false https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
 cd semiconductor-logistics-decarbonization
 py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -64,7 +64,7 @@ python -m pip install --require-hashes -r requirements/planning.txt
 python -m pip install --no-deps --no-build-isolation -e .
 ```
 
-在 Windows 上每个新终端都要设置 `PYTHONUTF8=1`。部分早期研究代码读文件时没有写明编码。
+在 Windows 上每个新终端都要设置 `PYTHONUTF8=1`。部分早期研究代码读文件时没有写明编码。`core.autocrlf=false` 保持文件原样，否则早期研究的证据哈希校验会失败。
 
 ### 5. 四种模式
 
@@ -263,7 +263,7 @@ python -m pip install --no-deps --no-build-isolation -e .
 **Windows (PowerShell)**
 
 ```powershell
-git clone https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
+git clone -c core.autocrlf=false https://github.com/nomoretry/semiconductor-logistics-decarbonization.git
 cd semiconductor-logistics-decarbonization
 py -3.12 -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -272,7 +272,7 @@ python -m pip install --require-hashes -r requirements/planning.txt
 python -m pip install --no-deps --no-build-isolation -e .
 ```
 
-On Windows, set `PYTHONUTF8=1` in every new terminal: some early research code opens files without naming an encoding.
+On Windows, set `PYTHONUTF8=1` in every new terminal: some early research code opens files without naming an encoding. `core.autocrlf=false` keeps files as they are; otherwise the evidence hash checks of the early studies fail.
 
 ### 5. The four modes
 
