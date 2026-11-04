@@ -62,6 +62,8 @@ C 组抽取规则：`real_notices_v1` 的 16 条按参考答案是否含数量�
 
 第一次启动时只发出 1 个请求，服务返回内容为空的 HTTP 400，没有模型回复，0 token（记录在结果目录的 `attempts.jsonl`、`ledger.jsonl`）。原因是 Windows 控制台的隐藏输入不支持 Ctrl+V，把控制字符当成了密钥（用占位密钥和控制字符分别请求，复现了 401 和这个 400）。修复：发送前检查密钥格式，提示用鼠标右键粘贴。题目、评分规则、提示词和优化约束都没有改，重新记录了 `freeze.json`。
 
+第二次启动时，第一个请求遇到网络错误（`URLError`，11 秒），重试后返回 HTTP 401（密钥不正确），同样没有模型回复。网络错误的那次预留按规则保留在账本里（0.66 美元，实际没有计费），所以这次运行实际可用的额度略低于 30 美元。之后改用一个带遮罩的本地对话框输入密钥，它先用不收费的模型查询核对密钥，再以环境变量启动同一命令，不改变评测代码。
+
 ## English
 
 ### Question
@@ -120,3 +122,5 @@ Once running, tasks, scoring rules, prompts and optimisation constraints do not 
 ### Changes before the run
 
 The first start sent one request and received an HTTP 400 with an empty body: no model reply and 0 tokens (recorded in `attempts.jsonl` and `ledger.jsonl` in the results folder). The cause was that hidden input in a Windows console does not paste with Ctrl+V and took a control character as the key (requests with a placeholder key and with a control character reproduced the 401 and this 400). The fix checks the key's format before sending and tells the user to paste with a right-click. Tasks, scoring rules, prompts and optimisation constraints did not change; `freeze.json` was recorded again.
+
+On the second start the first request hit a network error (`URLError`, 11 seconds), and the retry returned HTTP 401 (wrong key), again with no model reply. The reservation of the network error stays in the ledger under the rules (USD 0.66, not actually billed), so the budget available to this run is slightly below USD 30. After that, the key was entered in a masked local dialog, which checks it with a free model lookup and then starts the same command with an environment variable; the evaluation code did not change.
