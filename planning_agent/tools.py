@@ -53,6 +53,7 @@ class Session:
     mip_gap: float = 2e-3
     time_limit: float = 30.0
     memo_dir: Path = Path("artifacts/planning_agent/memos")
+    additive_mode_lanes: bool = False  # only for replaying runs recorded when create_scenario added mode and lanes
     networks: dict[str, Network] = field(default_factory=dict)
     custom: dict[tuple[str, str], Scenario] = field(default_factory=dict)
     plans: dict[str, StoredPlan] = field(default_factory=dict)
@@ -96,9 +97,11 @@ class Session:
             if not isinstance(arguments, dict):
                 raise ToolError("arguments must be a JSON object")
             arguments = json.loads(json.dumps(arguments))  # private copy: the call log must not change later
+            # Null means "not given".
+            arguments = {k: v for k, v in cast(dict[str, Any], arguments).items() if v is not None}
             if name not in TOOLS:
                 raise ToolError(f"unknown tool '{name}'; available: {list(TOOLS)}")
-            result, ok = TOOLS[name].run(self, **cast(dict[str, Any], arguments)), True
+            result, ok = TOOLS[name].run(self, **arguments), True
         except (ToolError, ValueError, TypeError) as error:
             result, ok = {"error": str(error)}, False
         self.calls.append({"name": name, "arguments": arguments, "ok": ok, "result": result,
@@ -134,6 +137,47 @@ def describe_network(session: Session, network: str) -> dict[str, Any]:
     return info
 
 
+def disruption_lanes(item: dict[str, Any], net: Network, network: str) -> list[str]:
+    """Which lanes one disruption covers.
+
+    `lanes` is the scope when given: a notice about Taiwan air must not touch Malaysia air, even though both are air.
+    `mode` alone means every lane of that mode. When both are given they must agree; a lane of another mode is an
+    error, so that nothing is built on a contradiction. Null and an empty list mean "not given".
+    """
+    lanes = item.get("lanes") or []
+    mode = item.get("mode")
+    if not isinstance(lanes, list):
+        raise ToolError("lanes must be a list of lane ids")
+    if mode is not None and mode not in {lane.mode for lane in net.lanes.values()}:
+        raise ToolError(f"{network} has no '{mode}' lanes; its modes are "
+                        f"{sorted({lane.mode for lane in net.lanes.values()})}")
+    missing = [lane_id for lane_id in lanes if lane_id not in net.lanes]
+    if missing:
+        raise ToolError(f"unknown lanes {missing}; {network} lanes are {list(net.lanes)}")
+    if lanes:
+        conflict = [lane_id for lane_id in lanes if mode is not None and net.lanes[lane_id].mode != mode]
+        if conflict:
+            raise ToolError(f"lanes {conflict} are not '{mode}' lanes; give only lanes, or a mode that matches them")
+        return list(dict.fromkeys(lanes))
+    if mode is not None:
+        return [lane_id for lane_id, lane in net.lanes.items() if lane.mode == mode]
+    raise ToolError(f"give 'mode' (air/ocean/road) or 'lanes' from {list(net.lanes)}")
+
+
+def _additive_lanes(item: dict[str, Any], net: Network, network: str) -> list[str]:
+    """The behaviour recorded runs were made with: every lane of `mode` is added to `lanes`."""
+    lanes = list(item.get("lanes") or [])
+    mode = item.get("mode")
+    if mode:
+        lanes += [lane_id for lane_id, lane in net.lanes.items() if lane.mode == mode and lane_id not in lanes]
+    if not lanes:
+        raise ToolError(f"give 'mode' (air/ocean/road) or 'lanes' from {list(net.lanes)}")
+    missing = [lane_id for lane_id in lanes if lane_id not in net.lanes]
+    if missing:
+        raise ToolError(f"unknown lanes {missing}; {network} lanes are {list(net.lanes)}")
+    return lanes
+
+
 def create_scenario(session: Session, network: str, name: str, disruptions: list[Any] | None = None,
                     demand_change_pct: float | None = None, demand_weeks: list[Any] | None = None,
                     description: str = "") -> dict[str, Any]:
@@ -147,15 +191,8 @@ def create_scenario(session: Session, network: str, name: str, disruptions: list
     for item in disruptions or []:
         if not isinstance(item, dict):
             raise ToolError("each disruption must be an object")
-        lanes = list(item.get("lanes") or [])
-        mode = item.get("mode")
-        if mode:
-            lanes += [lane_id for lane_id, lane in net.lanes.items() if lane.mode == mode and lane_id not in lanes]
-        if not lanes:
-            raise ToolError(f"give 'mode' (air/ocean/road) or 'lanes' from {list(net.lanes)}")
-        missing = [lane_id for lane_id in lanes if lane_id not in net.lanes]
-        if missing:
-            raise ToolError(f"unknown lanes {missing}; {network} lanes are {list(net.lanes)}")
+        item = {k: v for k, v in item.items() if v is not None}
+        lanes = (_additive_lanes if session.additive_mode_lanes else disruption_lanes)(item, net, network)
         try:
             start, end = int(item["start_week"]), int(item["end_week"])
         except (KeyError, TypeError, ValueError):
@@ -376,14 +413,18 @@ TOOLS = {tool.name: tool for tool in (
          {"type": "object", "properties": {"network": NETWORK}, "required": ["network"]}, describe_network),
     Tool("create_scenario",
          "Define a custom disruption or demand scenario from a notice or a what-if question. Only use numbers "
-         "stated by the user; omitted fields keep normal values and are reported as assumptions.",
+         "stated by the user; omitted fields keep normal values and are reported as assumptions. To affect only "
+         "some lanes of a mode, give lanes; the result lists the lanes each disruption covers.",
          {"type": "object", "properties": {
              "network": NETWORK,
              "name": {"type": "string", "description": "snake_case id, e.g. suez_closure_w5_10"},
              "description": {"type": "string"},
              "disruptions": {"type": "array", "items": {"type": "object", "properties": {
-                 "mode": {"type": "string", "enum": ["air", "ocean", "road"], "description": "every lane of this mode"},
-                 "lanes": {"type": "array", "items": {"type": "string"}, "description": "explicit lane ids"},
+                 "mode": {"type": "string", "enum": ["air", "ocean", "road"],
+                          "description": "every lane of this mode, when lanes is not given"},
+                 "lanes": {"type": "array", "items": {"type": "string"},
+                           "description": "explicit lane ids; only these lanes are affected. If mode is also "
+                                          "given it must match them"},
                  "start_week": {"type": "integer", "minimum": 1},
                  "end_week": {"type": "integer", "minimum": 1},
                  "extra_lead_weeks": {"type": "integer", "minimum": 0, "maximum": 8},

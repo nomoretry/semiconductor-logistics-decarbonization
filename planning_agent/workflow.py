@@ -23,6 +23,7 @@ from typing import Any
 
 from . import rules
 from .llm import CALL_KINDS, LLMError
+from .tools import Session, _additive_lanes
 
 DEMO_NOTICE = ("船公司通知：受红海安全局势影响，第4到12周亚欧航线绕行好望角，海运延误2周，舱位削减30%。"
                "这对我们新加坡备件仓的成本和排放有什么影响？")
@@ -276,10 +277,14 @@ def propose_from_recording(case_id: str, source: Path = RECORDED) -> Proposal:
     case = cases[case_id]
     summary = json.loads((source / "llm_summary.json").read_text(encoding="utf-8"))
     args = case["arguments"]
+    # Recordings were made when create_scenario added mode and lanes, so the scope is written out as explicit lanes.
+    net = Session().network(args["network"])
     origin = (f"录制回放：{summary.get('model')}（{summary.get('api_style')} 接口，推理强度 "
               f"{summary.get('reasoning_effort')}）在 24 题正式评测中为案例 {case_id} 给出的场景参数；本次不调用模型")
     proposal = Proposal("replay", origin, case["question"], args["network"],
-                        disruptions=[dict(d) for d in args.get("disruptions") or []],
+                        disruptions=[{**{k: v for k, v in d.items() if k != "mode"},
+                                      "lanes": _additive_lanes(d, net, args["network"])}
+                                     for d in args.get("disruptions") or []],
                         demand_change_pct=args.get("demand_change_pct"), demand_weeks=args.get("demand_weeks"),
                         evidence=evidence_for(case["question"]))
     proposal.notes.append(f"录制运行在该案例上的评测结果：{'成功' if case['success'] else '失败'}。")
@@ -302,7 +307,6 @@ def propose_from_model(notice: str, client: Any, *, network: str | None = None, 
     their ids so the model can cite them (retrieval-augmented prompt).
     """
     from .graph import PlanningGraph
-    from .tools import Session
 
     def approve(calls: list[dict[str, Any]]) -> bool:
         names = {(c.get("function") or {}).get("name") for c in calls}

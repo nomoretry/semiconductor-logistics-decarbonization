@@ -246,7 +246,9 @@ class OpenAICompatibleClient:
         body: dict[str, Any] = {"model": self.model, "input": self._to_input(messages),
                                 "max_output_tokens": self.max_output_tokens}
         if tools:
-            body["tools"] = [{"type": "function", **t["function"]} for t in tools]
+            # The tool schemas have optional fields whose absence means something ("not given", reported as an
+            # assumption). Left unset, the Responses API attempts strict mode, which makes the model fill them all.
+            body["tools"] = [{"type": "function", "strict": False, **t["function"]} for t in tools]
         reasoning = {k: v for k, v in (("effort", self.reasoning_effort), ("mode", self.reasoning_mode)) if v}
         if reasoning:
             body["reasoning"] = reasoning
@@ -342,6 +344,18 @@ class OpenAICompatibleClient:
             return data
         raise LLMError("unreachable")
 
+    def stored_response(self, response_id: str) -> dict[str, Any]:
+        """Read back a stored response: no model runs and nothing is billed, so no meter is involved."""
+        request = urllib.request.Request(f"{self.base_url}/responses/{response_id}",
+                                         headers={"Authorization": f"Bearer {self._api_key}"})
+        try:
+            with _open(request, self.timeout) as response:
+                return cast(dict[str, Any], json.load(response))
+        except urllib.error.HTTPError as error:
+            raise LLMError(f"HTTP {error.code} reading a stored response") from None
+        except (urllib.error.URLError, TimeoutError, ConnectionError, ValueError) as error:
+            raise LLMError("cannot read a stored response: " + redact(str(error), self._api_key)) from None
+
     def _log_failure(self, path: str, started: float, failure: str) -> None:
         self.request_log.append({"endpoint": path, "seconds": round(time.perf_counter() - started, 2),
                                  "failure": failure})
@@ -357,6 +371,7 @@ class OpenAICompatibleClient:
             "model": data.get("model"), "reasoning_effort": reasoning.get("effort"),
             "reasoning_mode": reasoning.get("mode"), "service_tier": data.get("service_tier"),
             "status": data.get("status"),
+            "tool_strict": sorted({str(t.get("strict")) for t in data.get("tools") or []}),
             "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
             "cached_tokens": input_details.get("cached_tokens", 0),
             "cache_write_tokens": input_details.get("cache_write_tokens", 0),

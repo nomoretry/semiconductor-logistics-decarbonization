@@ -231,7 +231,8 @@ def rescore(agent: str, output: Path, settings: dict[str, Any] | None = None) ->
     Results go to <agent>_rescored_*; the original files are left untouched.
     """
     from .guardrails import check_answer
-    output, settings = Path(output), settings or {}
+    # Replayed under the tool contract the recording was made with.
+    output, settings = Path(output), {"additive_mode_lanes": True, **(settings or {})}
     rows = [json.loads(line) for line in (output / f"{agent}_cases.jsonl").read_text(encoding="utf-8").splitlines()
             if line.strip()]
     cases = {c["id"]: c for c in load_cases()}
