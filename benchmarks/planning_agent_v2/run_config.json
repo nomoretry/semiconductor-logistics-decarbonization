@@ -1,0 +1,21 @@
+{
+  "model": "gpt-6.1-sol",
+  "api_style": "responses",
+  "reasoning_effort": "max",
+  "reasoning_mode": "standard",
+  "service_tier": "default",
+  "repeats": 3,
+  "max_steps": 16,
+  "result_folder": "gpt-6.1-sol-max",
+  "session": {},
+  "timeout_seconds": 1800,
+  "client_retries": 4,
+  "run_attempts": 3,
+  "max_requests": 1500,
+  "max_total_tokens": 25000000,
+  "max_output_tokens": 64000,
+  "max_input_tokens": 400000,
+  "max_usd": 30.0,
+  "prices": {"input": 2.0, "cached_input": 0.1, "cache_write": 2.5, "output": 10.0, "unit": "USD per million tokens", "source": "developers.openai.com/api/docs/models/gpt-6.1-sol, read 2026-11-04", "tier": "Standard"},
+  "meter_prices": {"input": 2.5, "output": 10.0, "note": "The stop check uses the higher cache-write rate for all input, so it cannot run behind the listed prices."}
+}
