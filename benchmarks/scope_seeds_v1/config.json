@@ -1,0 +1,20 @@
+{
+  "question": "The scope-misreading results used one synthetic portfolio (seed 7). Do the two findings hold for other seeds: (a) on the original network both readings give the same dispatches; (b) a misread scope changes dispatches only when MY_road space is far below mean Malaysia demand?",
+  "network": {"name": "marvell", "n_skus": 12, "weeks": 16},
+  "seeds": [1, 2, 3, 4, 5],
+  "seed_note": "The seed draws SKU mass, value and mean demand as well as weekly orders, so each seed is a different synthetic portfolio. Seed 7 is the one already reported and is not repeated here.",
+  "disruption": {"start_week": 7, "end_week": 9, "capacity_change_pct": -33.33333333333333, "cost_change_pct": 15},
+  "narrow_lanes": ["TW_air"],
+  "broad_lanes": ["TW_air", "MY_air"],
+  "varied": {
+    "lane": "MY_road",
+    "capacity_ratio_original": 1.5,
+    "capacity_ratios": [1.5, 1.25, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
+  },
+  "reveal_weeks": [7, 10],
+  "directions": ["planned_broad_but_narrow", "planned_narrow_but_broad"],
+  "solver": {"mip_gap": 1e-07, "time_limit": 120},
+  "tolerance_usd": 1.0,
+  "tie_break_weight": 0.0001,
+  "decided_before_running": "Fixed after the seed-7 results and before solving any other seed. No expectation about the threshold is assumed; whatever it is, it is reported per seed, including zero-regret and infeasible cases."
+}

@@ -11,3 +11,5 @@ benchmark_results/scope_misread_v1/** -text
 benchmarks/scope_misread_v1/** -text
 benchmark_results/scope_value_v1/** -text
 benchmarks/scope_value_v1/** -text
+benchmark_results/scope_seeds_v1/** -text
+benchmarks/scope_seeds_v1/** -text
