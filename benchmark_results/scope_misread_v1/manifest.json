@@ -1,0 +1,14 @@
+{
+  "code_version": "5f8b937",
+  "commands": [
+    "python scripts/run_scope_misread.py",
+    "python scripts/run_scope_misread.py --refinement"
+  ],
+  "sha256": {
+    "cases.jsonl": "acf11bcc737e4165e569d4d7362eda70cf05f7f95e2f359f2294a2197f998642",
+    "refinement_cases.jsonl": "f920d0c290f620288446d0332776f86179c9435339cac42b69753298cd1e379e",
+    "refinement_summary.json": "539e1606177a6aa8c1979c432cdcddaa58dce505b113170c55ab2b211d17dacd",
+    "reproduction.json": "bc2dd2d02c2d7f395f839eea10a1abd9dcc293a0425db10a0883779ae5f6aec5",
+    "summary.json": "8e2e1e8a92bfcab029c1345187236ffc0acf62ccbba15095697fe9871dac1287"
+  }
+}

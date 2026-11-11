@@ -1,0 +1,40 @@
+{
+  "source_run": "A04-r1-94247eed",
+  "arguments": [
+    {
+      "mode": "air",
+      "lanes": [
+        "TW_air"
+      ],
+      "start_week": 7,
+      "end_week": 9,
+      "capacity_change_pct": -33.33333333333333,
+      "cost_change_pct": 15
+    }
+  ],
+  "fixed_contract": {
+    "lanes": [
+      [
+        "TW_air"
+      ]
+    ],
+    "total_cost_usd": 467188,
+    "emissions_t": 9.76,
+    "service_level_pct": 100.0,
+    "normal_cost_usd": 464433,
+    "normal_emissions_t": 9.85
+  },
+  "old_contract": {
+    "lanes": [
+      [
+        "TW_air",
+        "MY_air"
+      ]
+    ],
+    "total_cost_usd": 467188,
+    "emissions_t": 9.76,
+    "service_level_pct": 100.0,
+    "normal_cost_usd": 464433,
+    "normal_emissions_t": 9.85
+  }
+}
