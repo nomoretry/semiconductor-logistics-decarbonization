@@ -64,6 +64,18 @@ class ScopeMisreadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             with_lane_capacity(self.net, "SG_rail", 1.0)
 
+    def test_reading_too_narrowly_can_leave_dispatches_that_exceed_the_space_that_exists(self):
+        from network_planning.misread import misread_case, with_lane_capacity
+        net = with_lane_capacity(self.net, "MY_road", 0.0)
+        record = misread_case(net, self.believed, self.actual, [7, 10])  # every air lane is affected; planned for one
+        learnt_at_7, learnt_at_10 = record["commitments"]
+        self.assertGreater(learnt_at_7["regret_usd"], 1000)
+        self.assertGreater(learnt_at_7["outcome"]["terminal_shortfall_units"], 0)
+        self.assertEqual(learnt_at_10["status"], "infeasible")
+        self.assertIn("air spot capacity exceeded on MY_air week 8", " ".join(learnt_at_10["violated"]))
+        self.assertFalse(record["no_replanning"]["feasible"])
+        self.assertIsNone(record["no_replanning"]["regret_usd"])
+
     def test_confirming_the_scope_is_worth_nothing_when_both_readings_give_one_plan(self):
         from network_planning.misread import scope_value
         record = scope_value(self.net, self.actual, self.believed, [0.5], 7)
