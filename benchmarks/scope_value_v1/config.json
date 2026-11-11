@@ -1,0 +1,24 @@
+{
+  "question": "Marvell-inspired network. The planner cannot tell whether the notice covers TW_air only (narrow) or every air lane (broad). Is it worth paying, in time or money, to confirm the scope before week 1, compared with assuming one reading or hedging?",
+  "network": {"name": "marvell", "n_skus": 12, "weeks": 16, "seed": 7},
+  "disruption": {"start_week": 7, "end_week": 9, "capacity_change_pct": -33.33333333333333, "cost_change_pct": 15},
+  "narrow_lanes": ["TW_air"],
+  "broad_lanes": ["TW_air", "MY_air"],
+  "varied": {
+    "lane": "MY_road",
+    "capacity_ratio_original": 1.5,
+    "capacity_ratios": [1.5, 1.25, 1.1, 1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0],
+    "reason": "Same lane and grid as benchmarks/scope_misread_v1/config.json, so the two studies can be read together."
+  },
+  "probabilities_broad": [0.1, 0.25, 0.5, 0.75, 0.9],
+  "reveal_weeks": [4, 7],
+  "reveal_note": "Without confirmation the scope shows at the start of this week: 7 is when the window opens, the latest the two-stage model allows; 4 is three weeks of warning. Confirmation means knowing before week 1.",
+  "under_reading": {
+    "reveal_weeks": [1, 7, 10],
+    "note": "The reverse of scope_misread_v1: the notice covers every air lane and the planner plans for TW_air only. Learning after the window (week 10) or never can leave dispatches that exceed the space that exists; such cases are kept with the violated constraint."
+  },
+  "solver": {"mip_gap": 1e-07, "time_limit": 120},
+  "tolerance_usd": 1.0,
+  "tie_break_weight": 0.0001,
+  "decided_before_running": "Fixed after seeing scope_misread_v1 (over-reading only). No under-reading or hedging result had been computed. Zero-value and infeasible results are kept."
+}

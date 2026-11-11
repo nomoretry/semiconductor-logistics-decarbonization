@@ -64,6 +64,22 @@ class ScopeMisreadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             with_lane_capacity(self.net, "SG_rail", 1.0)
 
+    def test_confirming_the_scope_is_worth_nothing_when_both_readings_give_one_plan(self):
+        from network_planning.misread import scope_value
+        record = scope_value(self.net, self.actual, self.believed, [0.5], 7)
+        self.assertEqual(record["assumed_narrow_but_broad"]["regret_usd"], 0)
+        self.assertEqual(record["assumed_broad_but_narrow"]["regret_usd"], 0)
+        self.assertLessEqual(abs(record["priors"][0]["value_of_confirming_usd"]), 0.05)
+
+    def test_a_hedge_is_never_worse_than_either_assumption_and_never_beats_knowing(self):
+        from network_planning.misread import scope_value, with_lane_capacity
+        record = scope_value(with_lane_capacity(self.net, "MY_road", 0.0), self.actual, self.believed, [0.25, 0.75], 7)
+        self.assertGreater(record["assumed_broad_but_narrow"]["regret_usd"], 1000)
+        for row in record["priors"]:
+            tolerance = 2e-7 * row["confirmed_usd"]
+            self.assertGreaterEqual(row["value_of_confirming_usd"], -tolerance)
+            self.assertLessEqual(row["hedge_usd"], min(row["assume_narrow_usd"], row["assume_broad_usd"]) + tolerance)
+
 
 if __name__ == "__main__":
     unittest.main()

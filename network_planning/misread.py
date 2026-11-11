@@ -140,3 +140,59 @@ def misread_case(net: Network, actual: Scenario, believed: Scenario, reveal_week
         row["distinguishable"] = bool(row["regret_interval_usd"][0] > tolerance_usd)
         record["commitments"].append(row)
     return record
+
+
+def scope_value(net: Network, narrow: Scenario, broad: Scenario, priors: Sequence[float], reveal_week: int, *,
+                mip_gap: float = 1e-7, time_limit: float = 120.0) -> dict[str, Any]:
+    """What confirming a notice's scope before week 1 is worth when the truth otherwise shows at ``reveal_week``.
+
+    The planner does not know whether the notice covers ``narrow`` or ``broad``; ``priors`` are probabilities of
+    ``broad``. Without confirmation the planner can assume either reading or hedge with a two-stage plan. With
+    confirmation the planner plans for what is true. The differences are what a confirmation may cost at most.
+    """
+    settings: dict[str, Any] = dict(mip_gap=mip_gap, time_limit=time_limit)
+    narrow, broad = narrow.with_probability(1.0), broad.with_probability(1.0)
+    best = {sc.name: solve(net, [sc], **settings) for sc in (narrow, broad)}
+    wrong = {  # the plan for one reading, carried into the other until the reveal
+        narrow.name: solve(net, [broad], reveal_week=reveal_week,
+                           fixed_first_stage=best[narrow.name].first_stage(reveal_week), **settings),
+        broad.name: solve(net, [narrow], reveal_week=reveal_week,
+                          fixed_first_stage=best[broad.name].first_stage(reveal_week), **settings)}
+    plans = [*best.values(), *wrong.values()]
+    if not all(plan.feasible for plan in plans):
+        return {"status": "infeasible", "reveal_week": reveal_week, "statuses": [plan.status for plan in plans]}
+    cost_n, cost_b = best[narrow.name].objective_usd, best[broad.name].objective_usd
+    under, over = wrong[narrow.name], wrong[broad.name]
+    record: dict[str, Any] = {
+        "status": "ok", "reveal_week": reveal_week,
+        "best_if_narrow": outcome(net, best[narrow.name]), "best_if_broad": outcome(net, best[broad.name]),
+        "assumed_narrow_but_broad": {"regret_usd": round(under.objective_usd - cost_b, 2),
+                                     "regret_interval_usd": [round(_lower(under) - cost_b, 2),
+                                                             round(under.objective_usd - _lower(best[broad.name]), 2)],
+                                     "outcome": outcome(net, under)},
+        "assumed_broad_but_narrow": {"regret_usd": round(over.objective_usd - cost_n, 2),
+                                     "regret_interval_usd": [round(_lower(over) - cost_n, 2),
+                                                             round(over.objective_usd - _lower(best[narrow.name]), 2)],
+                                     "outcome": outcome(net, over)},
+        "first_stage_differs": flow_differences(net, best[narrow.name], best[broad.name], before_week=reveal_week),
+        "priors": []}
+    for prior in priors:
+        pair = [narrow.with_probability(1 - prior), broad.with_probability(prior)]
+        hedge = solve(net, pair, reveal_week=reveal_week, **settings)
+        confirmed = (1 - prior) * cost_n + prior * cost_b
+        confirmed_lower = (1 - prior) * _lower(best[narrow.name]) + prior * _lower(best[broad.name])
+        row: dict[str, Any] = {"probability_broad": prior, "confirmed_usd": round(confirmed, 2),
+                               "assume_narrow_usd": round((1 - prior) * cost_n + prior * under.objective_usd, 2),
+                               "assume_broad_usd": round((1 - prior) * over.objective_usd + prior * cost_b, 2),
+                               "hedge_status": hedge.status}
+        if hedge.feasible:
+            row.update(hedge_usd=round(hedge.objective_usd, 2),
+                       value_of_confirming_usd=round(hedge.objective_usd - confirmed, 2),
+                       value_interval_usd=[round(_lower(hedge) - confirmed, 2),
+                                           round(hedge.objective_usd - confirmed_lower, 2)],
+                       hedge_service_if_narrow=round(hedge.per_scenario[narrow.name]["service_level"], 5),
+                       hedge_service_if_broad=round(hedge.per_scenario[broad.name]["service_level"], 5))
+        row["value_over_assuming_narrow_usd"] = round(row["assume_narrow_usd"] - confirmed, 2)
+        row["value_over_assuming_broad_usd"] = round(row["assume_broad_usd"] - confirmed, 2)
+        record["priors"].append(row)
+    return record
