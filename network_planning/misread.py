@@ -106,8 +106,8 @@ def misread_case(net: Network, actual: Scenario, believed: Scenario, reveal_week
         "flows_best_plan_kg": flow_table(net, best), "flows_believed_plan_kg": flow_table(net, planned),
         "no_replanning": carried_out(net, planned, actual), "commitments": []}
     # A plan that breaks a constraint in what occurred cannot be carried out, so its cost is not a regret.
-    record["no_replanning"]["regret_usd"] = round(
-        record["no_replanning"]["total_cost_usd"] - best.objective_usd, 2) if record["no_replanning"]["feasible"] else None
+    untouched = record["no_replanning"]
+    untouched["regret_usd"] = round(untouched["total_cost_usd"] - best.objective_usd, 2) if untouched["feasible"] else None
     first_window = min((d.start_week for sc in (actual, believed) for d in sc.disruptions), default=net.weeks)
     for reveal in reveal_weeks:
         done = solve(net, [actual], reveal_week=reveal, fixed_first_stage=planned.first_stage(reveal), **settings)
