@@ -1,0 +1,55 @@
+{
+  "question": "Marvell-inspired network. The notice affects TW_air only. A planner who reads it as affecting every air lane plans for TW_air and MY_air. When does that reading change dispatch decisions, and what does it cost once the plan meets what occurs?",
+  "network": {
+    "name": "marvell",
+    "n_skus": 12,
+    "weeks": 16,
+    "seed": 7
+  },
+  "source_case": "benchmarks/planning_agent_v2/cases.json A04; disruption arguments as the model sent them in benchmark_results/planning_agent_v2_1/a04_retest/runs.jsonl",
+  "disruption": {
+    "start_week": 7,
+    "end_week": 9,
+    "capacity_change_pct": -33.33333333333333,
+    "cost_change_pct": 15
+  },
+  "actual_lanes": [
+    "TW_air"
+  ],
+  "believed_lanes": [
+    "TW_air",
+    "MY_air"
+  ],
+  "varied": {
+    "lane": "MY_road",
+    "reason": "Taiwan and Malaysia cargo share no lane. The only lane that can carry the cargo MY_air carries is MY_road, so its weekly space decides whether MY_air is needed in weeks 7-9. Demand, service terms and every other input stay fixed.",
+    "capacity_ratio_original": 1.5,
+    "capacity_ratios": [
+      0.2,
+      0.19,
+      0.18,
+      0.17,
+      0.16,
+      0.15,
+      0.14,
+      0.13,
+      0.12,
+      0.11,
+      0.1
+    ],
+    "unit": "multiple of mean weekly Malaysia demand in kg, as in network_planning/config.json"
+  },
+  "reveal_weeks": [
+    1,
+    7,
+    10
+  ],
+  "reveal_note": "The planner learns the true scope at the start of this week. Earlier dispatches and the season's air reservation stay as planned. 1: only the reservation is committed; 7: learns when the window opens; 10: learns after the window. The plan carried out with no re-planning at all is evaluated as well.",
+  "solver": {
+    "mip_gap": 1e-07,
+    "time_limit": 120
+  },
+  "tolerance_usd": 1.0,
+  "tie_break_weight": 0.0001,
+  "decided_before_running": "Post hoc: this finer grid between 0.2 and 0.1 was chosen after the first results showed that regret first appears there. It locates the threshold and is exploratory; everything else is as in config.json."
+}

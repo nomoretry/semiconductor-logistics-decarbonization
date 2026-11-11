@@ -7,3 +7,5 @@ planning_agent/*.py text eol=lf
 network_planning/config.json text eol=lf
 benchmark_results/planning_agent_v2_1/** -text
 benchmarks/planning_agent_v2_1/** -text
+benchmark_results/scope_misread_v1/** -text
+benchmarks/scope_misread_v1/** -text

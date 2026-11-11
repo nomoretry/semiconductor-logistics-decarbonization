@@ -2,6 +2,7 @@
 
     python scripts/run_scope_misread.py                 # writes benchmark_results/scope_misread_v1
     python scripts/run_scope_misread.py --check         # recompute and compare with the saved results
+    python scripts/run_scope_misread.py --refinement    # finer grid chosen after the first results (exploratory)
 
 No model is called. Everything is solved locally with HiGHS.
 """
@@ -85,8 +86,8 @@ def summary_row(case: dict[str, Any]) -> dict[str, Any]:
     return row
 
 
-def run() -> dict[str, Any]:
-    config = json.loads(CONFIG.read_text(encoding="utf-8"))
+def run(config_path: Path = CONFIG, reproduce: bool = True) -> dict[str, Any]:
+    config = json.loads(config_path.read_text(encoding="utf-8"))
     spec = config["network"]
     net = build_network(spec["name"], spec["n_skus"], spec["weeks"], spec["seed"])
     actual = scenario("actual_scope", config["actual_lanes"], config["disruption"])
@@ -102,20 +103,24 @@ def run() -> dict[str, Any]:
                               tie_break_weight=config["tie_break_weight"], tolerance_usd=config["tolerance_usd"])
         cases.append({"capacity_ratio": ratio, "lane": lane, "capacity_kg": capacity, **record})
         print(json.dumps(summary_row(cases[-1])), flush=True)
-    return {"reproduction": reproduction(), "cases": cases}
+    return {"reproduction": reproduction() if reproduce else None, "cases": cases}
 
 
-def write(results: dict[str, Any]) -> None:
+def write(results: dict[str, Any], config_path: Path = CONFIG, prefix: str = "") -> None:
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / "cases.jsonl").write_text(
+    (RESULTS / f"{prefix}cases.jsonl").write_text(
         "".join(json.dumps(case, ensure_ascii=False) + "\n" for case in results["cases"]), encoding="utf-8",
         newline="\n")
-    (RESULTS / "reproduction.json").write_text(json.dumps(results["reproduction"], indent=2) + "\n",
-                                               encoding="utf-8", newline="\n")
-    summary = {"config_sha256": sha256(CONFIG), "rows": [summary_row(case) for case in results["cases"]]}
-    (RESULTS / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8", newline="\n")
+    if results["reproduction"] is not None:
+        (RESULTS / "reproduction.json").write_text(json.dumps(results["reproduction"], indent=2) + "\n",
+                                                   encoding="utf-8", newline="\n")
+    summary = {"config": config_path.relative_to(ROOT).as_posix(), "config_sha256": sha256(config_path),
+               "rows": [summary_row(case) for case in results["cases"]]}
+    (RESULTS / f"{prefix}summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8",
+                                                   newline="\n")
     files = sorted(p for p in RESULTS.iterdir() if p.name != "manifest.json")
-    manifest = {"code_version": code_version(), "command": "python scripts/run_scope_misread.py",
+    manifest = {"code_version": code_version(),
+                "commands": ["python scripts/run_scope_misread.py", "python scripts/run_scope_misread.py --refinement"],
                 "sha256": {p.name: sha256(p) for p in files}}
     (RESULTS / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -123,15 +128,19 @@ def write(results: dict[str, Any]) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--check", action="store_true", help="recompute and compare with the saved summary")
+    parser.add_argument("--refinement", action="store_true",
+                        help="the finer grid in refinement.json, chosen after the first results (exploratory)")
     args = parser.parse_args(argv)
-    results = run()
+    config_path = CONFIG.with_name("refinement.json") if args.refinement else CONFIG
+    prefix = "refinement_" if args.refinement else ""
+    results = run(config_path, reproduce=not args.refinement)
     if args.check:
-        saved = json.loads((RESULTS / "summary.json").read_text(encoding="utf-8"))["rows"]
+        saved = json.loads((RESULTS / f"{prefix}summary.json").read_text(encoding="utf-8"))["rows"]
         now = [summary_row(case) for case in results["cases"]]
         same = json.dumps(saved, sort_keys=True) == json.dumps(now, sort_keys=True)
         print("saved summary reproduces" if same else "saved summary differs from this run")
         return 0 if same else 1
-    write(results)
+    write(results, config_path, prefix)
     print(f"wrote {RESULTS}")
     return 0
 
