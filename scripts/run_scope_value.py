@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -62,7 +63,7 @@ def under_row(case: dict[str, Any]) -> dict[str, Any]:
     return row
 
 
-def run() -> list[dict[str, Any]]:
+def one_case(ratio: float) -> dict[str, Any]:
     config = json.loads(CONFIG.read_text(encoding="utf-8"))
     spec, varied, solver = config["network"], config["varied"], config["solver"]
     net = build_network(spec["name"], spec["n_skus"], spec["weeks"], spec["seed"])
@@ -70,23 +71,28 @@ def run() -> list[dict[str, Any]]:
     broad = scenario("broad_scope", config["broad_lanes"], config["disruption"])
     lane = varied["lane"]
     base_kg = net.lanes[lane].capacity_kg / varied["capacity_ratio_original"]
-    cases = []
-    for ratio in varied["capacity_ratios"]:
-        capacity = net.lanes[lane].capacity_kg if ratio == varied["capacity_ratio_original"] else round(
-            ratio * base_kg, 1)
-        changed = with_lane_capacity(net, lane, capacity)
-        under = misread_case(changed, broad, narrow, config["under_reading"]["reveal_weeks"],
-                             mip_gap=solver["mip_gap"], time_limit=solver["time_limit"],
-                             tie_break_weight=config["tie_break_weight"], tolerance_usd=config["tolerance_usd"])
-        value = [scope_value(changed, narrow, broad, config["probabilities_broad"], reveal,
-                             mip_gap=solver["mip_gap"], time_limit=solver["time_limit"])
-                 for reveal in config["reveal_weeks"]]
-        cases.append({"capacity_ratio": ratio, "lane": lane, "capacity_kg": capacity, "under_reading": under,
-                      "value": value})
-        print(json.dumps(under_row(cases[-1])), flush=True)
-        for row in summary_rows(cases[-1]):
-            if row.get("probability_broad") in (0.5, None):
-                print(json.dumps(row), flush=True)
+    capacity = net.lanes[lane].capacity_kg if ratio == varied["capacity_ratio_original"] else round(
+        ratio * base_kg, 1)
+    changed = with_lane_capacity(net, lane, capacity)
+    under = misread_case(changed, broad, narrow, config["under_reading"]["reveal_weeks"],
+                         mip_gap=solver["mip_gap"], time_limit=solver["time_limit"],
+                         tie_break_weight=config["tie_break_weight"], tolerance_usd=config["tolerance_usd"])
+    value = [scope_value(changed, narrow, broad, config["probabilities_broad"], reveal,
+                         mip_gap=solver["mip_gap"], time_limit=solver["time_limit"])
+             for reveal in config["reveal_weeks"]]
+    return {"capacity_ratio": ratio, "lane": lane, "capacity_kg": capacity, "under_reading": under, "value": value}
+
+
+def run(workers: int = 1) -> list[dict[str, Any]]:
+    """Cases are independent, so they may be solved side by side; the results do not depend on ``workers``."""
+    ratios = json.loads(CONFIG.read_text(encoding="utf-8"))["varied"]["capacity_ratios"]
+    if workers > 1:
+        with ProcessPoolExecutor(max_workers=workers) as pool:
+            cases = list(pool.map(one_case, ratios))
+    else:
+        cases = [one_case(ratio) for ratio in ratios]
+    for case in cases:
+        print(json.dumps(under_row(case)), flush=True)
     return cases
 
 
@@ -98,8 +104,9 @@ def summary(cases: list[dict[str, Any]]) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--check", action="store_true", help="recompute and compare with the saved summary")
+    parser.add_argument("--workers", type=int, default=1, help="cases solved side by side (same results)")
     args = parser.parse_args(argv)
-    cases = run()
+    cases = run(args.workers)
     if args.check:
         saved = json.loads((RESULTS / "summary.json").read_text(encoding="utf-8"))
         same = json.dumps(saved, sort_keys=True) == json.dumps(summary(cases), sort_keys=True)
