@@ -1,7 +1,7 @@
 # 公告影响范围读错的后果与事先确认的价值 / What misreading a notice's scope costs, and what confirming it is worth
 
-本文提供中英文版本，中文在前，英文在后。数字来自 [`benchmark_results/scope_misread_v1/`](../../benchmark_results/scope_misread_v1) 和 [`benchmark_results/scope_value_v1/`](../../benchmark_results/scope_value_v1)，不调用模型，只用本地求解器。所有订单、运力和费率都是合成假设。
-This document provides Chinese first and English second. Numbers come from [`benchmark_results/scope_misread_v1/`](../../benchmark_results/scope_misread_v1) and [`benchmark_results/scope_value_v1/`](../../benchmark_results/scope_value_v1); no model is called and everything is solved locally. All orders, capacities and rates are synthetic assumptions.
+本文提供中英文版本，中文在前，英文在后。数字来自 [`benchmark_results/scope_misread_v1/`](../../benchmark_results/scope_misread_v1)、[`benchmark_results/scope_value_v1/`](../../benchmark_results/scope_value_v1) 和 [`benchmark_results/scope_seeds_v1/`](../../benchmark_results/scope_seeds_v1)，不调用模型，只用本地求解器。所有订单、运力和费率都是合成假设。
+This document provides Chinese first and English second. Numbers come from [`benchmark_results/scope_misread_v1/`](../../benchmark_results/scope_misread_v1), [`benchmark_results/scope_value_v1/`](../../benchmark_results/scope_value_v1) and [`benchmark_results/scope_seeds_v1/`](../../benchmark_results/scope_seeds_v1); no model is called and everything is solved locally. All orders, capacities and rates are synthetic assumptions.
 
 ## 中文
 
@@ -73,10 +73,29 @@ This document provides Chinese first and English second. Numbers come from [`ben
 - 不确认时的简单做法：按窄做的期望损失是 p × 读窄的遗憾，按宽做是 (1 − p) × 读宽的遗憾。倍数 0.1、第 7 周显现时，读窄 8,595 美元，读宽 2,125 美元；p = 0.25 时按窄做损失 2,149，按宽做 1,594，对冲 1,540。倍数 0.0 时两边接近（10,433 对 13,396）。
 - 与信息处理成本对照：评测中模型读一条公告的中位成本是 0.034 美元、73 秒（按标价折算）。这只说明读公告本身便宜。向承运人确认范围要花计划员的时间，这个成本项目里没有测量。
 
+### 结果五：换五个需求种子
+
+结果一到四用的是种子 7。种子同时决定 SKU 的质量、价值、平均需求和每周订单，所以每个种子是另一组合成货物。种子 1–5、同样 14 个舱位取值、两个方向，共 70 个情形；种子和取值在求解之前提交。
+
+| 种子 | 原网络（倍数 1.5）两种读法的线路周货量 | 出现后果的最大舱位倍数 | 读宽的最大遗憾（美元）：第 7 周得知 / 不重排 | 读窄第 7 周得知的最大遗憾（美元） | 读窄且窗口后才发现而不可行的倍数 |
+|---|---|---:|---|---:|---|
+| 1 | 相同 | 0.0 | 9,975 / 12,460 | 29,982 | 0.0 |
+| 2 | 相同 | 0.1 | 31,385 / 34,954 | 15,957 | 0.1、0.0 |
+| 3 | 相同 | 0.0 | 2,580 / 4,692 | 5,583 | 0.0 |
+| 4 | 相同 | 0.2 | 35,385 / 46,776 | 44,133 | 0.2、0.1、0.0 |
+| 5 | 相同 | 0.1 | 11,994 / 13,722 | 24,312 | 0.1、0.0 |
+
+- **两条结论在五个种子上都成立**：原网络上两种读法的线路周货量相同、遗憾为 0；倍数 0.3 及以上的 55 个情形里，没有一个出现遗憾、货量差异或不可行。后果只出现在 0.2 及以下。
+- **量级随种子变化很大**：读宽的最大遗憾从 2,580 到 35,385 美元（第 7 周得知），不能把种子 7 的数字当作典型值。
+- **种子 7 里有两条说法不通用**：
+  - 读窄时“服务水平仍是 100%”只对种子 7 成立。种子 1、4、5 里读窄还造成积压，服务水平最低 99.70%，期末缺口 14–100 件。
+  - 读宽时“代价全是持有成本”也有例外：种子 4、倍数 0.0、窗口后才得知时，还出现 9.3 件期末缺口。读宽在 70 个情形里都可行。
+- 有遗憾的情形里，“有利平局”遗憾都与原值相同。
+
 ### 能说和不能说的
 
-- 能说：在这个合成网络里，范围读错只在替代线路几乎消失时才改变发运；读宽的代价是持有成本，读窄的代价是期末缺口，发现得太晚计划就无法执行；“两个情景的最优值之差”会高估读宽的损失；其余条件下确认范围不改变物流决策。
-- 不能说：这是企业实测；对别的网络、别的扰动幅度同样成立；预留舱位在现实中一定不受公告影响（这是模型假设）。
+- 能说：在这个合成网络里，范围读错只在替代线路几乎消失时才改变发运；读宽的代价主要是持有成本，读窄的代价是期末缺口（部分种子还有积压），发现得太晚计划就无法执行；这一点在六个种子上一致，金额随种子变化很大；“两个情景的最优值之差”会高估读宽的损失；其余条件下确认范围不改变物流决策。
+- 不能说：这是企业实测；对别的网络、别的扰动幅度同样成立；种子 7 的金额是典型值；预留舱位在现实中一定不受公告影响（这是模型假设）。
 - 评测成绩的三种口径不变：官方 52/60，修正评分 54/60，A04 修复后复测 3/3；C03 待人工复核。
 
 ### 复算
@@ -85,16 +104,18 @@ This document provides Chinese first and English second. Numbers come from [`ben
 python scripts/run_scope_misread.py --check
 python scripts/run_scope_misread.py --refinement --check
 python scripts/run_scope_value.py --workers 6 --check
+python scripts/run_scope_seeds.py --workers 6 --check
 python -m unittest tests.test_scope_misread
 ```
 
 ### 下一项验收条件
 
-现有结论只限这个网络和这组参数。要推广，需要先满足下面任一条件，并且协议先于结果提交、保留零差异和不可行结果：
+现有结论只限这个网络和这组参数。要推广到别的网络，需要先满足下面任一条件，并且协议先于结果提交、保留零差异和不可行结果：
 
 1. 网络里有两地共用的运力。现在台湾和马来西亚的货没有共用线路，所以读错范围只影响被多算或少算的那一地。
 2. 公告也影响预留舱位的模型变体。现在预留舱位不受影响，这是误读在大部分取值下没有后果的直接原因。
-3. 换需求随机种子后，分界点和遗憾的量级是否稳定。
+
+确认范围的价值（结果四）只在种子 7 上算过；换种子后的金额没有计算。
 
 ## English
 
@@ -166,10 +187,29 @@ The planner does not know whether the notice is narrow (`TW_air` only) or broad 
 - Simple policies without confirmation: planning for narrow loses p × the regret of reading too narrowly in expectation, and planning for broad loses (1 − p) × the regret of reading too broadly. At a multiple of 0.1 with the scope showing in week 7, too narrow costs US$8,595 and too broad US$2,125; at p = 0.25 planning for narrow loses 2,149, planning for broad 1,594 and the hedge 1,540. At 0.0 the two sides are close (10,433 against 13,396).
 - Against the cost of information processing: in the evaluation the model read a notice at a median of US$0.034 and 73 seconds (at list prices). This only says that reading a notice is cheap. Confirming the scope with a carrier costs planner time, which this project has not measured.
 
+### Result 5: five other demand seeds
+
+Results 1 to 4 use seed 7. The seed draws SKU mass, value and mean demand as well as weekly orders, so each seed is a different synthetic portfolio. Seeds 1–5, the same 14 space values and both directions give 70 cases; seeds and values were committed before solving.
+
+| Seed | Lane-week loads of the two readings on the original network (multiple 1.5) | Largest space multiple with a consequence | Largest regret of reading too broadly (USD): learnt in week 7 / never re-planned | Largest regret of reading too narrowly, learnt in week 7 (USD) | Multiples where reading too narrowly and learning after the window is infeasible |
+|---|---|---:|---|---:|---|
+| 1 | Same | 0.0 | 9,975 / 12,460 | 29,982 | 0.0 |
+| 2 | Same | 0.1 | 31,385 / 34,954 | 15,957 | 0.1, 0.0 |
+| 3 | Same | 0.0 | 2,580 / 4,692 | 5,583 | 0.0 |
+| 4 | Same | 0.2 | 35,385 / 46,776 | 44,133 | 0.2, 0.1, 0.0 |
+| 5 | Same | 0.1 | 11,994 / 13,722 | 24,312 | 0.1, 0.0 |
+
+- **Both findings hold on all five seeds**: on the original network the two readings give the same lane-week loads and regret is 0; none of the 55 cases at a multiple of 0.3 or more shows regret, a difference in loads or infeasibility. Consequences appear only at 0.2 or less.
+- **Sizes vary widely with the seed**: the largest regret of reading too broadly ranges from US$2,580 to US$35,385 (learnt in week 7), so the seed-7 numbers are not typical values.
+- **Two statements from seed 7 do not generalise**:
+  - "The service level stays at 100%" when reading too narrowly holds for seed 7 only. On seeds 1, 4 and 5 reading too narrowly also causes backlog, with a service level as low as 99.70%, and 14–100 units short of the closing stock target.
+  - "All of the cost is holding cost" when reading too broadly has an exception: seed 4 at a multiple of 0.0, learnt after the window, also ends 9.3 units short. Reading too broadly is feasible in all 70 cases.
+- Where there is regret, the favourable tie-break regret equals it.
+
 ### What can and cannot be said
 
-- Can be said: in this synthetic network, a misread scope changes dispatches only when the substitute lane has almost vanished; reading too broadly costs holding cost, reading too narrowly costs a closing shortfall, and a plan found out too late cannot be carried out; the difference between two optima overstates the loss from reading too broadly; under the other conditions confirming the scope changes no logistics decision.
-- Cannot be said: that this is a company measurement; that it holds for other networks or other disruption sizes; that reserved space is untouched by notices in reality (this is a model assumption).
+- Can be said: in this synthetic network, a misread scope changes dispatches only when the substitute lane has almost vanished; reading too broadly mostly costs holding cost, reading too narrowly costs a closing shortfall (and backlog on some seeds), and a plan found out too late cannot be carried out; this is consistent across six seeds, while the amounts vary widely with the seed; the difference between two optima overstates the loss from reading too broadly; under the other conditions confirming the scope changes no logistics decision.
+- Cannot be said: that this is a company measurement; that it holds for other networks or other disruption sizes; that the seed-7 amounts are typical; that reserved space is untouched by notices in reality (this is a model assumption).
 - The three evaluation scores are unchanged: official 52/60, corrected scoring 54/60, A04 retest after the fix 3/3; C03 is pending human review.
 
 ### Reproduction
@@ -178,6 +218,7 @@ The planner does not know whether the notice is narrow (`TW_air` only) or broad 
 python scripts/run_scope_misread.py --check
 python scripts/run_scope_misread.py --refinement --check
 python scripts/run_scope_value.py --workers 6 --check
+python scripts/run_scope_seeds.py --workers 6 --check
 python -m unittest tests.test_scope_misread
 ```
 
@@ -187,4 +228,5 @@ These conclusions hold for this network and these parameters only. Generalising 
 
 1. A network in which two origins share space. Taiwan and Malaysia cargo share no lane here, so a misread scope affects only the origin that was wrongly added or left out.
 2. A model variant in which a notice also affects reserved space. Reserved space is untouched here, which is the direct reason a misreading has no consequence at most values.
-3. Other demand seeds, to see whether the threshold and the size of the regret are stable.
+
+The value of confirming the scope (result 4) was computed on seed 7 only; its size on other seeds has not been computed.

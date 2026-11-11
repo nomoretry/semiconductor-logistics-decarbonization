@@ -1,0 +1,8 @@
+{
+  "code_version": "ebd3e89",
+  "command": "python scripts/run_scope_seeds.py --workers 6",
+  "sha256": {
+    "cases.jsonl": "84a479167ec4095458abd921371e3ac5a71b612ae7b7bea34dc0554cd0310679",
+    "summary.json": "c515c1d1462d772a76b25b4d3c457b0bd8e50378045c5bab2f7225cf937638a0"
+  }
+}
