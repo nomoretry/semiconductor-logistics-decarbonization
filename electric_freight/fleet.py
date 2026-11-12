@@ -183,6 +183,7 @@ def operations(m: Any, cfg: dict[str, Any], horizon: Horizon, own: list[str], le
     eta = float(truck["charging_efficiency"])
     trucks = own + leasable
     wage = corridor["waiting_usd_per_hour"]
+    carbon = float(cfg["carbon"]["price_usd_per_t"]) / 1000  # USD per kg CO2e
 
     def condition(t: int) -> str:
         return horizon.conditions[_week_of(horizon, t)]
@@ -254,9 +255,9 @@ def operations(m: Any, cfg: dict[str, Any], horizon: Horizon, own: list[str], le
                            "transport_cost": pulp.lpSum(pat["cost"] * x[i] for i, pat in enumerate(patterns)),
                            "site_power": {}, "energy_cost": 0, "energy": {}, "power": {}, "occupancy": {}}
     if mode == "diesel":
-        out["energy_cost"] = pulp.lpSum(
-            diesel_litres(cfg, condition(pat["s"])) * cfg["diesel"]["price_usd_per_litre"] * x[i]
-            for i, pat in enumerate(patterns))
+        fuel = cfg["diesel"]["price_usd_per_litre"] + carbon * cfg["diesel"]["kg_co2e_per_litre"]
+        out["energy_cost"] = pulp.lpSum(diesel_litres(cfg, condition(pat["s"])) * fuel * x[i]
+                                        for i, pat in enumerate(patterns))
         return out
     duration = {0: leg(cfg, condition(0))}
 
@@ -307,7 +308,7 @@ def operations(m: Any, cfg: dict[str, Any], horizon: Horizon, own: list[str], le
                     plugs_side.setdefault((k, site["side"], t), []).extend(plugs)
                     site_power.setdefault((j, t), []).append(p)
                     by_truck.setdefault((k, t), []).append(p)
-                    energy_cost.append(site["energy_usd_per_kwh"] * p)
+                    energy_cost.append((site["energy_usd_per_kwh"] + carbon * site["grid_kg_co2e_per_kwh"]) * p)
         for (k, side, t), plugs in plugs_side.items():
             at = at_my if side == "MY" else at_sg
             m += (pulp.lpSum(plugs) <= at[k, t], f"plug_{tag}_{k}_{side}_{t}")
@@ -412,6 +413,31 @@ def first_stage(m: Any, cfg: dict[str, Any], leasable: list[str], fixed: dict[st
     return plant, lease, pulp.lpSum(cost)
 
 
+def needed_sides(config: dict[str, Any], scenarios: Sequence[Scenario]) -> list[str]:
+    """Sides of the corridor where every feasible plan charges.
+
+    The depot always: a truck comes home below full and must be full again at the next week boundary. The
+    destination when a round trip needs more than the battery holds: the truck arrives with at most battery - E and
+    must leave with at least E + reserve."""
+    truck = config["truck"]
+    need = {"MY"}
+    for sc in scenarios:
+        for c in set(sc.conditions):
+            if 2 * leg(sc.config, c)[1] + truck["min_energy_kwh"] > truck["battery_usable_kwh"]:
+                need.add("SG")
+    return sorted(need)
+
+
+def side_cuts(m: Any, config: dict[str, Any], plant: dict[str, Any], scenarios: Sequence[Scenario]) -> None:
+    """Valid inequalities: every scenario runs background trips, so each side in ``needed_sides`` has an open site
+    with at least one connector. They remove no feasible plan; they stop the linear relaxation from opening sites and
+    buying connectors in fractions, which left most of the equipment cost out of the dual bound."""
+    for side in needed_sides(config, scenarios):
+        sites = [j for j, s in config["sites"].items() if s["side"] == side]
+        m += (pulp.lpSum(plant["open"][j] for j in sites) >= 1, f"side_open_{side}")
+        m += (pulp.lpSum(n for (j, _), n in plant["n"].items() if j in sites) >= 1, f"side_plug_{side}")
+
+
 # ----------------------------------------------------------------------------------------------- the whole model
 
 def week_bounds(cfg: dict[str, Any], mode: str, condition: str, departures: int,
@@ -477,6 +503,8 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
     if fixed is not None and "plant" not in fixed and mode == "joint" and fixed_first_stage is None:
         fixed = {"lease": fixed["lease"]}
     plant, lease, first_cost = first_stage(m, config, leasable, fixed, with_plant=(mode == "joint"))
+    if plant is not None:
+        side_cuts(m, config, plant, scenarios)
     expected: list[Any] = []
     transport_terms: list[Any] = []
     per: dict[str, Any] = {}
@@ -590,7 +618,9 @@ def _cargo(m: Any, sc: Scenario, types: list[tuple[str, int]], fixed: dict[str, 
     cost = []
     for i, order in enumerate(sc.orders):
         by_air[order.id] = m.add_variable(f"air_{name}_{i}", 0)
-        cost.append(sc.air["spot_usd_per_kg"] * order.mass_kg * by_air[order.id])
+        carbon = float(cfg["carbon"]["price_usd_per_t"]) / 1000
+        cost.append((sc.air["spot_usd_per_kg"] + carbon * sc.air["kg_co2e_per_kg"]) * order.mass_kg
+                    * by_air[order.id])
         terms = [by_air[order.id]]
         for week, early in dispatch_windows(order, cfg, sc.conditions):
             for channel in ROAD_CHANNELS:
@@ -700,11 +730,12 @@ def read_operations(op: dict[str, Any]) -> dict[str, Any]:
 # ----------------------------------------------------------------------------------------------- plans A, B, B*, C
 
 def sequential(config: dict[str, Any], scenarios: Sequence[Scenario], *, best_tie_break: bool = False,
-               **options: Any) -> dict[str, Any]:
+               step1: dict[str, Any] | None = None, **options: Any) -> dict[str, Any]:
     """Plan B: transport and truck schedules first (charging assumed available everywhere), then equipment and
     charging for that schedule. ``best_tie_break`` gives B*: among schedules as cheap as step 1, the one that is best
-    for charging."""
-    step1 = solve(config, scenarios, mode="relaxed", **options)
+    for charging. ``step1`` reuses a step-1 result already solved for the same scenarios."""
+    if step1 is None:
+        step1 = solve(config, scenarios, mode="relaxed", **{k: v for k, v in options.items() if k != "start"})
     if "solution" not in step1:
         return {"mode": "sequential", "status": step1["status"], "step_1": step1}
     if best_tie_break:
@@ -714,7 +745,8 @@ def sequential(config: dict[str, Any], scenarios: Sequence[Scenario], *, best_ti
     else:
         step2 = solve(config, scenarios, mode="joint", fixed_schedule=step1, **options)
         label = "sequential"
-    return {**step2, "mode": label, "step_1": {k: step1[k] for k in ("status", "stats", "objective_usd")}}
+    return {**step2, "mode": label, "step_1": {k: step1[k] for k in ("status", "stats", "objective_usd")},
+            "step_1_result": step1}
 
 
 def copy_config(config: dict[str, Any]) -> dict[str, Any]:

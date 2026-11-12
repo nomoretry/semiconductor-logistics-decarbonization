@@ -45,6 +45,7 @@ def evaluate(config: dict[str, Any], sc: Scenario, first_stage: dict[str, Any], 
         capacity = _first_stage(config, plant, cost, issues)
     peak: dict[str, float] = defaultdict(float)
     kwh: dict[str, float] = defaultdict(float)
+    carbon = float(cfg["carbon"]["price_usd_per_t"]) / 1000
     for typ, n_weeks in counts.items():
         ops = solution["types"].get(typ)
         if ops is None:
@@ -57,6 +58,7 @@ def evaluate(config: dict[str, Any], sc: Scenario, first_stage: dict[str, Any], 
         if mode == "diesel":
             litres = len(ops["trips"]) * diesel_litres(cfg, condition)
             cost["diesel"] += n_weeks * litres * cfg["diesel"]["price_usd_per_litre"]
+            cost["carbon"] += carbon * n_weeks * litres * cfg["diesel"]["kg_co2e_per_litre"]
             emissions["diesel"] += n_weeks * litres * cfg["diesel"]["kg_co2e_per_litre"]
             continue
         energy = _energy(cfg, plant if mode == "joint" else None, capacity, ops, record, mode, issues, typ)
@@ -70,6 +72,7 @@ def evaluate(config: dict[str, Any], sc: Scenario, first_stage: dict[str, Any], 
         cost["demand_charge"] = sum(cfg["sites"][j]["demand_usd_per_kw_month"] * months * peak[j] for j in peak)
         for j, value in kwh.items():
             emissions["electricity"] += cfg["sites"][j]["grid_kg_co2e_per_kwh"] * value
+            cost["carbon"] += carbon * cfg["sites"][j]["grid_kg_co2e_per_kwh"] * value
     elif mode == "relaxed":
         emissions["electricity_unassigned"] = 0.0
     total = sum(cost.values())
@@ -85,6 +88,7 @@ def _cargo(cfg: dict[str, Any], sc: Scenario, solution: dict[str, Any], counts: 
            cost: dict[str, float], emissions: dict[str, float], issues: list[str]) -> None:
     carrier = cfg["carrier"]
     holding = float(cfg["cargo"].get("holding_multiplier", 1.0))
+    carbon = float(cfg["carbon"]["price_usd_per_t"]) / 1000
     orders = {o.id: o for o in sc.orders}
     windows = {o.id: dict(dispatch_windows(o, cfg, sc.conditions)) for o in sc.orders}
     served: dict[str, float] = defaultdict(float)
@@ -107,6 +111,7 @@ def _cargo(cfg: dict[str, Any], sc: Scenario, solution: dict[str, Any], counts: 
         served[order.id] += float(item["units"])
         flown[order.due_week] += float(item["units"]) * order.mass_kg
         cost["air_freight"] += sc.air["spot_usd_per_kg"] * order.mass_kg * float(item["units"])
+        cost["carbon"] += carbon * sc.air["kg_co2e_per_kg"] * order.mass_kg * float(item["units"])
         emissions["air_freight"] += sc.air["kg_co2e_per_kg"] * order.mass_kg * float(item["units"])
     for oid, order in orders.items():
         if abs(served[oid] - order.units) > TOL * max(1.0, order.units):

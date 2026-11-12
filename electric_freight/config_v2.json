@@ -164,6 +164,10 @@
     "charge_kw": 150,
     "basis": "Sequential plan, step 1: the transport planner assumes a 150 kW charger wherever a truck stands and prices energy at the mean of the two sides."
   },
+  "carbon": {
+    "price_usd_per_t": 0,
+    "basis": "A carbon price on electricity bought (site grid factor), diesel burnt and air freight; 0 in all main runs, used only in the sensitivity runs. Reported separately as carbon cost."
+  },
   "sites": {
     "MY_DEPOT": {
       "side": "MY",
