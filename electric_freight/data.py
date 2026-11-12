@@ -12,9 +12,15 @@ CONFIG_PATH = Path(__file__).with_name("config.json")
 ROAD, MY, SG = "ROAD", "MY", "SG"
 
 
-def load_config(overrides: dict[str, Any] | None = None) -> dict[str, Any]:
+def load_config(overrides: dict[str, Any] | None = None, path: Path = CONFIG_PATH) -> dict[str, Any]:
     """The documented configuration, with dotted-path overrides such as {"carrier.weekly_consolidation_kg": 200}."""
-    config: dict[str, Any] = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    config: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    return apply_overrides(config, overrides)
+
+
+def apply_overrides(config: dict[str, Any], overrides: dict[str, Any] | None) -> dict[str, Any]:
+    """A copy of ``config`` with dotted-path overrides; an unknown path is an error, not a new key."""
+    config = copy.deepcopy(config)
     for path, value in (overrides or {}).items():
         node = config
         *parents, last = path.split(".")
