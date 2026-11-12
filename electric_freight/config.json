@@ -100,7 +100,8 @@
   "cargo": {
     "release_lead_weeks": 1,
     "max_late_weeks": 1,
-    "basis": "An order is the dispatch the weekly plan made on MY_road. Assumed: it may leave at most one week earlier (released) and at most one week later (backlog penalty of the SKU). Earlier dispatch pays the SKU's holding cost at the destination."
+    "basis": "An order is the dispatch the weekly plan made on MY_road. Assumed: it may leave at most one week earlier (released) and at most one week later (backlog penalty of the SKU). Earlier dispatch pays the SKU's holding cost at the destination. holding_multiplier scales every SKU's holding cost; 1 is the weekly plan's value (capital charge plus warehouse cost).",
+    "holding_multiplier": 1.0
   },
   "congestion": {
     "consolidation_factor": 0.6,
@@ -109,7 +110,8 @@
   },
   "air_fallback": {
     "lane": "MY_air",
-    "basis": "Chips that do not go by road go by MY_air in their due week at the spot rate of network_planning (freight x 1.25) and its emission factor."
+    "enabled": true,
+    "basis": "Chips that do not go by road go by MY_air in their due week at the spot rate of network_planning (freight x 1.25) and its emission factor, within the spot space the weekly plan left unused that week."
   },
   "planning_energy_usd_per_kwh": 0.133,
   "planning_energy_basis": "Only for the sequential plan: the logistics planner prices an extra trip's electricity at the mean of the two sides' energy prices and ignores equipment.",

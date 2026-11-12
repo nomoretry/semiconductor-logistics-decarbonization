@@ -20,11 +20,12 @@ TOLERANCE = 1e-5
 
 
 def evaluate(config: dict[str, Any], orders: Sequence[Order], solution: dict[str, Any], *, mode: str,
-             congested_weeks: Sequence[int] = (), air: dict[str, float] | None = None) -> dict[str, Any]:
-    from .model import dispatch_windows, week_conditions  # the two rules that define the task, not the model
+             congested_weeks: Sequence[int] = (), air: dict[str, Any] | None = None) -> dict[str, Any]:
+    from .model import air_terms, dispatch_windows, week_conditions  # rules that define the task, not the model
 
-    air = air or {"spot_usd_per_kg": 6.875, "kg_co2e_per_kg": 0.198253}
     weeks = int(config["horizon"]["weeks"])
+    air = air_terms(config, air, weeks)
+    holding = float(config["cargo"].get("holding_multiplier", 1.0))
     slots = int(config["horizon"]["slots_per_week"])
     hours = float(config["horizon"]["slot_hours"])
     carrier, truck, corridor = config["carrier"], config["truck"], config["corridor"]
@@ -52,15 +53,21 @@ def evaluate(config: dict[str, Any], orders: Sequence[Order], solution: dict[str
         load[week, channel] += units * order.mass_kg
         kg[channel] += units * order.mass_kg
         kg["early" if early > 0 else "late" if early < 0 else "on_time"] += units * order.mass_kg
-        cost["holding"] += order.holding_usd_per_unit_week * max(early, 0) * units
+        cost["holding"] += holding * order.holding_usd_per_unit_week * max(early, 0) * units
         cost["backlog"] += order.backlog_usd_per_unit_week * max(-early, 0) * units
         if channel == "premium":
             cost["displaced_cargo"] += carrier["premium_usd_per_kg"] * order.mass_kg * units
+    flown: defaultdict[int, float] = defaultdict(float)
     for item in solution["air"]:
         order = by_order[item["order"]]
         served[order.id] += float(item["units"])
+        flown[order.due_week] += float(item["units"]) * order.mass_kg
         kg["air"] += float(item["units"]) * order.mass_kg
         cost["air_freight"] += air["spot_usd_per_kg"] * order.mass_kg * float(item["units"])
+    for week, kg_flown in flown.items():
+        if kg_flown > air["available_kg"][week - 1] + 1e-4:
+            left = air["available_kg"][week - 1]
+            issues.append(f"week {week}: {kg_flown:.2f} kg by air exceeds the {left:.2f} kg left")
     for order in orders:
         if abs(served[order.id] - order.units) > TOLERANCE * max(1.0, order.units):
             issues.append(f"{order.id}: {served[order.id]:.4f} of {order.units:.4f} units delivered")

@@ -48,8 +48,11 @@ def dispatch_windows(order: Order, config: dict[str, Any], conditions: Sequence[
 
 
 def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint",
-          congested_weeks: Sequence[int] = (), air: dict[str, float] | None = None,
-          fixed: dict[str, Any] | None = None, mip_gap: float = 1e-4, time_limit: float = 180.0) -> dict[str, Any]:
+          congested_weeks: Sequence[int] = (), air: dict[str, Any] | None = None,
+          fixed: dict[str, Any] | None = None, fixed_equipment: dict[str, Any] | None = None,
+          mip_gap: float = 1e-4, time_limit: float = 180.0) -> dict[str, Any]:
+    """``air`` gives the fallback rate, emission factor and the kilograms available per week (``available_kg``).
+    ``fixed`` freezes dispatch and trips (step 2 of the sequential plan); ``fixed_equipment`` freezes equipment."""
     if mode not in ("joint", "logistics", "diesel"):
         raise ValueError("mode must be joint, logistics or diesel")
     started = time.perf_counter()
@@ -57,7 +60,8 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
     slots = int(config["horizon"]["slots_per_week"])
     hours = float(config["horizon"]["slot_hours"])
     carrier, truck = config["carrier"], config["truck"]
-    air = air or {"spot_usd_per_kg": 6.875, "kg_co2e_per_kg": 0.198253}
+    air = air_terms(config, air, weeks)
+    holding = float(config["cargo"].get("holding_multiplier", 1.0))
     conditions = week_conditions(weeks, congested_weeks)
     sites = sites_from(config)
     blocks = build_blocks(config, sites, sorted(set(conditions)))
@@ -81,7 +85,7 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
                 var = model.add_variable(f"x_{i}_{week}_{channel}", 0)
                 ship[order.id, week, channel] = var
                 terms.append(var)
-                rate = (order.holding_usd_per_unit_week * early if early > 0
+                rate = (holding * order.holding_usd_per_unit_week * early if early > 0
                         else order.backlog_usd_per_unit_week * -early)
                 if channel == "premium":
                     rate += carrier["premium_usd_per_kg"] * order.mass_kg
@@ -89,6 +93,10 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
                     cost.append(rate * var)
         model += (pulp.lpSum(terms) == order.units, f"serve_{i}")
     mass = {order.id: order.mass_kg for order in orders}
+    for w in range(1, weeks + 1):
+        air_kg = [order.mass_kg * by_air[order.id] for order in orders if order.due_week == w]
+        if air_kg:
+            model += (pulp.lpSum(air_kg) <= air["available_kg"][w - 1], f"air_space_{w}")
     factor = float(config["congestion"]["consolidation_factor"])
     for w in range(1, weeks + 1):
         scale = factor if conditions[w - 1] == "congested" else 1.0
@@ -139,7 +147,8 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
             kwh = sum(sum(t.drive_kwh) for t in block.timelines if t.extra) / truck["charging_efficiency"]
             cost.append(config["planning_energy_usd_per_kwh"] * kwh * var)
     else:
-        variables.update(_charging(model, cost, config, sites, blocks, week_type, weeks, slots, hours))
+        variables.update(_charging(model, cost, config, sites, blocks, week_type, weeks, slots, hours,
+                                   fixed_equipment))
 
     model += pulp.lpSum(cost) + constant
     build_seconds = time.perf_counter() - started
@@ -152,7 +161,7 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
              "solve_seconds": round(time.perf_counter() - started - build_seconds, 2),
              "mip_gap": getattr(info, "mip_gap", None), "dual_bound": getattr(info, "mip_dual_bound", None)}
     result: dict[str, Any] = {"mode": mode, "status": status, "stats": stats, "congested_weeks": list(congested_weeks),
-                              "sequential_step_2": fixed is not None}
+                              "sequential_step_2": fixed is not None, "equipment_fixed": fixed_equipment is not None}
     if status not in ("optimal", "feasible"):
         return result
     result["objective_usd"] = float(pulp.value(model.objective))
@@ -167,8 +176,21 @@ def solve(config: dict[str, Any], orders: Sequence[Order], *, mode: str = "joint
     return result
 
 
+def air_terms(config: dict[str, Any], air: dict[str, Any] | None, weeks: int) -> dict[str, Any]:
+    """The air fallback as the model and the accounting use it; switched off by ``air_fallback.enabled``."""
+    out = dict(air or {"spot_usd_per_kg": 6.875, "kg_co2e_per_kg": 0.198253})
+    available = list(out.get("available_kg") or [float("inf")] * weeks)
+    if not config["air_fallback"].get("enabled", True):
+        available = [0.0] * weeks
+    if len(available) != weeks:
+        raise ValueError("air available_kg needs one value per week")
+    out["available_kg"] = available
+    return out
+
+
 def _charging(model: Any, cost: list[Any], config: dict[str, Any], sites: dict[str, Site], blocks: list[Block],
-              week_type: dict[tuple[int, str], Any], weeks: int, slots: int, hours: float) -> dict[str, Any]:
+              week_type: dict[tuple[int, str], Any], weeks: int, slots: int, hours: float,
+              fixed_equipment: dict[str, Any] | None = None) -> dict[str, Any]:
     truck = config["truck"]
     eta = float(truck["charging_efficiency"])
     share = capital_share(config, weeks)
@@ -178,6 +200,13 @@ def _charging(model: Any, cost: list[Any], config: dict[str, Any], sites: dict[s
     upgrade = {(j, u.id): model.add_variable(f"up_{j}_{u.id}", cat="Binary") for j, site in sites.items()
                for u in site.upgrades}
     peak = {j: model.add_variable(f"peak_{j}", 0) for j in sites}
+    if fixed_equipment is not None:  # equipment decided before this scenario was known
+        for j, site in sites.items():
+            item = fixed_equipment[j]
+            opened[j].lowBound = opened[j].upBound = item["opened"]
+            connectors[j].lowBound = connectors[j].upBound = item["connectors"]
+            for u in site.upgrades:
+                upgrade[j, u.id].lowBound = upgrade[j, u.id].upBound = float(item["upgrade"] == u.id)
     for j, site in sites.items():
         model += (connectors[j] <= site.max_connectors * opened[j], f"open_first_{j}")
         if site.upgrades:
@@ -302,3 +331,31 @@ def solve_sequential(config: dict[str, Any], orders: Sequence[Order], **options:
     second = solve(config, orders, mode="joint", fixed=first["solution"], **options)
     return {**second, "mode": "sequential", "step_1": {"status": first["status"], "stats": first["stats"],
                                                        "objective_usd": first["objective_usd"]}}
+
+
+def aggregate_absorption(weekly_kg: Sequence[float], capacity_kg: float, early_weeks: int = 1,
+                         late_weeks: int = 0) -> dict[str, Any]:
+    """How much weekly cargo fits a fixed weekly space when only kilograms count: no SKU, value or holding cost.
+
+    Cargo of week t may leave in weeks t - early_weeks ... t + late_weeks. Maximises what fits; the rest is reported.
+    """
+    weeks = len(weekly_kg)
+    model = pulp.LpProblem("aggregate_absorption", pulp.LpMinimize)
+    moved = {(t, s): model.add_variable(f"y_{t}_{s}", 0) for t in range(weeks)
+             for s in range(max(0, t - early_weeks), min(weeks, t + late_weeks + 1))}
+    left = {t: model.add_variable(f"u_{t}", 0) for t in range(weeks)}
+    for t in range(weeks):
+        model += (pulp.lpSum(v for (tt, _), v in moved.items() if tt == t) + left[t] == weekly_kg[t], f"cargo_{t}")
+    for s in range(weeks):
+        model += (pulp.lpSum(v for (_, ss), v in moved.items() if ss == s) <= capacity_kg, f"space_{s}")
+    # Prefer dispatching in the due week among equally good answers, so the reported moves are minimal.
+    model += pulp.lpSum(left.values()) * 1000 + pulp.lpSum(v for (t, s), v in moved.items() if t != s)
+    model.solve(pulp.HiGHS(msg=False))
+    value = {key: float(var.varValue or 0.0) for key, var in moved.items()}
+    excess = sum(max(0.0, kg - capacity_kg) for kg in weekly_kg)
+    return {"capacity_kg": capacity_kg, "early_weeks": early_weeks, "late_weeks": late_weeks,
+            "excess_over_capacity_kg": round(excess, 3),
+            "unabsorbed_kg": round(sum(float(v.varValue or 0.0) for v in left.values()), 3),
+            "unabsorbed_by_week": {t + 1: round(float(v.varValue or 0.0), 3) for t, v in left.items()
+                                   if (v.varValue or 0.0) > 1e-6},
+            "moved_kg": {f"{t + 1}->{s + 1}": round(kg, 3) for (t, s), kg in value.items() if t != s and kg > 1e-6}}

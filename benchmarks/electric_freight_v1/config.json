@@ -1,0 +1,35 @@
+{
+  "question": "Malaysia-Singapore road corridor (Marvell-inspired MY_road). When can chip orders be absorbed by early dispatch and consolidation on the carrier's trips? When is an extra electric truck trip worth it? Once trips are added, is the best answer to change charging times, add connectors, open a site or expand grid access?",
+  "orders": {"network": "marvell", "lane": "MY_road", "scenario": "normal",
+             "note": "The orders are the normal weekly plan's MY_road dispatches (73 orders, 2,511.67 kg). Every scenario moves the same orders; a scenario changes conditions, not demand."},
+  "plans": {
+    "A_diesel": "The same dispatch choices with diesel trucks and no charging equipment.",
+    "B_sequential": "Step 1 decides dispatch, consolidation and extra trips with an extra trip's electricity at a planning price and no equipment; step 2 fixes them and decides sites, connectors, upgrades and charging.",
+    "C_joint": "Dispatch, consolidation, extra trips, sites, connectors, upgrades and charging decided together.",
+    "C_no_chips": "C without any chip order: the carrier's own fleet. C minus this is the chips' marginal cost and emissions.",
+    "C_fixed_normal_equipment": "Equipment chosen by C in the normal scenario, fixed before the scenario is known; dispatch, trips and charging re-optimised."
+  },
+  "scenarios": {
+    "normal": {"overrides": {}, "congested_weeks": []},
+    "border_congestion": {"overrides": {}, "congested_weeks": [8, 9, 10],
+                          "note": "network_planning border_congestion: weeks 8-10, road space x0.6 and one more week of lead time; here also three hours at the border instead of one."},
+    "tight_space": {"overrides": {"carrier.weekly_consolidation_kg": 200}, "congested_weeks": []},
+    "grid_limited": {"overrides": {"carrier.weekly_consolidation_kg": 200, "substations.SG_SUB.headroom_kw": 150},
+                     "congested_weeks": [],
+                     "note": "Tight space, and the Singapore substation can give both candidate sites together only 150 kW."}
+  },
+  "substation_rules": {"scenario": "tight_space", "rules": ["shared", "split"],
+                       "note": "Shared: SG_HUB and SG_YARD together within 300 kW. Split: each within its own 150 kW. Joint and sequential plans under each."},
+  "aggregate_bridge": {"capacity_kg": 200, "cases": [[1, 0], [1, 1], [2, 0]],
+                       "note": "Weekly kilograms only, no SKU, value or holding cost; [early weeks, late weeks]."},
+  "sweeps": {
+    "consolidation_kg": {"values": [276.6, 250, 225, 200, 175, 150, 125, 100, 75, 50, 25, 0], "plans": ["C_joint", "B_sequential"],
+                         "air_enabled": [true, false]},
+    "holding_multiplier": {"values": [0, 0.02, 0.05, 0.1, 0.2, 0.5, 1], "plans": ["C_joint"],
+                           "base_overrides": {"carrier.weekly_consolidation_kg": 200}},
+    "sg_headroom_kw": {"values": [300, 250, 200, 150, 100], "plans": ["C_joint", "B_sequential"],
+                       "base_overrides": {"carrier.weekly_consolidation_kg": 200}}
+  },
+  "solver": {"mip_gap": 0.0001, "time_limit": 600},
+  "decided_before_running": "Fixed after a first solve of the normal scenario (A, B, C, C without chips) and the aggregate bridge, which are the only results seen. Infeasible and zero-difference results are kept. Germany DE-LU prices are not used in this round."
+}

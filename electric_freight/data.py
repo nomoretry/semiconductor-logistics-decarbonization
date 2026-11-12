@@ -67,6 +67,9 @@ def export_orders(scenario: str = "normal", *, lane: str = "MY_road", network: s
                        "backlog_usd_per_unit_week": sku.backlog_usd})
     weekly = [round(sum(o["kg"] for o in orders if o["due_week"] == week), 3) for week in range(1, net.weeks + 1)]
     road, air = net.lanes[lane], net.lanes["MY_air"]
+    scenario_obj = plan.scenarios[0]
+    spot_used = [plan.solution["air_spot"].get((0, air.id, t), 0.0) for t in range(net.weeks)]
+    air_left = [round(max(0.0, scenario_obj.capacity(air, t + 1) - spot_used[t]), 3) for t in range(net.weeks)]
     eligible = sorted({sku.id for sku in net.skus if lane in sku.lanes})
     return {
         "source": {"network": network, "scenario": scenario, "lane": lane, "weeks": net.weeks, "seed": net.seed,
@@ -79,7 +82,8 @@ def export_orders(scenario: str = "normal", *, lane: str = "MY_road", network: s
                  "distance_km": road.distance_km, "lead_weeks": road.lead_weeks,
                  "kg_co2e_per_kg_old_basis": round(road.kgco2e_per_kg, 6)},
         "air_fallback": {"lane": air.id, "spot_usd_per_kg": round(air.freight_usd_per_kg * net.air_spot_premium, 6),
-                         "kg_co2e_per_kg": round(air.kgco2e_per_kg, 6)},
+                         "kg_co2e_per_kg": round(air.kgco2e_per_kg, 6), "available_kg": air_left,
+                         "note": "Spot space on the air lane each week minus what the weekly plan already uses."},
         "eligible_skus": eligible,
         "orders": orders,
     }

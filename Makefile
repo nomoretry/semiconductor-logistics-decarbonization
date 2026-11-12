@@ -31,7 +31,7 @@ lock-check:
 	diff -u planning_agent/requirements.txt $$tmp/web.txt
 
 # Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
-LINT_PATHS = network_planning planning_agent electric_freight tests/test_electric_freight.py tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py tests/test_llm_safety.py tests/test_planning_eval_v2.py tests/test_scenario_scope.py tests/test_eval_followup.py tests/test_scope_misread.py scripts/run_scope_misread.py scripts/run_scope_value.py scripts/run_scope_seeds.py
+LINT_PATHS = network_planning planning_agent electric_freight tests/test_electric_freight.py tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py tests/test_llm_safety.py tests/test_planning_eval_v2.py tests/test_scenario_scope.py tests/test_eval_followup.py tests/test_scope_misread.py scripts/run_scope_misread.py scripts/run_scope_value.py scripts/run_scope_seeds.py scripts/run_electric_freight.py
 
 lint:
 	$(PYTHON) -m ruff check $(LINT_PATHS)

@@ -13,3 +13,5 @@ benchmark_results/scope_value_v1/** -text
 benchmarks/scope_value_v1/** -text
 benchmark_results/scope_seeds_v1/** -text
 benchmarks/scope_seeds_v1/** -text
+benchmark_results/electric_freight_v1/** -text
+benchmarks/electric_freight_v1/** -text
