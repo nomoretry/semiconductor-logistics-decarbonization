@@ -1,0 +1,199 @@
+{
+  "description": "Electric freight on the Malaysia-Singapore road corridor: carrier consolidation, extra electric truck trips, charging sites and grid access. Every value states whether it is sourced, derived or assumed. Synthetic values are scenario assumptions, not company or carrier data.",
+  "currency": "USD",
+  "horizon": {
+    "weeks": 16,
+    "slot_hours": 1,
+    "slots_per_week": 168,
+    "week_start": "Monday 00:00 local time",
+    "basis": "Same 16 weekly periods as network_planning. One representative hourly week per week type."
+  },
+  "finance": {
+    "discount_rate": 0.08,
+    "lifetime_years": 10,
+    "weeks_per_year": 52,
+    "weeks_per_month": 4.345,
+    "myr_per_usd": 4.5,
+    "basis": "Assumed. Investment is annualised with the capital recovery factor and charged for the modelled weeks only, so investment and operation share one period."
+  },
+  "corridor": {
+    "network": "marvell",
+    "lane": "MY_road",
+    "distance_km": 400,
+    "drive_hours": 6,
+    "crossing_hours": {
+      "normal": 1,
+      "congested": 3
+    },
+    "destination_dwell_hours": 4,
+    "basis": "400 km is the illustrative corridor distance of marvell/config.json, not a measured route. Driving, border crossing and loading times are assumed and kept apart from the weekly lead time of the planning model."
+  },
+  "truck": {
+    "battery_usable_kwh": 590,
+    "battery_basis": "Mercedes-Benz eActros 600: 621 kWh installed (manufacturer); about 95% usable is a press figure. https://hub.mercedes-benz-trucks.com/gb/en/trucks/eactros-600.html",
+    "min_energy_kwh": 59,
+    "min_energy_basis": "Assumed 10% reserve at every moment, including departure and arrival.",
+    "initial_energy_kwh": 590,
+    "terminal_basis": "Each truck starts the week full and must end the week at least as full, as in the UM charging model (C07).",
+    "drive_kwh_per_km": 1.13,
+    "drive_basis": "Derived: 1,813,321.7 kWh over 1,604,920.3 km of simulated German long-haul tracks (TUMFTM truck_fleet_electrification, 19.3 t payload, 5 kW auxiliaries) as archived in UM-RESEARCH studies/truck-energy/metrics.json. Transfer to this corridor is an assumption.",
+    "auxiliary_kw_waiting": 5,
+    "charging_efficiency": 0.9,
+    "efficiency_basis": "Assumed, as in the UM charging configurations.",
+    "chip_cargo_energy": "Ignored: at most a few hundred kg on a truck of about 19 t payload."
+  },
+  "diesel": {
+    "litres_per_km": 0.3,
+    "idle_litres_per_hour": 3,
+    "price_usd_per_litre": 0.68,
+    "kg_co2e_per_litre": 2.68,
+    "basis": "Assumed typical long-haul values; price about MYR 3.05 per litre. Sensitivity is reported rather than a point claim."
+  },
+  "carrier": {
+    "base_trips": [
+      {
+        "vehicle": "BASE1",
+        "depart_hours": [
+          6,
+          54,
+          102
+        ]
+      },
+      {
+        "vehicle": "BASE2",
+        "depart_hours": [
+          30,
+          78,
+          126
+        ]
+      }
+    ],
+    "base_basis": "Assumed: two trucks, three round trips each per week for other customers. They run whether or not they carry chips.",
+    "extra_vehicle": "EXTRA",
+    "extra_options": {
+      "day": {
+        "depart_hour": 54,
+        "trip_cost_usd": 300
+      },
+      "night": {
+        "depart_hour": 66,
+        "trip_cost_usd": 360
+      },
+      "weekend": {
+        "depart_hour": 146,
+        "trip_cost_usd": 390
+      }
+    },
+    "extra_basis": "Assumed. Day: Wednesday 06:00, at the destination together with BASE1. Night: Wednesday 18:00. Weekend: Sunday 02:00. Night and weekend carry a driver premium.",
+    "trip_cost_usd": 300,
+    "congested_trip_surcharge_usd": 40,
+    "trip_cost_basis": "Assumed driver, toll and maintenance cost per round trip, without energy.",
+    "extra_trip_chip_capacity_kg": 5000,
+    "weekly_consolidation_kg": 276.6,
+    "consolidation_basis": "Space left for chips on the base trips after other customers' cargo. 276.6 kg is the MY_road weekly capacity of network_planning (seed 7).",
+    "premium_kg_per_week": 50,
+    "premium_usd_per_kg": 2.1,
+    "premium_basis": "Assumed: up to 50 kg a week more can be bought on the base trips by displacing other cargo, at three times the base rate. This is a real cost to the system, unlike the base rate.",
+    "base_rate_usd_per_kg": 0.7,
+    "base_rate_basis": "MY_road freight rate of marvell/config.json. It is a payment from shipper to carrier and is reported, not added to system cost, once this module costs the trucks themselves."
+  },
+  "cargo": {
+    "release_lead_weeks": 1,
+    "max_late_weeks": 1,
+    "basis": "An order is the dispatch the weekly plan made on MY_road. Assumed: it may leave at most one week earlier (released) and at most one week later (backlog penalty of the SKU). Earlier dispatch pays the SKU's holding cost at the destination."
+  },
+  "congestion": {
+    "consolidation_factor": 0.6,
+    "road_delay_weeks": 1,
+    "basis": "From the border_congestion scenario of network_planning/config.json: road capacity x0.6 and one more week of lead time in the affected weeks. Here the affected weeks also use the congested crossing time. A road dispatch in such a week arrives one week later."
+  },
+  "air_fallback": {
+    "lane": "MY_air",
+    "basis": "Chips that do not go by road go by MY_air in their due week at the spot rate of network_planning (freight x 1.25) and its emission factor."
+  },
+  "planning_energy_usd_per_kwh": 0.133,
+  "planning_energy_basis": "Only for the sequential plan: the logistics planner prices an extra trip's electricity at the mean of the two sides' energy prices and ignores equipment.",
+  "sites": {
+    "MY_DEPOT": {
+      "side": "MY",
+      "open_capex_usd": 40000,
+      "connector_capex_usd": 60000,
+      "max_connectors": 3,
+      "connector_kw": 150,
+      "base_kw": 200,
+      "upgrades": [
+        {
+          "id": "plus_200",
+          "kw": 200,
+          "capex_usd": 50000
+        }
+      ],
+      "energy_usd_per_kwh": 0.0663,
+      "demand_usd_per_kw_month": 19.84,
+      "grid_kg_co2e_per_kwh": 0.74,
+      "substation": null,
+      "access_delay_hours": 0,
+      "tariff_basis": "TNB medium-voltage general tariff from July 2025 as reported by a secondary source (not checked against the official schedule): energy MYR 0.2983/kWh, capacity MYR 29.43/kW and network MYR 59.84/kW per month. https://www.plusxnergy.com/?p=2574",
+      "grid_basis": "Peninsular Malaysia grid emission factor 2024, provisional: 0.740 t CO2e/MWh (Energy Commission). https://myenergystats.st.gov.my/documents/d/guest/grid-emission-factor-gef-in-malaysia-2022-2024-provisional-",
+      "share_connector_within_hour": true
+    },
+    "SG_HUB": {
+      "side": "SG",
+      "open_capex_usd": 40000,
+      "connector_capex_usd": 60000,
+      "max_connectors": 2,
+      "connector_kw": 150,
+      "base_kw": 150,
+      "upgrades": [
+        {
+          "id": "plus_150",
+          "kw": 150,
+          "capex_usd": 60000
+        }
+      ],
+      "energy_usd_per_kwh": 0.2,
+      "demand_usd_per_kw_month": 0,
+      "grid_kg_co2e_per_kwh": 0.402,
+      "substation": "SG_SUB",
+      "access_delay_hours": 0,
+      "tariff_basis": "Assumed USD 0.20/kWh with no demand charge; reported with a sensitivity range.",
+      "grid_basis": "Singapore grid emission factor 2024: 0.402 kg CO2/kWh (EMA, Singapore Energy Statistics). https://www.ema.gov.sg/singapore-energy-statistics/Ch02/index2",
+      "share_connector_within_hour": false
+    },
+    "SG_YARD": {
+      "side": "SG",
+      "open_capex_usd": 60000,
+      "connector_capex_usd": 60000,
+      "max_connectors": 2,
+      "connector_kw": 150,
+      "base_kw": 150,
+      "upgrades": [
+        {
+          "id": "plus_150",
+          "kw": 150,
+          "capex_usd": 60000
+        }
+      ],
+      "energy_usd_per_kwh": 0.2,
+      "demand_usd_per_kw_month": 0,
+      "grid_kg_co2e_per_kwh": 0.402,
+      "substation": "SG_SUB",
+      "access_delay_hours": 1,
+      "tariff_basis": "As SG_HUB.",
+      "grid_basis": "As SG_HUB.",
+      "share_connector_within_hour": false
+    }
+  },
+  "site_basis": "All equipment costs, connector ratings, connection capacities and upgrade steps are assumed. SG_YARD is a second candidate near the hub; a truck can plug in there only after its first hour at the destination (unloading at the hub). At the depot trucks stand for a day or more, so connector time may be divided within an hour (occupancy is a fraction of the hour); at the destination sites a connector serves one truck for a whole hour, as in the UM charging model.",
+  "substations": {
+    "SG_SUB": {
+      "headroom_kw": 300,
+      "split_kw": {
+        "SG_HUB": 150,
+        "SG_YARD": 150
+      },
+      "basis": "Assumed. 'shared': the two sites together may draw the headroom at any moment. 'split': each site has its own fixed share. No local grid topology is modelled, so conclusions are limited to connection capacity planning."
+    }
+  },
+  "substation_rule": "shared"
+}

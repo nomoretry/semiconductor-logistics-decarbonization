@@ -28,7 +28,7 @@ semiconductor-logistics = "semiconductor_logistics.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["semiconductor_logistics*", "notice_benchmark*", "notice_facts*", "real_notice_eval*", "decision_benchmark*", "coupled_decision*", "budgeted_decision*", "query_policy*", "query_ppo*", "query_study*", "query_components*", "rolling_inventory*", "rolling_sensitivity*", "rolling_forecast*", "rolling_distribution*", "rolling_recourse*", "network_planning*", "planning_agent*", "shared*", "scripts*"]
+include = ["semiconductor_logistics*", "notice_benchmark*", "notice_facts*", "real_notice_eval*", "decision_benchmark*", "coupled_decision*", "budgeted_decision*", "query_policy*", "query_ppo*", "query_study*", "query_components*", "rolling_inventory*", "rolling_sensitivity*", "rolling_forecast*", "rolling_distribution*", "rolling_recourse*", "network_planning*", "planning_agent*", "electric_freight*", "shared*", "scripts*"]
 exclude = ["tests*"]
 
 [tool.setuptools]
@@ -36,6 +36,7 @@ include-package-data = false
 
 [tool.setuptools.package-data]
 network_planning = ["config.json"]
+electric_freight = ["config.json"]
 planning_agent = ["eval_cases.json", "notice_glossary.json"]
 
 [tool.ruff]
@@ -55,4 +56,4 @@ ignore_missing_imports = true
 follow_imports = "silent"
 strict = true
 # Every module of the planning engine and the planning agent type-checks strictly.
-files = ["network_planning", "planning_agent"]
+files = ["network_planning", "planning_agent", "electric_freight"]
