@@ -210,6 +210,8 @@ def operations(m: Any, cfg: dict[str, Any], horizon: Horizon, own: list[str], le
                 if 0 <= s < T:
                     add(("task", b), k, s)
         for w, start in enumerate(horizon.week_starts):
+            if isinstance(horizon.extra[w], int) and horizon.extra[w] == 0:
+                continue  # a week with no extra trip (known number, as in the horizon check) needs no extra patterns
             end = horizon.week_starts[w + 1] if w + 1 < len(horizon.week_starts) else T
             for s in range(start, end):
                 add(("extra", w), k, s)
@@ -244,7 +246,10 @@ def operations(m: Any, cfg: dict[str, Any], horizon: Horizon, own: list[str], le
         m += (pulp.lpSum(first) == used, f"first_{tag}")
     for w in range(len(horizon.week_starts)):
         mine = [x[i] for i, pat in enumerate(patterns) if pat["kind"] == ("extra", w)]
-        m += (pulp.lpSum(mine) == horizon.extra[w], f"extra_{tag}_{w}")
+        if mine:
+            m += (pulp.lpSum(mine) == horizon.extra[w], f"extra_{tag}_{w}")
+        elif not (isinstance(horizon.extra[w], int) and horizon.extra[w] == 0):
+            raise ValueError(f"week {w} of {tag} needs extra trips but none can leave and return within it")
     for k in leasable:
         mine = [x[i] for i, pat in enumerate(patterns) if pat["truck"] == k]
         m += (pulp.lpSum(mine) <= (len(horizon.windows) + 2 * len(horizon.week_starts)) * lease[k], f"lease_{tag}_{k}")
