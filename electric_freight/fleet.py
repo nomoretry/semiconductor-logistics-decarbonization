@@ -685,9 +685,12 @@ def _cargo(m: Any, sc: Scenario, types: list[tuple[str, int]], fixed: dict[str, 
         chosen = fixed["solution"][name]
         for (w, c, n), v in z.items():
             v.lowBound = v.upBound = float(chosen["week_types"][str(w)] == f"{c}|{n}")
-        # Quantities are kept within a tolerance band, not at the solver's exact output: a plan that met a capacity
-        # row within the solver's tolerance can exceed it by a few 1e-7 once every quantity is fixed, and presolve
-        # then declares the fixed plan infeasible (it did in fleet/border_congestion).
+        if fixed.get("cargo_fixing", "quantities") == "week_types":
+            # Week types (and so every extra trip) stay fixed; the quantities, which touch no truck or charger, are
+            # solved again. See fleet.sequential.
+            return {"z": z, "ship": ship, "air": by_air, "cost": pulp.lpSum(cost)}
+        # Quantities are kept within a small band, not at the solver's exact output: a plan that met its capacity
+        # rows within the solver's tolerance can miss them by a few 1e-7 once every quantity is fixed.
         tol = 1e-6
         flows = {(s["order"], s["week"], s["channel"]): s["units"] for s in chosen["shipments"]}
         for key, v in ship.items():
@@ -815,6 +818,14 @@ def sequential(config: dict[str, Any], scenarios: Sequence[Scenario], *, best_ti
         label = "sequential_best"
     else:
         step2 = solve(config, scenarios, mode="joint", fixed_schedule=step1, **options)
+        step2["cargo_fixing"] = "quantities"
+        if step2["status"] == "infeasible":
+            # Fixing all of step 1's continuous quantities at once can leave coupled cargo rows a few 1e-7 to 1e-6
+            # off, beyond the solver's tolerance (fleet/border_congestion). Week types, trips, trucks and the lease
+            # stay fixed; the quantities touch no truck or charger and are solved again.
+            step2 = solve(config, scenarios, mode="joint", fixed_schedule={**step1, "cargo_fixing": "week_types"},
+                          **options)
+            step2["cargo_fixing"] = "week_types"
         label = "sequential"
     return {**step2, "mode": label, "step_1": {k: step1[k] for k in ("status", "stats", "objective_usd")},
             "step_1_result": step1}

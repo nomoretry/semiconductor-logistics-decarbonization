@@ -65,6 +65,8 @@ def compact(config: dict[str, Any], sc: Any, result: dict[str, Any], mode: str) 
     """What a plan decided and what it costs, recomputed by the independent accounting."""
     out: dict[str, Any] = {"status": result["status"], "objective_usd": result.get("objective_usd"),
                            "stats": result["stats"], "step_1": result.get("step_1")}
+    if "cargo_fixing" in result:
+        out["cargo_fixing"] = result["cargo_fixing"]  # plan B's step 2: step-1 quantities, or week types only
     if "solution" not in result:
         return out
     solution = result["solution"][sc.name]

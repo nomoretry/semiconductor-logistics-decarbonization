@@ -169,6 +169,21 @@ class FleetTests(unittest.TestCase):
         other = next(v for k, v in fixed["ship"].items() if k != key)
         self.assertEqual((other.lowBound, other.upBound), (0.0, 1e-6))
 
+    def test_week_type_fixing_keeps_week_types_and_frees_quantities(self):
+        import pulp
+
+        from electric_freight.fleet import _cargo, make_scenario, week_types
+        sc = make_scenario(self.config, "c", 1.0)
+        types = week_types(sc)
+        key = next(iter(_cargo(pulp.LpProblem("free", pulp.LpMinimize), sc, types, None)["ship"]))
+        plan = {"cargo_fixing": "week_types", "solution": {"c": {
+            "week_types": {str(w): f"{c}|0" for w, c in enumerate(sc.conditions, start=1)},
+            "shipments": [{"order": key[0], "week": key[1], "channel": key[2], "units": 2.5}], "air": []}}}
+        fixed = _cargo(pulp.LpProblem("fixed", pulp.LpMinimize), sc, types, plan)
+        self.assertEqual((fixed["ship"][key].lowBound, fixed["ship"][key].upBound), (0, None))
+        for (_, _, n), v in fixed["z"].items():
+            self.assertEqual((v.lowBound, v.upBound), (float(n == 0), float(n == 0)))
+
     def test_a_solver_seed_changes_only_the_search(self):
         from electric_freight.fleet import solve
         seeded = solve(self.config, [self.scenario], mode="diesel", mip_gap=1e-6, time_limit=120, random_seed=3)
