@@ -680,12 +680,18 @@ def _cargo(m: Any, sc: Scenario, types: list[tuple[str, int]], fixed: dict[str, 
         chosen = fixed["solution"][name]
         for (w, c, n), v in z.items():
             v.lowBound = v.upBound = float(chosen["week_types"][str(w)] == f"{c}|{n}")
+        # Quantities are kept within a tolerance band, not at the solver's exact output: a plan that met a capacity
+        # row within the solver's tolerance can exceed it by a few 1e-7 once every quantity is fixed, and presolve
+        # then declares the fixed plan infeasible (it did in fleet/border_congestion).
+        tol = 1e-6
         flows = {(s["order"], s["week"], s["channel"]): s["units"] for s in chosen["shipments"]}
         for key, v in ship.items():
-            v.lowBound = v.upBound = flows.get(key, 0.0)
+            value = flows.get(key, 0.0)
+            v.lowBound, v.upBound = max(0.0, value - tol), value + tol
         flown_units = {a["order"]: a["units"] for a in chosen["air"]}
         for oid, v in by_air.items():
-            v.lowBound = v.upBound = flown_units.get(oid, 0.0)
+            value = flown_units.get(oid, 0.0)
+            v.lowBound, v.upBound = max(0.0, value - tol), value + tol
     return {"z": z, "ship": ship, "air": by_air, "cost": pulp.lpSum(cost)}
 
 

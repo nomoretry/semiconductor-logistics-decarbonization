@@ -151,6 +151,24 @@ class FleetTests(unittest.TestCase):
         values = [h["objective_usd"] for h in out["search"]["history"] if h["objective_usd"] is not None]
         self.assertLessEqual(out["objective_usd"], min(values) + 1e-6)
 
+    def test_a_fixed_cargo_plan_keeps_a_tolerance_band(self):
+        import pulp
+
+        from electric_freight.fleet import _cargo, make_scenario, week_types
+        sc = make_scenario(self.config, "c", 1.0)
+        types = week_types(sc)
+        free = _cargo(pulp.LpProblem("free", pulp.LpMinimize), sc, types, None)
+        key = next(iter(free["ship"]))
+        plan = {"solution": {"c": {
+            "week_types": {str(w): f"{c}|0" for w, c in enumerate(sc.conditions, start=1)},
+            "shipments": [{"order": key[0], "week": key[1], "channel": key[2], "units": 2.5}], "air": []}}}
+        fixed = _cargo(pulp.LpProblem("fixed", pulp.LpMinimize), sc, types, plan)
+        chosen = fixed["ship"][key]
+        self.assertAlmostEqual(chosen.lowBound, 2.5 - 1e-6, places=12)
+        self.assertAlmostEqual(chosen.upBound, 2.5 + 1e-6, places=12)
+        other = next(v for k, v in fixed["ship"].items() if k != key)
+        self.assertEqual((other.lowBound, other.upBound), (0.0, 1e-6))
+
     def test_a_solver_seed_changes_only_the_search(self):
         from electric_freight.fleet import solve
         seeded = solve(self.config, [self.scenario], mode="diesel", mip_gap=1e-6, time_limit=120, random_seed=3)

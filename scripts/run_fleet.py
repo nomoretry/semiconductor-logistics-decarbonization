@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -230,18 +231,39 @@ def saved() -> dict[str, dict[str, Any]]:
 
 
 def append(rows: list[dict[str, Any]]) -> None:
+    """Append rows under a lock file, so two groups running at once never interleave their lines."""
     RESULTS.mkdir(parents=True, exist_ok=True)
-    with (RESULTS / "runs.jsonl").open("a", encoding="utf-8", newline="\n") as handle:
-        for row in rows:
-            handle.write(json.dumps(row) + "\n")
+    text = "".join(json.dumps(row) + "\n" for row in rows)
+    lock = RESULTS / "runs.jsonl.lock"
+    for _ in range(1200):
+        try:
+            handle = os.open(lock, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+            break
+        except FileExistsError:
+            time.sleep(0.5)
+    else:
+        raise RuntimeError(f"{lock} is held; delete it if no run is writing")
+    try:
+        with (RESULTS / "runs.jsonl").open("a", encoding="utf-8", newline="\n") as out:
+            out.write(text)
+    finally:
+        os.close(handle)
+        lock.unlink()
 
 
-def run_group(jobs: list[dict[str, Any]], workers: int, version: str) -> None:
-    """``version`` is the code version when the group started; the workers import the code once, at that time."""
+def run_group(jobs: list[dict[str, Any]], workers: int, version: str, *, only: list[str] | None = None,
+              note: str | None = None) -> None:
+    """``version`` is the code version when the group started; the workers import the code once, at that time.
+    ``only`` runs just these jobs again ("<id>/<plans>", for example deterministic/fleet/border_congestion/BC), even
+    when saved; the new rows carry ``note`` and come after the old ones, which stay in the file (the summary reads
+    the last row of an id)."""
     done = saved()
     # A job is done when its last plan is saved: A for "A", B for "B", C for "C" and for the chain "BC" (C is
     # written last); a search job names its row in "last".
-    todo = [j for j in jobs if j.get("last", f"{j['id']}/{j['plans'][-1]}") not in done]
+    if only:
+        todo = [j for j in jobs if f"{j['id']}/{j['plans']}" in only]
+    else:
+        todo = [j for j in jobs if j.get("last", f"{j['id']}/{j['plans'][-1]}") not in done]
     print(f"{len(todo)} of {len(jobs)} jobs to run, code {version}", flush=True)
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(run_job, job): job for job in todo}
@@ -249,6 +271,8 @@ def run_group(jobs: list[dict[str, Any]], workers: int, version: str) -> None:
             rows = future.result()
             for row in rows:
                 row["code_version"] = version
+                if note:
+                    row["rerun_note"] = note
             append(rows)
             for row in rows:
                 print(json.dumps({k: row.get(k) for k in ("id", "status", "objective_usd")}), flush=True)
@@ -344,19 +368,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("group", choices=["deterministic", "tie_break", "search", "boundaries", "horizon",
                                           "stochastic", "sensitivity", "manifest"])
     parser.add_argument("--workers", type=int, default=6)
+    parser.add_argument("--only", nargs="+", help="run these jobs again (<id>/<plans>), even when saved")
+    parser.add_argument("--note", help="why they run again; stored on the new rows")
     args = parser.parse_args(argv)
     spec = protocol()
     version = code_version()  # once, when the group starts: edits made while it runs do not relabel its rows
-    if args.group == "deterministic":
-        run_group(deterministic_jobs(spec), args.workers, version)
-    elif args.group == "tie_break":
-        run_group(tie_break_jobs(spec), args.workers, version)
-    elif args.group == "search":
-        run_group(search_jobs(spec), args.workers, version)
-    elif args.group == "boundaries":
-        run_group(boundary_jobs(spec), args.workers, version)
-    elif args.group == "sensitivity":
-        run_group(sensitivity_jobs(spec), args.workers, version)
+    groups = {"deterministic": deterministic_jobs, "tie_break": tie_break_jobs, "search": search_jobs,
+              "boundaries": boundary_jobs, "sensitivity": sensitivity_jobs}
+    if args.group in groups:
+        run_group(groups[args.group](spec), args.workers, version, only=args.only, note=args.note)
     elif args.group == "horizon":
         items = horizon_jobs(spec)
         print(f"{len(items)} horizon checks to run, code {version}", flush=True)
