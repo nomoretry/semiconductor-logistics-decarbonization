@@ -490,7 +490,10 @@ def windows_of(cfg: dict[str, Any], instance: str, offset: int = 0) -> list[list
 def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = "joint",
           fixed_first_stage: dict[str, Any] | None = None, fixed_schedule: dict[str, Any] | None = None,
           transport_cap: float | None = None, mip_gap: float = 1e-4, time_limit: float = 600.0,
-          threads: int | None = None, start: dict[str, float] | None = None) -> dict[str, Any]:
+          threads: int | None = None, start: dict[str, float] | None = None,
+          random_seed: int | None = None) -> dict[str, Any]:
+    """``random_seed`` changes only the solver's search order (HiGHS option), so ties among equally good plans may be
+    broken differently; the model is unchanged."""
     if mode not in ("joint", "relaxed", "diesel"):
         raise ValueError("mode must be joint, relaxed or diesel")
     if abs(sum(s.probability for s in scenarios) - 1) > 1e-9:
@@ -521,7 +524,8 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
     m += first_cost + pulp.lpSum(expected)
     build = time.perf_counter() - started
     m.solve(StartedHiGHS(start, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3,
-                         **({"threads": threads} if threads else {})))
+                         **({"threads": threads} if threads else {}),
+                         **({"random_seed": int(random_seed)} if random_seed is not None else {})))
     status = STATUS.get(m.sol_status, "undefined")
     info = getattr(getattr(m, "solverModel", None), "getInfo", lambda: None)()
     stats = {"variables": len(m.variables()), "integers": sum(v.cat == pulp.LpInteger for v in m.variables()),

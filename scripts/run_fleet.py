@@ -1,11 +1,14 @@
-"""Run the model-v2 study: plans A, B, B* and C by instance and scenario, the boundary sweeps, the unbroken-horizon
-check of the representative weeks, and the two-stage stochastic plan.
+"""Run the model-v2 study: plans A, B, B* and C by instance and scenario, plan B under other solver seeds, the boundary
+sweeps, the unbroken-horizon check of the representative weeks, and the two-stage stochastic plan.
 
-    python scripts/run_fleet.py deterministic --workers 4
-    python scripts/run_fleet.py boundaries --workers 4
+    python scripts/run_fleet.py deterministic --workers 3
+    python scripts/run_fleet.py tie_break --workers 3
+    python scripts/run_fleet.py boundaries --workers 3
     python scripts/run_fleet.py horizon --workers 3
-    python scripts/run_fleet.py stochastic --workers 4
-    python scripts/run_fleet.py sensitivity --workers 4
+    python scripts/run_fleet.py stochastic --workers 3
+    python scripts/run_fleet.py sensitivity --workers 3
+
+A base-instance solve needs about 0.6 GB of memory; three workers fit a machine with 3 GB free.
 
 Results go to benchmark_results/electric_freight_v2/. Every group can be resumed: a job whose id is already saved is
 skipped. No model is called. Everything is solved locally with HiGHS.
@@ -80,12 +83,17 @@ def _delivered(solution: dict[str, Any], sc: Any) -> dict[str, float]:
 
 
 def run_job(job: dict[str, Any]) -> list[dict[str, Any]]:
-    """One setting: plan A, or the chain B -> B* -> C (C starts from the better of B and B*)."""
+    """One setting: plan A, plan C alone, plan B alone with a solver seed, or the chain B -> B* -> C (C starts from
+    the better of B and B*)."""
     spec = protocol()
     config = load_v2(job.get("config_overrides"))
     sc = scenario_for(config, job["scenario"], job["instance"])
     options = dict(time_limit=spec["solver"]["time_limit"], mip_gap=spec["solver"]["mip_gap"])
     started = time.perf_counter()
+    if job["plans"] == "B":
+        b = sequential(config, [sc], random_seed=job["seed"], **options)
+        return [{"id": f"{job['id']}/B", **job["meta"], "plan": "B", "seed": job["seed"],
+                 **compact(config, sc, b, "joint"), "seconds": round(time.perf_counter() - started, 1)}]
     if job["plans"] in ("A", "C"):
         mode = "diesel" if job["plans"] == "A" else "joint"
         result = solve(config, [sc], mode=mode, **options)
@@ -115,6 +123,19 @@ def deterministic_jobs(spec: dict[str, Any]) -> list[dict[str, Any]]:
             for plans in ("A", "BC"):
                 jobs.append({"id": f"deterministic/{instance}/{name}", "instance": instance, "scenario": scenario,
                              "plans": plans, "meta": meta})
+    return jobs
+
+
+def tie_break_jobs(spec: dict[str, Any]) -> list[dict[str, Any]]:
+    """Plan B again with other solver seeds: step 1 has many equally cheap schedules and keeps whichever the search
+    meets first, so B's charging cost depends on that choice."""
+    item = spec["tie_break"]
+    jobs = []
+    for instance, name in item["targets"]:
+        for seed in item["seeds"]:
+            meta = {"group": "tie_break", "instance": instance, "scenario": name}
+            jobs.append({"id": f"tie_break/{instance}/{name}/seed{seed}", "instance": instance,
+                         "scenario": spec["scenarios"][name], "plans": "B", "seed": seed, "meta": meta})
     return jobs
 
 
@@ -177,17 +198,19 @@ def append(rows: list[dict[str, Any]]) -> None:
             handle.write(json.dumps(row) + "\n")
 
 
-def run_group(jobs: list[dict[str, Any]], workers: int) -> None:
+def run_group(jobs: list[dict[str, Any]], workers: int, version: str) -> None:
+    """``version`` is the code version when the group started; the workers import the code once, at that time."""
     done = saved()
-    # A job is done when its last plan is saved: A for "A", C for "C" and for the chain "BC" (C is written last).
+    # A job is done when its last plan is saved: A for "A", B for "B", C for "C" and for the chain "BC" (C is
+    # written last).
     todo = [j for j in jobs if f"{j['id']}/{j['plans'][-1]}" not in done]
-    print(f"{len(todo)} of {len(jobs)} jobs to run", flush=True)
+    print(f"{len(todo)} of {len(jobs)} jobs to run, code {version}", flush=True)
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(run_job, job): job for job in todo}
         for future in as_completed(futures):
             rows = future.result()
             for row in rows:
-                row["code_version"] = code_version()
+                row["code_version"] = version
             append(rows)
             for row in rows:
                 print(json.dumps({k: row.get(k) for k in ("id", "status", "objective_usd")}), flush=True)
@@ -236,7 +259,7 @@ def run_horizon(item: tuple[str, dict[str, Any], str, bool]) -> dict[str, Any]:
     return out
 
 
-def run_stochastic(spec: dict[str, Any], workers: int) -> None:
+def run_stochastic(spec: dict[str, Any], workers: int, version: str) -> None:
     from dataclasses import replace
 
     from electric_freight.stochastic import decompose, deterministic_equivalent, scenario_set
@@ -255,6 +278,7 @@ def run_stochastic(spec: dict[str, Any], workers: int) -> None:
     result = decompose(config, scenarios, deterministic=item["deterministic"], workers=workers, options=options,
                        start=start)
     result["seconds"] = round(time.perf_counter() - started, 1)
+    result["code_version"] = version
     equivalent_start = result.pop("start_for_equivalent", None)
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "stochastic.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
@@ -265,6 +289,7 @@ def run_stochastic(spec: dict[str, Any], workers: int) -> None:
                                       mip_gap=spec["solver"]["mip_gap"], start=equivalent_start)
         de["seconds"] = round(time.perf_counter() - started, 1)
         de["started_from"] = "RP candidate" if equivalent_start else None
+        de["code_version"] = version
         (RESULTS / "stochastic_de.json").write_text(json.dumps(de, indent=2) + "\n", encoding="utf-8", newline="\n")
         print(json.dumps({k: de.get(k) for k in ("status", "objective_usd", "stats")}, default=str), flush=True)
 
@@ -278,26 +303,30 @@ def write_manifest() -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("group", choices=["deterministic", "boundaries", "horizon", "stochastic", "sensitivity",
-                                          "manifest"])
+    parser.add_argument("group", choices=["deterministic", "tie_break", "boundaries", "horizon", "stochastic",
+                                          "sensitivity", "manifest"])
     parser.add_argument("--workers", type=int, default=6)
     args = parser.parse_args(argv)
     spec = protocol()
+    version = code_version()  # once, when the group starts: edits made while it runs do not relabel its rows
     if args.group == "deterministic":
-        run_group(deterministic_jobs(spec), args.workers)
+        run_group(deterministic_jobs(spec), args.workers, version)
+    elif args.group == "tie_break":
+        run_group(tie_break_jobs(spec), args.workers, version)
     elif args.group == "boundaries":
-        run_group(boundary_jobs(spec), args.workers)
+        run_group(boundary_jobs(spec), args.workers, version)
     elif args.group == "sensitivity":
-        run_group(sensitivity_jobs(spec), args.workers)
+        run_group(sensitivity_jobs(spec), args.workers, version)
     elif args.group == "horizon":
         items = horizon_jobs(spec)
+        print(f"{len(items)} horizon checks to run, code {version}", flush=True)
         with ProcessPoolExecutor(max_workers=args.workers) as pool:
             for row in pool.map(run_horizon, items):
-                row["code_version"] = code_version()
+                row["code_version"] = version
                 append([row])
                 print(json.dumps({k: row.get(k) for k in ("id", "status", "restriction_usd")}), flush=True)
     elif args.group == "stochastic":
-        run_stochastic(spec, args.workers)
+        run_stochastic(spec, args.workers, version)
     write_manifest()
     return 0
 

@@ -129,6 +129,13 @@ class FleetTests(unittest.TestCase):
         self.assertGreaterEqual(out["EVPI"]["value"], -1e-6)
         self.assertTrue(out["start_for_equivalent"])
 
+    def test_a_solver_seed_changes_only_the_search(self):
+        from electric_freight.fleet import solve
+        seeded = solve(self.config, [self.scenario], mode="diesel", mip_gap=1e-6, time_limit=120, random_seed=3)
+        self.assertEqual(seeded["status"], self.diesel["status"])
+        self.assertAlmostEqual(seeded["objective_usd"], self.diesel["objective_usd"],
+                               delta=1e-5 * self.diesel["objective_usd"])
+
     def test_diesel_runs_every_background_trip(self):
         account = self.diesel["solution"]["small"]
         self.assertEqual(len(account["types"]["normal|0"]["trips"]), 6)

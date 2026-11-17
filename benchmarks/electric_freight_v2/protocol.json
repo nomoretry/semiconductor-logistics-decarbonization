@@ -203,5 +203,29 @@
       }
     },
     "note": "Each case changes only the listed values of the normal season on the base instance. capex_scale multiplies every equipment price: site opening, connector tiers, upgrades, grid connections and substation expansions. Diesel price, grid emission factors without a carbon price, and the electric truck's purchase premium do not change any decision; they are computed from the saved plans, not re-solved."
+  },
+  "tie_break": {
+    "targets": [
+      [
+        "base",
+        "normal"
+      ],
+      [
+        "base",
+        "tight_space"
+      ],
+      [
+        "dense",
+        "normal"
+      ]
+    ],
+    "seeds": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "added": "2026-11-17, after the deterministic group and before running this group. Step 1 of plan B has many schedules of equal cost and keeps whichever the solver's search meets first. In base/normal that choice put three trips of consecutive days on one truck with 6 h at the depot between them, which forced a 150 kW depot charger; B* and C alternate the trucks and need 50 kW. Plan B is solved again with HiGHS random_seed 1 to 5 (search order only; the model is unchanged) to measure how far B's cost depends on that arbitrary choice. The deterministic group's B used the default seed 0."
   }
 }

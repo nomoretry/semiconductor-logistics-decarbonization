@@ -60,7 +60,8 @@ def extra_trips(row: dict[str, Any]) -> str:
         for trip in row["trips"][typ]:
             if trip["kind"].startswith("extra"):
                 day = ("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")[trip["depart"] // 24]
-                out.append(f"{typ}: {trip['truck']} {day} {trip['depart'] % 24:02d}:00, dwell {trip['dwell']} h")
+                out.append(f"{typ.split('|')[0]} week: {trip['truck']} {day} {trip['depart'] % 24:02d}:00, "
+                           f"dwell {trip['dwell']} h")
     return f"weeks {', '.join(weeks)} ({'; '.join(out)})"
 
 
@@ -86,7 +87,8 @@ def deterministic(all_rows: list[dict[str, Any]]) -> list[str]:
             row = plans[plan]
             peak = (row.get("peak_kw") or {}).get("MY_DEPOT")
             account = row.get("accounting") or {}
-            out.append(f"| {instance} | {scenario} | {plan} | {money(cost(row))} | {solver(row)} | {equipment(row)} | "
+            kit = equipment(row) if row.get("first_stage") else "—"
+            out.append(f"| {instance} | {scenario} | {plan} | {money(cost(row))} | {solver(row)} | {kit} | "
                        f"{extra_trips(row) if 'week_types' in row else '—'} | "
                        f"{'—' if peak is None else f'{peak:.1f}'} | {money(cost(row, 'demand_charge'))} | "
                        f"{money(account.get('total_emissions_kg'))} |")
@@ -103,6 +105,88 @@ def deterministic(all_rows: list[dict[str, Any]]) -> list[str]:
             a, c = plans["A"]["accounting"]["total_emissions_kg"], plans["C"]["accounting"]["total_emissions_kg"]
             emissions = f"{100 * (c - a) / a:+.1f}%"
         out.append(f"| {instance} | {scenario} | {' | '.join(diffs)} | {emissions} |")
+    return out
+
+
+def closed_form(all_rows: list[dict[str, Any]]) -> list[str]:
+    """What follows from the saved plans without solving again: none of these values changes a decision."""
+    sys.path.insert(0, str(ROOT))
+    from electric_freight.data import capital_share
+    from electric_freight.fleet import load_v2, trucks_of
+    config = load_v2()
+    weeks = int(config["horizon"]["weeks"])
+    retail = float(config["diesel"]["price_usd_per_litre"])
+    premium = float(config["vehicle_capital"]["electric_premium_usd_per_truck"]) * capital_share(config, weeks)
+    germany = 0.363  # kg CO2e per kWh, Germany 2024 (UBA); a counterfactual factor, not a German case
+    out = ["", "## Closed form from the saved plans A and C (no solving)", "",
+           f"Diesel prices: {retail} USD/L retail (RM 3.35), 0.478 USD/L fleet card (RM 2.15), 1.00 USD/L. "
+           f"Electric truck premium: {config['vehicle_capital']['electric_premium_usd_per_truck']:,} USD per truck, "
+           f"{premium:,.2f} USD per truck over {weeks} weeks (capital recovery), never added to the plans' cost. "
+           "Emission factors applied to the plan's own kWh: the base case, the depot at Germany's 2024 factor "
+           f"({germany}), and zero-carbon electricity.", "",
+           "| instance | scenario | C solver | C − A at 0.478 / 0.744 / 1.00 USD/L | diesel break-even (USD/L) | "
+           "C − A with premium | CO2e A / C (t) | C with depot at 0.363 / zero-carbon (t) | "
+           "carbon break-even, decisions fixed (USD/t) |", "|---|---|---|---|---|---|---|---|---|"]
+    table: dict[tuple[str, str], dict[str, dict[str, Any]]] = {}
+    for row in all_rows:
+        if row.get("group") == "deterministic" and row.get("accounting"):
+            table.setdefault((row["instance"], row["scenario"]), {})[row["plan"]] = row
+    for (instance, scenario), plans in sorted(table.items()):
+        if "A" not in plans or "C" not in plans:
+            continue
+        a, c = plans["A"]["accounting"], plans["C"]["accounting"]
+        litres = a["cost_usd"].get("diesel", 0.0) / retail
+        gaps = [c["total_cost_usd"] - (a["total_cost_usd"] + litres * (price - retail))
+                for price in (0.478, retail, 1.0)]
+        breakeven = retail + gaps[1] / litres if litres else float("nan")
+        own, _ = trucks_of(config, instance)
+        leased = [k for k, v in plans["C"]["first_stage"].get("lease", {}).items() if v]
+        with_premium = gaps[1] + premium * (len(own) + len(leased))
+        air = c["emissions_kg"].get("air_freight", 0.0)
+        kwh = c["energy_kwh"]
+        factor = {j: germany if site["side"] == "MY" else site["grid_kg_co2e_per_kwh"]
+                  for j, site in config["sites"].items()}
+        depot_de = sum(v * factor[j] for j, v in kwh.items()) + air
+        zero = air
+        saved_kg = a["total_emissions_kg"] - c["total_emissions_kg"]
+        carbon = gaps[1] / saved_kg * 1000 if saved_kg > 0 else float("nan")
+        out.append(f"| {instance} | {scenario} | {solver(plans['C'])} | {' / '.join(f'{g:,.0f}' for g in gaps)} | "
+                   f"{breakeven:.3f} | "
+                   f"{with_premium:,.0f} | {a['total_emissions_kg'] / 1000:.1f} / "
+                   f"{c['total_emissions_kg'] / 1000:.1f} | "
+                   f"{depot_de / 1000:.1f} / {zero / 1000:.1f} | {carbon:,.0f} |")
+    return out
+
+
+def tie_break(all_rows: list[dict[str, Any]]) -> list[str]:
+    """Plan B under solver seeds 0 (the deterministic group) to 5, against B* and C of the same setting."""
+    found = [r for r in all_rows if r.get("group") == "tie_break"]
+    if not found:
+        return []
+    reference = {(r["instance"], r["scenario"], r["plan"]): r for r in all_rows if r.get("group") == "deterministic"}
+    out = ["", "## Plan B under other solver seeds", "",
+           "Step 1 keeps whichever of its equally cheap schedules the search meets first; seed 0 is the "
+           "deterministic group's B.", "",
+           "| instance | scenario | seed | step-1 cost | B cost | B − B* | equipment | depot peak kW |",
+           "|---|---|---|---|---|---|---|---|"]
+    settings = sorted({(r["instance"], r["scenario"]) for r in found})
+    for instance, scenario in settings:
+        seeded = sorted((r for r in found if (r["instance"], r["scenario"]) == (instance, scenario)),
+                        key=lambda r: r["seed"])
+        mine = [reference.get((instance, scenario, "B")), *seeded]
+        best = reference.get((instance, scenario, "B*"))
+        best_cost = cost(best) if best else None
+        for row in mine:
+            if row is None:
+                continue
+            seed = row.get("seed", 0)
+            step1 = (row.get("step_1") or {}).get("objective_usd")
+            value = cost(row)
+            diff = None if value is None or best_cost is None else value - best_cost
+            peak = (row.get("peak_kw") or {}).get("MY_DEPOT")
+            out.append(f"| {instance} | {scenario} | {seed} | {money(step1)} | {money(value)} | {money(diff)} | "
+                       f"{equipment(row) if row.get('first_stage') else solver(row)} | "
+                       f"{'—' if peak is None else f'{peak:.1f}'} |")
     return out
 
 
@@ -164,7 +248,8 @@ def main() -> int:
     all_rows = rows()
     lines = ["# Model v2 results", "", "Generated by `scripts/summarize_fleet.py` from the saved results; costs are "
              "the independent accounting's totals over 16 weeks.", ""]
-    lines += deterministic(all_rows) + boundaries(all_rows) + horizon(all_rows) + stochastic()
+    lines += (deterministic(all_rows) + closed_form(all_rows) + tie_break(all_rows) + boundaries(all_rows)
+              + horizon(all_rows) + stochastic())
     text = "\n".join(lines) + "\n"
     RESULTS.mkdir(parents=True, exist_ok=True)
     (RESULTS / "summary.md").write_text(text, encoding="utf-8", newline="\n")
