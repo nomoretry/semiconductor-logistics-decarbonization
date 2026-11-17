@@ -1,0 +1,24 @@
+{
+  "equal_time": 216,
+  "prior_strength": 192,
+  "rules": {
+    "equal_time": "mean online time closest to M1",
+    "prior_strength": "lowest mean one-step joint energy score on the tuning split",
+    "shape": {
+      "failures": 0,
+      "first_period_error": "mean over those states not above the rolling baseline's own seven scenarios",
+      "max_p95_m1_seconds": 2.0,
+      "max_p95_m2_star_seconds": 10.0,
+      "order": "first candidate in the listed order that meets every condition",
+      "state_paths": "the first tuning seed under all four profiles, on the rolling baseline's states",
+      "states_per_path": 3
+    }
+  },
+  "shape": {
+    "branching": [
+      9,
+      3
+    ],
+    "continuation": 1
+  }
+}
