@@ -1,13 +1,38 @@
 {
   "question": "On the Malaysia-Singapore road corridor, when does planning trucks and chargers together (C) change decisions compared with planning transport first and chargers second (B), now that an extra trip occupies one of the carrier's trucks and its charging time? Which first-stage equipment hedges best when border congestion, cargo space, demand, grid headroom and charging windows are uncertain?",
   "model": "electric_freight/fleet.py (model v2), config electric_freight/config_v2.json",
-  "instances": ["base", "dense", "fleet"],
+  "instances": [
+    "base",
+    "dense",
+    "fleet"
+  ],
   "instance_note": "base: 6 background round trips a week, 2 own trucks (model v1's timetable with two-hour windows). dense: 12 a week, 2 own trucks. fleet: 18 a week, 3 own trucks. A third or fourth truck can be leased for the season in every instance.",
   "scenarios": {
-    "normal": {"overrides": {}, "congested_weeks": []},
-    "border_congestion": {"overrides": {}, "congested_weeks": [8, 9, 10]},
-    "tight_space": {"overrides": {"carrier.weekly_consolidation_kg": 200}, "congested_weeks": []},
-    "grid_limited": {"overrides": {"carrier.weekly_consolidation_kg": 200, "substations.SG_SUB_N.headroom_kw": 150}, "congested_weeks": []}
+    "normal": {
+      "overrides": {},
+      "congested_weeks": []
+    },
+    "border_congestion": {
+      "overrides": {},
+      "congested_weeks": [
+        8,
+        9,
+        10
+      ]
+    },
+    "tight_space": {
+      "overrides": {
+        "carrier.weekly_consolidation_kg": 200
+      },
+      "congested_weeks": []
+    },
+    "grid_limited": {
+      "overrides": {
+        "carrier.weekly_consolidation_kg": 200,
+        "substations.SG_SUB_N.headroom_kw": 150
+      },
+      "congested_weeks": []
+    }
   },
   "plans": {
     "A": "Diesel trucks, the same trips and cargo rules, no charging equipment.",
@@ -16,30 +41,167 @@
     "C": "Joint: cargo, trips, trucks, equipment, grid connection and charging together. Started from the better of B and B*, so a time limit can never leave C worse than B."
   },
   "boundaries": {
-    "consolidation_kg": {"instance": "base", "key": "carrier.weekly_consolidation_kg", "values": [225, 220, 215, 210, 205, 175, 150]},
-    "holding_multiplier": {"instance": "base", "key": "cargo.holding_multiplier", "values": [0, 0.1, 0.3, 0.35, 0.5],
-                           "base_overrides": {"carrier.weekly_consolidation_kg": 200}},
-    "sg_headroom_kw": {"instance": "base", "key": "substations.SG_SUB_N.headroom_kw", "values": [250, 213, 212, 107, 106],
-                       "base_overrides": {"carrier.weekly_consolidation_kg": 200}}
+    "consolidation_kg": {
+      "instance": "base",
+      "key": "carrier.weekly_consolidation_kg",
+      "values": [
+        225,
+        220,
+        215,
+        210,
+        205,
+        175,
+        150
+      ]
+    },
+    "holding_multiplier": {
+      "instance": "base",
+      "key": "cargo.holding_multiplier",
+      "values": [
+        0,
+        0.1,
+        0.3,
+        0.35,
+        0.5
+      ],
+      "base_overrides": {
+        "carrier.weekly_consolidation_kg": 200
+      }
+    },
+    "sg_headroom_kw": {
+      "instance": "base",
+      "key": "substations.SG_SUB_N.headroom_kw",
+      "values": [
+        250,
+        213,
+        212,
+        107,
+        106
+      ],
+      "base_overrides": {
+        "carrier.weekly_consolidation_kg": 200
+      }
+    }
   },
   "boundary_note": "Values bracket model v1's thresholds (210-215 kg; holding multiplier 0.30-0.35; 106.4 and 212.8 kW). The 200 kg / multiplier 1 / 300 kW and 150 kW cases are the tight_space and grid_limited scenarios above.",
-  "horizon_check": ["deterministic/base/normal/C", "deterministic/base/tight_space/C", "deterministic/dense/normal/C"],
-  "horizon": {"time_limit": 1800},
+  "horizon_check": [
+    "deterministic/base/normal/C",
+    "deterministic/base/tight_space/C",
+    "deterministic/dense/normal/C"
+  ],
+  "horizon": {
+    "time_limit": 1800,
+    "variants": "each target twice: equipment and lease fixed (operations only), and equipment and lease free (their cost added); both start from the plan's weeks laid end to end"
+  },
   "stochastic": {
     "instance": "base",
     "deterministic": "normal",
     "scenarios": {
-      "normal": {"probability": 0.45},
-      "border_congestion": {"probability": 0.15, "congested_weeks": [8, 9, 10]},
-      "tight_space": {"probability": 0.15, "overrides": {"carrier.weekly_consolidation_kg": 200}},
-      "demand_surge": {"probability": 0.1, "weekly_plan": "demand_surge"},
-      "grid_cut": {"probability": 0.1, "overrides": {"carrier.weekly_consolidation_kg": 200, "substations.SG_SUB_N.headroom_kw": 150}},
-      "sg_window": {"probability": 0.05, "overrides": {"sites.SG_HUB.unavailable_hours_of_day": [8, 9, 10, 11, 12, 13, 14, 15, 16, 17], "sites.SG_HUB.energy_usd_per_kwh": 0.25}}
+      "normal": {
+        "probability": 0.45
+      },
+      "border_congestion": {
+        "probability": 0.15,
+        "congested_weeks": [
+          8,
+          9,
+          10
+        ]
+      },
+      "tight_space": {
+        "probability": 0.15,
+        "overrides": {
+          "carrier.weekly_consolidation_kg": 200
+        }
+      },
+      "demand_surge": {
+        "probability": 0.1,
+        "weekly_plan": "demand_surge"
+      },
+      "grid_cut": {
+        "probability": 0.1,
+        "overrides": {
+          "carrier.weekly_consolidation_kg": 200,
+          "substations.SG_SUB_N.headroom_kw": 150
+        }
+      },
+      "sg_window": {
+        "probability": 0.05,
+        "overrides": {
+          "sites.SG_HUB.unavailable_hours_of_day": [
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "sites.SG_HUB.energy_usd_per_kwh": 0.25
+        }
+      }
     },
     "probability_note": "Assumed. demand_surge takes the orders of network_planning's demand_surge weekly plan (chip demand +30% in weeks 8-16, which that plan partly moves to air). grid_cut: another customer takes half of the northern substation's headroom in a season when space is also tight. sg_window: the hub cannot charge in daytime port hours and its price rises 25%.",
-    "deterministic_equivalent": {"time_limit": 3600},
+    "deterministic_equivalent": {
+      "time_limit": 3600
+    },
     "revelation": "The whole scenario is known once the season starts; equipment and the lease are decided before. Operations inside the season do not learn week by week."
   },
-  "solver": {"mip_gap": 0.001, "time_limit": 900},
-  "decided_before_running": "Fixed after solving only the base instance's normal week (A, B, B*, C) and a first tight_space and grid_limited run that was still running when this file was written. Infeasible, zero-difference and time-limited results are kept with their gaps."
+  "solver": {
+    "mip_gap": 0.001,
+    "time_limit": 900
+  },
+  "decided_before_running": "Fixed after exploratory runs of the base instance (normal, tight_space and grid_limited; plans A, B, B* and C) with the code of 793a127 and 2ece76a. Those runs are not results of this protocol. Before any protocol run they led to these solver changes, none of which removes a feasible or optimal plan: (1) on each side of the corridor where every feasible plan must charge, an open site with at least one connector; (2) the week without an extra trip of every crossing condition is always scheduled, billed only for the weeks that take it; (3) each weekly bill's big-M term reaches only down to the lowest lower bound among the week's types; (4) the weekly bounds include the carbon price (a correction: without it a positive carbon price made them invalid); (5) starting solutions for the horizon check and the two-stage solves. Infeasible, zero-difference and time-limited results are kept with their gaps.",
+  "sensitivity": {
+    "instance": "base",
+    "scenario": "normal",
+    "plans": [
+      "A",
+      "C"
+    ],
+    "cases": {
+      "carbon_100": {
+        "carbon.price_usd_per_t": 100
+      },
+      "carbon_300": {
+        "carbon.price_usd_per_t": 300
+      },
+      "carbon_400": {
+        "carbon.price_usd_per_t": 400
+      },
+      "carbon_600": {
+        "carbon.price_usd_per_t": 600
+      },
+      "my_price_0.10": {
+        "sites.MY_DEPOT.energy_usd_per_kwh": 0.1
+      },
+      "my_price_0.15": {
+        "sites.MY_DEPOT.energy_usd_per_kwh": 0.15
+      },
+      "sg_price_0.15": {
+        "sites.SG_HUB.energy_usd_per_kwh": 0.15,
+        "sites.SG_YARD.energy_usd_per_kwh": 0.15
+      },
+      "sg_price_0.30": {
+        "sites.SG_HUB.energy_usd_per_kwh": 0.3,
+        "sites.SG_YARD.energy_usd_per_kwh": 0.3
+      },
+      "capex_0.5": {
+        "capex_scale": 0.5
+      },
+      "capex_1.5": {
+        "capex_scale": 1.5
+      },
+      "energy_1.00": {
+        "truck.drive_kwh_per_km": 1.0
+      },
+      "energy_1.25": {
+        "truck.drive_kwh_per_km": 1.25
+      }
+    },
+    "note": "Each case changes only the listed values of the normal season on the base instance. capex_scale multiplies every equipment price: site opening, connector tiers, upgrades, grid connections and substation expansions. Diesel price, grid emission factors without a carbon price, and the electric truck's purchase premium do not change any decision; they are computed from the saved plans, not re-solved."
+  }
 }

@@ -31,7 +31,7 @@ lock-check:
 	diff -u planning_agent/requirements.txt $$tmp/web.txt
 
 # Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
-LINT_PATHS = network_planning planning_agent electric_freight tests/test_electric_freight.py tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py tests/test_llm_safety.py tests/test_planning_eval_v2.py tests/test_scenario_scope.py tests/test_eval_followup.py tests/test_scope_misread.py scripts/run_scope_misread.py scripts/run_scope_value.py scripts/run_scope_seeds.py scripts/run_electric_freight.py scripts/run_electric_freight_refinement.py
+LINT_PATHS = network_planning planning_agent electric_freight tests/test_electric_freight.py tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py tests/test_llm_safety.py tests/test_planning_eval_v2.py tests/test_scenario_scope.py tests/test_eval_followup.py tests/test_scope_misread.py scripts/run_scope_misread.py scripts/run_scope_value.py scripts/run_scope_seeds.py scripts/run_electric_freight.py scripts/run_electric_freight_refinement.py tests/test_fleet.py scripts/run_fleet.py
 
 lint:
 	$(PYTHON) -m ruff check $(LINT_PATHS)
@@ -148,7 +148,7 @@ planning-sync:
 	$(PYTHON) -m pip install --no-deps --no-build-isolation -e .
 
 planning-test:
-	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow tests.test_notice_retrieval tests.test_llm_safety tests.test_planning_eval_v2 tests.test_scenario_scope tests.test_eval_followup tests.test_scope_misread tests.test_electric_freight -v
+	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow tests.test_notice_retrieval tests.test_llm_safety tests.test_planning_eval_v2 tests.test_scenario_scope tests.test_eval_followup tests.test_scope_misread tests.test_electric_freight tests.test_fleet -v
 
 planning-report:
 	$(PYTHON) -m network_planning report --output benchmark_results/network_planning

@@ -450,12 +450,14 @@ def week_bounds(cfg: dict[str, Any], mode: str, condition: str, departures: int,
     must leave with at least E + reserve); the rest at the cheapest price of either side. The upper bound adds a
     full battery per truck at the dearest price."""
     corridor, truck = cfg["corridor"], cfg["truck"]
+    carbon = float(cfg["carbon"]["price_usd_per_t"]) / 1000  # USD per kg CO2e, part of every energy price
     cheapest = min(departure_cost(cfg, t, condition) for t in range(168))
     dearest = max(departure_cost(cfg, t, condition) for t in range(168))
     wait = (corridor["sg_max_dwell_hours"] - corridor["sg_min_dwell_hours"]) * corridor["waiting_usd_per_hour"]
     low_t, high_t = departures * cheapest, departures * (dearest + wait) + 1
     if mode == "diesel":
-        fuel = departures * diesel_litres(cfg, condition) * cfg["diesel"]["price_usd_per_litre"]
+        fuel = departures * diesel_litres(cfg, condition) * (cfg["diesel"]["price_usd_per_litre"]
+                                                             + carbon * cfg["diesel"]["kg_co2e_per_litre"])
         return low_t, high_t, fuel, fuel + 1
     eta = float(truck["charging_efficiency"])
     energy = 2 * leg(cfg, condition)[1]
@@ -465,7 +467,7 @@ def week_bounds(cfg: dict[str, Any], mode: str, condition: str, departures: int,
         return low_t, high_t, price * departures * energy / eta, price * (departures * energy + refill) / eta + 1
     sides: dict[str, list[float]] = {}
     for site in cfg["sites"].values():
-        sides.setdefault(site["side"], []).append(site["energy_usd_per_kwh"])
+        sides.setdefault(site["side"], []).append(site["energy_usd_per_kwh"] + carbon * site["grid_kg_co2e_per_kwh"])
     at_destination = max(0.0, energy + truck["min_energy_kwh"] - truck["battery_usable_kwh"])
     low_e = departures * (at_destination * min(sides["SG"]) + (energy - at_destination) * min(min(v) for v in
                                                                                                sides.values())) / eta
@@ -556,7 +558,16 @@ def _scenario(m: Any, sc: Scenario, own: list[str], leasable: list[str], mode: s
     used = {(c, n): m.add_variable(f"u_{name}_{c}_{n}", cat="Binary") for c, n in types}
     for (w, c, n), z in cargo["z"].items():
         m += (used[c, n] >= z, f"used_{name}_{w}_{c}_{n}")
-    for c, n in types:  # a week type no week takes has no trips, so it cannot claim chargers or peak power
+    for c, n in types:
+        if n == 0 and fixed_schedule is None:
+            # The week without extra trips of every condition is always scheduled, whether or not a week takes it.
+            # This removes no optimum: an extra-trip week's schedule without its extra trip, charging less after it,
+            # is such a week within the same equipment, connectors and peak. It stops the linear relaxation from
+            # running a fraction of the background trips (and so charging less, with a lower peak) by splitting weeks
+            # between types. Its cost is billed only for the weeks that take it.
+            used[c, n].lowBound = 1
+            continue
+        # Otherwise a week type no week takes has no trips, so it cannot claim chargers or peak power.
         m += (used[c, n] <= pulp.lpSum(z for (_, cc, nn), z in cargo["z"].items() if (cc, nn) == (c, n)),
               f"unused_{name}_{c}_{n}")
     ops = {}
@@ -578,10 +589,14 @@ def _scenario(m: Any, sc: Scenario, own: list[str], leasable: list[str], mode: s
         bills_t.append(bt)
         bills_e.append(be)
         mine = [(c, n, z) for (ww, c, n), z in cargo["z"].items() if ww == w]
+        # When another type is chosen the bill is already at least that type's lower bound, so each big-M term
+        # only has to reach down to the lowest lower bound among this week's types.
+        floor_t = min(bounds[c, n][0] for c, n, _ in mine)
+        floor_e = min(bounds[c, n][2] for c, n, _ in mine)
         for c, n, z in mine:
             _, high_t, _, high_e = bounds[c, n]
-            m += (bt >= ops[c, n]["transport_cost"] - high_t * (1 - z), f"bt_{name}_{w}_{c}_{n}")
-            m += (be >= ops[c, n]["energy_cost"] - high_e * (1 - z), f"be_{name}_{w}_{c}_{n}")
+            m += (bt >= ops[c, n]["transport_cost"] - (high_t - floor_t) * (1 - z), f"bt_{name}_{w}_{c}_{n}")
+            m += (be >= ops[c, n]["energy_cost"] - (high_e - floor_e) * (1 - z), f"be_{name}_{w}_{c}_{n}")
         m += (bt >= pulp.lpSum(bounds[c, n][0] * z for c, n, z in mine), f"bt_low_{name}_{w}")
         m += (be >= pulp.lpSum(bounds[c, n][2] * z for c, n, z in mine), f"be_low_{name}_{w}")
     demand = 0
@@ -701,8 +716,9 @@ def _read_scenario(s: dict[str, Any], sc: Scenario) -> dict[str, Any]:
         "boundary_kwh": {k: _value(v) for k, v in s["boundary"].items()},
         "peak_kw": {j: _value(v) for j, v in s["peaks"].items()},
         "types": {}}
+    taken = set(week_type.values())
     for (c, n), op in s["ops"].items():
-        if _value(s["used"][c, n]) < 0.5:
+        if f"{c}|{n}" not in taken:  # scheduled but taken by no week (see _scenario)
             continue
         out["types"][f"{c}|{n}"] = read_operations(op)
     return out
@@ -755,21 +771,27 @@ def copy_config(config: dict[str, Any]) -> dict[str, Any]:
 
 # ----------------------------------------------------------------------------------------------- representative weeks
 
-def horizon_check(config: dict[str, Any], sc: Scenario, plan: dict[str, Any], *, mip_gap: float = 1e-3,
-                  time_limit: float = 900.0) -> dict[str, Any]:
-    """Re-solve the truck operations of a joint plan over one unbroken horizon of all weeks.
+def horizon_check(config: dict[str, Any], sc: Scenario, plan: dict[str, Any], *, free_first_stage: bool = False,
+                  mip_gap: float = 1e-3, time_limit: float = 900.0) -> dict[str, Any]:
+    """Re-solve the truck operations of a plan over one unbroken horizon of all weeks.
 
-    The equipment, the lease and the number of extra trips in every week are those of ``plan``; cargo does not
-    change. Unlike the representative weeks, trucks need not stand at the depot or be full at Monday 00:00, and a trip
-    may run across a week boundary. The difference in operating cost is what the representative-week restriction
-    costs (it cannot be negative beyond the solver tolerance)."""
+    Cargo and the number of extra trips in every week are those of ``plan``; so are the equipment and the lease unless
+    ``free_first_stage``, which also lets the horizon choose them (and adds their cost to the objective). Unlike the
+    representative weeks, trucks need not stand at the depot or be full at Monday 00:00, and a trip may run across a
+    week boundary. The plan's own weeks laid end to end are a feasible solution of this problem: when the plan carries
+    its trips, they are fixed first, the remaining (continuous) variables are solved, and that solution starts the
+    free solve. The cost of the representative-week restriction is the plan's cost minus the horizon's cost; it is at
+    least zero up to the solver's gap."""
     weeks = len(sc.conditions)
     m = pulp.LpProblem("horizon", pulp.LpMinimize)
     own, leasable = trucks_of(config, sc.instance)
-    plant, lease, _ = first_stage(m, config, leasable, plan["first_stage"], with_plant=True)
+    plant, lease, first_cost = first_stage(m, config, leasable, None if free_first_stage else plan["first_stage"],
+                                           with_plant=True)
     assert plant is not None
+    side_cuts(m, config, plant, [sc])
     types = plan["solution"][sc.name]["week_types"]
     extra = [int(types[str(w)].split("|")[1]) for w in range(1, weeks + 1)]
+    tasks = len(windows_of(sc.config, sc.instance))
     windows = [window for w in range(weeks) for window in windows_of(sc.config, sc.instance, offset=168 * w)]
     horizon = Horizon(f"{sc.name}_horizon", 168 * weeks, list(sc.conditions), windows, extra,
                       [168 * w for w in range(weeks)])
@@ -784,16 +806,68 @@ def horizon_check(config: dict[str, Any], sc: Scenario, plan: dict[str, Any], *,
             if jj == j:
                 m += (expr <= peak, f"peak_{j}_{t}")
         demand.append(site["demand_usd_per_kw_month"] * months * peak)
-    m += op["transport_cost"] + op["energy_cost"] + pulp.lpSum(demand)
+    operating = op["transport_cost"] + op["energy_cost"] + pulp.lpSum(demand)
+    m += operating + (first_cost if free_first_stage else 0)
     started = time.perf_counter()
-    m.solve(StartedHiGHS(None, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3))
+    start, start_note = _concatenated_start(m, op, plan, sc, tasks, plant, lease, free_first_stage)
+    m.solve(StartedHiGHS(start, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3))
     info = getattr(getattr(m, "solverModel", None), "getInfo", lambda: None)()
     status = STATUS.get(m.sol_status, "undefined")
     out: dict[str, Any] = {"status": status, "solve_seconds": round(time.perf_counter() - started, 2),
+                           "free_first_stage": free_first_stage, "start": start_note,
                            "integers": sum(v.cat == pulp.LpInteger for v in m.variables()),
                            "mip_gap": getattr(info, "mip_gap", None),
                            "dual_bound": getattr(info, "mip_dual_bound", None)}
     if status in ("optimal", "feasible"):
-        out["operating_cost_usd"] = float(pulp.value(m.objective))
+        out["objective_usd"] = float(pulp.value(m.objective))
+        out["operating_cost_usd"] = float(pulp.value(operating))
+        out["first_stage"] = _read_first_stage(plant, lease)
+        out["first_stage_cost_usd"] = float(pulp.value(first_cost))
         out["operations"] = read_operations(op)
     return out
+
+
+def _concatenated_start(m: Any, op: dict[str, Any], plan: dict[str, Any], sc: Scenario, tasks: int,
+                        plant: dict[str, Any], lease: dict[str, Any],
+                        free_first_stage: bool) -> tuple[dict[str, float] | None, str]:
+    """The plan's representative weeks laid end to end, as a full starting solution of the horizon model."""
+    scenario_plan = plan["solution"][sc.name]
+    if "types" not in scenario_plan:
+        return None, "none: the plan carries no trips"
+    chosen = set()
+    for w in range(1, len(sc.conditions) + 1):
+        for trip in scenario_plan["types"][scenario_plan["week_types"][str(w)]]["trips"]:
+            kind = trip["kind"]
+            label = (f"task{(w - 1) * tasks + int(kind[4:])}" if kind.startswith("task") else f"extra{w - 1}")
+            chosen.add((label, trip["truck"], trip["depart"] + 168 * (w - 1), trip["dwell"]))
+    found = set()
+    saved: list[tuple[Any, Any, Any]] = []
+    for i, pat in enumerate(op["patterns"]):
+        k = (f"{pat['kind'][0]}{pat['kind'][1]}", pat["truck"], pat["s"], pat["h"])
+        var = op["x"][i]
+        saved.append((var, var.lowBound, var.upBound))
+        var.lowBound = var.upBound = float(k in chosen)
+        if k in chosen:
+            found.add(k)
+    if free_first_stage:  # the start keeps the plan's equipment and lease
+        fixed = plan["first_stage"]
+        for k_name, var in lease.items():
+            saved.append((var, var.lowBound, var.upBound))
+            var.lowBound = var.upBound = float(fixed["lease"].get(k_name, 0))
+        for group in ("open", "n", "up", "conn", "exp"):
+            for name, var in plant[group].items():
+                label = name if isinstance(name, str) else "|".join(name)
+                saved.append((var, var.lowBound, var.upBound))
+                var.lowBound = var.upBound = float(fixed["plant"][group].get(label, 0))
+    note = f"{len(found)} of {len(chosen)} trips mapped"
+    values = None
+    if found == chosen:
+        m.solve(pulp.HiGHS(msg=False, timeLimit=600))
+        if STATUS.get(m.sol_status, "undefined") in ("optimal", "feasible"):
+            values = {v.name: float(v.varValue) for v in m.variables() if v.varValue}
+            note += "; plan's weeks feasible, used as the start"
+        else:
+            note += "; plan's weeks not feasible in the horizon model"
+    for var, low, up in saved:
+        var.lowBound, var.upBound = low, up
+    return values, note

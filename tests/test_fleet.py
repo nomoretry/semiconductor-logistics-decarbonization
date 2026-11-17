@@ -52,9 +52,10 @@ class FleetTests(unittest.TestCase):
                            mode="joint")
         low_t, high_t, low_e, high_e = week_bounds(self.config, "joint", "normal", 6, 3)
         weeks = 2
-        self.assertLessEqual(low_t * weeks, account["cost_usd"]["trips"] + account["cost_usd"]["waiting"] + 1e-6)
-        self.assertLessEqual(account["cost_usd"]["trips"] + account["cost_usd"]["waiting"], high_t * weeks)
-        self.assertLessEqual(low_e * weeks, account["cost_usd"]["energy"] + 1e-6)
+        transport = account["cost_usd"]["trips"] + account["cost_usd"]["waiting"]
+        self.assertLessEqual(low_t * weeks, transport * (1 + 1e-6) + 1e-6)  # a plan may sit exactly on a bound
+        self.assertLessEqual(transport, high_t * weeks)
+        self.assertLessEqual(low_e * weeks, account["cost_usd"]["energy"] * (1 + 1e-6) + 1e-6)
         self.assertLessEqual(account["cost_usd"]["energy"], high_e * weeks)
 
     def test_unused_week_types_have_no_trips(self):
@@ -101,6 +102,32 @@ class FleetTests(unittest.TestCase):
         if result["status"] == "optimal":
             trips = sorted(t["depart"] for t in result["solution"]["one_truck"]["types"]["normal|0"]["trips"])
             self.assertTrue(all(b - a >= 2 * 7 + 4 + 2 for a, b in pairwise(trips)))
+
+    def test_the_horizon_check_starts_from_the_representative_weeks(self):
+        from electric_freight.fleet import horizon_check
+        plan = self.joint
+        operating = plan["objective_usd"] - plan["first_stage_cost_usd"]  # no chips, so no cargo cost
+        fixed = horizon_check(self.config, self.scenario, plan, mip_gap=1e-6, time_limit=30)
+        self.assertIn("used as the start", fixed["start"])
+        self.assertLessEqual(fixed["operating_cost_usd"], operating * (1 + 1e-6) + 1e-6)
+        free = horizon_check(self.config, self.scenario, plan, free_first_stage=True, mip_gap=1e-6, time_limit=30)
+        self.assertIn("used as the start", free["start"])
+        self.assertLessEqual(free["objective_usd"], plan["objective_usd"] * (1 + 1e-6) + 1e-6)
+
+    def test_the_decomposition_brackets_the_stochastic_plan(self):
+        from electric_freight.fleet import load_v2, make_scenario
+        from electric_freight.stochastic import decompose
+        config = load_v2({**SMALL, "horizon.weeks": 1})
+        scenarios = [make_scenario(config, "calm", 0.7, with_chips=False),
+                     make_scenario(config, "weak_grid", 0.3, with_chips=False,
+                                   overrides={"substations.SG_SUB_N.headroom_kw": 100})]
+        out = decompose(config, scenarios, deterministic="calm", workers=2,
+                        options={"time_limit": 60, "mip_gap": 1e-6}, log=lambda _: None)
+        self.assertLessEqual(out["WS"]["value"], out["RP"]["expected_usd"] + 1e-6)
+        self.assertLessEqual(out["RP"]["expected_usd"], out["EEV"]["expected_usd"] + 1e-6)
+        self.assertGreaterEqual(out["VSS"]["value"], -1e-6)
+        self.assertGreaterEqual(out["EVPI"]["value"], -1e-6)
+        self.assertTrue(out["start_for_equivalent"])
 
     def test_diesel_runs_every_background_trip(self):
         account = self.diesel["solution"]["small"]

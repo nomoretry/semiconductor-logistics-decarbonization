@@ -12,6 +12,11 @@ Two ways to solve it are kept side by side:
   fixed. The best candidate is a stochastic plan whose expected cost is an upper bound on the true optimum (RP); the
   wait-and-see value is a lower bound on it.
 
+  Order of the solves, so that every free solve starts from a feasible plan: (1) the deterministic scenario with
+  perfect information; (2) its first stage in every other scenario (these make the EEV); (3) every other scenario
+  with perfect information, started from (2); (4) every new candidate in the scenarios it did not come from.
+  Every scenario is solved on its own with probability one; the probabilities weight the results afterwards.
+
 Reported quantities, all with intervals from the MIP gaps:
     WS   expected cost with perfect information;
     RP   expected cost of the best first stage found (two-stage plan);
@@ -23,6 +28,7 @@ from __future__ import annotations
 import json
 from collections.abc import Callable, Sequence
 from concurrent.futures import ProcessPoolExecutor
+from dataclasses import replace
 from typing import Any
 
 from .fleet import Scenario, make_scenario, solve
@@ -51,45 +57,66 @@ def lower(value: float, bound: float | None) -> float:
 
 
 def _solve_job(job: tuple[Any, ...]) -> dict[str, Any]:
-    config, scenario, fixed, options = job
-    result = solve(config, [scenario], mode="joint", fixed_first_stage=fixed, **options)
-    keep = {k: result.get(k) for k in ("status", "objective_usd", "first_stage", "first_stage_cost_usd")}
+    config, scenario, fixed, options, start = job
+    alone = replace(scenario, probability=1.0)  # weighted by its probability afterwards
+    result = solve(config, [alone], mode="joint", fixed_first_stage=fixed, start=start, **options)
+    keep = {k: result.get(k) for k in ("status", "objective_usd", "first_stage", "first_stage_cost_usd", "values")}
     keep["stats"] = result["stats"]
     keep["second_stage_usd"] = (None if result.get("objective_usd") is None
                                 else result["objective_usd"] - result["first_stage_cost_usd"])
-    keep["solution"] = result.get("solution")
     return keep
 
 
 def decompose(config: dict[str, Any], scenarios: Sequence[Scenario], *, deterministic: str = "normal",
-              workers: int = 6, options: dict[str, Any] | None = None,
+              workers: int = 4, options: dict[str, Any] | None = None, start: dict[str, float] | None = None,
               log: Callable[[str], None] = print) -> dict[str, Any]:
+    """Wait-and-see, candidate first stages and their evaluation in every scenario; see the module docstring.
+
+    ``start`` is a starting solution for the deterministic scenario's perfect-information solve (for example the
+    better of plans B and B*). The result carries ``start_for_equivalent``: the best candidate's solutions in every
+    scenario, a feasible start for ``deterministic_equivalent``."""
     options = options or {"time_limit": 900, "mip_gap": 1e-3}
+    names = [s.name for s in scenarios]
+    if deterministic not in names:
+        raise ValueError(f"the deterministic scenario '{deterministic}' is not among the scenarios")
+    by_name = {s.name: s for s in scenarios}
+    others = [s for s in scenarios if s.name != deterministic]
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        wait_and_see = dict(zip([s.name for s in scenarios],
-                                pool.map(_solve_job, [(config, s, None, options) for s in scenarios]), strict=True))
-        for name, r in wait_and_see.items():
+        det = pool.submit(_solve_job, (config, by_name[deterministic], None, options, start)).result()
+        log(f"perfect information {deterministic}: {det['status']} {det.get('objective_usd')} "
+            f"gap {det['stats']['mip_gap']}")
+        if not det.get("first_stage"):
+            raise ValueError(f"the deterministic scenario '{deterministic}' has no plan")
+        det_first = det["first_stage"]
+        evaluated_det = dict(zip([s.name for s in others], pool.map(
+            _solve_job, [(config, s, det_first, options, None) for s in others]), strict=True))
+        for name, r in evaluated_det.items():
+            log(f"deterministic plan in {name}: {r['status']} {r.get('objective_usd')}")
+        wait_and_see = {deterministic: det}
+        wait_and_see.update(zip([s.name for s in others], pool.map(
+            _solve_job, [(config, s, None, options, evaluated_det[s.name].get("values")) for s in others]),
+            strict=True))
+        for name in names:
+            r = wait_and_see[name]
             log(f"perfect information {name}: {r['status']} {r.get('objective_usd')} gap {r['stats']['mip_gap']}")
         candidates: dict[str, dict[str, Any]] = {}
-        for r in wait_and_see.values():
+        origin: dict[str, list[str]] = {}
+        for name in names:
+            r = wait_and_see[name]
             if r.get("first_stage"):
-                candidates.setdefault(key(r["first_stage"]), r["first_stage"])
-        if deterministic not in wait_and_see or not wait_and_see[deterministic].get("first_stage"):
-            raise ValueError(f"the deterministic scenario '{deterministic}' has no plan")
-        deterministic_key = key(wait_and_see[deterministic]["first_stage"])
+                ck = key(r["first_stage"])
+                candidates.setdefault(ck, r["first_stage"])
+                origin.setdefault(ck, []).append(name)
+        deterministic_key = key(det_first)
+        table: dict[str, dict[str, Any]] = {ck: {n: wait_and_see[n] for n in origin[ck]} for ck in candidates}
+        for name, r in evaluated_det.items():
+            table[deterministic_key].setdefault(name, r)
         jobs, labels = [], []
         for ck, first in candidates.items():
             for s in scenarios:
-                origin = [n for n, r in wait_and_see.items() if r.get("first_stage") and key(r["first_stage"]) == ck]
-                if s.name in origin:
-                    continue  # already solved: this scenario's own optimum
-                jobs.append((config, s, first, options))
-                labels.append((ck, s.name))
-        table: dict[str, dict[str, Any]] = {ck: {} for ck in candidates}
-        for ck in candidates:
-            for name, r in wait_and_see.items():
-                if r.get("first_stage") and key(r["first_stage"]) == ck:
-                    table[ck][name] = r
+                if s.name not in table[ck]:
+                    jobs.append((config, s, first, options, None))
+                    labels.append((ck, s.name))
         for (ck, name), r in zip(labels, pool.map(_solve_job, jobs), strict=True):
             table[ck][name] = r
             log(f"candidate {list(candidates).index(ck)} in {name}: {r['status']} {r.get('objective_usd')}")
@@ -97,31 +124,30 @@ def decompose(config: dict[str, Any], scenarios: Sequence[Scenario], *, determin
 
     def expected(ck: str) -> dict[str, Any]:
         rows = table[ck]
-        if any(rows[s.name].get("objective_usd") is None for s in scenarios):
-            return {"status": "infeasible in " + ", ".join(s.name for s in scenarios
-                                                            if rows[s.name].get("objective_usd") is None)}
-        value = sum(probability[n] * rows[n]["objective_usd"] for n in probability)
-        low = sum(probability[n] * lower(rows[n]["objective_usd"], rows[n]["stats"]["dual_bound"])
-                  for n in probability)
+        missing = [n for n in names if rows[n].get("objective_usd") is None]
+        if missing:
+            return {"status": "infeasible or unsolved in " + ", ".join(missing),
+                    "per_scenario": {n: rows[n]["status"] for n in names}}
+        value = sum(probability[n] * rows[n]["objective_usd"] for n in names)
+        low = sum(probability[n] * lower(rows[n]["objective_usd"], rows[n]["stats"]["dual_bound"]) for n in names)
         return {"status": "ok", "expected_usd": value, "interval": [low, value],
-                "per_scenario": {n: rows[n]["objective_usd"] for n in probability},
-                "first_stage_usd": rows[scenarios[0].name]["first_stage_cost_usd"]}
+                "per_scenario": {n: rows[n]["objective_usd"] for n in names},
+                "first_stage_usd": rows[names[0]]["first_stage_cost_usd"]}
 
     evaluated = {ck: expected(ck) for ck in candidates}
     feasible = {ck: e for ck, e in evaluated.items() if e["status"] == "ok"}
     best = min(feasible, key=lambda ck: feasible[ck]["expected_usd"]) if feasible else None
-    ws_value = sum(probability[n] * r["objective_usd"] for n, r in wait_and_see.items())
-    ws_low = sum(probability[n] * lower(r["objective_usd"], r["stats"]["dual_bound"])
-                 for n, r in wait_and_see.items())
+    ws_value = sum(probability[n] * wait_and_see[n]["objective_usd"] for n in names)
+    ws_low = sum(probability[n] * lower(wait_and_see[n]["objective_usd"], wait_and_see[n]["stats"]["dual_bound"])
+                 for n in names)
     out: dict[str, Any] = {
-        "scenarios": {s.name: s.probability for s in scenarios},
+        "scenarios": dict(probability),
         "wait_and_see": {n: {"objective_usd": r.get("objective_usd"), "status": r["status"],
                              "mip_gap": r["stats"]["mip_gap"], "dual_bound": r["stats"]["dual_bound"],
                              "first_stage": r.get("first_stage")} for n, r in wait_and_see.items()},
         "WS": {"value": ws_value, "interval": [ws_low, ws_value]},
-        "candidates": [{"key": ck, "first_stage": candidates[ck], "origin":
-                        [n for n, r in wait_and_see.items() if r.get("first_stage") and key(r["first_stage"]) == ck],
-                        **evaluated[ck]} for ck in candidates],
+        "candidates": [{"key": ck, "first_stage": candidates[ck], "origin": origin[ck], **evaluated[ck]}
+                       for ck in candidates],
         "deterministic_candidate": deterministic_key}
     eev = evaluated[deterministic_key]
     out["EEV"] = eev
@@ -136,6 +162,10 @@ def decompose(config: dict[str, Any], scenarios: Sequence[Scenario], *, determin
                                        eev["expected_usd"] - rp["interval"][0]]}
         else:
             out["VSS"] = {"value": None, "note": f"the deterministic plan's equipment is {eev['status']}"}
+        merged: dict[str, float] = {}
+        for name in names:
+            merged.update(table[best][name].get("values") or {})
+        out["start_for_equivalent"] = merged
     out["table"] = {ck: {n: {"objective_usd": r.get("objective_usd"), "status": r["status"],
                              "mip_gap": r["stats"]["mip_gap"], "dual_bound": r["stats"]["dual_bound"],
                              "solve_seconds": r["stats"]["solve_seconds"]} for n, r in rows.items()}
