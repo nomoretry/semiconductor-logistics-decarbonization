@@ -502,10 +502,17 @@ def verify(output=PILOT, current_configuration=True):
         raise ValueError('tasks_changed')
     by_id = {t['id']: t for t in tasks}; traces = read_lines(out/'traces.jsonl')
     outcomes = json.loads((out/'outcomes.json').read_text(encoding='utf-8')); checked = 0
+    # Traces and outcomes are written in the same order; a trace cut by the budget has no outcome. Matching by
+    # position keeps two identical swaps (same path, seed and swapped action for two comparisons) apart.
+    pending = iter(outcomes)
     for trace in traces:
         rows = [r for r in trace['rows'] if 'failure' not in r and 'interrupted' not in r]
-        outcome = next((x for x in outcomes if x['id'] == trace['id'] and x['method'] == trace['method']
-                        and x.get('sampler_seed') == trace.get('sampler_seed')), None)
+        outcome = None
+        if not any('interrupted' in r for r in trace['rows']):
+            outcome = next(pending)
+            if (outcome['id'], outcome['method'], outcome.get('sampler_seed')) != \
+                    (trace['id'], trace['method'], trace.get('sampler_seed')):
+                raise ValueError(f'trace_outcome_order:{trace["id"]}:{trace["method"]}')
         complete = outcome is not None and outcome['status'] == 'complete'
         check_ledger(by_id[trace['id']], rows, complete)
         for row in rows:

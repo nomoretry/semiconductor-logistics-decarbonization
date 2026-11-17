@@ -1,0 +1,3326 @@
+[
+  {
+    "id": "development-stable-72019",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 65.0,
+        "carbon": 24.5,
+        "freight": 88.0,
+        "holding": 41.7,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 98,
+      "final_backlog": 0,
+      "final_stock": 7,
+      "immediate_fill_rate": 0.8846153846153846,
+      "online_seconds_mean": 0.00027926666734856553,
+      "online_seconds_p95": 0.00048564499811618587,
+      "online_seconds_total": 0.0033512000081827864,
+      "solves": 0,
+      "total_cost": 219.2
+    },
+    "profile": "stable",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 40.0,
+        "carbon": 20.75,
+        "freight": 77.0,
+        "holding": 45.699999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 83,
+      "final_backlog": 0,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.00025708333184108295,
+      "online_seconds_p95": 0.00044310499979474113,
+      "online_seconds_total": 0.003084999982092995,
+      "solves": 0,
+      "total_cost": 183.45
+    },
+    "profile": "volatile",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 12,
+      "costs": {
+        "backlog": 74.0,
+        "carbon": 22.0,
+        "freight": 82.0,
+        "holding": 49.7,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 88,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.7924528301886793,
+      "online_seconds_mean": 0.0002796666667563841,
+      "online_seconds_p95": 0.00044691000039165374,
+      "online_seconds_total": 0.003356000001076609,
+      "solves": 0,
+      "total_cost": 227.7
+    },
+    "profile": "upshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 20.0,
+        "carbon": 16.75,
+        "freight": 63.0,
+        "holding": 53.7,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 67,
+      "final_backlog": 0,
+      "final_stock": 15,
+      "immediate_fill_rate": 0.9411764705882353,
+      "online_seconds_mean": 0.00025680833399140585,
+      "online_seconds_p95": 0.0005040500011091354,
+      "online_seconds_total": 0.0030817000078968704,
+      "solves": 0,
+      "total_cost": 153.45
+    },
+    "profile": "downshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 32.75,
+        "freight": 111.0,
+        "holding": 47.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 131,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.009207533332300954,
+      "online_seconds_p95": 0.015758199996344046,
+      "online_seconds_total": 0.11049039998761145,
+      "solves": 12,
+      "total_cost": 215.35
+    },
+    "profile": "stable",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M1@4",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 14.0,
+        "carbon": 32.0,
+        "freight": 109.0,
+        "holding": 48.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 128,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9615384615384616,
+      "online_seconds_mean": 0.00711931666531503,
+      "online_seconds_p95": 0.011421419999533097,
+      "online_seconds_total": 0.08543179998378037,
+      "solves": 11,
+      "total_cost": 203.2
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 4
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M2*@4",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 32.75,
+        "freight": 111.0,
+        "holding": 47.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 131,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.009274741666862004,
+      "online_seconds_p95": 0.017821475001619545,
+      "online_seconds_total": 0.11129690000234405,
+      "solves": 11,
+      "total_cost": 215.35
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 4
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 31.25,
+        "freight": 107.0,
+        "holding": 44.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 125,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.012067074999019193,
+      "online_seconds_p95": 0.03410247999709099,
+      "online_seconds_total": 0.14480489998823032,
+      "solves": 11,
+      "total_cost": 206.85
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 32.75,
+        "freight": 111.0,
+        "holding": 47.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 131,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.008403991666151947,
+      "online_seconds_p95": 0.015168854998410097,
+      "online_seconds_total": 0.10084789999382338,
+      "solves": 11,
+      "total_cost": 215.35
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 31.25,
+        "freight": 107.0,
+        "holding": 44.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 125,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.008075241668241992,
+      "online_seconds_p95": 0.014250030004041037,
+      "online_seconds_total": 0.09690290001890389,
+      "solves": 11,
+      "total_cost": 206.85
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 31.25,
+        "freight": 107.0,
+        "holding": 48.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 125,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.007365733332335367,
+      "online_seconds_p95": 0.01254761000018334,
+      "online_seconds_total": 0.0883887999880244,
+      "solves": 11,
+      "total_cost": 210.45
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M1@2",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 32.0,
+        "freight": 109.0,
+        "holding": 47.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 128,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.007961041666931123,
+      "online_seconds_p95": 0.01427661499947135,
+      "online_seconds_total": 0.09553250000317348,
+      "solves": 11,
+      "total_cost": 212.2
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 2
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M2*@2",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 30.5,
+        "freight": 105.0,
+        "holding": 47.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 122,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.008381333333697208,
+      "online_seconds_p95": 0.01469190499810793,
+      "online_seconds_total": 0.1005760000043665,
+      "solves": 11,
+      "total_cost": 206.7
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 2
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 30.5,
+        "freight": 105.0,
+        "holding": 45.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 122,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.007402925000254375,
+      "online_seconds_p95": 0.013959605001582531,
+      "online_seconds_total": 0.0888351000030525,
+      "solves": 11,
+      "total_cost": 205.0
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 24.0,
+        "carbon": 31.25,
+        "freight": 107.0,
+        "holding": 48.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 125,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.007290283332622494,
+      "online_seconds_p95": 0.013235705000261076,
+      "online_seconds_total": 0.08748339999146992,
+      "solves": 11,
+      "total_cost": 210.45
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 15.25,
+        "freight": 61.0,
+        "holding": 13.1,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 61,
+      "final_backlog": 0,
+      "final_stock": 0,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 89.35
+    },
+    "profile": "stable",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.010307016666653604,
+      "online_seconds_p95": 0.02109185499975865,
+      "online_seconds_total": 0.12368419999984326,
+      "solves": 12,
+      "total_cost": 212.05
+    },
+    "profile": "volatile",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M1@9",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 30.25,
+        "freight": 104.0,
+        "holding": 58.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 121,
+      "final_backlog": 0,
+      "final_stock": 15,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.009385933332547816,
+      "online_seconds_p95": 0.02038469999679364,
+      "online_seconds_total": 0.1126311999905738,
+      "solves": 11,
+      "total_cost": 215.15
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 9
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M2*@9",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.010081558333088955,
+      "online_seconds_p95": 0.02135746999956609,
+      "online_seconds_total": 0.12097869999706745,
+      "solves": 11,
+      "total_cost": 212.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 9
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 32.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.8888888888888888,
+      "online_seconds_mean": 0.007474033332982799,
+      "online_seconds_p95": 0.0151938799976051,
+      "online_seconds_total": 0.08968839999579359,
+      "solves": 11,
+      "total_cost": 222.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.008250524999311892,
+      "online_seconds_p95": 0.02050132500116888,
+      "online_seconds_total": 0.09900629999174271,
+      "solves": 11,
+      "total_cost": 212.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M1@2",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.010090958333118275,
+      "online_seconds_p95": 0.023275194997040668,
+      "online_seconds_total": 0.1210914999974193,
+      "solves": 11,
+      "total_cost": 212.35
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 2
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M2*@2",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 15.0,
+        "carbon": 29.0,
+        "freight": 100.0,
+        "holding": 54.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 116,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9333333333333333,
+      "online_seconds_mean": 0.010287450000153816,
+      "online_seconds_p95": 0.02331038999909651,
+      "online_seconds_total": 0.12344940000184579,
+      "solves": 11,
+      "total_cost": 198.9
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          6,
+          3
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 2
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 32.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.1,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.8888888888888888,
+      "online_seconds_mean": 0.007315925000511925,
+      "online_seconds_p95": 0.015356149999934125,
+      "online_seconds_total": 0.0877911000061431,
+      "solves": 11,
+      "total_cost": 221.85
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.008253691668869578,
+      "online_seconds_p95": 0.021159665003142435,
+      "online_seconds_total": 0.09904430002643494,
+      "solves": 11,
+      "total_cost": 212.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 32.0,
+        "carbon": 30.25,
+        "freight": 104.0,
+        "holding": 59.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 121,
+      "final_backlog": 0,
+      "final_stock": 15,
+      "immediate_fill_rate": 0.8888888888888888,
+      "online_seconds_mean": 0.008597041665780125,
+      "online_seconds_p95": 0.020401084995319247,
+      "online_seconds_total": 0.1031644999893615,
+      "solves": 11,
+      "total_cost": 225.55
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 22.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 58.300000000000004,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.008597050000389572,
+      "online_seconds_p95": 0.02086992000149621,
+      "online_seconds_total": 0.10316460000467487,
+      "solves": 11,
+      "total_cost": 212.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 13.75,
+        "freight": 53.0,
+        "holding": 6.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 55,
+      "final_backlog": 0,
+      "final_stock": 0,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 73.05
+    },
+    "profile": "volatile",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 25.75,
+        "freight": 91.0,
+        "holding": 55.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 103,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.007549591666247579,
+      "online_seconds_p95": 0.011597165000421227,
+      "online_seconds_total": 0.09059509999497095,
+      "solves": 12,
+      "total_cost": 205.15
+    },
+    "profile": "upshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M1@3",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 26.75,
+        "freight": 94.0,
+        "holding": 54.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 107,
+      "final_backlog": 0,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.008135066666606386,
+      "online_seconds_p95": 0.01477688999766542,
+      "online_seconds_total": 0.09762079999927664,
+      "solves": 11,
+      "total_cost": 208.35
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 3
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M2*@3",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 25.75,
+        "freight": 91.0,
+        "holding": 52.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 103,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.008234949999556799,
+      "online_seconds_p95": 0.0157730500006437,
+      "online_seconds_total": 0.09881939999468159,
+      "solves": 11,
+      "total_cost": 202.25
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          4,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 3
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 54.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.010430375000699618,
+      "online_seconds_p95": 0.016487404999861607,
+      "online_seconds_total": 0.1251645000083954,
+      "solves": 11,
+      "total_cost": 213.75
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 25.75,
+        "freight": 91.0,
+        "holding": 55.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 103,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.007725974999630125,
+      "online_seconds_p95": 0.013417335001213357,
+      "online_seconds_total": 0.0927116999955615,
+      "solves": 11,
+      "total_cost": 205.15
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 7,
+      "costs": {
+        "backlog": 41.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 53.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8867924528301887,
+      "online_seconds_mean": 0.008685050000470559,
+      "online_seconds_p95": 0.017598550001639523,
+      "online_seconds_total": 0.1042206000056467,
+      "solves": 11,
+      "total_cost": 205.55
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 25.75,
+        "freight": 91.0,
+        "holding": 55.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 103,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.007426200001646066,
+      "online_seconds_p95": 0.012476335000974358,
+      "online_seconds_total": 0.08911440001975279,
+      "solves": 11,
+      "total_cost": 205.15
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 46.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 54.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.00784225833316062,
+      "online_seconds_p95": 0.014677695003047119,
+      "online_seconds_total": 0.09410709999792743,
+      "solves": 11,
+      "total_cost": 211.75
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M2*@0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 54.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.009417108334673685,
+      "online_seconds_p95": 0.017713354997977146,
+      "online_seconds_total": 0.11300530001608422,
+      "solves": 11,
+      "total_cost": 213.75
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 46.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 54.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.008484283333018539,
+      "online_seconds_p95": 0.015115734999926644,
+      "online_seconds_total": 0.10181139999622246,
+      "solves": 11,
+      "total_cost": 211.75
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 25.75,
+        "freight": 91.0,
+        "holding": 55.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 103,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.007236566665596911,
+      "online_seconds_p95": 0.01234271000139415,
+      "online_seconds_total": 0.08683879998716293,
+      "solves": 11,
+      "total_cost": 205.15
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 7.0,
+        "carbon": 15.5,
+        "freight": 60.0,
+        "holding": 6.3999999999999995,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 62,
+      "final_backlog": 0,
+      "final_stock": 0,
+      "immediate_fill_rate": 0.9811320754716981,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 88.9
+    },
+    "profile": "upshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 69.0,
+        "holding": 64.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.00946493333382629,
+      "online_seconds_p95": 0.014198815002237094,
+      "online_seconds_total": 0.11357920000591548,
+      "solves": 12,
+      "total_cost": 153.15
+    },
+    "profile": "downshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 17.75,
+        "freight": 65.0,
+        "holding": 57.400000000000006,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 71,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.007683458333000696,
+      "online_seconds_p95": 0.013800280000577913,
+      "online_seconds_total": 0.09220149999600835,
+      "solves": 11,
+      "total_cost": 150.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M2*@0",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 17.75,
+        "freight": 65.0,
+        "holding": 57.400000000000006,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 71,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.00797246666600889,
+      "online_seconds_p95": 0.014160569998057322,
+      "online_seconds_total": 0.09566959999210667,
+      "solves": 11,
+      "total_cost": 150.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 17.75,
+        "freight": 65.0,
+        "holding": 57.400000000000006,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 71,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.00805811666759837,
+      "online_seconds_p95": 0.014964029998373006,
+      "online_seconds_total": 0.09669740001118043,
+      "solves": 11,
+      "total_cost": 150.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 69.0,
+        "holding": 64.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.00795164999908593,
+      "online_seconds_p95": 0.012637374999030726,
+      "online_seconds_total": 0.09541979998903116,
+      "solves": 11,
+      "total_cost": 153.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M1@4",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 69.0,
+        "holding": 61.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.007583741666773373,
+      "online_seconds_p95": 0.013431389998368102,
+      "online_seconds_total": 0.09100490000128048,
+      "solves": 11,
+      "total_cost": 149.45
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M1",
+      "t": 4
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M2*@4",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.5,
+        "freight": 70.0,
+        "holding": 63.0,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 78,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.008224416666659332,
+      "online_seconds_p95": 0.016305730002932246,
+      "online_seconds_total": 0.09869299999991199,
+      "solves": 11,
+      "total_cost": 152.5
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "comparison": "dependence",
+      "source": "M2*",
+      "t": 4
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 17.75,
+        "freight": 65.0,
+        "holding": 57.400000000000006,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 71,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.008230924998618624,
+      "online_seconds_p95": 0.014846984996620448,
+      "online_seconds_total": 0.09877109998342348,
+      "solves": 11,
+      "total_cost": 150.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 69.0,
+        "holding": 64.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.009024999999382999,
+      "online_seconds_p95": 0.014829370000370542,
+      "online_seconds_total": 0.10829999999259599,
+      "solves": 11,
+      "total_cost": 153.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+M1@0",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 17.75,
+        "freight": 65.0,
+        "holding": 57.400000000000006,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 71,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.007832683333617751,
+      "online_seconds_p95": 0.013991419998637863,
+      "online_seconds_total": 0.09399220000341302,
+      "solves": 11,
+      "total_cost": 150.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "M1",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B1+B1*@0",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 69.0,
+        "holding": 64.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.008166233332910148,
+      "online_seconds_p95": 0.013844349996725212,
+      "online_seconds_total": 0.09799479999492178,
+      "solves": 11,
+      "total_cost": 153.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete",
+    "swap": {
+      "action": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "comparison": "anchor",
+      "source": "B1*",
+      "t": 0
+    }
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 9.75,
+        "freight": 38.0,
+        "holding": 3.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 39,
+      "final_backlog": 0,
+      "final_stock": 0,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 51.55
+    },
+    "profile": "downshift",
+    "sampler_seed": null,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 28.0,
+        "carbon": 24.75,
+        "freight": 89.0,
+        "holding": 39.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 99,
+      "final_backlog": 0,
+      "final_stock": 8,
+      "immediate_fill_rate": 0.9230769230769231,
+      "online_seconds_mean": 0.1074878999994932,
+      "online_seconds_p95": 0.169598219999898,
+      "online_seconds_total": 1.2898547999939183,
+      "solves": 11,
+      "total_cost": 181.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 25.25,
+        "freight": 90.0,
+        "holding": 37.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 101,
+      "final_backlog": 0,
+      "final_stock": 7,
+      "immediate_fill_rate": 0.9038461538461539,
+      "online_seconds_mean": 0.34209612500004977,
+      "online_seconds_p95": 0.7090222349968825,
+      "online_seconds_total": 4.105153500000597,
+      "solves": 22,
+      "total_cost": 200.55
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 3,
+      "costs": {
+        "backlog": 21.0,
+        "carbon": 26.5,
+        "freight": 94.0,
+        "holding": 49.0,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 106,
+      "final_backlog": 0,
+      "final_stock": 9,
+      "immediate_fill_rate": 0.9423076923076923,
+      "online_seconds_mean": 0.69693148333378,
+      "online_seconds_p95": 2.936171510001437,
+      "online_seconds_total": 8.36317780000536,
+      "solves": 22,
+      "total_cost": 190.5
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 7.0,
+        "carbon": 24.75,
+        "freight": 90.0,
+        "holding": 51.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 99,
+      "final_backlog": 0,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9807692307692307,
+      "online_seconds_mean": 0.259966341666465,
+      "online_seconds_p95": 0.5451173599994942,
+      "online_seconds_total": 3.1195960999975796,
+      "solves": 11,
+      "total_cost": 173.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 27.25,
+        "freight": 95.0,
+        "holding": 51.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 109,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.4417133083340256,
+      "online_seconds_p95": 1.9563387099973597,
+      "online_seconds_total": 5.300559700008307,
+      "solves": 11,
+      "total_cost": 198.75
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M2*",
+    "metrics": null,
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "failed_at_6"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 20.0,
+        "carbon": 28.25,
+        "freight": 98.0,
+        "holding": 66.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 113,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.6628944666669364,
+      "online_seconds_p95": 2.53234684500312,
+      "online_seconds_total": 7.954733600003237,
+      "solves": 22,
+      "total_cost": 213.15
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 30.25,
+        "freight": 104.0,
+        "holding": 67.5,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 121,
+      "final_backlog": 0,
+      "final_stock": 15,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.4271798333326539,
+      "online_seconds_p95": 1.1058310050000728,
+      "online_seconds_total": 5.126157999991847,
+      "solves": 11,
+      "total_cost": 226.75
+    },
+    "profile": "volatile",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 58.0,
+        "carbon": 20.25,
+        "freight": 76.0,
+        "holding": 44.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 81,
+      "final_backlog": 0,
+      "final_stock": 9,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.12428581666790706,
+      "online_seconds_p95": 0.2231031200004508,
+      "online_seconds_total": 1.4914298000148847,
+      "solves": 11,
+      "total_cost": 198.55
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 58.0,
+        "carbon": 20.25,
+        "freight": 76.0,
+        "holding": 45.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 81,
+      "final_backlog": 0,
+      "final_stock": 9,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.40818138333452225,
+      "online_seconds_p95": 1.16860675500211,
+      "online_seconds_total": 4.898176600014267,
+      "solves": 22,
+      "total_cost": 199.85
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 33.0,
+        "carbon": 24.25,
+        "freight": 88.0,
+        "holding": 55.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 97,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9056603773584906,
+      "online_seconds_mean": 0.35791755000051734,
+      "online_seconds_p95": 1.0422743699971753,
+      "online_seconds_total": 4.295010600006208,
+      "solves": 22,
+      "total_cost": 201.15
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 22.25,
+        "freight": 83.0,
+        "holding": 56.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 89,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.41127686666671553,
+      "online_seconds_p95": 1.4390836200007457,
+      "online_seconds_total": 4.935322400000587,
+      "solves": 11,
+      "total_cost": 210.05
+    },
+    "profile": "upshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 16.0,
+        "freight": 60.0,
+        "holding": 51.099999999999994,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 64,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.11534742500043649,
+      "online_seconds_p95": 0.21974521500087574,
+      "online_seconds_total": 1.3841691000052379,
+      "solves": 11,
+      "total_cost": 137.1
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 15.0,
+        "carbon": 16.75,
+        "freight": 62.0,
+        "holding": 51.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 67,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9411764705882353,
+      "online_seconds_mean": 0.7052165083338574,
+      "online_seconds_p95": 2.087126790000184,
+      "online_seconds_total": 8.46259810000629,
+      "solves": 22,
+      "total_cost": 145.15
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 19.5,
+        "freight": 71.0,
+        "holding": 65.7,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 78,
+      "final_backlog": 0,
+      "final_stock": 16,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.3482584583337787,
+      "online_seconds_p95": 0.9715507799999612,
+      "online_seconds_total": 4.179101500005345,
+      "solves": 22,
+      "total_cost": 166.2
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 20.25,
+        "freight": 73.0,
+        "holding": 64.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 81,
+      "final_backlog": 0,
+      "final_stock": 16,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.3991341166674829,
+      "online_seconds_p95": 1.3455731649999507,
+      "online_seconds_total": 4.789609400009795,
+      "solves": 11,
+      "total_cost": 157.45
+    },
+    "profile": "downshift",
+    "sampler_seed": 924601,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 68.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 39.4,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 97,
+      "final_backlog": 1,
+      "final_stock": 8,
+      "immediate_fill_rate": 0.8653846153846154,
+      "online_seconds_mean": 0.1629834249997657,
+      "online_seconds_p95": 0.37907242999972335,
+      "online_seconds_total": 1.9558010999971884,
+      "solves": 11,
+      "total_cost": 248.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 68.0,
+        "carbon": 24.25,
+        "freight": 87.0,
+        "holding": 39.4,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 97,
+      "final_backlog": 1,
+      "final_stock": 8,
+      "immediate_fill_rate": 0.8653846153846154,
+      "online_seconds_mean": 0.5849704916660509,
+      "online_seconds_p95": 2.0238973649997183,
+      "online_seconds_total": 7.019645899992611,
+      "solves": 22,
+      "total_cost": 248.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 17.0,
+        "carbon": 25.75,
+        "freight": 92.0,
+        "holding": 51.9,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 103,
+      "final_backlog": 1,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9615384615384616,
+      "online_seconds_mean": 0.5121639916657538,
+      "online_seconds_p95": 1.9287872500004573,
+      "online_seconds_total": 6.145967899989046,
+      "solves": 22,
+      "total_cost": 216.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 17.0,
+        "carbon": 25.25,
+        "freight": 91.0,
+        "holding": 55.8,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 101,
+      "final_backlog": 1,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9615384615384616,
+      "online_seconds_mean": 0.2630164583345807,
+      "online_seconds_p95": 0.5776524599987168,
+      "online_seconds_total": 3.1561975000149687,
+      "solves": 11,
+      "total_cost": 219.05
+    },
+    "profile": "stable",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 26.5,
+        "freight": 92.0,
+        "holding": 51.2,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 106,
+      "final_backlog": 0,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.1770074249998288,
+      "online_seconds_p95": 0.48156284999859017,
+      "online_seconds_total": 2.1240890999979456,
+      "solves": 11,
+      "total_cost": 194.7
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 26.5,
+        "freight": 92.0,
+        "holding": 50.4,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 106,
+      "final_backlog": 0,
+      "final_stock": 11,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 1.0013706166664633,
+      "online_seconds_p95": 4.057273535002601,
+      "online_seconds_total": 12.01644739999756,
+      "solves": 22,
+      "total_cost": 193.9
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 27.0,
+        "freight": 94.0,
+        "holding": 56.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 108,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.3826230000013311,
+      "online_seconds_p95": 1.1229114250025296,
+      "online_seconds_total": 4.591476000015973,
+      "solves": 22,
+      "total_cost": 202.6
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 29.75,
+        "freight": 102.0,
+        "holding": 64.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 119,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.3021140416670581,
+      "online_seconds_p95": 0.8665459100018776,
+      "online_seconds_total": 3.625368500004697,
+      "solves": 11,
+      "total_cost": 221.05
+    },
+    "profile": "volatile",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 58.0,
+        "carbon": 23.0,
+        "freight": 83.0,
+        "holding": 39.199999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 92,
+      "final_backlog": 0,
+      "final_stock": 8,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.10492398333311333,
+      "online_seconds_p95": 0.21063794999754454,
+      "online_seconds_total": 1.25908779999736,
+      "solves": 11,
+      "total_cost": 203.2
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 58.0,
+        "carbon": 23.0,
+        "freight": 83.0,
+        "holding": 39.199999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 92,
+      "final_backlog": 0,
+      "final_stock": 8,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.34875684999860823,
+      "online_seconds_p95": 0.9752616099991422,
+      "online_seconds_total": 4.185082199983299,
+      "solves": 22,
+      "total_cost": 203.2
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 7,
+      "costs": {
+        "backlog": 46.0,
+        "carbon": 22.25,
+        "freight": 83.0,
+        "holding": 54.1,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 89,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.6578637750008056,
+      "online_seconds_p95": 2.433900170001286,
+      "online_seconds_total": 7.894365300009667,
+      "solves": 22,
+      "total_cost": 205.35
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 21.5,
+        "freight": 81.0,
+        "holding": 58.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 86,
+      "final_backlog": 0,
+      "final_stock": 13,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.35013232499962516,
+      "online_seconds_p95": 0.9254474500001371,
+      "online_seconds_total": 4.201587899995502,
+      "solves": 11,
+      "total_cost": 208.8
+    },
+    "profile": "upshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 1,
+      "costs": {
+        "backlog": 10.0,
+        "carbon": 15.25,
+        "freight": 57.0,
+        "holding": 46.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 61,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9705882352941176,
+      "online_seconds_mean": 0.48753784166607755,
+      "online_seconds_p95": 2.2713012700001833,
+      "online_seconds_total": 5.85045409999293,
+      "solves": 11,
+      "total_cost": 128.55
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M2*",
+    "metrics": null,
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "failed_at_3"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 21.0,
+        "freight": 76.0,
+        "holding": 66.0,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 84,
+      "final_backlog": 0,
+      "final_stock": 18,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.5559699416674752,
+      "online_seconds_p95": 1.568465135003134,
+      "online_seconds_total": 6.671639300009701,
+      "solves": 22,
+      "total_cost": 163.0
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.5,
+        "freight": 71.0,
+        "holding": 63.7,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 78,
+      "final_backlog": 0,
+      "final_stock": 16,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.26458739166688855,
+      "online_seconds_p95": 0.5492539399994709,
+      "online_seconds_total": 3.1750487000026624,
+      "solves": 11,
+      "total_cost": 154.2
+    },
+    "profile": "downshift",
+    "sampler_seed": 924611,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 29.0,
+        "carbon": 27.0,
+        "freight": 94.0,
+        "holding": 40.0,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 108,
+      "final_backlog": 1,
+      "final_stock": 7,
+      "immediate_fill_rate": 0.9230769230769231,
+      "online_seconds_mean": 0.10117185833284263,
+      "online_seconds_p95": 0.13522297499912384,
+      "online_seconds_total": 1.2140622999941115,
+      "solves": 11,
+      "total_cost": 220.0
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 39.0,
+        "carbon": 25.5,
+        "freight": 90.0,
+        "holding": 39.4,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 102,
+      "final_backlog": 1,
+      "final_stock": 7,
+      "immediate_fill_rate": 0.9038461538461539,
+      "online_seconds_mean": 0.3388970250004301,
+      "online_seconds_p95": 0.7734623250045842,
+      "online_seconds_total": 4.066764300005161,
+      "solves": 22,
+      "total_cost": 223.9
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 14.0,
+        "carbon": 28.75,
+        "freight": 101.0,
+        "holding": 56.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 115,
+      "final_backlog": 0,
+      "final_stock": 12,
+      "immediate_fill_rate": 0.9615384615384616,
+      "online_seconds_mean": 0.31896247499995906,
+      "online_seconds_p95": 0.8926944600003474,
+      "online_seconds_total": 3.8275496999995084,
+      "solves": 22,
+      "total_cost": 200.65
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-stable-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 17.0,
+        "carbon": 25.5,
+        "freight": 91.0,
+        "holding": 52.3,
+        "terminal_backlog": 30.0
+      },
+      "emissions": 102,
+      "final_backlog": 1,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9615384615384616,
+      "online_seconds_mean": 0.2625704333325605,
+      "online_seconds_p95": 0.6418773599998525,
+      "online_seconds_total": 3.1508451999907265,
+      "solves": 11,
+      "total_cost": 215.8
+    },
+    "profile": "stable",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 27.0,
+        "freight": 93.0,
+        "holding": 52.6,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 108,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.3156219833326759,
+      "online_seconds_p95": 1.360365884997735,
+      "online_seconds_total": 3.7874637999921106,
+      "solves": 11,
+      "total_cost": 197.6
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 30.0,
+        "carbon": 26.25,
+        "freight": 91.0,
+        "holding": 51.699999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 105,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 2.202609675000834,
+      "online_seconds_p95": 11.53164621500218,
+      "online_seconds_total": 26.431316100010008,
+      "solves": 22,
+      "total_cost": 198.95
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 29.5,
+        "freight": 102.0,
+        "holding": 63.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 118,
+      "final_backlog": 0,
+      "final_stock": 16,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.6657854499996271,
+      "online_seconds_p95": 2.7683938599995574,
+      "online_seconds_total": 7.989425399995525,
+      "solves": 22,
+      "total_cost": 220.3
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 5,
+      "costs": {
+        "backlog": 25.0,
+        "carbon": 30.0,
+        "freight": 103.0,
+        "holding": 64.10000000000001,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 120,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9111111111111111,
+      "online_seconds_mean": 0.3517796249998355,
+      "online_seconds_p95": 1.0368210999989962,
+      "online_seconds_total": 4.221355499998026,
+      "solves": 11,
+      "total_cost": 222.10000000000002
+    },
+    "profile": "volatile",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 10,
+      "costs": {
+        "backlog": 63.0,
+        "carbon": 22.25,
+        "freight": 82.0,
+        "holding": 45.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 89,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8301886792452831,
+      "online_seconds_mean": 0.12316751666548953,
+      "online_seconds_p95": 0.17894291499724205,
+      "online_seconds_total": 1.4780101999858744,
+      "solves": 11,
+      "total_cost": 213.05
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 58.0,
+        "carbon": 22.25,
+        "freight": 82.0,
+        "holding": 45.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 89,
+      "final_backlog": 0,
+      "final_stock": 10,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.33667962500051846,
+      "online_seconds_p95": 0.8601080949989408,
+      "online_seconds_total": 4.040155500006222,
+      "solves": 22,
+      "total_cost": 208.05
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 9,
+      "costs": {
+        "backlog": 53.0,
+        "carbon": 24.75,
+        "freight": 90.0,
+        "holding": 56.8,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 99,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.8490566037735849,
+      "online_seconds_mean": 0.2566418500009604,
+      "online_seconds_p95": 0.5514481400005025,
+      "online_seconds_total": 3.079702200011525,
+      "solves": 22,
+      "total_cost": 224.55
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 8,
+      "costs": {
+        "backlog": 48.0,
+        "carbon": 22.5,
+        "freight": 84.0,
+        "holding": 59.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 90,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.8679245283018868,
+      "online_seconds_mean": 0.3283847916670008,
+      "online_seconds_p95": 0.9327502600008295,
+      "online_seconds_total": 3.9406175000040093,
+      "solves": 11,
+      "total_cost": 213.8
+    },
+    "profile": "upshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 15.0,
+        "carbon": 16.5,
+        "freight": 62.0,
+        "holding": 52.699999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 66,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9411764705882353,
+      "online_seconds_mean": 0.17973265000000538,
+      "online_seconds_p95": 0.5033574500059326,
+      "online_seconds_total": 2.1567918000000645,
+      "solves": 11,
+      "total_cost": 146.2
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 15.0,
+        "carbon": 16.5,
+        "freight": 62.0,
+        "holding": 52.699999999999996,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 66,
+      "final_backlog": 0,
+      "final_stock": 14,
+      "immediate_fill_rate": 0.9411764705882353,
+      "online_seconds_mean": 0.698429033331801,
+      "online_seconds_p95": 2.231269205001079,
+      "online_seconds_total": 8.381148399981612,
+      "solves": 22,
+      "total_cost": 146.2
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 20.5,
+        "freight": 75.0,
+        "holding": 67.9,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 82,
+      "final_backlog": 0,
+      "final_stock": 19,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.5786983583329857,
+      "online_seconds_p95": 1.7676203699989854,
+      "online_seconds_total": 6.944380299995828,
+      "solves": 22,
+      "total_cost": 163.4
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  },
+  {
+    "id": "development-downshift-72019",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 19.25,
+        "freight": 70.0,
+        "holding": 62.3,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 77,
+      "final_backlog": 0,
+      "final_stock": 15,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.3749969499998163,
+      "online_seconds_p95": 0.9330921250002575,
+      "online_seconds_total": 4.499963399997796,
+      "solves": 11,
+      "total_cost": 151.55
+    },
+    "profile": "downshift",
+    "sampler_seed": 924617,
+    "status": "complete"
+  }
+]

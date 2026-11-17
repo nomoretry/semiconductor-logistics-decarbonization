@@ -1,0 +1,227 @@
+{
+  "environment": {
+    "backlog": [
+      7.0,
+      10.0,
+      5.0
+    ],
+    "base_mean": [
+      1.4,
+      1.8,
+      1.0
+    ],
+    "base_stock_z_candidates": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "calibration_seeds": [
+      101,
+      211,
+      307
+    ],
+    "capacity": [
+      8,
+      4
+    ],
+    "carbon_budget_per_period": 11,
+    "carbon_price": 0.25,
+    "development_seeds": [
+      1009,
+      1103,
+      1201,
+      1301,
+      1409,
+      1511,
+      1601,
+      1709
+    ],
+    "emissions": [
+      1.0,
+      4.0
+    ],
+    "forecast_alpha": 0.35,
+    "freight": [
+      1.0,
+      3.0
+    ],
+    "holding": [
+      0.4,
+      0.6,
+      0.3
+    ],
+    "horizon": 6,
+    "initial_inventory": [
+      3,
+      4,
+      2
+    ],
+    "lead": [
+      2,
+      1
+    ],
+    "mass": [
+      1,
+      2,
+      1
+    ],
+    "methods": [
+      "base_stock",
+      "marginal_cost",
+      "mpc_mean",
+      "mpc_scenarios"
+    ],
+    "periods": 12,
+    "profiles": [
+      "stable",
+      "volatile",
+      "upshift",
+      "downshift"
+    ],
+    "scenario_seed": 901337,
+    "scenarios": 7,
+    "schema": "rolling-inventory-development-v1",
+    "scope": "synthetic_development_not_final_or_company_calibrated",
+    "terminal_backlog": [
+      21.0,
+      30.0,
+      15.0
+    ]
+  },
+  "rolling_tree_v2": {
+    "budget": {
+      "max_solves": 3500,
+      "max_wall_seconds": 5400,
+      "retries": 0,
+      "start_guard_seconds": 30
+    },
+    "budget_tuning": {
+      "max_solves": 600,
+      "max_wall_seconds": 1800,
+      "retries": 0,
+      "start_guard_seconds": 30
+    },
+    "common_variance_cap": 2.0,
+    "confirmation": "not_generated_not_viewed",
+    "energy_score": {
+      "samples": 500,
+      "seed": 977201
+    },
+    "environment": "rolling_inventory/config.json unchanged; tasks from rolling_inventory.environment.generate",
+    "equal_time_candidates": [
+      27,
+      54,
+      108,
+      216
+    ],
+    "fit_seeds": [
+      71001,
+      71011,
+      71023,
+      71039
+    ],
+    "horizon": 6,
+    "learning_trained": false,
+    "paced_carbon": true,
+    "permutation_seed": 917351,
+    "pilot": {
+      "base_stock_z": 1.0,
+      "profiles": [
+        "stable",
+        "volatile",
+        "upshift",
+        "downshift"
+      ],
+      "seed": 72019,
+      "split": "development"
+    },
+    "prior_strength_candidates": [
+      12,
+      48,
+      192
+    ],
+    "reference_thresholds": {
+      "emissions_relative_increase": 0.02,
+      "fill_rate_absolute_drop": 0.005,
+      "practical_cost_reduction": 0.02
+    },
+    "sampler_seeds": [
+      924601,
+      924611,
+      924617
+    ],
+    "schema": "rolling-tree-development-v2",
+    "scope": "development_diagnostic_not_confirmation_synthetic_not_company_data",
+    "shape_candidates": [
+      {
+        "branching": [
+          9,
+          3
+        ],
+        "continuation": 3
+      },
+      {
+        "branching": [
+          9,
+          3
+        ],
+        "continuation": 1
+      },
+      {
+        "branching": [
+          7,
+          3
+        ],
+        "continuation": 1
+      }
+    ],
+    "shape_rule": {
+      "failures": 0,
+      "first_period_error": "mean over those states not above the rolling baseline's own seven scenarios",
+      "max_p95_m1_seconds": 2.0,
+      "max_p95_m2_star_seconds": 10.0,
+      "order": "first candidate in the listed order that meets every condition",
+      "state_paths": "the first tuning seed under all four profiles, on the rolling baseline's states",
+      "states_per_path": 3
+    },
+    "solver": {
+      "backend": "scipy.optimize.milp (HiGHS)",
+      "mip_rel_gap": 0.0,
+      "time_limit_seconds": 30.0
+    },
+    "tie_tolerance": {
+      "absolute": 1e-07,
+      "relative": 1e-06
+    },
+    "tuning_seeds": [
+      71101,
+      71119,
+      71129,
+      71143
+    ]
+  },
+  "selection": {
+    "equal_time": 216,
+    "prior_strength": 192,
+    "rules": {
+      "equal_time": "mean online time closest to M1",
+      "prior_strength": "lowest mean one-step joint energy score on the tuning split",
+      "shape": {
+        "failures": 0,
+        "first_period_error": "mean over those states not above the rolling baseline's own seven scenarios",
+        "max_p95_m1_seconds": 2.0,
+        "max_p95_m2_star_seconds": 10.0,
+        "order": "first candidate in the listed order that meets every condition",
+        "state_paths": "the first tuning seed under all four profiles, on the rolling baseline's states",
+        "states_per_path": 3
+      }
+    },
+    "shape": {
+      "branching": [
+        9,
+        3
+      ],
+      "continuation": 1
+    }
+  }
+}
