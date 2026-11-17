@@ -540,3 +540,66 @@ def verify(output=PILOT, current_configuration=True):
     if rows != summary['contrasts'] or aggregate(rows) != summary['aggregate']:
         raise ValueError('contrasts_changed')
     return {'files': len(manifest), 'trajectories': checked, 'trees_regenerated': trees, 'solves_run': 0}
+
+
+# --------------------------------------------------------------------------------------------- post-hoc check
+
+CHECK = ROOT/'benchmark_results/rolling_tree_v2_continuation_check'
+
+
+def continuation_check(output=CHECK, pilot_output=PILOT, continuation=3):
+    """Exploratory, added after the second pilot's results were seen.
+
+    With one continuation path per leaf, decisions from the third window period on are specific to a leaf and so
+    know that leaf's future, which can overstate the value of waiting. On every audited baseline state this
+    re-solves M1 with `continuation` paths per depth-2 node (same branching, same seeds) and records its first
+    action, whether it still drops the baseline's fast-route shipments, and the baseline action's excess under
+    it. No trajectory is rerun; nothing is tuned on these numbers.
+    """
+    out = Path(output)
+    if out.exists() and any(out.iterdir()):
+        raise FileExistsError(f'output_not_empty:{out}')
+    out.mkdir(parents=True, exist_ok=True)
+    saved = json.loads((Path(pilot_output)/'config.json').read_text(encoding='utf-8'))
+    cfg, selection = saved['rolling_tree_v2'], saved['selection']
+    fit = fitted_variance(cfg, base_configuration())
+    shape = dict(selection['shape'], continuation=continuation)
+    budget = Budget(dict(cfg['budget'], max_solves=1200, max_wall_seconds=3600))
+    traces = read_lines(Path(pilot_output)/'traces.jsonl')
+    anchor = {(x['id'], r['observation']['t']): r for x in traces if x['method'] == 'B1'
+              for r in x['rows'] if 'observation' in r}
+    audits = read_lines(Path(pilot_output)/'audit.jsonl'); rows = []
+    for a in audits:
+        if a.get('forced_zero') or 'value' not in a.get('m1', {}):
+            continue
+        planner = PlannerV2(cfg, fit['fitted_variance'], budget, shape, selection['prior_strength'], a['sampler_seed'])
+        state = anchor[(a['path'], a['t'])]; obs = state['observation']
+        joint, labels, depth = planner.joint(obs, planner.variance(obs)); model = Model(obs, joint, depth)
+        context = {'path': a['path'], 't': a['t'], 'sampler_seed': a['sampler_seed'], 'method': 'check'}
+        sol, rec, _ = planner.solve(model, dict(context, purpose=f'M1:m={continuation}'))
+        row = {'path': a['path'], 't': a['t'], 'sampler_seed': a['sampler_seed'], 'm1_m1': a['m1']['action'],
+               'b1': state['action'], 'status': rec['status'], 'model': model.summary()}
+        if sol is not None:
+            given, rec2, _ = planner.fixed(model, state['action'], dict(context, purpose='B1 in M1:m'))
+            row.update(m1_m3=sol['action'], value=sol['value'],
+                       b1_excess=None if given is None else given['value']-sol['value'],
+                       same_as_m1=sol['action'] == a['m1']['action'],
+                       fast_units={'m1_m1': sum(r[1] for r in a['m1']['action']),
+                                   'm1_m3': sum(r[1] for r in sol['action']), 'b1': sum(r[1] for r in state['action'])})
+        rows.append(row)
+    done = [r for r in rows if 'm1_m3' in r]
+    first = [r for r in done if r['t'] == 0]
+    summary = {'exploratory': 'added after the second pilot; not a protocol readout', 'continuation': continuation,
+               'states': len(rows), 'solved': len(done), 'usage': budget.usage(),
+               'same_first_action_as_m1': sum(r['same_as_m1'] for r in done),
+               'b1_material_under_m3': sum(1 for r in done if r['b1_excess'] is not None
+                                           and r['b1_excess'] > tolerance(r['value'], cfg['tie_tolerance'])),
+               'mean_fast_units': {k: float(np.mean([r['fast_units'][k] for r in done])) for k in ('m1_m1', 'm1_m3', 'b1')},
+               'period_0': {'states': len(first), 'm3_ships_fast': sum(r['fast_units']['m1_m3'] > 0 for r in first),
+                            'b1_ships_fast': sum(r['fast_units']['b1'] > 0 for r in first),
+                            'm1_ships_fast': sum(r['fast_units']['m1_m1'] > 0 for r in first)}}
+    write_json(out/'summary.json', summary); write_lines(out/'states.jsonl', rows)
+    write_lines(out/'solves.jsonl', budget.log); write_json(out/'runtime.json', runtime())
+    files = sorted(p.name for p in out.iterdir() if p.name != 'manifest.json')
+    write_json(out/'manifest.json', {name: digest_bytes((out/name).read_bytes()) for name in files})
+    return summary
