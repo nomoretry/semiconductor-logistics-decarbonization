@@ -7,7 +7,7 @@ tree node, never on the realized path.
 from itertools import combinations, product
 
 import numpy as np
-from scipy.stats import norm
+from scipy.stats import norm, poisson
 
 from rolling_inventory.environment import seasonal
 
@@ -131,3 +131,122 @@ def node_keys(paths, depth):
     S, h, _ = paths.shape
     return [[tuple(tuple(int(x) for x in paths[k, s]) for s in range(min(u, depth)))
              for u in range(h)] for k in range(S)]
+
+
+# ----------------------------------------------------------------------------------------------- v2
+# Development version 2 (docs/rolling_tree_protocol_v2.md). The v1 functions above stay unchanged so the
+# first pilot's evidence still regenerates. v2 changes only how the planner samples its own scenarios:
+# per-depth branching (a wider first stage) and stratified draws of every random component within a node,
+# so that a tree's first-period sample is no coarser than the open-loop comparators'.
+
+def _strata(rng, count):
+    """One uniform in each of `count` equal strata of (0, 1), in random order."""
+    return np.clip((rng.permutation(count)+rng.random(count))/count, 1e-12, 1-1e-12)
+
+
+def _poisson_at(levels, mean):
+    return np.asarray(poisson.ppf(levels, mean), dtype=int)
+
+
+def tree_labels_v2(branching, continuation):
+    return [(prefix, j) for prefix in product(*(range(b) for b in branching)) for j in range(continuation)]
+
+
+def joint_tree_v2(obs, v, branching, continuation, seed):
+    """Paths (S, h, n) of a tree with branching[u] children at depth u.
+
+    Children of one node share the common factor's equal-probability quantiles (as in v1); each SKU's
+    Poisson component takes one stratified uniform per child, independently across SKUs, so the common
+    factor is the only cross-SKU link. Continuation paths below the last branching depth stratify their
+    factor and Poisson draws across the `continuation` paths of the node, period by period.
+    """
+    check_observation(obs)
+    h = window(obs); depth = min(len(branching), h); branching = tuple(branching[:depth]); t = obs['t']
+    mu = np.asarray(obs['forecast'][:h], dtype=float); n = mu.shape[1]; s = np.sqrt(np.log1p(v))
+    labels = tree_labels_v2(branching, continuation)
+    paths = np.zeros((len(labels), h, n), dtype=int)
+    node_draws = {}
+
+    def children(u, prefix):  # demand of every child of the node `prefix` (length u) in window period u
+        if (u, prefix) not in node_draws:
+            b = branching[u]; points = factor_points(v, b); out = np.zeros((b, n), dtype=int)
+            for i in range(n):
+                levels = _strata(_rng(seed, t, u, 77, i, *prefix), b)
+                out[:, i] = _poisson_at(levels, mu[u, i]*points)
+            node_draws[u, prefix] = out
+        return node_draws[u, prefix]
+
+    continuation_draws = {}
+
+    def continued(prefix):  # (m, h-depth, n) demand of the continuation paths of a depth-D node
+        if prefix not in continuation_draws:
+            out = np.zeros((continuation, h-depth, n), dtype=int)
+            for u in range(depth, h):
+                g = _strata(_rng(seed, t, 1000+u, 78, *prefix), continuation)
+                factor = np.exp(-s*s/2+s*norm.ppf(g)) if v > 0 else np.ones(continuation)
+                for i in range(n):
+                    levels = _strata(_rng(seed, t, 1000+u, 79, i, *prefix), continuation)
+                    out[:, u-depth, i] = _poisson_at(levels, mu[u, i]*factor)
+            continuation_draws[prefix] = out
+        return continuation_draws[prefix]
+
+    for k, (prefix, j) in enumerate(labels):
+        for u in range(depth):
+            paths[k, u] = children(u, prefix[:u])[prefix[u]]
+        if depth < h:
+            paths[k, depth:] = continued(prefix)[j]
+    return paths, labels, depth
+
+
+def automorphism_v2(labels, branching, continuation, depth, seed, t, sku):
+    """Children permuted at every node (and continuation paths at every depth-D node), keyed by the prefix."""
+    images = []
+    for prefix, j in labels:
+        image = tuple(int(_rng(seed, t, sku, u, *prefix[:u]).permutation(branching[u])[prefix[u]])
+                      for u in range(depth))
+        images.append((image, int(_rng(seed, t, sku, depth, *prefix).permutation(continuation)[j])))
+    return images
+
+
+def shuffled_tree_v2(paths, labels, depth, branching, continuation, seed, t):
+    """Same per-SKU marginal tree as `joint_tree_v2`; cross-SKU pairing changed for SKUs after the first."""
+    index = {label: k for k, label in enumerate(labels)}
+    out = paths.copy()
+    for sku in range(1, paths.shape[2]):
+        for k, image in enumerate(automorphism_v2(labels, tuple(branching[:depth]), continuation, depth,
+                                                  seed, t, sku)):
+            out[k, :, sku] = paths[index[image], :, sku]
+    return out
+
+
+def open_loop_paths_v2(obs, v, count, seed):
+    """Equal-time open-loop paths with the same stratified sampling as the v2 tree, period by period."""
+    check_observation(obs)
+    h = window(obs); mu = np.asarray(obs['forecast'][:h], dtype=float); s = np.sqrt(np.log1p(v)); t = obs['t']
+    paths = np.zeros((count, h, mu.shape[1]), dtype=int)
+    for u in range(h):
+        g = _strata(_rng(seed, t, 2000+u, 78), count)
+        factor = np.exp(-s*s/2+s*norm.ppf(g)) if v > 0 else np.ones(count)
+        for i in range(mu.shape[1]):
+            paths[:, u, i] = _poisson_at(_strata(_rng(seed, t, 2000+u, 79, i), count), mu[u, i]*factor)
+    return paths
+
+
+def first_period_error(paths, obs):
+    """Sum over SKUs of |mean first-period scenario demand - forecast| (the pilot's diagnostic)."""
+    return float(np.abs(np.asarray(paths)[:, 0, :].mean(axis=0)-np.asarray(obs['forecast'][0])).sum())
+
+
+def energy_score(samples, observed):
+    """Energy score of a joint sample (N, n) for one observed vector; lower is better."""
+    x = np.asarray(samples, dtype=float); y = np.asarray(observed, dtype=float)
+    first = np.linalg.norm(x-y, axis=1).mean()
+    second = np.linalg.norm(x[:, None, :]-x[None, :, :], axis=2).mean()
+    return float(first-second/2)
+
+
+def one_step_samples(obs, v, count, seed):
+    """Joint one-step predictive sample: Poisson(mu F) with one common lognormal F per draw."""
+    rng = _rng(seed, obs['t'], 3000); mu = np.asarray(obs['forecast'][0], dtype=float); s = np.sqrt(np.log1p(v))
+    factor = np.exp(-s*s/2+s*rng.standard_normal(count)) if v > 0 else np.ones(count)
+    return rng.poisson(mu[None, :]*factor[:, None])

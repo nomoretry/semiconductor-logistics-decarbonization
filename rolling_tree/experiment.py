@@ -95,6 +95,9 @@ class Planner:
         return sc.joint_tree(obs, v, tree['depth'], tree['branching'], tree['continuation'],
                              self.cfg['sampler_seed'])
 
+    def open_loop(self, obs, v, count):
+        return sc.open_loop_paths(obs, v, count, self.cfg['sampler_seed'])
+
     def shuffled(self, obs, joint, labels, depth):
         tree = self.cfg['tree']
         return sc.shuffled_tree(joint, labels, depth, tree['branching'], tree['continuation'],
@@ -138,7 +141,7 @@ class Planner:
         else:
             g = time.perf_counter(); v = self.variance(obs); info['common_variance'] = v
             if method == 'B4':
-                paths = sc.open_loop_paths(obs, v, self.equal_time_scenarios, self.cfg['sampler_seed']); depth = 0
+                paths = self.open_loop(obs, v, self.equal_time_scenarios); depth = 0
             else:
                 paths, labels, depth = self.joint(obs, v)
                 if method == 'M2*':

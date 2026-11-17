@@ -131,9 +131,9 @@ def tolerance(value, rule):
     return rule['relative']*max(1., abs(value))+rule['absolute']
 
 
-def _milp(c, integrality, ub, matrix, lo, hi, time_limit):
+def _milp(c, integrality, ub, matrix, lo, hi, time_limit, lb=None):
     wall, cpu = time.perf_counter(), time.process_time()
-    res = milp(c, integrality=integrality, bounds=Bounds(np.zeros(len(c)), ub),
+    res = milp(c, integrality=integrality, bounds=Bounds(np.zeros(len(c)) if lb is None else lb, ub),
                constraints=LinearConstraint(matrix, lo, hi),
                options={'mip_rel_gap': 0.0, 'time_limit': time_limit})
     record = {'status': int(res.status), 'message': str(res.message),
@@ -191,3 +191,27 @@ def tie_robust(primary, own, own_value, rule, time_limit):
         raise ValueError('tie_first_action_link')
     record.update({'replayed_objective': value, 'own_replayed_cost': own_cost})
     return {'value': value, 'own_cost': own_cost, 'action': action}, record
+
+
+def solve_fixed_first(model, action, time_limit):
+    """The model's best value when its first-stage action is fixed to `action` (another method's choice).
+
+    Returns None when that action is infeasible in this model (for example outside its window)."""
+    action = np.asarray(action, dtype=float).reshape(-1)
+    lb = np.zeros(model.size); ub = model.ub.copy()
+    for index, value in zip(model.first, action):
+        if value > ub[index]+1e-9:
+            return None, {'status': None, 'message': 'action_outside_model_bounds', 'feasible_solution': False,
+                          'wall_seconds': 0., 'cpu_seconds': 0.}
+        lb[index] = ub[index] = value
+    res, record = _milp(model.c, model.integrality, ub, model.matrix, model.lo, model.hi, time_limit, lb=lb)
+    record.update(model.summary())
+    if res.status != 0 or res.x is None:
+        return None, record
+    physical = model.replay(res.x)
+    if abs(physical-res.fun) > 1e-5+1e-8*abs(physical):
+        raise ValueError('MILP_objective_replay')
+    if model.first_action(res.x) != np.asarray(action, dtype=int).reshape(model.shape).tolist():
+        raise ValueError('fixed_first_action')
+    record['replayed_objective'] = physical
+    return {'value': physical, 'action': model.first_action(res.x)}, record
