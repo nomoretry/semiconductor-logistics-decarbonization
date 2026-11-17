@@ -1,8 +1,10 @@
-"""Run the model-v2 study: plans A, B, B* and C by instance and scenario, plan B under other solver seeds, the boundary
-sweeps, the unbroken-horizon check of the representative weeks, and the two-stage stochastic plan.
+"""Run the model-v2 study: plans A, B, B* and C by instance and scenario, plan B under other solver seeds, a
+fix-and-optimize search from saved plans, the boundary sweeps, the unbroken-horizon check of the representative
+weeks, and the two-stage stochastic plan.
 
     python scripts/run_fleet.py deterministic --workers 3
     python scripts/run_fleet.py tie_break --workers 3
+    python scripts/run_fleet.py search --workers 2
     python scripts/run_fleet.py boundaries --workers 3
     python scripts/run_fleet.py horizon --workers 3
     python scripts/run_fleet.py stochastic --workers 3
@@ -90,6 +92,8 @@ def run_job(job: dict[str, Any]) -> list[dict[str, Any]]:
     sc = scenario_for(config, job["scenario"], job["instance"])
     options = dict(time_limit=spec["solver"]["time_limit"], mip_gap=spec["solver"]["mip_gap"])
     started = time.perf_counter()
+    if job["plans"] == "search":
+        return [run_search(job, config, sc, spec)]
     if job["plans"] == "B":
         b = sequential(config, [sc], random_seed=job["seed"], **options)
         return [{"id": f"{job['id']}/B", **job["meta"], "plan": "B", "seed": job["seed"],
@@ -123,6 +127,40 @@ def deterministic_jobs(spec: dict[str, Any]) -> list[dict[str, Any]]:
             for plans in ("A", "BC"):
                 jobs.append({"id": f"deterministic/{instance}/{name}", "instance": instance, "scenario": scenario,
                              "plans": plans, "meta": meta})
+    return jobs
+
+
+def run_search(job: dict[str, Any], config: dict[str, Any], sc: Any, spec: dict[str, Any]) -> dict[str, Any]:
+    """The fix-and-optimize search from a saved plan; B* keeps the transport cap of its own step 1."""
+    from electric_freight.search import default_parts, improve
+    item, row = spec["search"], job["row"]
+    started = time.perf_counter()
+    cap = None
+    if row["plan"] == "B*":
+        cap = row["step_1"]["objective_usd"] * (1 + 1e-7) + 1e-3  # as in fleet.sequential
+    parts = default_parts(config, row["instance"], window_hours=item["parts"]["window_hours"],
+                          step_hours=item["parts"]["step_hours"])
+    result = improve(config, [sc], {sc.name: row["trips"]}, parts=parts, transport_cap=cap,
+                     sub_time_limit=item["sub_time_limit"], mip_gap=spec["solver"]["mip_gap"], rounds=item["rounds"],
+                     log=lambda _: None)
+    return {"id": job["last"], **job["meta"], "plan": row["plan"], "started_from": job["target"],
+            "full_solve": {"objective_usd": row["objective_usd"], "dual_bound": row["stats"]["dual_bound"]},
+            **compact(config, sc, result, "joint"), "search": result.get("search"),
+            "seconds": round(time.perf_counter() - started, 1)}
+
+
+def search_jobs(spec: dict[str, Any]) -> list[dict[str, Any]]:
+    done = saved()
+    jobs = []
+    for target in spec["search"]["targets"]:
+        row = done.get(target)
+        if row is None or "trips" not in row:
+            print(f"skip {target}: no saved plan", flush=True)
+            continue
+        meta = {"group": "search", "instance": row["instance"], "scenario": row["scenario"]}
+        jobs.append({"id": target, "last": f"search/{row['instance']}/{row['scenario']}/{row['plan']}",
+                     "instance": row["instance"], "scenario": spec["scenarios"][row["scenario"]], "plans": "search",
+                     "target": target, "row": row, "meta": meta})
     return jobs
 
 
@@ -202,8 +240,8 @@ def run_group(jobs: list[dict[str, Any]], workers: int, version: str) -> None:
     """``version`` is the code version when the group started; the workers import the code once, at that time."""
     done = saved()
     # A job is done when its last plan is saved: A for "A", B for "B", C for "C" and for the chain "BC" (C is
-    # written last).
-    todo = [j for j in jobs if f"{j['id']}/{j['plans'][-1]}" not in done]
+    # written last); a search job names its row in "last".
+    todo = [j for j in jobs if j.get("last", f"{j['id']}/{j['plans'][-1]}") not in done]
     print(f"{len(todo)} of {len(jobs)} jobs to run, code {version}", flush=True)
     with ProcessPoolExecutor(max_workers=workers) as pool:
         futures = {pool.submit(run_job, job): job for job in todo}
@@ -303,8 +341,8 @@ def write_manifest() -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("group", choices=["deterministic", "tie_break", "boundaries", "horizon", "stochastic",
-                                          "sensitivity", "manifest"])
+    parser.add_argument("group", choices=["deterministic", "tie_break", "search", "boundaries", "horizon",
+                                          "stochastic", "sensitivity", "manifest"])
     parser.add_argument("--workers", type=int, default=6)
     args = parser.parse_args(argv)
     spec = protocol()
@@ -313,6 +351,8 @@ def main(argv: list[str] | None = None) -> int:
         run_group(deterministic_jobs(spec), args.workers, version)
     elif args.group == "tie_break":
         run_group(tie_break_jobs(spec), args.workers, version)
+    elif args.group == "search":
+        run_group(search_jobs(spec), args.workers, version)
     elif args.group == "boundaries":
         run_group(boundary_jobs(spec), args.workers, version)
     elif args.group == "sensitivity":

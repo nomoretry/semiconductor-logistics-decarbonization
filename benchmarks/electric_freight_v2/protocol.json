@@ -227,5 +227,22 @@
       5
     ],
     "added": "2026-11-17, after the deterministic group and before running this group. Step 1 of plan B has many schedules of equal cost and keeps whichever the solver's search meets first. In base/normal that choice put three trips of consecutive days on one truck with 6 h at the depot between them, which forced a 150 kW depot charger; B* and C alternate the trucks and need 50 kW. Plan B is solved again with HiGHS random_seed 1 to 5 (search order only; the model is unchanged) to measure how far B's cost depends on that arbitrary choice. The deterministic group's B used the default seed 0."
+  },
+  "search": {
+    "targets": [
+      "deterministic/fleet/normal/B*",
+      "deterministic/fleet/normal/C",
+      "deterministic/fleet/tight_space/B*",
+      "deterministic/fleet/tight_space/C",
+      "deterministic/dense/border_congestion/B*",
+      "deterministic/dense/border_congestion/C"
+    ],
+    "parts": {
+      "window_hours": 48,
+      "step_hours": 24
+    },
+    "rounds": 2,
+    "sub_time_limit": 120,
+    "added": "2026-11-17, after the deterministic group and before running this group. At the fleet instance and in dense/border_congestion the full MILP stopped at its starting plan (gaps 7.6-19.2%), so those rows say nothing about whether C beats B*. A fix-and-optimize search (electric_freight/search.py) improves each saved plan: every step fixes the trips outside one truck, or outside the departures of one 48-hour window, and solves the rest again from the current plan (120 s per step, two rounds, a round with no gain ends it). B* keeps its step-1 transport cap. B* and C get the same parts, rounds and limits. The lower bounds remain those of the full solves. fleet/grid_limited is left out: its B, B* and C equal fleet/tight_space's, because the hub uses only its base 150 kW."
   }
 }

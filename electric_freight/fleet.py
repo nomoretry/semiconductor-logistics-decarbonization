@@ -491,9 +491,15 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
           fixed_first_stage: dict[str, Any] | None = None, fixed_schedule: dict[str, Any] | None = None,
           transport_cap: float | None = None, mip_gap: float = 1e-4, time_limit: float = 600.0,
           threads: int | None = None, start: dict[str, float] | None = None,
-          random_seed: int | None = None) -> dict[str, Any]:
+          random_seed: int | None = None, neighbourhood: dict[str, Any] | None = None) -> dict[str, Any]:
     """``random_seed`` changes only the solver's search order (HiGHS option), so ties among equally good plans may be
-    broken differently; the model is unchanged."""
+    broken differently; the model is unchanged.
+
+    ``neighbourhood`` is one fix-and-optimize step: every trip outside its free parts is fixed to a given schedule,
+    while cargo, the first stage and charging stay free. The schedule is ``"trips"`` ({scenario: {week type:
+    [trip, ...]}}, as read back; a week type it does not list stays free) or ``"values"`` (variable values of an
+    earlier solution). ``"free"`` lists parts ``{"trucks": [...], "window": [first, last]}``; a missing key means all
+    trucks or the whole week, and a trip stays free when its truck and departure hour fall in any part."""
     if mode not in ("joint", "relaxed", "diesel"):
         raise ValueError("mode must be joint, relaxed or diesel")
     if abs(sum(s.probability for s in scenarios) - 1) > 1e-9:
@@ -517,6 +523,8 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
         per[sc.name] = _scenario(m, sc, own, leasable, mode, plant, lease, fixed_schedule)
         expected.append(sc.probability * per[sc.name]["cost"])
         transport_terms.append(sc.probability * per[sc.name]["transport"])
+    if neighbourhood is not None:
+        _freeze_trips(per, neighbourhood)
     if transport_cap is not None:
         m += (first_cost if mode != "joint" else pulp.lpSum(
             config["fleet"]["lease"][k]["usd_per_week"] * int(config["horizon"]["weeks"]) * lease[k]
@@ -690,6 +698,38 @@ def _fix_schedule(op: dict[str, Any], schedule: dict[str, Any] | None, used: Any
     for i, pat in enumerate(op["patterns"]):
         key = (f"{pat['kind'][0]}{pat['kind'][1]}", pat["truck"], pat["s"], pat["h"])
         op["x"][i].lowBound = op["x"][i].upBound = float(key in chosen)
+
+
+def _inside(pat: dict[str, Any], part: dict[str, Any]) -> bool:
+    trucks, window = part.get("trucks"), part.get("window")
+    return (trucks is None or pat["truck"] in trucks) and (window is None or window[0] <= pat["s"] < window[1])
+
+
+def _freeze_trips(per: dict[str, Any], hood: dict[str, Any]) -> int:
+    """Fix the trips outside the neighbourhood's free parts (see ``solve``); returns how many were fixed."""
+    values: dict[str, float] = hood.get("values") or {}
+    saved: dict[str, Any] | None = hood.get("trips")
+    parts: list[dict[str, Any]] = hood.get("free") or []
+    fixed = 0
+    for name, s in per.items():
+        for (c, n), op in s["ops"].items():
+            chosen = None
+            if saved is not None:
+                listed = saved.get(name, {}).get(f"{c}|{n}")
+                if listed is None:
+                    continue  # a week type the saved plan does not use stays free
+                chosen = {(t["kind"], t["truck"], int(t["depart"]), int(t["dwell"])) for t in listed}
+            for i, pat in enumerate(op["patterns"]):
+                if any(_inside(pat, part) for part in parts):
+                    continue
+                var = op["x"][i]
+                if chosen is not None:
+                    value = float((f"{pat['kind'][0]}{pat['kind'][1]}", pat["truck"], pat["s"], pat["h"]) in chosen)
+                else:
+                    value = float(round(values.get(var.name, 0.0)))
+                var.lowBound = var.upBound = value
+                fixed += 1
+    return fixed
 
 
 # ----------------------------------------------------------------------------------------------- reading results

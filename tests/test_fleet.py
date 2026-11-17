@@ -129,6 +129,28 @@ class FleetTests(unittest.TestCase):
         self.assertGreaterEqual(out["EVPI"]["value"], -1e-6)
         self.assertTrue(out["start_for_equivalent"])
 
+    def test_fixing_saved_trips_keeps_them_and_their_cost(self):
+        from electric_freight.fleet import solve
+        solution = self.joint["solution"]["small"]
+        trips = {"small": {typ: ops["trips"] for typ, ops in solution["types"].items()}}
+        again = solve(self.config, [self.scenario], mode="joint", neighbourhood={"trips": trips, "free": []},
+                      mip_gap=1e-6, time_limit=60)
+        for typ, ops in again["solution"]["small"]["types"].items():
+            self.assertEqual(ops["trips"], trips["small"][typ])
+        self.assertLessEqual(again["objective_usd"], self.joint["objective_usd"] * (1 + 1e-6) + 1e-6)
+
+    def test_the_search_never_raises_the_cost_of_a_saved_plan(self):
+        from electric_freight.search import default_parts, improve
+        solution = self.joint["solution"]["small"]
+        trips = {"small": {typ: ops["trips"] for typ, ops in solution["types"].items()}}
+        parts = default_parts(self.config, "base")
+        self.assertEqual(len(parts), 3 + 7)  # two own trucks and one leasable, seven 48-hour windows
+        out = improve(self.config, [self.scenario], trips, parts=parts, sub_time_limit=20, mip_gap=1e-6, rounds=1,
+                      log=lambda _: None)
+        self.assertLessEqual(out["objective_usd"], self.joint["objective_usd"] * (1 + 1e-6) + 1e-6)
+        values = [h["objective_usd"] for h in out["search"]["history"] if h["objective_usd"] is not None]
+        self.assertLessEqual(out["objective_usd"], min(values) + 1e-6)
+
     def test_a_solver_seed_changes_only_the_search(self):
         from electric_freight.fleet import solve
         seeded = solve(self.config, [self.scenario], mode="diesel", mip_gap=1e-6, time_limit=120, random_seed=3)
