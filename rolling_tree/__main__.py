@@ -1,17 +1,33 @@
-"""Offline commands for the scenario-tree development pilots (v1: pilot, verify; v2: tune2, pilot2, verify2).
+"""Offline commands for scenario-tree development pilots and M1 first-action stability.
 
-`pilot` runs MILPs within the configured budget and refuses a non-empty output directory.
-`verify` runs no solver.
+The pilot and stability runners refuse a non-empty output directory. Verification runs no solver.
 """
 import argparse
 import json
+import sys
+
+
+def _stability_progress(event, detail):
+    print(json.dumps(dict(event=event, **detail)), file=sys.stderr, flush=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('command', choices=['pilot', 'verify', 'tune2', 'pilot2', 'verify2', 'check2'])
+    parser.add_argument('command', choices=['pilot', 'verify', 'tune2', 'pilot2', 'verify2', 'check2',
+                                            'stability3', 'verify3'])
     parser.add_argument('--output', default=None)
     args = parser.parse_args()
+    if args.command in ('stability3', 'verify3'):
+        from . import stability
+        output = args.output or stability.OUTPUT
+        if args.command == 'verify3':
+            print(json.dumps(stability.verify(output), indent=2))
+            return
+        summary = stability.run(output, progress=_stability_progress)
+        print(json.dumps(summary, indent=2))
+        if summary['stop_reason'] is not None:
+            raise SystemExit(1)
+        return
     if args.command in ('pilot', 'verify'):
         from .experiment import pilot, verify
         call, default = (pilot if args.command == 'pilot' else verify), 'benchmark_results/rolling_tree_pilot'
