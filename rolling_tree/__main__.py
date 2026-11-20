@@ -14,9 +14,20 @@ def _stability_progress(event, detail):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=['pilot', 'verify', 'tune2', 'pilot2', 'verify2', 'check2',
-                                            'stability3', 'verify3'])
+                                            'stability3', 'verify3', 'consensus4', 'verify4'])
     parser.add_argument('--output', default=None)
     args = parser.parse_args()
+    if args.command in ('consensus4', 'verify4'):
+        from . import consensus
+        output = args.output or consensus.OUTPUT
+        if args.command == 'verify4':
+            print(json.dumps(consensus.verify(output), indent=2))
+            return
+        execution = consensus.run(output, progress=_stability_progress)
+        print(json.dumps(execution, indent=2))
+        if execution['stop_reason'] is not None:
+            raise SystemExit(1)
+        return
     if args.command in ('stability3', 'verify3'):
         from . import stability
         output = args.output or stability.OUTPUT
