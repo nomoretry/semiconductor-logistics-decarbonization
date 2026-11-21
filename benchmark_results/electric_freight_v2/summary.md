@@ -219,3 +219,34 @@ Each step fixes the trips outside one truck or one 48-hour window of departures 
 | 1 | sg_window | 53,299.52 | 52,380.80 | 56,029.60 | 53,866.39 | 52,380.80 | 53,866.39 | 52,380.80 |
 
 Deterministic equivalent: feasible, 52,126.63 USD, gap 0.46%, dual bound 51,886.52, 3719.6 s.
+
+## Sensitivity of the base instance in the normal season
+
+USD per 16 weeks. Each change row subtracts the corresponding deterministic/base/normal value.
+
+| case | A | B | B* | C | C − A | B − C | B* − C | C kg CO2e | C equipment | depot peak kW | status and gap (A / B / B* / C) |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| carbon_100 | 52,699.39 | 62,241.80 | 56,838.81 | 56,838.81 | 4,139.41 | 5,402.99 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.06% |
+| Change vs base normal | 6,329.09 | 5,694.16 | 5,818.57 | 5,818.57 | -510.52 | -124.41 | 0.00 | 0.00 | same | -0.21 | — |
+| carbon_300 | 65,357.57 | 73,630.11 | 68,506.13 | 68,506.13 | 3,148.57 | 5,123.98 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.10% |
+| Change vs base normal | 18,987.26 | 17,082.47 | 17,485.90 | 17,485.90 | -1,501.36 | -403.43 | 0.00 | 0.00 | same | -0.21 | — |
+| carbon_400 | 71,686.66 | 79,310.73 | 74,069.77 | 74,069.77 | 2,383.11 | 5,240.96 | 0.00 | 53,890.06 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 21.16 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.10% |
+| Change vs base normal | 25,316.35 | 22,763.09 | 23,049.54 | 23,049.54 | -2,266.82 | -286.45 | 0.00 | -4,446.58 | same | -3.63 | — |
+| carbon_600 | 84,344.83 | 90,088.74 | 84,847.78 | 84,847.78 | 502.95 | 5,240.96 | 0.00 | 53,890.06 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 21.16 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.04% / feasible, gap 2.73% |
+| Change vs base normal | 37,974.53 | 33,541.10 | 33,827.55 | 33,827.55 | -4,146.98 | -286.45 | 0.00 | -4,446.58 | same | -3.63 | — |
+| my_price_0.10 | 46,370.30 | 58,317.31 | 52,913.91 | 52,913.91 | 6,543.61 | 5,403.40 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.07% |
+| Change vs base normal | 0.00 | 1,769.67 | 1,893.68 | 1,893.68 | 1,893.68 | -124.00 | 0.00 | 0.00 | same | -0.21 | — |
+| my_price_0.15 | 46,370.30 | 60,942.94 | 55,745.91 | 55,745.91 | 9,375.61 | 5,197.03 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.07% |
+| Change vs base normal | 0.00 | 4,395.30 | 4,725.68 | 4,725.68 | 4,725.68 | -330.37 | 0.00 | 0.00 | same | -0.21 | — |
+| sg_price_0.15 | 46,370.30 | 54,298.60 | 48,962.48 | 48,962.48 | 2,592.17 | 5,336.13 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.08% |
+| Change vs base normal | 0.00 | -2,249.04 | -2,057.76 | -2,057.76 | -2,057.76 | -191.28 | 0.00 | 0.00 | same | -0.21 | — |
+| sg_price_0.30 | 46,370.30 | 61,045.71 | 55,090.48 | 55,090.48 | 8,720.17 | 5,955.24 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.04% |
+| Change vs base normal | 0.00 | 4,498.07 | 4,070.24 | 4,070.24 | 4,070.24 | 427.83 | 0.00 | 0.00 | same | -0.21 | — |
+| capex_0.5 | 46,370.30 | 51,503.56 | 46,763.53 | 46,763.53 | 393.23 | 4,740.03 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.07% |
+| Change vs base normal | 0.00 | -5,044.07 | -4,256.70 | -4,256.70 | -4,256.70 | -787.37 | 0.00 | 0.00 | same | -0.21 | — |
+| capex_1.5 | 46,370.30 | 61,591.71 | 55,246.75 | 55,246.75 | 8,876.45 | 6,344.96 | 0.00 | 58,336.64 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.06% |
+| Change vs base normal | 0.00 | 5,044.08 | 4,226.52 | 4,226.52 | 4,226.52 | 817.56 | 0.00 | 0.00 | same | -0.21 | — |
+| energy_1.00 | 46,370.30 | 54,258.80 | 48,786.48 | 48,786.48 | 2,416.17 | 5,472.32 | 0.00 | 53,877.12 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.07% |
+| Change vs base normal | 0.00 | -2,288.84 | -2,233.76 | -2,233.76 | -2,233.76 | -55.08 | 0.00 | -4,459.52 | same | -0.21 | — |
+| energy_1.25 | 46,370.30 | 59,466.22 | 53,053.14 | 53,053.14 | 6,682.84 | 6,413.08 | 0.00 | 62,453.12 | MY_DEPOT dc50×1; SG_HUB dc150×1; MY_DEPOT→MY_SUB; SG_HUB→SG_SUB_N | 24.58 | optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.00% / optimal, gap 0.06% |
+| Change vs base normal | 0.00 | 2,918.59 | 2,032.91 | 2,032.91 | 2,032.91 | 885.68 | 0.00 | 4,116.48 | same | -0.21 | — |
