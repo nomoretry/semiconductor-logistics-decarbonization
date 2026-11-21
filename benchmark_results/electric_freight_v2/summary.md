@@ -196,3 +196,20 @@ Each step fixes the trips outside one truck or one 48-hour window of departures 
 
 | plan | equipment | representative (USD) | horizon (USD) | solver | restriction cost (USD) | start |
 |---|---|---|---|---|---|---|
+
+## Two-stage plan
+
+| quantity | value (USD) | interval (USD) |
+|---|---|---|
+| WS | 51,932.19 | 51,784.02 to 51,932.19 |
+| RP | 52,126.63 | 51,886.52 to 52,126.63 |
+| EEV | 52,126.63 | 51,820.57 to 52,126.63 |
+| VSS | 0.00 | 0.00 to 240.12 |
+| EVPI | 194.44 | 0.00 to 342.62 |
+
+| candidate | from scenarios | expected (USD) | normal | border_congestion | tight_space | demand_surge | grid_cut | sg_window |
+|---|---|---|---|---|---|---|---|---|
+| 0 | normal, border_congestion, tight_space, demand_surge, grid_cut | 52,126.63 | 51,020.23 | 54,509.18 | 52,308.63 | 51,005.14 | 52,308.63 | 56,269.57 |
+| 1 | sg_window | 53,299.52 | 52,380.80 | 56,029.60 | 53,866.39 | 52,380.80 | 53,866.39 | 52,380.80 |
+
+Deterministic equivalent: feasible, 52,126.63 USD, gap 0.46%, dual bound 51,886.52, 3719.6 s.
