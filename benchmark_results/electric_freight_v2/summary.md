@@ -196,6 +196,12 @@ Each step fixes the trips outside one truck or one 48-hour window of departures 
 
 | plan | equipment | representative (USD) | horizon (USD) | solver | restriction cost (USD) | start |
 |---|---|---|---|---|---|---|
+| deterministic/base/normal/C | fixed | 42,537.02 | 42,444.12 | feasible, gap 4.40% | 92.90 to 1,962.29 | 96 of 96 trips mapped; plan's weeks feasible, used as the start |
+| deterministic/base/normal/C | free | 51,020.23 | 50,927.33 | feasible, gap 8.47% | 92.90 to 4,406.67 | 96 of 96 trips mapped; plan's weeks feasible, used as the start |
+| deterministic/base/tight_space/C | fixed | 43,452.87 | 43,031.26 | feasible, gap 4.81% | 421.60 to 2,492.49 | 97 of 97 trips mapped; plan's weeks feasible, used as the start |
+| deterministic/base/tight_space/C | free | 51,936.08 | 51,434.91 | feasible, gap 8.57% | 501.17 to 4,910.12 | 97 of 97 trips mapped; plan's weeks feasible, used as the start |
+| deterministic/dense/normal/C | fixed | 88,511.12 | 88,511.12 | feasible, gap 5.33% | -0.00 to 4,716.29 | 192 of 192 trips mapped; plan's weeks feasible, used as the start |
+| deterministic/dense/normal/C | free | 98,599.27 | 98,599.27 | feasible, gap 6.22% | -0.00 to 6,134.75 | 192 of 192 trips mapped; plan's weeks feasible, used as the start |
 
 ## Two-stage plan
 
