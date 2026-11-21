@@ -1,10 +1,11 @@
 {
-  "code_version": "499cd84",
+  "code_version": "62dc6a6",
   "protocol_sha256": "fc5685853054127b40996467e17ee7050b577fc994013364ae70b0ddf5988535",
   "protocol_supplement_1_sha256": "45ab7f90aa5b8e33f3f1aaef5441f5159fd756cf924eb7d381704b6983ec2a3c",
   "paths_relative_to": "..",
   "sha256": {
     "manifest.json": "e45da682148ffdca4595cc89c15917eb084d9b44566d9412dae2cc4cbe7ce7aa",
+    "presolve_check.json": "1c1496e983237046f81dfff98830eba3eff181d35711dcd60dd2fb3d2ffbc049",
     "runs.jsonl": "57dd728b9acf3409ae8bc40c4f6ff0b0092183d804e9706f110710e7f1860ff7",
     "stochastic.json": "d46efe4e0cafc26a8f3f0aa216eef122679fa0052ba46b2f573bcd4f244e5196",
     "stochastic_de.json": "f626c4bb042b1a032f2449738f7771c8fe3c820ad15c452945a9e7e2e57b2d7d",
