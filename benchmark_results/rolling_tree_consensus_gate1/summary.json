@@ -1,0 +1,91 @@
+{
+  "estimated_formal_wall_seconds": 6066.942092540322,
+  "formal": {
+    "active_wall_seconds": 0,
+    "completed_observations": 0,
+    "failures": 0,
+    "observation_seconds": null,
+    "observations": 0,
+    "solves": 0,
+    "status_counts": {}
+  },
+  "formal_wall_seconds": null,
+  "results": {
+    "comparisons": {
+      "across_groups": {
+        "change_rate": null,
+        "changed": 0,
+        "comparable": 0,
+        "expected": 44,
+        "material": 0,
+        "material_comparable": 0,
+        "material_missing": 44,
+        "material_rate": null,
+        "missing": 44
+      },
+      "across_tiers": {
+        "change_rate": null,
+        "changed": 0,
+        "comparable": 0,
+        "expected": 44,
+        "material": 0,
+        "material_comparable": 0,
+        "material_missing": 44,
+        "material_rate": null,
+        "missing": 44
+      }
+    },
+    "conclusion": "unassessed",
+    "gates": {
+      "across_groups": null,
+      "across_tiers": null
+    },
+    "observations": 0,
+    "online_seconds": {
+      "12": {
+        "by_group": {
+          "a": {
+            "count": 0,
+            "seconds": null
+          },
+          "b": {
+            "count": 0,
+            "seconds": null
+          }
+        },
+        "count": 0,
+        "seconds": null
+      },
+      "3": {
+        "by_group": {
+          "a": {
+            "count": 0,
+            "seconds": null
+          },
+          "b": {
+            "count": 0,
+            "seconds": null
+          }
+        },
+        "count": 0,
+        "seconds": null
+      }
+    }
+  },
+  "stop_reason": "estimated_formal_wall_above_budget",
+  "trial": {
+    "active_wall_seconds": 380.3709777000331,
+    "completed_observations": 12,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 199.49755339999683,
+      "mean": 31.69758147500276,
+      "p95": 108.06003602000044
+    },
+    "observations": 12,
+    "solves": 327,
+    "status_counts": {
+      "0": 327
+    }
+  }
+}

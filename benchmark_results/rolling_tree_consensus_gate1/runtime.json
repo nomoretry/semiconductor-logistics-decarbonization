@@ -1,0 +1,16 @@
+{
+  "cpu": "Intel(R) Core(TM) i7-10870H CPU @ 2.20GHz",
+  "execution": {
+    "estimated_formal_wall_seconds": 6066.942092540322,
+    "formal_wall_seconds": null,
+    "stop_reason": "estimated_formal_wall_above_budget"
+  },
+  "highspy_package": "unknown",
+  "logical_cpus": 16,
+  "numpy": "2.3.5",
+  "parallel": "one sequential process; scipy.optimize.milp (bundled HiGHS) with default threads",
+  "platform": "Windows-10-10.0.19045-SP0",
+  "python": "3.12.10",
+  "scipy": "1.17.0",
+  "timers": "wall=time.perf_counter, cpu=time.process_time (all threads of this process)"
+}
