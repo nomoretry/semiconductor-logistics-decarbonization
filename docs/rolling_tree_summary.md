@@ -8,6 +8,8 @@
 
 三个 SKU 争用有限运力时，保留同期需求配对会改变部分发运决定。160 条完整合成路径中，133 条至少有一期改变了发运件数。与只打乱配对的 M2 相比，M1 的平均总成本差为 0.205（相对 0.08%，配对 t 95% 区间 [-1.662, 2.071]），事前判定为 **没有实用价值（成本等效）**。即时满足率差为 0.192 个百分点，区间 [-0.00026, 0.38373]。排放差为 -0.281，区间 [-0.685, 0.123]。交付与排放两项指标的区间均跨零。本环境中没有测出保留配对带来的交付或排放改善。 [闭环收尾结果](rolling_tree_closing_test.md)
 
+同一批路径上还有一个负结果：两种情景树规划器都不如现行滚动基线 B1。M1−B1 的平均总成本差为 +7.255（+2.93%，区间 [+0.987, +13.523]），即时满足率低 3.97 个百分点，排放低 7.1%。这是少发货换来的取舍，不是改进。v2 试跑只用 4 条路径时曾得到 M1 比 B1 便宜 4.2%，在 160 条新路径上方向反转。
+
 ### 五个阶段的证据
 
 | 阶段 | 设计与测得的结果 |
@@ -22,7 +24,7 @@
 
 拟合的共同冲击方差约为 0.077。慢线和快线每期分别提供 8 和 4 个质量单位，全期碳预算为 132。首次分歧时，M1 / M2 的慢线满载比例为 60.90% / 57.14%，窗口碳约束取紧比例为 15.04% / 11.28%。B1 每期都会用新需求更新 EWMA 并重规划。这些结果说明比较发生在已有反馈和共享约束的系统。各因素对成本差的独立贡献仍未经测量。
 
-证据限于一个合成环境，每路径一个规划采样种子，未独立验证。项目另一模块用 SciPy 1.17.0 的 HiGHS 复现了预处理返回错误最优与误报不可行，本研究沿用开启预处理的设置，个别首期动作和实质性分析中的目标超额可能受影响。环境对已执行动作独立记账。若动作受求解影响，轨迹仍会随之变化。另一模块的复现记录可用 `git show 92be4e6:docs/decision_graph_qa_protocol_amendment.md` 查阅。
+证据限于一个合成环境，每路径一个规划采样种子，未独立验证。项目另一模块用 SciPy 1.17.0 的 HiGHS 复现了预处理返回错误最优与误报不可行，本研究沿用开启预处理的设置，个别首期动作和实质性分析中的目标超额可能受影响。环境对已执行动作独立记账。若动作受求解影响，轨迹仍会随之变化。复现记录见决策图问答数据集的修订说明（`docs/decision_graph_qa_protocol_amendment.md`，在该数据集的分支上）。
 
 R1 在本环境收尾。若重启，先在独立校准的环境中预登记相同的参考线，再检验成本区间能否支持至少 2% 的节约，同时满足率下降不超过 0.5 个百分点、排放增加不超过 2%。
 
@@ -31,6 +33,8 @@ R1 在本环境收尾。若重启，先在独立校准的环境中预登记相�
 ### Answer
 
 When three SKUs share limited freight capacity, preserving contemporaneous pairing changes some dispatch decisions. Of 160 complete synthetic paths, 133 had at least one change in shipped units. Compared with shuffled-pairing M2, M1 had a mean total cost difference of 0.205 (0.08% relative, paired t 95% CI [-1.662, 2.071]). The preregistered decision was **equivalent within the practical cost margin**. Immediate fill differed by 0.192 percentage points, CI [-0.00026, 0.38373], and emissions by -0.281, CI [-0.685, 0.123]. Both the fill and emissions intervals included zero. This environment showed no measurable improvement in either outcome from preserving pairing. [Closing test](rolling_tree_closing_test.md)
+
+The same paths gave a second negative result: both scenario-tree planners did worse than the existing rolling baseline B1. M1−B1 averaged +7.255 in total cost (+2.93%, CI [+0.987, +13.523]), with immediate fill 3.97 percentage points lower and emissions 7.1% lower. This is a trade-off from shipping less, not an improvement. The four-path v2 pilot had shown M1 4.2% cheaper than B1; the sign reversed on 160 fresh paths.
 
 ### Evidence across five stages
 
@@ -46,6 +50,6 @@ When three SKUs share limited freight capacity, preserving contemporaneous pairi
 
 The fitted common-shock variance was about 0.077. Slow and fast capacity were 8 and 4 mass units per period, with an episode carbon budget of 132. At first divergence, M1 / M2 filled the slow route on 60.90% / 57.14% of pairs, and used their full window carbon allowance on at least one leaf on 15.04% / 11.28%. B1 updated its EWMA forecast and replanned each period. These quantities describe a system with feedback and shared constraints. Their separate contributions to the cost difference were unmeasured.
 
-The evidence covers one synthetic environment and one planning seed per path, and awaits independent validation. Elsewhere in the project HiGHS in SciPy 1.17.0 reproduced incorrect optima and false infeasibility with presolve enabled. This study retained presolve, which could affect individual first actions and objective excesses in the materiality analysis. The environment independently calculates realized cost given the actions actually executed. A change in the solver-selected action can still change the trajectory. The separate reproductions are available via `git show 92be4e6:docs/decision_graph_qa_protocol_amendment.md`.
+The evidence covers one synthetic environment and one planning seed per path, and awaits independent validation. Elsewhere in the project HiGHS in SciPy 1.17.0 reproduced incorrect optima and false infeasibility with presolve enabled. This study retained presolve, which could affect individual first actions and objective excesses in the materiality analysis. The environment independently calculates realized cost given the actions actually executed. A change in the solver-selected action can still change the trajectory. The reproductions are recorded in the decision graph dataset's amendment note (`docs/decision_graph_qa_protocol_amendment.md`, on that dataset's branch).
 
 R1 closes for this environment. A future study should preregister the same reference thresholds in an independently calibrated environment, then test whether the cost interval supports at least 2% savings with a fill decline no greater than 0.5 percentage points and an emissions increase no greater than 2%.
