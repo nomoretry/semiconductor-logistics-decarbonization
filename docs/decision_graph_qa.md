@@ -6,7 +6,7 @@
 
 ### 研究问题与实现
 
-哪些库存、预测和共享资源信息，经由题目间的依赖传递，会改变补货发运及其成本、交付与排放？DQ-1 将每个滚动决策时点整理为 31 道带有标准答案的双语题，供 DQ-2 比较上下文及其决策后果。每张图的状态文本来自三个 SKU、两条路线的合成库存环境。发运后才揭示当期需求。图的组织采用 DriveLM 的分阶段问答与依赖关系。物流题目、数据和求解均由本项目定义。
+哪些库存、预测和共享资源信息，经由题目间的依赖传递，会改变补货发运及其成本、交付与排放？DQ-1 将每个滚动决策时点整理为 31 道带有标准答案的双语题，供 DQ-2 比较上下文及其决策后果。每张图的状态文本来自三个 SKU、两条路线的合成库存环境。发运后才揭示当期需求。图的组织采用 DriveLM（Chonghao Sima 等，*DriveLM: Driving with Graph Visual Question Answering*，ECCV 2024）的分阶段问答与依赖关系，只借用结构，不使用其代码和数据。物流题目、数据和求解均由本项目定义。
 
 每条需求路径分别用 `mpc_scenarios` 和 `base_stock`（z=0）运行，以覆盖不同历史状态。两种轨迹上的 P3、B、M 均以观测条件下的七情景参照规划器为准。该规划器给七个情景共用一个完整发运计划，遵守路线提前期、共享运力和按剩余期数分摊的排放预算，以平均路径费用为目标。扩展规划器把期望库存与积压费用写成分段线性函数，生成时逐图核对其最优值。[原协议](decision_graph_qa_protocol.md) · [环境和参数](../rolling_inventory/config.json)
 
@@ -89,7 +89,7 @@ P1/P2 对整数、布尔值、空值和数组结构严格匹配，小数采用�
 
 ### Research question and implementation
 
-Which inventory, forecast and shared resource information, when passed along question dependencies, changes replenishment dispatch and its cost, delivery and emissions? DQ-1 turns each rolling decision state into 31 bilingual questions with gold answers for the DQ-2 context and consequence comparisons. State texts come from a synthetic inventory environment with three SKUs and two routes. Current demand is revealed after dispatch. The graph uses the staged questions and dependencies of DriveLM. The logistics questions, data and solves are project specific.
+Which inventory, forecast and shared resource information, when passed along question dependencies, changes replenishment dispatch and its cost, delivery and emissions? DQ-1 turns each rolling decision state into 31 bilingual questions with gold answers for the DQ-2 context and consequence comparisons. State texts come from a synthetic inventory environment with three SKUs and two routes. Current demand is revealed after dispatch. The graph uses the staged questions and dependencies of DriveLM (Chonghao Sima et al., *DriveLM: Driving with Graph Visual Question Answering*, ECCV 2024); only the structure is borrowed, not its code or data. The logistics questions, data and solves are project specific.
 
 Each demand path is run with `mpc_scenarios` and `base_stock` (z=0) to visit different histories. P3, B and M labels on both policy trajectories come from the seven-scenario reference planner at the observed state. It uses one full dispatch schedule across all seven scenarios, with lead times, shared route capacity and an emissions allowance paced over the remaining episode. The objective is mean path cost. The extended planner expresses expected inventory and backlog cost as a piecewise-linear function and checks its optimum against the reference at each graph. [Original protocol](decision_graph_qa_protocol.md) · [Environment configuration](../rolling_inventory/config.json)
 
