@@ -13,11 +13,17 @@ from .planning import solve, solve_fixed_first
 
 OUTPUT = ROOT/'benchmark_results'
 PROTOCOL = ROOT/'docs/rolling_tree_consensus_protocol.md'
+AMENDMENT = ROOT/'docs/rolling_tree_consensus_protocol_amendment.md'
+DEFAULT_MAX_WALL_SECONDS = 5400
+AMENDED_MAX_WALL_SECONDS = 10800
+WALL_BUDGETS = (DEFAULT_MAX_WALL_SECONDS, AMENDED_MAX_WALL_SECONDS)
 STUDIES = (('rolling_tree_materiality', materiality), ('rolling_tree_consensus', ensemble))
 FILES = ('config.json', 'trial.jsonl', 'formal.jsonl', 'summary.json', 'runtime.json')
 
 
-def _inputs():
+def _inputs(max_wall_seconds=DEFAULT_MAX_WALL_SECONDS):
+    if max_wall_seconds not in WALL_BUDGETS:
+        raise ValueError(f'unsupported_max_wall_seconds:{max_wall_seconds}')
     source = stability.OUTPUT
     hashes = stability._hashes(source, stability.EVIDENCE_FILES)
     if hashes != stability._json(source/'manifest.json'):
@@ -47,12 +53,14 @@ def _inputs():
         'groups': {'a': seeds, 'b': [924623, 924629, 924631]},
         'tiers': tiers,
         'trial_periods': [0, 5, 6],
-        'max_wall_seconds': 5400.0,
+        'max_wall_seconds': float(max_wall_seconds),
         'start_guard_seconds': 45.0,
         'max_failure_rate': .05,
         'max_action_change_rate': .10,
         'baseline_online': {str(tier): old['formal']['tiers'][str(tier)]['online_seconds'] for tier in tiers},
     }
+    if max_wall_seconds == AMENDED_MAX_WALL_SECONDS:
+        protocol['amendment_sha256'] = digest_bytes(AMENDMENT.read_bytes())
     return protocol, states, archived
 
 
@@ -198,8 +206,8 @@ def _summary(module, config, trial, formal, execution):
     return {'trial': _phase_stats(trial), 'formal': _phase_stats(formal), 'results': result, **execution}
 
 
-def run(output=OUTPUT, progress=None):
-    config, states, archived = _inputs()
+def run(output=OUTPUT, progress=None, *, max_wall_seconds=DEFAULT_MAX_WALL_SECONDS):
+    config, states, archived = _inputs(max_wall_seconds)
     outputs = [Path(output)/name for name, _ in STUDIES]
     for out in outputs:
         if out.exists() and any(out.iterdir()):
@@ -260,21 +268,27 @@ def _replay(module, records, keys, states, archived, config):
             raise ValueError(f'analysis_replay_changed:{key}')
 
 
-def verify(output=OUTPUT):
-    config, states, archived = _inputs()
+def verify(output=OUTPUT, *, gate1=False):
+    suffix = '_gate1' if gate1 else ''
+    packages = []
+    for name, module in STUDIES:
+        out = Path(output)/(name+suffix)
+        if stability._json(out/'manifest.json') != stability._hashes(out, FILES):
+            raise ValueError(f'evidence_hash:{out.name}')
+        packages.append((out, module, stability._json(out/'config.json')))
+    config, states, archived = _inputs(packages[0][2]['max_wall_seconds'])
+    for out, _, saved in packages:
+        if saved != config:
+            raise ValueError(f'configuration_changed:{out.name}')
+
     trial_keys = [key for key in states if key[1] in config['trial_periods']]
     trials, formals, summaries, executions = [], [], [], []
     attempts = failures = 0
-    for name, module in STUDIES:
-        out = Path(output)/name
-        if stability._json(out/'manifest.json') != stability._hashes(out, FILES):
-            raise ValueError(f'evidence_hash:{name}')
-        if stability._json(out/'config.json') != config:
-            raise ValueError(f'configuration_changed:{name}')
+    for out, module, _ in packages:
         trial = read_lines(out/'trial.jsonl')
         formal = read_lines(out/'formal.jsonl')
         if len(trial) != len(trial_keys) or any(row['result'] is None for row in trial):
-            raise ValueError(f'trial_observation_count:{name}')
+            raise ValueError(f'trial_observation_count:{out.name}')
         _replay(module, trial, trial_keys, states, archived, config)
         _replay(module, formal, states, states, archived, config)
         for row in formal:
