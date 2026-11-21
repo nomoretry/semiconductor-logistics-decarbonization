@@ -105,6 +105,7 @@ class FleetTests(unittest.TestCase):
 
     def test_the_horizon_check_starts_from_the_representative_weeks(self):
         from electric_freight.fleet import horizon_check
+        from electric_freight.fleet_accounting import evaluate_horizon
         plan = self.joint
         operating = plan["objective_usd"] - plan["first_stage_cost_usd"]  # no chips, so no cargo cost
         fixed = horizon_check(self.config, self.scenario, plan, mip_gap=1e-6, time_limit=30)
@@ -113,6 +114,10 @@ class FleetTests(unittest.TestCase):
         free = horizon_check(self.config, self.scenario, plan, free_first_stage=True, mip_gap=1e-6, time_limit=30)
         self.assertIn("used as the start", free["start"])
         self.assertLessEqual(free["objective_usd"], plan["objective_usd"] * (1 + 1e-6) + 1e-6)
+        for result in (fixed, free):
+            account = evaluate_horizon(self.config, self.scenario, result, plan["solution"]["small"]["week_types"])
+            self.assertEqual(account["issues"], [])
+            self.assertAlmostEqual(account["total_cost_usd"], result["objective_usd"], places=3)
 
     def test_the_decomposition_brackets_the_stochastic_plan(self):
         from electric_freight.fleet import load_v2, make_scenario
@@ -128,6 +133,54 @@ class FleetTests(unittest.TestCase):
         self.assertGreaterEqual(out["VSS"]["value"], -1e-6)
         self.assertGreaterEqual(out["EVPI"]["value"], -1e-6)
         self.assertTrue(out["start_for_equivalent"])
+        self.assertTrue(all(not row["accounting"]["issues"] for row in out["solves"] if row["objective_usd"]))
+
+    def test_sensitivity_jobs_and_capital_prices(self):
+        import json
+
+        from electric_freight.fleet import load_v2
+        from scripts.run_fleet import PROTOCOL, protocol, sensitivity_jobs
+        spec = protocol()
+        original = json.loads(PROTOCOL.read_text(encoding="utf-8"))
+        jobs = sensitivity_jobs(spec)
+        self.assertEqual(original["sensitivity"]["plans"], ["A", "C"])
+        self.assertEqual(len(jobs), 24)
+        for case in original["sensitivity"]["cases"]:
+            self.assertEqual([j["plans"] for j in jobs if j["meta"]["case"] == case], ["A", "BC"])
+        base = load_v2()
+        for job in jobs:
+            case = original["sensitivity"]["cases"][job["meta"]["case"]]
+            if "capex_scale" not in case:
+                self.assertEqual(job["config_overrides"], case)
+                continue
+            scaled = load_v2(job["config_overrides"])
+            factor = case["capex_scale"]
+            for name, site in base["sites"].items():
+                changed = scaled["sites"][name]
+                self.assertEqual(changed["open_capex_usd"], site["open_capex_usd"] * factor)
+                self.assertEqual(changed["energy_usd_per_kwh"], site["energy_usd_per_kwh"])
+                for q, tier in site["tiers"].items():
+                    self.assertEqual(changed["tiers"][q]["capex_usd"], tier["capex_usd"] * factor)
+                for a, b in zip(site["upgrades"], changed["upgrades"], strict=True):
+                    self.assertEqual(b["capex_usd"], a["capex_usd"] * factor)
+                self.assertEqual(changed["connections"], {k: v * factor for k, v in site["connections"].items()})
+            for name, sub in base["substations"].items():
+                for a, b in zip(sub["expansions"], scaled["substations"][name]["expansions"], strict=True):
+                    self.assertEqual(b["capex_usd"], a["capex_usd"] * factor)
+
+    def test_sensitivity_summary_uses_accounts_and_baseline(self):
+        from scripts.summarize_fleet import sensitivity
+        rows = []
+        for group, costs in (("deterministic", [100, 145, 130, 120]), ("sensitivity", [110, 142, 128, 125])):
+            for p, v in zip(("A", "B", "B*", "C"), costs, strict=True):
+                rows.append({"group": group, "instance": "base", "scenario": "normal", "case": "test", "plan": p,
+                             "first_stage": {"lease": {}}, "status": "optimal", "stats": {"mip_gap": 0.0005},
+                             "objective_usd": 999, "accounting": {"total_cost_usd": v, "total_emissions_kg": 650,
+                                                                  "peak_kw": {"MY_DEPOT": 24.5}}})
+        table = "\n".join(sensitivity(rows))
+        self.assertIn("| test | 110.00 | 142.00 | 128.00 | 125.00 | 15.00 | 17.00 | 3.00 | 650.00", table)
+        self.assertIn("| Change vs base normal | 10.00 | -3.00 | -2.00 | 5.00 | -5.00 | -8.00 | -7.00", table)
+        self.assertIn("24.50 | optimal, gap 0.05%", table)
 
     def test_fixing_saved_trips_keeps_them_and_their_cost(self):
         from electric_freight.fleet import solve
@@ -190,6 +243,20 @@ class FleetTests(unittest.TestCase):
         self.assertEqual(seeded["status"], self.diesel["status"])
         self.assertAlmostEqual(seeded["objective_usd"], self.diesel["objective_usd"],
                                delta=1e-5 * self.diesel["objective_usd"])
+
+    def test_presolve_off_keeps_the_small_diesel_plan_cost(self):
+        from electric_freight.fleet import solve
+        from electric_freight.fleet_accounting import audit_plan
+        result = solve(self.config, [self.scenario], mode="diesel", highs_options={"presolve": "off"},
+                       mip_gap=1e-6, time_limit=120, start=self.diesel["values"])
+        account = audit_plan(self.config, self.scenario, result, "diesel")
+        self.assertAlmostEqual(account["total_cost_usd"], self.diesel["objective_usd"], places=3)
+
+    def test_presolve_selection_requires_a_saved_incumbent(self):
+        from scripts.check_fleet_presolve import eligible
+        self.assertFalse(eligible({"status": "infeasible", "mip_gap": 0.0}))
+        self.assertFalse(eligible({"objective_usd": 3.0, "status": "feasible", "mip_gap": 0.002}))
+        self.assertTrue(eligible({"objective_usd": 3.0, "status": "feasible", "stats": {"mip_gap": 0.001}}))
 
     def test_diesel_runs_every_background_trip(self):
         account = self.diesel["solution"]["small"]

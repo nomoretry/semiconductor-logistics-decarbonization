@@ -1,0 +1,16 @@
+{
+  "added": "2026-11-22, before resuming the three outstanding groups after the four completed groups. All instances, scenarios, overrides, probabilities, solver budgets and other settings remain those of protocol.json.",
+  "groups": {
+    "stochastic": "Three workers. Start from the better normal-season B and B*, evaluate all six scenarios and then solve the deterministic equivalent.",
+    "horizon": "One worker alongside stochastic. Check the three saved schedules over all 16 weeks, with equipment and lease first fixed and then free.",
+    "sensitivity": "Three workers after both previous groups. A and the B to B* to C chain use the deterministic group's starting rules in every case. A cold joint solve can miss good feasible schedules within the time budget. These four plans measure electric minus diesel and both sequential premiums."
+  },
+  "sensitivity": {"plans": ["A", "BC"]},
+  "accounting": "Independently recompute each feasible plan from its decisions. Require no issues and an absolute cost discrepancy no greater than half a US cent (the accounting is saved to four decimal places). For the deterministic equivalent weight each full scenario total by its probability, including the common first-stage cost exactly once. For the unbroken horizon charge the lease and equipment only in the free variant.",
+  "bounds": "A fixed design's recourse lower bound applies only to that design. Bound the unrestricted RP with the probability-weighted perfect-information lower bound and, when available, the deterministic-equivalent dual bound. Use the best independently checked feasible first-stage policy for an upper bound. Report VSS and EVPI using these intervals.",
+  "presolve_check": {
+    "targets": ["deterministic/base/normal/C", "deterministic/base/tight_space/B*", "stochastic/RP/tight_space", "horizon"],
+    "selection": "After all three groups, use the named solves and the first eligible horizon row in original protocol target order, fixed before free. Eligible means an incumbent marked optimal or relative gap at most 0.001. Record any unavailable or ineligible target explicitly.",
+    "method": "Keep the original formulation, starting solution, objective, gap and time limit, disabling only HiGHS presolve in the target solve. For archived deterministic starts reproduce the predecessor chain and verify it against the saved plan. Distinguish a reconstructed start from an archived full vector. Capture the actual stochastic input and verify the horizon start when replayed. Compare the feasible costs and both dual bounds, keeping lower feasible costs and contradictory bounds as negative results."
+  }
+}

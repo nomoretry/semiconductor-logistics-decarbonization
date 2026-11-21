@@ -32,9 +32,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from electric_freight.fleet import horizon_check, load_v2, make_scenario, sequential, solve  # noqa: E402
-from electric_freight.fleet_accounting import evaluate  # noqa: E402
+from electric_freight.fleet_accounting import audit_plan, evaluate_horizon  # noqa: E402
 
 PROTOCOL = ROOT / "benchmarks" / "electric_freight_v2" / "protocol.json"
+SUPPLEMENT = PROTOCOL.with_name("protocol_supplement_1.json")
 RESULTS = ROOT / "benchmark_results" / "electric_freight_v2"
 
 
@@ -46,12 +47,15 @@ def code_version() -> str:
     def git(*args: str) -> str:
         return subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True, check=False).stdout.strip()
     dirty = git("status", "--porcelain", "--", "electric_freight", "scripts/run_fleet.py",
-                "benchmarks/electric_freight_v2")
+                "scripts/check_fleet_presolve.py", "benchmarks/electric_freight_v2")
     return git("rev-parse", "--short", "HEAD") + ("+uncommitted" if dirty else "")
 
 
 def protocol() -> dict[str, Any]:
     data: dict[str, Any] = json.loads(PROTOCOL.read_text(encoding="utf-8"))
+    addition = json.loads(SUPPLEMENT.read_text(encoding="utf-8"))
+    data["sensitivity"]["plans"] = addition["sensitivity"]["plans"]
+    data["presolve_check"] = addition["presolve_check"]
     return data
 
 
@@ -70,7 +74,7 @@ def compact(config: dict[str, Any], sc: Any, result: dict[str, Any], mode: str) 
     if "solution" not in result:
         return out
     solution = result["solution"][sc.name]
-    account = evaluate(config, sc, result["first_stage"], solution, mode=mode)
+    account = audit_plan(config, sc, result, mode)
     out.update(first_stage=result["first_stage"], week_types=solution["week_types"],
                trips={typ: ops["trips"] for typ, ops in solution["types"].items()},
                peak_kw=solution["peak_kw"], accounting=account,
@@ -109,6 +113,8 @@ def run_job(job: dict[str, Any]) -> list[dict[str, Any]]:
     rows = []
     b = sequential(config, [sc], **options)
     rows.append({"id": f"{job['id']}/B", **job["meta"], "plan": "B", **compact(config, sc, b, "joint")})
+    if job["meta"]["group"] == "sensitivity" and "step_1_result" in b and "solution" in b["step_1_result"]:
+        rows[-1]["step_1_accounting"] = audit_plan(config, sc, b["step_1_result"], "relaxed")
     best = sequential(config, [sc], best_tie_break=True, start=b.get("values"), step1=b.get("step_1_result"),
                       **options)
     rows.append({"id": f"{job['id']}/B*", **job["meta"], "plan": "B*", **compact(config, sc, best, "joint")})
@@ -295,7 +301,8 @@ def horizon_jobs(spec: dict[str, Any]) -> list[tuple[str, dict[str, Any], str, b
     return out
 
 
-def run_horizon(item: tuple[str, dict[str, Any], str, bool]) -> dict[str, Any]:
+def run_horizon(item: tuple[str, dict[str, Any], str, bool], *,
+                highs_options: dict[str, Any] | None = None) -> dict[str, Any]:
     target, row, instance, free = item
     spec = protocol()
     config = load_v2()
@@ -305,7 +312,7 @@ def run_horizon(item: tuple[str, dict[str, Any], str, bool]) -> dict[str, Any]:
             "solution": {sc.name: {"week_types": row["week_types"],
                                    "types": {typ: {"trips": trips} for typ, trips in row["trips"].items()}}}}
     check = horizon_check(config, sc, plan, free_first_stage=free, mip_gap=spec["solver"]["mip_gap"],
-                          time_limit=spec["horizon"]["time_limit"])
+                          time_limit=spec["horizon"]["time_limit"], highs_options=highs_options)
     account = row["accounting"]["cost_usd"]
     keys = ["trips", "waiting", "energy", "demand_charge"] + (["equipment", "lease"] if free else [])
     representative = sum(float(account.get(k, 0.0)) for k in keys)
@@ -316,6 +323,7 @@ def run_horizon(item: tuple[str, dict[str, Any], str, bool]) -> dict[str, Any]:
            "representative_usd": representative,
            **{k: v for k, v in check.items() if k not in ("operations", "status")}}
     if horizon_cost is not None:
+        out["accounting"] = evaluate_horizon(config, sc, check, row["week_types"])
         # restriction cost = representative weeks minus unbroken horizon; the interval uses the dual bound
         out["restriction_usd"] = representative - horizon_cost
         out["restriction_interval_usd"] = [representative - horizon_cost,
@@ -323,13 +331,12 @@ def run_horizon(item: tuple[str, dict[str, Any], str, bool]) -> dict[str, Any]:
     return out
 
 
-def run_stochastic(spec: dict[str, Any], workers: int, version: str) -> None:
+def stochastic_designs(spec: dict[str, Any], workers: int, config: dict[str, Any],
+                       scenarios: list[Any]) -> dict[str, Any]:
     from dataclasses import replace
 
-    from electric_freight.stochastic import decompose, deterministic_equivalent, scenario_set
+    from electric_freight.stochastic import decompose
     item = spec["stochastic"]
-    config = load_v2()
-    scenarios = scenario_set(config, item["scenarios"], instance=item["instance"])
     options = dict(time_limit=spec["solver"]["time_limit"], mip_gap=spec["solver"]["mip_gap"])
     started = time.perf_counter()
     # The deterministic scenario's perfect-information solve starts from the better of plans B and B*.
@@ -339,30 +346,75 @@ def run_stochastic(spec: dict[str, Any], workers: int, version: str) -> None:
                       **options)
     starts = [r for r in (b, best) if "values" in r]
     start = min(starts, key=lambda r: r["objective_usd"])["values"] if starts else None
+    warmups = {}
+    for label, plan, mode in (("step_1", b["step_1_result"], "relaxed"), ("B", b, "joint"), ("B*", best, "joint")):
+        warmups[label] = compact(config, alone, plan, mode)
+    replay_target = next(t for t in spec["presolve_check"]["targets"] if t.startswith("stochastic/RP/"))
     result = decompose(config, scenarios, deterministic=item["deterministic"], workers=workers, options=options,
-                       start=start)
+                       start=start, replay_scenario=replay_target.split("/")[2])
+    result["warmups"] = warmups
     result["seconds"] = round(time.perf_counter() - started, 1)
-    result["code_version"] = version
+    return result
+
+
+def save_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix(f".{os.getpid()}.tmp")
+    temp.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8", newline="\n")
+    temp.replace(path)
+
+
+def checkpoint_directory() -> Path:
+    return ROOT / "_local" / "electric_freight_v2" / sha256(SUPPLEMENT)
+
+
+def run_stochastic(spec: dict[str, Any], workers: int, version: str) -> None:
+    from electric_freight.stochastic import deterministic_equivalent, scenario_set
+    if all((RESULTS / name).exists() for name in ("stochastic.json", "stochastic_de.json")):
+        print("Two-stage results already saved", flush=True)
+        return
+    item = spec["stochastic"]
+    config = load_v2()
+    scenarios = scenario_set(config, item["scenarios"], instance=item["instance"])
+    checkpoint = checkpoint_directory() / "stochastic.json"
+    if checkpoint.exists():
+        result = json.loads(checkpoint.read_text(encoding="utf-8"))
+    else:
+        result = stochastic_designs(spec, workers, config, scenarios)
+        result["code_version"] = version
+        save_json(checkpoint, result)
     equivalent_start = result.pop("start_for_equivalent", None)
-    RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / "stochastic.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({k: result.get(k) for k in ("WS", "RP", "EEV", "VSS", "EVPI")}, default=str)[:2000], flush=True)
     if item.get("deterministic_equivalent"):
         started = time.perf_counter()
         de = deterministic_equivalent(config, scenarios, time_limit=item["deterministic_equivalent"]["time_limit"],
                                       mip_gap=spec["solver"]["mip_gap"], start=equivalent_start)
         de["seconds"] = round(time.perf_counter() - started, 1)
-        de["started_from"] = "RP candidate" if equivalent_start else None
+        de["started_from"] = "best evaluated design" if equivalent_start else None
         de["code_version"] = version
-        (RESULTS / "stochastic_de.json").write_text(json.dumps(de, indent=2) + "\n", encoding="utf-8", newline="\n")
+        if "RP" in result:
+            low, high = result["RP"]["interval"]
+            if de["stats"]["dual_bound"] is not None:
+                low = max(low, de["stats"]["dual_bound"])
+            if de.get("objective_usd") is not None:
+                high = min(high, de["objective_usd"])
+            result["certified_intervals_usd"] = {"RP": [low, high],
+                "EVPI": [max(0.0, low - result["WS"]["value"]), high - result["WS"]["interval"][0]]}
+            if result["EEV"]["status"] == "ok":
+                lower_eev, upper_eev = result["EEV"]["interval"]
+                result["certified_intervals_usd"]["VSS"] = [max(0.0, lower_eev - high), upper_eev - low]
+        save_json(RESULTS / "stochastic_de.json", de)
         print(json.dumps({k: de.get(k) for k in ("status", "objective_usd", "stats")}, default=str), flush=True)
+    save_json(RESULTS / "stochastic.json", result)
 
 
 def write_manifest() -> None:
-    files = sorted(p for p in RESULTS.iterdir() if p.is_file() and p.name != "manifest.json")
+    files = sorted(p for p in RESULTS.iterdir() if p.is_file() and p.suffix in (".json", ".jsonl", ".md"))
     manifest = {"code_version": code_version(), "protocol_sha256": sha256(PROTOCOL),
+                "protocol_supplement_1_sha256": sha256(SUPPLEMENT), "paths_relative_to": "..",
                 "sha256": {p.name: sha256(p) for p in files}}
-    (RESULTS / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8", newline="\n")
+    directory = RESULTS / "supplement_1"
+    save_json(directory / "manifest.json", manifest)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -381,12 +433,18 @@ def main(argv: list[str] | None = None) -> int:
         run_group(groups[args.group](spec), args.workers, version, only=args.only, note=args.note)
     elif args.group == "horizon":
         items = horizon_jobs(spec)
-        print(f"{len(items)} horizon checks to run, code {version}", flush=True)
+        checkpoint = checkpoint_directory() / "horizon.json"
+        finished = json.loads(checkpoint.read_text(encoding="utf-8")) if checkpoint.exists() else {}
+        todo = [i for i in items if f"horizon/{i[0]}/{'free' if i[3] else 'fixed'}" not in finished]
+        print(f"{len(todo)} horizon checks to run, code {version}", flush=True)
         with ProcessPoolExecutor(max_workers=args.workers) as pool:
-            for row in pool.map(run_horizon, items):
+            for row in pool.map(run_horizon, todo):
                 row["code_version"] = version
-                append([row])
+                finished[row["id"]] = row
+                save_json(checkpoint, finished)
                 print(json.dumps({k: row.get(k) for k in ("id", "status", "restriction_usd")}), flush=True)
+        done = saved()
+        append([row for key, row in finished.items() if key not in done])
     elif args.group == "stochastic":
         run_stochastic(spec, args.workers, version)
     write_manifest()

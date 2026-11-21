@@ -32,6 +32,8 @@ process can do when it breaks ties among equally cheap schedules in favour of ch
 from __future__ import annotations
 
 import copy
+import hashlib
+import json
 import time
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -496,7 +498,8 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
           fixed_first_stage: dict[str, Any] | None = None, fixed_schedule: dict[str, Any] | None = None,
           transport_cap: float | None = None, mip_gap: float = 1e-4, time_limit: float = 600.0,
           threads: int | None = None, start: dict[str, float] | None = None,
-          random_seed: int | None = None, neighbourhood: dict[str, Any] | None = None) -> dict[str, Any]:
+          random_seed: int | None = None, neighbourhood: dict[str, Any] | None = None,
+          highs_options: dict[str, Any] | None = None) -> dict[str, Any]:
     """``random_seed`` changes only the solver's search order (HiGHS option), so ties among equally good plans may be
     broken differently; the model is unchanged.
 
@@ -538,7 +541,8 @@ def solve(config: dict[str, Any], scenarios: Sequence[Scenario], *, mode: str = 
     build = time.perf_counter() - started
     m.solve(StartedHiGHS(start, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3,
                          **({"threads": threads} if threads else {}),
-                         **({"random_seed": int(random_seed)} if random_seed is not None else {})))
+                         **({"random_seed": int(random_seed)} if random_seed is not None else {}),
+                         **(highs_options or {})))
     status = STATUS.get(m.sol_status, "undefined")
     info = getattr(getattr(m, "solverModel", None), "getInfo", lambda: None)()
     stats = {"variables": len(m.variables()), "integers": sum(v.cat == pulp.LpInteger for v in m.variables()),
@@ -838,7 +842,8 @@ def copy_config(config: dict[str, Any]) -> dict[str, Any]:
 # ----------------------------------------------------------------------------------------------- representative weeks
 
 def horizon_check(config: dict[str, Any], sc: Scenario, plan: dict[str, Any], *, free_first_stage: bool = False,
-                  mip_gap: float = 1e-3, time_limit: float = 900.0) -> dict[str, Any]:
+                  mip_gap: float = 1e-3, time_limit: float = 900.0,
+                  highs_options: dict[str, Any] | None = None) -> dict[str, Any]:
     """Re-solve the truck operations of a plan over one unbroken horizon of all weeks.
 
     Cargo and the number of extra trips in every week are those of ``plan``; so are the equipment and the lease unless
@@ -876,11 +881,13 @@ def horizon_check(config: dict[str, Any], sc: Scenario, plan: dict[str, Any], *,
     m += operating + (first_cost if free_first_stage else 0)
     started = time.perf_counter()
     start, start_note = _concatenated_start(m, op, plan, sc, tasks, plant, lease, free_first_stage)
-    m.solve(StartedHiGHS(start, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3))
+    start_hash = hashlib.sha256(json.dumps(start, sort_keys=True).encode()).hexdigest()
+    m.solve(StartedHiGHS(start, msg=False, timeLimit=time_limit, gapRel=mip_gap, mip_heuristic_effort=0.3,
+                         **(highs_options or {})))
     info = getattr(getattr(m, "solverModel", None), "getInfo", lambda: None)()
     status = STATUS.get(m.sol_status, "undefined")
     out: dict[str, Any] = {"status": status, "solve_seconds": round(time.perf_counter() - started, 2),
-                           "free_first_stage": free_first_stage, "start": start_note,
+                           "free_first_stage": free_first_stage, "start": start_note, "start_sha256": start_hash,
                            "integers": sum(v.cat == pulp.LpInteger for v in m.variables()),
                            "mip_gap": getattr(info, "mip_gap", None),
                            "dual_bound": getattr(info, "mip_dual_bound", None)}
