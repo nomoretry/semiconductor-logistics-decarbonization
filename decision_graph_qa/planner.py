@@ -27,6 +27,28 @@ class SolveFailure(RuntimeError):
     """A solver did not prove optimality or infeasibility."""
 
 
+class AuditFailure(SolveFailure):
+    """A consistency failure requires immediate termination."""
+
+    def __init__(self, message: str, diagnostics: Record | None = None) -> None:
+        super().__init__(message)
+        self.diagnostics = diagnostics
+
+
+RETRY_OUTCOMES = ("presolve_retry_recovered", "presolve_retry_confirmed")
+
+
+def solve_counts(counts: Counter[str]) -> dict[str, dict[str, int]]:
+    summary: dict[str, dict[str, int]] = {name: {} for name in ("solves", *RETRY_OUTCOMES)}
+    for key, count in counts.items():
+        group, separator, label = key.partition("/")
+        if separator:
+            summary[group][label] = count
+        else:
+            summary["solves"][group] = count
+    return summary
+
+
 def tolerance(value: float) -> float:
     return 1e-7 + 1e-6 * abs(value)
 
@@ -141,7 +163,7 @@ class Model:
         return (u * self.n + i) * self.r + j
 
     def optimize(self, label: str, extra: tuple[Row, ...] = (), target: Weights | None = None,
-                 binaries: int = 0) -> Schedule | None:
+                 binaries: int = 0, *, endpoint: tuple[str, float] | None = None) -> Schedule | None:
         size = self.size + binaries
         c = np.zeros(size)
         for k, value in (self.objective if target is None else target).items():
@@ -156,27 +178,57 @@ class Model:
             lb.append(low)
             ub.append(high)
         mat = coo_matrix((values, (row_ids, cols)), shape=(len(lb), size)).tocsc()
+        integrality = np.r_[np.ones(self.nq), np.zeros(self.size - self.nq), np.ones(binaries)]
+        bounds = Bounds(np.zeros(size), self.ub + [1.0] * binaries)
+        constraints = LinearConstraint(mat, lb, ub)
+        options = {"time_limit": 30.0, "mip_rel_gap": 0.0}
         self.counts[label] += 1
-        res = milp(c, integrality=np.r_[np.ones(self.nq), np.zeros(self.size - self.nq),
-                                        np.ones(binaries)],
-                   bounds=Bounds(np.zeros(size), self.ub + [1.0] * binaries),
-                   constraints=LinearConstraint(mat, lb, ub),
-                   options={"time_limit": 30.0, "mip_rel_gap": 0.0})
+        res = milp(c, integrality=integrality, bounds=bounds, constraints=constraints, options=options.copy())
+        statuses = [int(res.status)]
         if res.status == 2:
+            self.counts[label] += 1
+            res = milp(c, integrality=integrality, bounds=bounds, constraints=constraints,
+                       options=dict(options, presolve=False))
+            statuses.append(int(res.status))
+            if res.status == 0 and res.x is not None:
+                self.counts[f"presolve_retry_recovered/{label}"] += 1
+            elif res.status == 2:
+                self.counts[f"presolve_retry_confirmed/{label}"] += 1
+
+        def fail(message: str, plan: Schedule | None = None, cost: float | None = None) -> SolveFailure:
+            if endpoint is not None:
+                name, ceiling = endpoint
+                return AuditFailure(message, {
+                    "endpoint": name, "statuses": statuses, "solver_message": str(res.message),
+                    "plan": plan, "model_objective": None if res.fun is None else float(res.fun),
+                    "physical_cost": cost, "ceiling": ceiling,
+                })
+            if label == "exclude_action":
+                return AuditFailure(message, {"statuses": statuses, "solver_message": str(res.message),
+                                              "plan": plan})
+            return SolveFailure(message)
+
+        if res.status == 2:
+            if endpoint is not None:
+                raise fail("face endpoint infeasible after presolve-off retry")
             return None
         if res.status != 0 or res.x is None:
-            raise SolveFailure(f"{label}: {res.status} {res.message}")
+            raise fail(f"{label}: {res.status} {res.message}")
         raw = res.x[:self.nq]
         rounded = np.rint(raw)
         if np.max(np.abs(raw - rounded)) > 1e-5:
-            raise SolveFailure(f"{label}: noninteger dispatch")
+            raise fail(f"{label}: noninteger dispatch")
         plan: Schedule = rounded.astype(int).reshape(self.h, self.n, self.r).tolist()
         if not feasible_plan(self.obs, plan):
-            raise SolveFailure(f"{label}: infeasible returned schedule")
+            raise fail(f"{label}: infeasible returned schedule", plan)
         if target is None:
             value = physical_cost(self.obs, plan, self.demands)
             if abs(value - res.fun) > tolerance(value):
                 raise PlannerMismatch(f"{label}: physical={value}, model={res.fun}")
+        if endpoint is not None:
+            cost = self.value(plan)
+            if cost > endpoint[1]:
+                raise fail("face endpoint replay above ceiling", plan, cost)
         return plan
 
     def value(self, plan: Schedule) -> float:
@@ -214,20 +266,21 @@ class Model:
             other = self.optimize("opposite_flag", (row,))
             opposite.append(other is not None and self.value(other) <= ceiling)
         ranges = []
-        for quantity in (*self.loads, self.emission):
+        quantities = [(f"load.{j}", load) for j, load in enumerate(self.loads)]
+        for name, quantity in (*quantities, ("emission", self.emission)):
             ends = []
-            for sign in (1, -1):
+            for sign, direction in ((1, "min"), (-1, "max")):
                 extreme = self.optimize("face_endpoint", ((self.objective, -INF, ceiling),),
-                                        {k: sign * weight for k, weight in quantity.items()})
-                if extreme is None or self.value(extreme) > ceiling + 1e-8:
-                    raise SolveFailure("optimal-face endpoint failed physical replay")
+                                        {k: sign * weight for k, weight in quantity.items()},
+                                        endpoint=(f"{name}.{direction}", ceiling))
+                assert extreme is not None
                 flat = np.asarray(extreme[0]).ravel()
                 ends.append(int(sum(weight * flat[k] for k, weight in quantity.items())))
             ranges.append(ends)
         rows, binaries = self.exclude(gold[0])
         alternate = self.optimize("exclude_action", rows, binaries=binaries)
         if alternate is not None and alternate[0] == gold[0]:
-            raise SolveFailure("action exclusion failed")
+            raise AuditFailure("action exclusion failed", {"plan": alternate})
         return {"new_objective": new_value, "opposite_flags": opposite,
                 "load_ranges": ranges[:-1], "emission_range": ranges[-1],
                 "other_action": alternate is not None and self.value(alternate) <= ceiling}

@@ -18,7 +18,14 @@ from rolling_inventory.environment import Environment, generate
 from rolling_inventory.planning import base_stock
 
 from .graph import compact, make_graph
-from .planner import PlannerMismatch, Record, SolveFailure
+from .planner import (
+    RETRY_OUTCOMES,
+    AuditFailure,
+    PlannerMismatch,
+    Record,
+    SolveFailure,
+    solve_counts,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "rolling_inventory" / "config.json"
@@ -116,16 +123,17 @@ def stats(directory: Path) -> Record:
         if g["objective"]:
             max_relative = max(max_relative, delta / abs(g["objective"]))
     attempts = list(records(directory / "attempts.jsonl"))
-    solves: Counter[str] = Counter()
+    counters: dict[str, Counter[str]] = {name: Counter() for name in ("solves", *RETRY_OUTCOMES)}
     for row in attempts:
-        solves.update(row["solves"])
+        for name, counts in counters.items():
+            counts.update(row.get(name, {}))
     p95 = float(np.percentile([r["seconds"] for r in attempts], 95)) if attempts else None
     return {"graphs": sum(splits.values()), "paths": len(paths), "trajectories": len(traces),
             "by_split": splits, "by_profile": profiles, "by_policy": policies, "nodes": stages,
             "edge_layers": layers, "edges_by_target_stage": target_stages, "tie_counts": ties,
             "max_abs_difference": max_delta, "max_relative_difference": max_relative,
             "attempted": len(attempts), "failures": sum(r["status"] != "ok" for r in attempts),
-            "solves": solves, "p95_seconds": p95,
+            **counters, "p95_seconds": p95,
             "estimated_formal_seconds": None if p95 is None else p95 * 880 + 60}
 
 
@@ -139,6 +147,7 @@ def environment() -> Record:
     return {"python": sys.version, "platform": platform.platform(), "processor": platform.processor(),
             "packages": packages, "sha256_config": digest(CONFIG),
             "sha256_protocol": digest(ROOT / "docs" / "decision_graph_qa_protocol.md"),
+            "sha256_amendment": digest(ROOT / "docs" / "decision_graph_qa_protocol_amendment.md"),
             "source_sha256": {p.relative_to(ROOT).as_posix(): digest(p) for p in
                               [*sorted(Path(__file__).parent.glob("*.py")), SCHEMA,
                                ROOT / "rolling_inventory" / "environment.py",
@@ -195,9 +204,11 @@ def build(directory: Path, *, pilot: bool, pilot_evidence: Path | None = None) -
                 failures += 1
                 row.update(status=type(exc).__name__, detail=str(exc), observation=obs,
                            unvisited_offsets=list(range(obs["t"] + 1, task["public"]["periods"] - 1)))
-                if isinstance(exc, PlannerMismatch) or not pilot and failures / (attempted + 1) > RATE_LIMIT:
+                if isinstance(exc, AuditFailure) and exc.diagnostics is not None:
+                    row["diagnostics"] = exc.diagnostics
+                if pilot or isinstance(exc, (PlannerMismatch, AuditFailure)) or failures / (attempted + 1) > RATE_LIMIT:
                     stop = f"{gid}: {exc}"
-            row.update(seconds=time.perf_counter() - t0, solves=dict(counts))
+            row.update(seconds=time.perf_counter() - t0, **solve_counts(counts))
             append(directory / "attempts.jsonl", row)
             attempted += 1
             if row["status"] != "ok" or attempted % 11 == 0:
@@ -209,10 +220,11 @@ def build(directory: Path, *, pilot: bool, pilot_evidence: Path | None = None) -
             break
     summary = stats(directory)
     status = "complete"
-    if stop or pilot and failures:
+    if stop:
         status = "failed"
     elif pilot and summary["estimated_formal_seconds"] > 3600:
         status = "over_budget"
+        stop = "estimated formal wall time exceeds 3600 seconds"
     summary.update(phase="pilot" if pilot else "formal", status=status, stop_reason=stop,
                    wall_seconds=time.perf_counter() - start)
     write(directory / "summary.json", summary)

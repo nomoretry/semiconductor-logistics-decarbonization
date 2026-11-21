@@ -5,11 +5,19 @@ import unittest
 from collections import Counter
 from copy import deepcopy
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from decision_graph_qa.dataset import CONFIG, build, read
 from decision_graph_qa.graph import compact, context, make_graph, predictions
-from decision_graph_qa.planner import Model, PlannerMismatch, feasible_plan, scenarios
+from decision_graph_qa.planner import (
+    AuditFailure,
+    Model,
+    PlannerMismatch,
+    feasible_plan,
+    scenarios,
+    solve_counts,
+)
 from decision_graph_qa.replay import recheck, score, verify, verify_forecasts
 from decision_graph_qa.scoring import answer_map, grade_graph, matches
 from rolling_inventory.environment import Environment, generate
@@ -60,6 +68,54 @@ class GraphTests(unittest.TestCase):
         plan = answer_map(self.graph)["M"]
         with self.assertRaises(PlannerMismatch):
             model.audit(plan, self.graph["objective"] + 1)
+
+    def test_presolve_false_infeasibility(self):
+        obs = read(Path(__file__).with_name("fixtures") / "decision_graph_qa_failed_observation.json")
+        demands = scenarios(obs)
+        plan, info = solve(obs, demands)
+        model = Model(obs, demands)
+        audit = model.audit(plan, info["objective"])
+        self.assertEqual(audit["load_ranges"][1], [4, 4])
+        self.assertEqual(audit["emission_range"], [16, 16])
+        self.assertFalse(audit["other_action"])
+        counts = solve_counts(model.counts)
+        recovered = counts["presolve_retry_recovered"].get("face_endpoint", 0)
+        self.assertGreaterEqual(recovered, 1)
+        self.assertEqual(counts["solves"]["face_endpoint"], 6 + recovered)
+
+    def test_endpoint_failures_report_status_and_cost(self):
+        model = Model(self.obs, scenarios(self.obs))
+        unavailable = SimpleNamespace(status=2, x=None, fun=None, message="infeasible")
+        with patch("decision_graph_qa.planner.milp", return_value=unavailable) as milp, self.assertRaisesRegex(
+            AuditFailure, "infeasible after presolve-off retry"
+        ) as ctx:
+            model.optimize("face_endpoint", endpoint=("load.1.max", 0.0))
+        self.assertEqual(ctx.exception.diagnostics, {
+            "endpoint": "load.1.max", "statuses": [2, 2], "solver_message": "infeasible",
+            "plan": None, "model_objective": None, "physical_cost": None, "ceiling": 0.0,
+        })
+        self.assertFalse(milp.call_args.kwargs["options"]["presolve"])
+        with self.assertRaisesRegex(AuditFailure, "replay above ceiling") as ctx:
+            model.optimize("face_endpoint", target={}, endpoint=("load.1.min", -1.0))
+        diagnostics = ctx.exception.diagnostics
+        self.assertEqual(diagnostics["statuses"], [0])
+        self.assertEqual(diagnostics["model_objective"], 0.0)
+        self.assertGreater(diagnostics["physical_cost"], diagnostics["ceiling"])
+        self.assertTrue(feasible_plan(self.obs, diagnostics["plan"]))
+
+    def test_endpoint_failure_stops_build_and_retains_diagnostics(self):
+        failure = AuditFailure("face endpoint infeasible after presolve-off retry", {"statuses": [2, 2]})
+        for pilot in (True, False):
+            with self.subTest(pilot=pilot), tempfile.TemporaryDirectory() as tmp, (
+                    patch("decision_graph_qa.dataset.pilot_gate")
+                ), patch("decision_graph_qa.dataset.make_graph", side_effect=failure) as make:
+                directory = Path(tmp) / "build"
+                summary = build(directory, pilot=pilot, pilot_evidence=Path(tmp))
+                self.assertEqual(make.call_count, 1)
+                self.assertEqual((summary["status"], summary["failures"]), ("failed", 1))
+                row = json.loads((directory / "attempts.jsonl").read_text(encoding="utf-8"))
+                self.assertEqual(row["diagnostics"], failure.diagnostics)
+                self.assertEqual(summary["stop_reason"], f"{row['id']}: {failure}")
 
     def test_gold_and_fixed_perturbation(self):
         counts = Counter()

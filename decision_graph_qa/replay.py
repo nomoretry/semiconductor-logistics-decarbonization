@@ -32,6 +32,7 @@ from .planner import (
     original,
     physical_cost,
     scenarios,
+    solve_counts,
     tolerance,
     window,
 )
@@ -166,7 +167,7 @@ def recheck(directory: Path, sample: float) -> Record:
         rows = grade_graph(g, answers, counts)
         require(all(r["correct"] for r in rows if r["provided"]), f"{g['id']}: P3/B score")
     return {"verified": len(selected), "sample": sample, "sample_seed": 901337,
-            "graph_ids": [g["id"] for g in selected], "solves": counts}
+            "graph_ids": [g["id"] for g in selected], **solve_counts(counts)}
 
 
 def score(directory: Path, responses: Path, details: Path | None = None) -> Record:
@@ -204,5 +205,5 @@ def score(directory: Path, responses: Path, details: Path | None = None) -> Reco
             "expected": all_counts["expected"], "correct": all_counts["correct"],
             "accuracy": all_counts["correct"] / all_counts["expected"] if all_counts["expected"] else None,
             "violations": all_counts["violations"], "violation_denominator": denom,
-            "violation_rate": all_counts["violations"] / denom if denom else None, "solves": counts}
+            "violation_rate": all_counts["violations"] / denom if denom else None, **solve_counts(counts)}
 
