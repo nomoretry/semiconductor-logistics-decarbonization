@@ -17,7 +17,7 @@ def main():
                                             'stability3', 'verify3', 'consensus4', 'verify4', 'closing', 'verify5'])
     parser.add_argument('--output', default=None)
     parser.add_argument('--max-wall-seconds', type=int,
-                        help='shared wall-time budget for consensus4 (default 5400) or closing (default 7200)')
+                        help='shared wall-time budget for consensus4 (default 5400) or closing (default 7200, max 14400)')
     parser.add_argument('--gate1', action='store_true', help='verify the first timing-gate archives with verify4')
     args = parser.parse_args()
     if args.max_wall_seconds is not None and args.command not in ('consensus4', 'closing'):
@@ -30,7 +30,7 @@ def main():
         if args.command == 'verify5':
             print(json.dumps(closing_replay.verify(output), indent=2))
             return
-        limit = 7200 if args.max_wall_seconds is None else args.max_wall_seconds
+        limit = closing.DEFAULT_WALL_SECONDS if args.max_wall_seconds is None else args.max_wall_seconds
         execution = closing.run(output, max_wall_seconds=limit, progress=_stability_progress)
         print(json.dumps(execution, indent=2), flush=True)
         if execution['stop_reason'] is not None:

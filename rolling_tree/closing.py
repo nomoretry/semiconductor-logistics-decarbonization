@@ -16,6 +16,9 @@ from .planning import Model
 
 OUTPUT = ROOT / 'benchmark_results/rolling_tree_closing'
 PROTOCOL = ROOT / 'docs/rolling_tree_closing_protocol.md'
+AMENDMENT = ROOT / 'docs/rolling_tree_closing_protocol_amendment.md'
+DEFAULT_WALL_SECONDS = 7200
+MAX_WALL_SECONDS = 14400
 SEEDS = (75011, 75023, 75037, 75041, 75053, 75067, 75079, 75083, 75097, 75109,
          75113, 75127, 75139, 75151, 75163, 75173, 75187, 75193, 75209, 75217,
          75223, 75239, 75247, 75253, 75269, 75277, 75289, 75307, 75323, 75337,
@@ -33,12 +36,17 @@ def file_hash(path):
     return digest_bytes(Path(path).read_bytes())
 
 
-def settings():
-    return {'split': 'closing', 'path_seeds': list(SEEDS), 'profiles': list(PROFILES),
-            'first_sampler': 925101, 'bootstrap_seed': 979301, 'formal_limit': 7200,
+def settings(max_wall_seconds=DEFAULT_WALL_SECONDS):
+    if not 30 < max_wall_seconds <= MAX_WALL_SECONDS:
+        raise ValueError('closing_wall_budget_must_be_above_30_and_at_most_14400')
+    cfg = {'split': 'closing', 'path_seeds': list(SEEDS), 'profiles': list(PROFILES),
+            'first_sampler': 925101, 'bootstrap_seed': 979301, 'formal_limit': max_wall_seconds,
             'max_incomplete_per_primary_method': 8, 'environment': base_configuration(),
             'v2': v2.configuration(), 'fit': read(v2.TUNING/'fit.json'),
             'selection': read(v2.TUNING/'selection.json'), 'protocol_sha256': file_hash(PROTOCOL)}
+    if max_wall_seconds > DEFAULT_WALL_SECONDS:
+        cfg['amendment_sha256'] = file_hash(AMENDMENT)
+    return cfg
 
 
 def ordered_tasks(cfg):
@@ -242,13 +250,11 @@ def formal(output, cfg, gate, progress, max_wall_seconds):
     return execution
 
 
-def run(output=OUTPUT, *, max_wall_seconds=7200, progress=lambda event, data: None):
-    if not 30 < max_wall_seconds <= 7200:
-        raise ValueError('closing_wall_budget_must_be_above_30_and_at_most_7200')
+def run(output=OUTPUT, *, max_wall_seconds=DEFAULT_WALL_SECONDS, progress=lambda event, data: None):
+    cfg = settings(max_wall_seconds)
     out = Path(output)
     if out.exists() and any(out.iterdir()):
         raise FileExistsError(out)
-    cfg = settings()
     if v2.fitted_variance(cfg['v2'], cfg['environment']) != cfg['fit']:
         raise ValueError('frozen_fit_replay')
     gate = timing_gate(cfg, progress)

@@ -17,6 +17,12 @@ def require(condition, label):
 
 
 def check_timing(gate, cfg, limit):
+    # Older archives can carry a smaller execution cap under the original 7200-second timing gate.
+    if cfg['formal_limit'] > closing.DEFAULT_WALL_SECONDS:
+        require(limit == cfg['formal_limit'] and cfg['amendment_sha256'] == closing.file_hash(closing.AMENDMENT),
+                'amended_wall_budget')
+    else:
+        require(30 < limit <= cfg['formal_limit'], 'original_wall_budget')
     pilot = cfg['v2']['pilot']
     development = v2.pilot_tasks(cfg['v2'], cfg['environment'])
     times = gate['development']
@@ -99,8 +105,9 @@ def check_decision(obs, method, info, action, logs, planner):
 def verify(output=closing.OUTPUT, *, expected_config=None):
     out = Path(output)
     require(closing.read(out/'manifest.json') == {n: closing.file_hash(out/n) for n in closing.FILES}, 'manifest')
-    cfg = closing.settings() if expected_config is None else expected_config
-    require(cfg == closing.read(out/'config.json'), 'configuration')
+    saved = closing.read(out/'config.json')
+    cfg = closing.settings(saved['formal_limit']) if expected_config is None else expected_config
+    require(cfg == saved, 'configuration')
     require(v2.fitted_variance(cfg['v2'], cfg['environment']) == cfg['fit'], 'fitted_variance')
     execution = closing.read(out/'execution.json')
     check_timing(closing.read(out/'timing.json'), cfg, execution['max_wall_seconds'])

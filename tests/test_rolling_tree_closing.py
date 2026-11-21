@@ -154,3 +154,23 @@ class ClosingTests(unittest.TestCase):
             rehash()
             with self.assertRaisesRegex(ValueError, 'summary_replay'):
                 closing_replay.verify(out, expected_config=cfg)
+
+    def test_amended_budget_admits_the_same_timing_without_opening_test_paths(self):
+        with tempfile.TemporaryDirectory() as folder:
+            with (patch.object(closing, 'trajectory'), patch.object(closing, 'formal') as formal,
+                  patch('rolling_tree.closing.time.perf_counter', side_effect=[0, 0, 10, 10, 30, 30, 80, 80, 81])):
+                closing.run(folder, max_wall_seconds=14400)
+            _, cfg, gate, _, limit = formal.call_args.args
+            self.assertEqual(limit, 14400)
+            self.assertEqual(cfg['formal_limit'], 14400)
+            self.assertEqual(cfg['amendment_sha256'], closing.file_hash(closing.AMENDMENT))
+            self.assertEqual(gate['estimated_seconds'], 8060)
+            closing_replay.check_timing(gate, cfg, limit)
+            with self.assertRaisesRegex(ValueError, 'amended_wall_budget'):
+                closing_replay.check_timing(gate, cfg, 7200)
+            with self.assertRaisesRegex(ValueError, 'amended_wall_budget'):
+                closing_replay.check_timing(gate, dict(cfg, amendment_sha256='altered'), limit)
+            with self.assertRaises(ValueError):
+                closing.run(folder, max_wall_seconds=14401)
+            self.assertEqual(closing.settings()['formal_limit'], 7200)
+            self.assertNotIn('amendment_sha256', closing.settings())
