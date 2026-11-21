@@ -1,0 +1,168 @@
+{
+  "estimated_formal_wall_seconds": 5061.509703920689,
+  "formal": {
+    "active_wall_seconds": 152.86808230003226,
+    "completed_observations": 44,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 27.800825400016038,
+      "mean": 3.4742745977280056,
+      "p95": 11.795629500020006
+    },
+    "observations": 44,
+    "solves": 289,
+    "status_counts": {
+      "0": 289
+    }
+  },
+  "formal_wall_seconds": 707.177932599996,
+  "results": {
+    "across_seeds": {
+      "above_half_percent_pairs": 37,
+      "archived_changed": 53,
+      "archived_comparisons": 132,
+      "both_directions": {
+        "above_half_percent": 55,
+        "excess": {
+          "count": 106,
+          "max": 2.5851851851851855,
+          "median": 0.26558641975308817,
+          "p90": 1.0658950617283978
+        },
+        "material": 106,
+        "planned": 106,
+        "relative_excess": {
+          "count": 106,
+          "max": 0.09181794264667194,
+          "median": 0.005088776772588151,
+          "p90": 0.01651950767068937
+        },
+        "resolved": 106
+      },
+      "forward": {
+        "above_half_percent": 28,
+        "excess": {
+          "count": 53,
+          "max": 2.5851851851851855,
+          "median": 0.2716049382716008,
+          "p90": 1.1898765432098741
+        },
+        "material": 53,
+        "planned": 53,
+        "relative_excess": {
+          "count": 53,
+          "max": 0.09181794264667194,
+          "median": 0.0050061823336047095,
+          "p90": 0.01651950767068937
+        },
+        "resolved": 53
+      },
+      "half_percent_resolved_pairs": 53,
+      "material_change_rate": 0.4015151515151515,
+      "material_changes": 53,
+      "material_share_of_changes": 1.0,
+      "resolved_changes": 53,
+      "reverse": {
+        "above_half_percent": 27,
+        "excess": {
+          "count": 53,
+          "max": 2.5851851851851855,
+          "median": 0.25617283950617065,
+          "p90": 0.8800617283950688
+        },
+        "material": 53,
+        "planned": 53,
+        "relative_excess": {
+          "count": 53,
+          "max": 0.09181794264667194,
+          "median": 0.005171371211571594,
+          "p90": 0.012460250771116153
+        },
+        "resolved": 53
+      },
+      "unresolved_changes": 0
+    },
+    "across_tiers": {
+      "above_half_percent_pairs": 12,
+      "archived_changed": 44,
+      "archived_comparisons": 132,
+      "both_directions": {
+        "above_half_percent": 28,
+        "excess": {
+          "count": 88,
+          "max": 0.9845679012345698,
+          "median": 0.1679012345679105,
+          "p90": 0.5554938271604997
+        },
+        "material": 88,
+        "planned": 88,
+        "relative_excess": {
+          "count": 88,
+          "max": 0.021332912832411864,
+          "median": 0.003260279296251495,
+          "p90": 0.010924250588184697
+        },
+        "resolved": 88
+      },
+      "forward": {
+        "above_half_percent": 12,
+        "excess": {
+          "count": 44,
+          "max": 0.8114197530864118,
+          "median": 0.16481481481481808,
+          "p90": 0.48558641975308703
+        },
+        "material": 44,
+        "planned": 44,
+        "relative_excess": {
+          "count": 44,
+          "max": 0.021332912832411864,
+          "median": 0.0027693751404700056,
+          "p90": 0.007632975466905843
+        },
+        "resolved": 44
+      },
+      "half_percent_resolved_pairs": 44,
+      "material_change_rate": 0.3333333333333333,
+      "material_changes": 44,
+      "material_share_of_changes": 1.0,
+      "resolved_changes": 44,
+      "reverse": {
+        "above_half_percent": 16,
+        "excess": {
+          "count": 44,
+          "max": 0.9845679012345698,
+          "median": 0.17345679012346693,
+          "p90": 0.572345679012355
+        },
+        "material": 44,
+        "planned": 44,
+        "relative_excess": {
+          "count": 44,
+          "max": 0.019033655086275938,
+          "median": 0.0037285772617516137,
+          "p90": 0.013318126286830108
+        },
+        "resolved": 44
+      },
+      "unresolved_changes": 0
+    },
+    "observations": 44
+  },
+  "stop_reason": null,
+  "trial": {
+    "active_wall_seconds": 103.72387840008014,
+    "completed_observations": 12,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 30.683652000006987,
+      "mean": 8.643656533340012,
+      "p95": 22.45588316501088
+    },
+    "observations": 12,
+    "solves": 127,
+    "status_counts": {
+      "0": 127
+    }
+  }
+}

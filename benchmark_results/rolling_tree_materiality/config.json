@@ -1,0 +1,101 @@
+{
+  "amendment_sha256": "fff9616ef5d48c855db7b0a76ac406dd39add3055002eae6289b575c0d159ccb",
+  "baseline_online": {
+    "12": {
+      "max": 29.253226399996493,
+      "mean": 1.4455929886364285,
+      "p95": 4.483875695003734
+    },
+    "3": {
+      "max": 13.316160200003651,
+      "mean": 0.4854652106063661,
+      "p95": 1.0896840149980536
+    }
+  },
+  "groups": {
+    "a": [
+      924601,
+      924611,
+      924617
+    ],
+    "b": [
+      924623,
+      924629,
+      924631
+    ]
+  },
+  "max_action_change_rate": 0.1,
+  "max_failure_rate": 0.05,
+  "max_wall_seconds": 10800.0,
+  "observations": 44,
+  "protocol_sha256": "1f419a3dfea40d299e1ce906623838a033b194210fecddac9b93f52e5feb674f",
+  "schema": "rolling-tree-materiality-and-ensemble",
+  "single_tree_config": {
+    "audit_states": 132,
+    "branching": [
+      9,
+      3
+    ],
+    "fitted_variance": 0.07659418132480351,
+    "larger_tiers": [
+      6,
+      9,
+      12
+    ],
+    "max_action_change_rate": 0.1,
+    "max_failure_rate": 0.05,
+    "max_formal_wall_seconds": 3600.0,
+    "observations": 44,
+    "online_p95_limit_seconds": 10.0,
+    "paced_carbon": true,
+    "pilot_sha256": {
+      "audit.jsonl": "7af2d2a02f74e079171cffebf7b0db91d2a5906412217f0584aabff148f69abd",
+      "config.json": "3f7f9e8ace31695fe5adc8ed9f5434def102590211680b4a7cf2b46a8383be3b",
+      "summary.json": "4f5a2f3ea5dcf8d0c6b6684a17264afee476a9573ef11aa0f5a79a68a120d535",
+      "tasks.json": "d960cdcac13c726d9b9f006435404e48940e282756362c79a0f792088d9998cc",
+      "traces.jsonl": "6c2e052165980f86375b0a0f4835dbf81f75350788be450a2c957b28720c00b4"
+    },
+    "prior_strength": 192,
+    "protocol_sha256": "4456069e578e22c253bf8900abf456ae8db59db252ffae442f773c93448013dc",
+    "reference_tiers": [
+      1,
+      3
+    ],
+    "retries": 0,
+    "sampler_seeds": [
+      924601,
+      924611,
+      924617
+    ],
+    "schema": "rolling-tree-first-action-stability",
+    "solver": {
+      "backend": "scipy.optimize.milp (HiGHS)",
+      "mip_rel_gap": 0.0,
+      "time_limit_seconds": 30.0
+    },
+    "split": "development",
+    "start_guard_seconds": 45.0,
+    "variance_cap": 2.0
+  },
+  "single_tree_sha256": {
+    "config.json": "fbe11ced808b8239243fd020d614d047a61221b876afdb08d742c1ec43729fda",
+    "runtime.json": "b6ce269789f18fd29e2f6d5a5cf3b19289fafd44c16decae6f477b4779156dde",
+    "states.jsonl": "fadd7246e78143b71d938cc270d17be705b4ba4e08f1774d9495fe4defadb14c",
+    "summary.json": "d469c2c37cdc61d7a8bf8e78b2b4a99fb1f10e3eb2c771bc16275145572ccdd1",
+    "timing.jsonl": "3db3a05fcf3d40573eafe71a52eef5d304183a4babc5dd98dd861f76204c4db1"
+  },
+  "start_guard_seconds": 45.0,
+  "tie_tolerance": {
+    "absolute": 1e-07,
+    "relative": 1e-06
+  },
+  "tiers": [
+    3,
+    12
+  ],
+  "trial_periods": [
+    0,
+    5,
+    6
+  ]
+}

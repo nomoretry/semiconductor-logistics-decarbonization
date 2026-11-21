@@ -1,0 +1,121 @@
+{
+  "estimated_formal_wall_seconds": 5061.509703920689,
+  "formal": {
+    "active_wall_seconds": 554.1198794000084,
+    "completed_observations": 44,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 171.81004969999776,
+      "mean": 12.593633622727463,
+      "p95": 31.075774759989876
+    },
+    "observations": 44,
+    "solves": 957,
+    "status_counts": {
+      "0": 957
+    }
+  },
+  "formal_wall_seconds": 707.177932599996,
+  "results": {
+    "comparisons": {
+      "across_groups": {
+        "change_rate": 0.38636363636363635,
+        "changed": 17,
+        "comparable": 44,
+        "expected": 44,
+        "material": 17,
+        "material_comparable": 44,
+        "material_missing": 0,
+        "material_rate": 0.38636363636363635,
+        "missing": 0
+      },
+      "across_tiers": {
+        "change_rate": 0.45454545454545453,
+        "changed": 20,
+        "comparable": 44,
+        "expected": 44,
+        "material": 19,
+        "material_comparable": 44,
+        "material_missing": 0,
+        "material_rate": 0.4318181818181818,
+        "missing": 0
+      }
+    },
+    "conclusion": "unstable",
+    "gates": {
+      "across_groups": false,
+      "across_tiers": false
+    },
+    "observations": 44,
+    "online_seconds": {
+      "12": {
+        "by_group": {
+          "a": {
+            "count": 44,
+            "seconds": {
+              "max": 55.82871299999533,
+              "mean": 4.11834910227216,
+              "p95": 11.028634415003765
+            }
+          },
+          "b": {
+            "count": 44,
+            "seconds": {
+              "max": 54.8397549999936,
+              "mean": 4.763152788635952,
+              "p95": 15.09817932000588
+            }
+          }
+        },
+        "count": 88,
+        "seconds": {
+          "max": 55.82871299999533,
+          "mean": 4.440750945454056,
+          "p95": 12.675695529997752
+        }
+      },
+      "3": {
+        "by_group": {
+          "a": {
+            "count": 44,
+            "seconds": {
+              "max": 33.7619956000126,
+              "mean": 1.6837572704561437,
+              "p95": 2.4226296200038635
+            }
+          },
+          "b": {
+            "count": 44,
+            "seconds": {
+              "max": 27.379532299994025,
+              "mean": 1.614862184092503,
+              "p95": 2.682569495013741
+            }
+          }
+        },
+        "count": 88,
+        "seconds": {
+          "max": 33.7619956000126,
+          "mean": 1.6493097272743233,
+          "p95": 2.592296154993526
+        }
+      }
+    }
+  },
+  "stop_reason": null,
+  "trial": {
+    "active_wall_seconds": 323.67892990008113,
+    "completed_observations": 12,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 165.67809810000472,
+      "mean": 26.973244158340094,
+      "p95": 91.55570101500479
+    },
+    "observations": 12,
+    "solves": 327,
+    "status_counts": {
+      "0": 327
+    }
+  }
+}
