@@ -17,6 +17,7 @@ Schedule = list[list[list[int]]]
 Weights = dict[int, float]
 Row = tuple[Weights, float, float]
 INF = float("inf")
+PRESOLVE = False
 
 
 class PlannerMismatch(ValueError):
@@ -181,11 +182,11 @@ class Model:
         integrality = np.r_[np.ones(self.nq), np.zeros(self.size - self.nq), np.ones(binaries)]
         bounds = Bounds(np.zeros(size), self.ub + [1.0] * binaries)
         constraints = LinearConstraint(mat, lb, ub)
-        options = {"time_limit": 30.0, "mip_rel_gap": 0.0}
+        options = {"time_limit": 30.0, "mip_rel_gap": 0.0, "presolve": PRESOLVE}
         self.counts[label] += 1
         res = milp(c, integrality=integrality, bounds=bounds, constraints=constraints, options=options.copy())
         statuses = [int(res.status)]
-        if res.status == 2:
+        if res.status == 2 and options["presolve"]:
             self.counts[label] += 1
             res = milp(c, integrality=integrality, bounds=bounds, constraints=constraints,
                        options=dict(options, presolve=False))
@@ -210,7 +211,9 @@ class Model:
 
         if res.status == 2:
             if endpoint is not None:
-                raise fail("face endpoint infeasible after presolve-off retry")
+                if len(statuses) > 1:
+                    raise fail("face endpoint infeasible after presolve-off retry")
+                raise fail("face endpoint infeasible with presolve disabled")
             return None
         if res.status != 0 or res.x is None:
             raise fail(f"{label}: {res.status} {res.message}")

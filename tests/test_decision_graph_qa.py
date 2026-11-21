@@ -17,6 +17,7 @@ from decision_graph_qa.planner import (
     feasible_plan,
     scenarios,
     solve_counts,
+    tolerance,
 )
 from decision_graph_qa.replay import recheck, score, verify, verify_forecasts
 from decision_graph_qa.scoring import answer_map, grade_graph, matches
@@ -33,6 +34,10 @@ class GraphTests(unittest.TestCase):
             env.step(base_stock(env.observe(), 0)[0])
         cls.obs = env.observe()
         cls.graph = make_graph(cls.task, "base_stock", cls.obs, Counter())
+        fixture = Path(__file__).with_name("fixtures") / "decision_graph_qa_gold_observation.json"
+        affected_obs = read(fixture)
+        affected_task = next(t for t in generate(read(CONFIG), "train", [5101]) if t["id"] == "train-volatile-5101")
+        cls.affected_graph = make_graph(affected_task, "base_stock", affected_obs, Counter())
 
     def test_future_changes_only_hindsight(self):
         changed = deepcopy(self.task)
@@ -78,6 +83,10 @@ class GraphTests(unittest.TestCase):
         self.assertEqual(audit["load_ranges"][1], [4, 4])
         self.assertEqual(audit["emission_range"], [16, 16])
         self.assertFalse(audit["other_action"])
+        self.assertEqual(solve_counts(model.counts)["presolve_retry_recovered"], {})
+        model.counts.clear()
+        with patch("decision_graph_qa.planner.PRESOLVE", True):
+            self.assertEqual(model.audit(plan, info["objective"]), audit)
         counts = solve_counts(model.counts)
         recovered = counts["presolve_retry_recovered"].get("face_endpoint", 0)
         self.assertGreaterEqual(recovered, 1)
@@ -86,15 +95,25 @@ class GraphTests(unittest.TestCase):
     def test_endpoint_failures_report_status_and_cost(self):
         model = Model(self.obs, scenarios(self.obs))
         unavailable = SimpleNamespace(status=2, x=None, fun=None, message="infeasible")
-        with patch("decision_graph_qa.planner.milp", return_value=unavailable) as milp, self.assertRaisesRegex(
-            AuditFailure, "infeasible after presolve-off retry"
-        ) as ctx:
+        with (
+            patch("decision_graph_qa.planner.PRESOLVE", True),
+            patch("decision_graph_qa.planner.milp", return_value=unavailable) as milp,
+            self.assertRaisesRegex(AuditFailure, "infeasible after presolve-off retry") as ctx,
+        ):
             model.optimize("face_endpoint", endpoint=("load.1.max", 0.0))
         self.assertEqual(ctx.exception.diagnostics, {
             "endpoint": "load.1.max", "statuses": [2, 2], "solver_message": "infeasible",
             "plan": None, "model_objective": None, "physical_cost": None, "ceiling": 0.0,
         })
         self.assertFalse(milp.call_args.kwargs["options"]["presolve"])
+        with (
+            patch("decision_graph_qa.planner.milp", return_value=unavailable) as milp,
+            self.assertRaisesRegex(AuditFailure, "infeasible with presolve disabled") as ctx,
+        ):
+            model.optimize("face_endpoint", endpoint=("load.1.max", 0.0))
+        self.assertEqual(ctx.exception.diagnostics["statuses"], [2])
+        self.assertFalse(milp.call_args.kwargs["options"]["presolve"])
+        self.assertEqual(milp.call_count, 1)
         with self.assertRaisesRegex(AuditFailure, "replay above ceiling") as ctx:
             model.optimize("face_endpoint", target={}, endpoint=("load.1.min", -1.0))
         diagnostics = ctx.exception.diagnostics
@@ -128,6 +147,38 @@ class GraphTests(unittest.TestCase):
         self.assertEqual([r["id"] for r in changed if not r["correct"]],
                          ["P1.stock.0", "P2.capacity", "P3.emission", "B", "M"])
         self.assertEqual(sum(r["violation"] for r in changed), 3)
+
+    def test_presolve_false_optimum(self):
+        graph = self.affected_graph
+        self.assertEqual(graph["id"], "train-volatile-5101/base_stock/5")
+        answers = answer_map(graph)
+        self.assertEqual(answers["P3.load.1"], 3)
+        results = grade_graph(graph, answers, Counter())
+        route = next(r for r in results if r["id"] == "P3.load.1")
+        self.assertLessEqual(abs(route["excess"]), tolerance(graph["objective"]))
+        self.assertTrue(all(row["correct"] and not row["violation"] for row in results))
+
+    def test_known_feasible_point_rejects_contradictory_solver_result(self):
+        graph = self.affected_graph
+        answers = answer_map(graph)
+        node = "P3.load.1"
+        worse = [
+            [[2, 3], [3, 0], [0, 0]],
+            [[1, 0], [2, 0], [3, 1]],
+            [[1, 0], [2, 0], [0, 0]],
+            *[[[0, 0], [0, 0], [0, 0]]] * 3,
+        ]
+        self.assertTrue(feasible_plan(graph["observation"], worse))
+        with (
+            patch("decision_graph_qa.scoring.Model.optimize", return_value=worse),
+            self.assertRaisesRegex(AuditFailure, rf"{graph['id']} P3\.load\.1: known feasible point"),
+        ):
+            grade_graph(graph, {node: answers[node]}, Counter())
+        with (
+            patch("decision_graph_qa.scoring.Model.optimize", return_value=None),
+            self.assertRaisesRegex(AuditFailure, "constrained cost=None"),
+        ):
+            grade_graph(graph, {node: answers[node]}, Counter())
 
     def test_alternate_optimal_and_suboptimal(self):
         task = deepcopy(self.task)

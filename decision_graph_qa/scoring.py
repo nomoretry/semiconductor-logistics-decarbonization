@@ -9,9 +9,11 @@ import numpy as np
 
 from .planner import (
     INF,
+    AuditFailure,
     Model,
     Record,
     Row,
+    Schedule,
     allowance,
     feasible_plan,
     physical_cost,
@@ -31,7 +33,8 @@ def matches(expected: Any, reply: Any) -> bool:
     return bool(expected == reply)
 
 
-def constrained(model: Model, key: str, reply: Any) -> tuple[bool, float | None]:
+def constrained(model: Model, key: str, reply: Any, *, graph_id: str,
+                reference_plan: Schedule, reference_objective: float) -> tuple[bool, float | None]:
     rows: list[Row] = []
     if key == "B":
         if not feasible_plan(model.obs, [reply], first=True):
@@ -54,7 +57,20 @@ def constrained(model: Model, key: str, reply: Any) -> tuple[bool, float | None]
             return False, None
         rows.append((terms, reply, reply))
     plan = model.optimize("score_constraint", tuple(rows))
-    return (False, None) if plan is None else (True, model.value(plan))
+    value = None if plan is None else model.value(plan)
+    if value is None or value > reference_objective + tolerance(reference_objective):
+        first = [q for sku in reference_plan[0] for q in sku]
+        if all(lo <= sum(weight * first[k] for k, weight in terms.items()) <= hi
+               for terms, lo, hi in rows):
+            if not feasible_plan(model.obs, reference_plan):
+                raise AuditFailure(f"{graph_id} {key}: invalid reference schedule")
+            known = model.value(reference_plan)
+            if abs(known - reference_objective) > tolerance(reference_objective):
+                raise AuditFailure(f"{graph_id} {key}: reference replay={known}, "
+                                   f"reference optimum={reference_objective}")
+            raise AuditFailure(f"{graph_id} {key}: known feasible point at {known}, "
+                               f"reference optimum={reference_objective}, constrained cost={value}")
+    return value is not None, value
 
 
 def grade_graph(graph: Record, answers: Record, counts: Counter[str]) -> list[Record]:
@@ -64,6 +80,7 @@ def grade_graph(graph: Record, answers: Record, counts: Counter[str]) -> list[Re
     expected_ids = {n["id"] for n in graph["nodes"]}
     if answers.keys() - expected_ids:
         raise ValueError(f"unknown node IDs for {graph['id']}")
+    reference_plan = next(n["answer"] for n in graph["nodes"] if n["id"] == "M")
     out: list[Record] = []
     for node in graph["nodes"]:
         key, stage = node["id"], node["stage"]
@@ -82,7 +99,8 @@ def grade_graph(graph: Record, answers: Record, counts: Counter[str]) -> list[Re
             if feasible:
                 row["l1"] = int(np.abs(np.subtract(reply, node["answer"])).sum())
         else:
-            feasible, value = constrained(model, key, reply)
+            feasible, value = constrained(model, key, reply, graph_id=graph["id"],
+                                          reference_plan=reference_plan, reference_objective=graph["objective"])
         row["violation"] = not feasible
         if value is not None:
             row["excess"] = value - graph["objective"]

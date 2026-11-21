@@ -19,6 +19,7 @@ from rolling_inventory.planning import base_stock
 
 from .graph import compact, make_graph
 from .planner import (
+    PRESOLVE,
     RETRY_OUTCOMES,
     AuditFailure,
     PlannerMismatch,
@@ -145,6 +146,7 @@ def environment() -> Record:
         except PackageNotFoundError:
             packages[package] = None
     return {"python": sys.version, "platform": platform.platform(), "processor": platform.processor(),
+            "extended_planner_presolve": PRESOLVE, "reference_planner_presolve": True,
             "packages": packages, "sha256_config": digest(CONFIG),
             "sha256_protocol": digest(ROOT / "docs" / "decision_graph_qa_protocol.md"),
             "sha256_amendment": digest(ROOT / "docs" / "decision_graph_qa_protocol_amendment.md"),
@@ -226,6 +228,7 @@ def build(directory: Path, *, pilot: bool, pilot_evidence: Path | None = None) -
         status = "over_budget"
         stop = "estimated formal wall time exceeds 3600 seconds"
     summary.update(phase="pilot" if pilot else "formal", status=status, stop_reason=stop,
+                   extended_planner_presolve=PRESOLVE, reference_planner_presolve=True,
                    wall_seconds=time.perf_counter() - start)
     write(directory / "summary.json", summary)
     write(directory / "manifest.json", {"algorithm": "SHA256", "files": {
