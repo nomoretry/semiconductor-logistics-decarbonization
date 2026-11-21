@@ -1,0 +1,9 @@
+{
+  "max_wall_seconds": 14400,
+  "process_cpu_seconds": 4318.453125,
+  "recorded_trajectories": 960,
+  "scheduled_paths": 160,
+  "solves": 9120,
+  "stop_reason": null,
+  "wall_seconds": 4064.7383554000116
+}

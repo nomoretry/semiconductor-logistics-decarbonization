@@ -1,0 +1,2636 @@
+{
+  "comparisons": {
+    "downshift": {
+      "B0-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              26.075,
+              32.4
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 44.7,
+            "mean_difference": 29.225,
+            "relative": 0.6538031319910514,
+            "t95": [
+              25.870365432182453,
+              32.57963456781755
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12303660408140067,
+              -0.07035818514971154
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9884515259618807,
+            "mean_difference": -0.09552829848682763,
+            "relative": -0.0966443937590842,
+            "t95": [
+              -0.12339277813688088,
+              -0.06766381883677439
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              107.63734375,
+              150.09390625
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 64.57000000000001,
+            "mean_difference": 125.75124999999998,
+            "relative": 1.9475181973052496,
+            "t95": [
+              103.41414182393592,
+              148.08835817606405
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-B0": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              17.425,
+              23.425
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 73.925,
+            "mean_difference": 20.45,
+            "relative": 0.2766317213391951,
+            "t95": [
+              17.261741637428713,
+              23.638258362571285
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              0.0291680579224852,
+              0.06958559337963335
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.892923227475053,
+            "mean_difference": 0.048761067234203884,
+            "relative": 0.05460835347747318,
+            "t95": [
+              0.027241250027613333,
+              0.07028088444079443
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -22.74756249999999,
+              15.233781250000003
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 190.32125,
+            "mean_difference": -1.209999999999998,
+            "relative": -0.006357671568466464,
+            "t95": [
+              -21.175103033035665,
+              18.75510303303567
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "B1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              45.85,
+              53.475
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 44.7,
+            "mean_difference": 49.675,
+            "relative": 1.111297539149888,
+            "t95": [
+              45.70659859066866,
+              53.64340140933133
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.06140935614453766,
+              -0.032740462691003606
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9884515259618807,
+            "mean_difference": -0.04676723125262376,
+            "relative": -0.04731363149762321,
+            "t95": [
+              -0.06167208274385393,
+              -0.03186237976139359
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              118.41121874999999,
+              130.84271875000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 64.57000000000001,
+            "mean_difference": 124.54124999999996,
+            "relative": 1.928778844664704,
+            "t95": [
+              118.03838067512011,
+              131.0441193248798
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -15.85,
+              -10.65
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 94.375,
+            "mean_difference": -13.2,
+            "relative": -0.13986754966887416,
+            "t95": [
+              -15.952300784253612,
+              -10.447699215746386
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.023156197604200058,
+              -0.005682473675879913
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9416842947092569,
+            "mean_difference": -0.014291039560745405,
+            "relative": -0.015176041101075956,
+            "t95": [
+              -0.02359422832287674,
+              -0.004987850798614071
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -22.10134375,
+              -11.089843750000004
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 189.11124999999998,
+            "mean_difference": -16.9,
+            "relative": -0.0893653867763023,
+            "t95": [
+              -22.71371184848462,
+              -11.086288151515378
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              33.025,
+              39.8
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 44.7,
+            "mean_difference": 36.475,
+            "relative": 0.8159955257270693,
+            "t95": [
+              32.91148577227516,
+              40.038514227724846
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.07790811261242929,
+              -0.04545987057943114
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9884515259618807,
+            "mean_difference": -0.06105827081336916,
+            "relative": -0.06177163898245006,
+            "t95": [
+              -0.07805474180439509,
+              -0.044061799822343234
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              99.5396875,
+              116.05759375000001
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 64.57000000000001,
+            "mean_difference": 107.64124999999999,
+            "relative": 1.6670473904289913,
+            "t95": [
+              98.93904427634368,
+              116.34345572365629
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.55,
+              0.1
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 81.85,
+            "mean_difference": -0.675,
+            "relative": -0.00824679291386683,
+            "t95": [
+              -1.5392077487036122,
+              0.189207748703612
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.0015514551197935546,
+              0.006779901237449794
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.9248379398817255,
+            "mean_difference": 0.002555315266785904,
+            "relative": 0.0027629870668072886,
+            "t95": [
+              -0.0018109933358363998,
+              0.006921623869408208
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -3.4237499999999996,
+              0.7850312499999994
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 173.51000000000002,
+            "mean_difference": -1.2987499999999994,
+            "relative": -0.007485159356809401,
+            "t95": [
+              -3.4656956245867283,
+              0.8681956245867297
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2*": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.55,
+              0.1
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 81.85,
+            "mean_difference": -0.675,
+            "relative": -0.00824679291386683,
+            "t95": [
+              -1.5392077487036122,
+              0.189207748703612
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.0015514551197935546,
+              0.006779901237449794
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.9248379398817255,
+            "mean_difference": 0.002555315266785904,
+            "relative": 0.0027629870668072886,
+            "t95": [
+              -0.0018109933358363998,
+              0.006921623869408208
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -3.4237499999999996,
+              0.7850312499999994
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 173.51000000000002,
+            "mean_difference": -1.2987499999999994,
+            "relative": -0.007485159356809401,
+            "t95": [
+              -3.4656956245867283,
+              0.8681956245867297
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2*-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              33.55,
+              40.6
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 44.7,
+            "mean_difference": 37.15,
+            "relative": 0.8310961968680088,
+            "t95": [
+              33.459539438829516,
+              40.84046056117048
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.08011721028563246,
+              -0.04800012976861267
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9884515259618807,
+            "mean_difference": -0.06361358608015508,
+            "relative": -0.06435680901827888,
+            "t95": [
+              -0.0803158601868672,
+              -0.046911311973442955
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              101.15471875,
+              116.79143749999999
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 64.57000000000001,
+            "mean_difference": 108.94000000000001,
+            "relative": 1.6871612203809818,
+            "t95": [
+              100.63097426466037,
+              117.24902573533966
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -14.825,
+              -10.3
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 94.375,
+            "mean_difference": -12.525,
+            "relative": -0.13271523178807948,
+            "t95": [
+              -14.906181827940001,
+              -10.14381817206
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.02663991086340602,
+              -0.007238661157693679
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9416842947092569,
+            "mean_difference": -0.016846354827531308,
+            "relative": -0.01788959943601118,
+            "t95": [
+              -0.027016710557635378,
+              -0.006675999097427238
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -20.35503125,
+              -10.33996875
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 189.11124999999998,
+            "mean_difference": -15.601250000000004,
+            "relative": -0.08249773612093414,
+            "t95": [
+              -20.89350427010828,
+              -10.308995729891729
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              33.55,
+              40.6
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 44.7,
+            "mean_difference": 37.15,
+            "relative": 0.8310961968680088,
+            "t95": [
+              33.459539438829516,
+              40.84046056117048
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.08011721028563246,
+              -0.04800012976861267
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9884515259618807,
+            "mean_difference": -0.06361358608015508,
+            "relative": -0.06435680901827888,
+            "t95": [
+              -0.0803158601868672,
+              -0.046911311973442955
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              101.15471875,
+              116.79143749999999
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 64.57000000000001,
+            "mean_difference": 108.94000000000001,
+            "relative": 1.6871612203809818,
+            "t95": [
+              100.63097426466037,
+              117.24902573533966
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      }
+    },
+    "overall": {
+      "B0-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              27.00625,
+              31.66875
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 62.71875,
+            "mean_difference": 29.38125,
+            "relative": 0.46846038863976086,
+            "t95": [
+              27.02071418246717,
+              31.741785817532833
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.16401761538474766,
+              -0.13058416515788424
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.986875964933177,
+            "mean_difference": -0.14704487893843077,
+            "relative": -0.14900036495304395,
+            "t95": [
+              -0.16387946894332645,
+              -0.1302102889335351
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              167.4890390625,
+              210.02137500000003
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 100.77093750000002,
+            "mean_difference": 187.88093749999996,
+            "relative": 1.864435740711452,
+            "t95": [
+              166.37910857201487,
+              209.38276642798505
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "B1-B0": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              13.1625,
+              16.74375
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 92.1,
+            "mean_difference": 14.96875,
+            "relative": 0.16252714440825192,
+            "t95": [
+              13.155198456114245,
+              16.782301543885755
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              0.05591592407060922,
+              0.07734117599185787
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8398310859947464,
+            "mean_difference": 0.06655538298745603,
+            "relative": 0.07924853473198581,
+            "t95": [
+              0.05574186961488857,
+              0.07736889636002349
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -55.423078124999996,
+              -26.85803906250001
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 288.6518750000001,
+            "mean_difference": -40.60718750000001,
+            "relative": -0.1406787587989858,
+            "t95": [
+              -54.89038797629398,
+              -26.32398702370604
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "B1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              41.75625,
+              46.75625
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 62.71875,
+            "mean_difference": 44.35,
+            "relative": 0.707125062282013,
+            "t95": [
+              41.81844397793207,
+              46.88155602206793
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.09270527501327851,
+              -0.06883184098981678
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.986875964933177,
+            "mean_difference": -0.0804894959509747,
+            "relative": -0.08155989081811793,
+            "t95": [
+              -0.09245982905239634,
+              -0.06851916284955305
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              136.2375546875,
+              159.17072656249996
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 100.77093750000002,
+            "mean_difference": 147.27375,
+            "relative": 1.4614704760487118,
+            "t95": [
+              135.71241959446544,
+              158.83508040553457
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "M1-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -8.94375,
+              -6.2625
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 107.06875,
+            "mean_difference": -7.60625,
+            "relative": -0.07104080322222871,
+            "t95": [
+              -8.971257558591358,
+              -6.241242441408643
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.046596915657241327,
+              -0.032895704580197103
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9063864689822021,
+            "mean_difference": -0.0397172834203225,
+            "relative": -0.04381936930823974,
+            "t95": [
+              -0.046529613445553966,
+              -0.03290495339509103
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              1.1841874999999964,
+              13.694398437499999
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 248.04468749999995,
+            "mean_difference": 7.255312499999998,
+            "relative": 0.029250021732475116,
+            "t95": [
+              0.9874782826105744,
+              13.523146717389421
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "M1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              34.3934375,
+              39.05015624999999
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 62.71875,
+            "mean_difference": 36.74375,
+            "relative": 0.5858495266567015,
+            "t95": [
+              34.35221551938508,
+              39.13528448061492
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.1349853707954681,
+              -0.10605951460500798
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.986875964933177,
+            "mean_difference": -0.12020677937129723,
+            "relative": -0.12180535714985888,
+            "t95": [
+              -0.1347692999925532,
+              -0.10564425875004127
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              141.1060625,
+              168.98328124999998
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 100.77093750000002,
+            "mean_difference": 154.52906249999978,
+            "relative": 1.5334685409669802,
+            "t95": [
+              140.50861504635557,
+              168.549509953644
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "M1-M2": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -0.68125,
+              0.11265624999999772
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 99.74375,
+            "mean_difference": -0.28125,
+            "relative": -0.002819725546713453,
+            "t95": [
+              -0.6852195874492966,
+              0.12271958744929651
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -7.108960616885773e-06,
+              0.0038042397219468674
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.8647518283416643,
+            "mean_difference": 0.0019173572202150434,
+            "relative": 0.0022172340749969407,
+            "t95": [
+              -2.6082223487477844e-06,
+              0.0038373226627788346
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -1.6096953125000026,
+              2.107203125
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 255.09531250000015,
+            "mean_difference": 0.20468749999999866,
+            "relative": 0.0008023961631987987,
+            "t95": [
+              -1.6615916205368317,
+              2.070966620536829
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 160
+      },
+      "M1-M2*": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -0.68125,
+              0.11265624999999772
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 99.74375,
+            "mean_difference": -0.28125,
+            "relative": -0.002819725546713453,
+            "t95": [
+              -0.6852195874492966,
+              0.12271958744929651
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -7.108960616885773e-06,
+              0.0038042397219468674
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.8647518283416643,
+            "mean_difference": 0.0019173572202150434,
+            "relative": 0.0022172340749969407,
+            "t95": [
+              -2.6082223487477844e-06,
+              0.0038373226627788346
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -1.6096953125000026,
+              2.107203125
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 255.09531250000015,
+            "mean_difference": 0.20468749999999866,
+            "relative": 0.0008023961631987987,
+            "t95": [
+              -1.6615916205368317,
+              2.070966620536829
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 160
+      },
+      "M2*-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              34.65,
+              39.35
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 62.71875,
+            "mean_difference": 37.025,
+            "relative": 0.590333831589437,
+            "t95": [
+              34.629320869280484,
+              39.42067913071951
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.13685115987367386,
+              -0.10794209369702633
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.986875964933177,
+            "mean_difference": -0.1221241365915122,
+            "relative": -0.12374821247144409,
+            "t95": [
+              -0.1366434215602231,
+              -0.1076048516228013
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              141.381109375,
+              168.27260937499997
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 100.77093750000002,
+            "mean_difference": 154.3243749999999,
+            "relative": 1.5314373253697264,
+            "t95": [
+              140.95830860689514,
+              167.69044139310463
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "M2-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -8.61265625,
+              -6.01875
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 107.06875,
+            "mean_difference": -7.325,
+            "relative": -0.06841398634055222,
+            "t95": [
+              -8.63245761565824,
+              -6.01754238434176
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.04875171690740114,
+              -0.03461401427239022
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9063864689822021,
+            "mean_difference": -0.04163464064053754,
+            "relative": -0.045934755278606305,
+            "t95": [
+              -0.048722238448615424,
+              -0.03454704283245966
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              1.162476562500002,
+              13.369734374999995
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 248.04468749999995,
+            "mean_difference": 7.050624999999998,
+            "relative": 0.028424817604690684,
+            "t95": [
+              0.884109001238885,
+              13.217140998761112
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      },
+      "M2-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              34.65,
+              39.35
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 62.71875,
+            "mean_difference": 37.025,
+            "relative": 0.590333831589437,
+            "t95": [
+              34.629320869280484,
+              39.42067913071951
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.13685115987367386,
+              -0.10794209369702633
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.986875964933177,
+            "mean_difference": -0.1221241365915122,
+            "relative": -0.12374821247144409,
+            "t95": [
+              -0.1366434215602231,
+              -0.1076048516228013
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              141.381109375,
+              168.27260937499997
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 100.77093750000002,
+            "mean_difference": 154.3243749999999,
+            "relative": 1.5314373253697264,
+            "t95": [
+              140.95830860689514,
+              167.69044139310463
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 160
+      }
+    },
+    "stable": {
+      "B0-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              32.2,
+              39.25
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.2,
+            "mean_difference": 35.825,
+            "relative": 0.6051520270270271,
+            "t95": [
+              32.13998879418918,
+              39.51001120581083
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.1535230251399196,
+              -0.1000090111211298
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.996807334044729,
+            "mean_difference": -0.12622009327748032,
+            "relative": -0.12662436256896215,
+            "t95": [
+              -0.15429452584993048,
+              -0.09814566070503018
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              127.74996875000002,
+              163.83156250000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 81.965,
+            "mean_difference": 144.82625,
+            "relative": 1.7669279570548402,
+            "t95": [
+              125.78398400790127,
+              163.8685159920987
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-B0": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              9.45,
+              16.55
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.025,
+            "mean_difference": 13.1,
+            "relative": 0.13785845830044724,
+            "t95": [
+              9.400844257424266,
+              16.799155742575735
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              0.04588406950767911,
+              0.0883713897036809
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8705872407672486,
+            "mean_difference": 0.06626895689174989,
+            "relative": 0.07611983473746646,
+            "t95": [
+              0.0439067566282519,
+              0.08863115715524787
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -37.36628125000001,
+              -6.059843750000003
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 226.79125,
+            "mean_difference": -20.595000000000002,
+            "relative": -0.09081038179383025,
+            "t95": [
+              -37.05898154709904,
+              -4.131018452900964
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              44.3,
+              53.275
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.2,
+            "mean_difference": 48.925,
+            "relative": 0.8264358108108107,
+            "t95": [
+              44.22112839110959,
+              53.62887160889041
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.07794408384609851,
+              -0.04305700926198638
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.996807334044729,
+            "mean_difference": -0.05995113638573041,
+            "relative": -0.06014315338398209,
+            "t95": [
+              -0.07808259053058283,
+              -0.04181968224087798
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              114.98859374999998,
+              133.99153124999998
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 81.965,
+            "mean_difference": 124.23124999999997,
+            "relative": 1.5156621728786674,
+            "t95": [
+              114.33122038594533,
+              134.13127961405462
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -9.95,
+              -4.775
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 108.125,
+            "mean_difference": -7.325,
+            "relative": -0.0677456647398844,
+            "t95": [
+              -10.060274934418192,
+              -4.589725065581809
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.052060119261389357,
+              -0.025990119074980413
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9368561976589985,
+            "mean_difference": -0.03906455869452691,
+            "relative": -0.04169749721690566,
+            "t95": [
+              -0.052791151540837945,
+              -0.02533796584821587
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -3.4877812499999985,
+              14.101281250000001
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 206.19625000000002,
+            "mean_difference": 5.306250000000001,
+            "relative": 0.02573397915820487,
+            "t95": [
+              -4.001940564238866,
+              14.614440564238869
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              36.65,
+              46.425
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.2,
+            "mean_difference": 41.6,
+            "relative": 0.7027027027027027,
+            "t95": [
+              36.5887020617782,
+              46.6112979382218
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.11655012630253712,
+              -0.0814717455189391
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.996807334044729,
+            "mean_difference": -0.09901569508025732,
+            "relative": -0.09933283163004322,
+            "t95": [
+              -0.11709232179109175,
+              -0.08093906836942288
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              117.80121874999998,
+              141.67015625000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 81.965,
+            "mean_difference": 129.53750000000005,
+            "relative": 1.5804001708046123,
+            "t95": [
+              117.2076938874923,
+              141.8673061125078
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.125,
+              0.9
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 100.925,
+            "mean_difference": -0.125,
+            "relative": -0.0012385434728758979,
+            "t95": [
+              -1.1724904891260586,
+              0.9224904891260586
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              3.373983191940211e-05,
+              0.0060592624932684185
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8948977411804828,
+            "mean_difference": 0.0028938977839891187,
+            "relative": 0.0032337748223296475,
+            "t95": [
+              -0.00032364321414847085,
+              0.006111438782126708
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -4.31753125,
+              0.952593749999997
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 212.88875,
+            "mean_difference": -1.386250000000001,
+            "relative": -0.006511616983048664,
+            "t95": [
+              -4.161505219016232,
+              1.3890052190162294
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2*": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.125,
+              0.9
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 100.925,
+            "mean_difference": -0.125,
+            "relative": -0.0012385434728758979,
+            "t95": [
+              -1.1724904891260586,
+              0.9224904891260586
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              3.373983191940211e-05,
+              0.0060592624932684185
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8948977411804828,
+            "mean_difference": 0.0028938977839891187,
+            "relative": 0.0032337748223296475,
+            "t95": [
+              -0.00032364321414847085,
+              0.006111438782126708
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -4.31753125,
+              0.952593749999997
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 212.88875,
+            "mean_difference": -1.386250000000001,
+            "relative": -0.006511616983048664,
+            "t95": [
+              -4.161505219016232,
+              1.3890052190162294
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2*-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              36.9,
+              46.5
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.2,
+            "mean_difference": 41.725,
+            "relative": 0.7048141891891891,
+            "t95": [
+              36.75511897312136,
+              46.69488102687864
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12040614823336548,
+              -0.08375776658498324
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.996807334044729,
+            "mean_difference": -0.10190959286424643,
+            "relative": -0.10223599825527921,
+            "t95": [
+              -0.12082693914663108,
+              -0.08299224658186179
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              119.05740624999997,
+              143.39031250000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 81.965,
+            "mean_difference": 130.92375,
+            "relative": 1.5973128774476912,
+            "t95": [
+              118.32227568701893,
+              143.5252243129811
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -9.85,
+              -4.575
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 108.125,
+            "mean_difference": -7.2,
+            "relative": -0.06658959537572255,
+            "t95": [
+              -10.005154617227314,
+              -4.3948453827726865
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.056070500764778194,
+              -0.027986135702179248
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9368561976589985,
+            "mean_difference": -0.041958456478516024,
+            "relative": -0.04478644276822969,
+            "t95": [
+              -0.05673580542822037,
+              -0.027181107528811678
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -2.684031249999996,
+              16.091187499999982
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 206.19625000000002,
+            "mean_difference": 6.692500000000004,
+            "relative": 0.03245694332462401,
+            "t95": [
+              -3.2509767421010043,
+              16.635976742101015
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              36.9,
+              46.5
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.2,
+            "mean_difference": 41.725,
+            "relative": 0.7048141891891891,
+            "t95": [
+              36.75511897312136,
+              46.69488102687864
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12040614823336548,
+              -0.08375776658498324
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.996807334044729,
+            "mean_difference": -0.10190959286424643,
+            "relative": -0.10223599825527921,
+            "t95": [
+              -0.12082693914663108,
+              -0.08299224658186179
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              119.05740624999997,
+              143.39031250000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 81.965,
+            "mean_difference": 130.92375,
+            "relative": 1.5973128774476912,
+            "t95": [
+              118.32227568701893,
+              143.5252243129811
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      }
+    },
+    "upshift": {
+      "B0-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              16.125,
+              26.77562499999999
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 87.275,
+            "mean_difference": 21.65,
+            "relative": 0.2480664566026926,
+            "t95": [
+              16.022537706120488,
+              27.27746229387951
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.2574714782125646,
+              -0.18942825167106306
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9849965942016008,
+            "mean_difference": -0.22415801322387008,
+            "relative": -0.2275723738979663,
+            "t95": [
+              -0.2595775602007009,
+              -0.18873846624703927
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              242.73337499999997,
+              360.49815624999997
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 161.26375000000002,
+            "mean_difference": 299.85249999999996,
+            "relative": 1.8593918348047838,
+            "t95": [
+              237.9283920127755,
+              361.7766079872244
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-B0": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              12.8,
+              17.875
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 108.925,
+            "mean_difference": 15.5,
+            "relative": 0.142299747532706,
+            "t95": [
+              12.864723336961081,
+              18.13527666303892
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              0.0569849100805509,
+              0.09806579245691405
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.7608385809777306,
+            "mean_difference": 0.07708667564187448,
+            "relative": 0.10131804244576126,
+            "t95": [
+              0.05551271263577304,
+              0.09866063864797592
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -130.46134374999997,
+              -59.56953125
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 461.11625000000004,
+            "mean_difference": -93.13499999999996,
+            "relative": -0.20197726712081812,
+            "t95": [
+              -130.427389215425,
+              -55.84261078457492
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              31.524375,
+              42.575
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 87.275,
+            "mean_difference": 37.15,
+            "relative": 0.4256659982812947,
+            "t95": [
+              31.36852237248927,
+              42.93147762751073
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.17503339698849468,
+              -0.11963535167797486
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9849965942016008,
+            "mean_difference": -0.1470713375819956,
+            "relative": -0.14931151889028182,
+            "t95": [
+              -0.175907765100545,
+              -0.11823491006344616
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              172.40409375000004,
+              242.88640625000002
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 161.26375000000002,
+            "mean_difference": 206.71749999999997,
+            "relative": 1.2818596863833314,
+            "t95": [
+              169.85281515406314,
+              243.5821848459368
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -5.8,
+              -2.05
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 124.425,
+            "mean_difference": -3.85,
+            "relative": -0.030942334739803096,
+            "t95": [
+              -5.852558306561198,
+              -1.8474416934388027
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.08673791991335342,
+              -0.05766039183570939
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8379252566196047,
+            "mean_difference": -0.071982798128259,
+            "relative": -0.08590598929868185,
+            "t95": [
+              -0.08702627077047013,
+              -0.05693932548604787
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              23.81090624999998,
+              56.755031249999995
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 367.98125000000005,
+            "mean_difference": 39.98249999999999,
+            "relative": 0.10865363384683319,
+            "t95": [
+              22.545758221470983,
+              57.41924177852899
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              28.125,
+              38.3
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 87.275,
+            "mean_difference": 33.3,
+            "relative": 0.3815525637353193,
+            "t95": [
+              27.997102557219538,
+              38.60289744278046
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.24873814414161802,
+              -0.18896198830396257
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9849965942016008,
+            "mean_difference": -0.21905413571025453,
+            "relative": -0.22239075444500508,
+            "t95": [
+              -0.25038954098884303,
+              -0.18771873043166604
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              211.63271874999995,
+              284.51040624999996
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 161.26375000000002,
+            "mean_difference": 246.7,
+            "relative": 1.5297920332374757,
+            "t95": [
+              208.17904129249752,
+              285.22095870750246
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -0.5,
+              0.65
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 120.525,
+            "mean_difference": 0.05,
+            "relative": 0.00041485169052063887,
+            "t95": [
+              -0.5470036056413502,
+              0.6470036056413503
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.0035776094003941565,
+              0.0046734014704897875
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.7653420341826456,
+            "mean_difference": 0.00060042430870062,
+            "relative": 0.0007845176168088676,
+            "t95": [
+              -0.0036933861950935887,
+              0.004894234812494829
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -2.200062499999994,
+              10.266343750000004
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 404.20125,
+            "mean_difference": 3.762500000000002,
+            "relative": 0.009308481851552914,
+            "t95": [
+              -2.8016723784614666,
+              10.32667237846147
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2*": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -0.5,
+              0.65
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 120.525,
+            "mean_difference": 0.05,
+            "relative": 0.00041485169052063887,
+            "t95": [
+              -0.5470036056413502,
+              0.6470036056413503
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.0035776094003941565,
+              0.0046734014704897875
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.7653420341826456,
+            "mean_difference": 0.00060042430870062,
+            "relative": 0.0007845176168088676,
+            "t95": [
+              -0.0036933861950935887,
+              0.004894234812494829
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -2.200062499999994,
+              10.266343750000004
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 404.20125,
+            "mean_difference": 3.762500000000002,
+            "relative": 0.009308481851552914,
+            "t95": [
+              -2.8016723784614666,
+              10.32667237846147
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2*-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              28.0,
+              38.35
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 87.275,
+            "mean_difference": 33.25,
+            "relative": 0.38097966198796906,
+            "t95": [
+              27.895155912521115,
+              38.60484408747888
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.24937979531575447,
+              -0.18994062292751676
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9849965942016008,
+            "mean_difference": -0.21965456001895517,
+            "relative": -0.22300032437878473,
+            "t95": [
+              -0.2508117197717128,
+              -0.18849740026619752
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              210.15146875,
+              277.68737500000003
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 161.26375000000002,
+            "mean_difference": 242.9375,
+            "relative": 1.5064606893985784,
+            "t95": [
+              207.26140343710233,
+              278.61359656289767
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -6.0,
+              -2.0
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 124.425,
+            "mean_difference": -3.9,
+            "relative": -0.03134418324291742,
+            "t95": [
+              -5.996295014926272,
+              -1.8037049850737286
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.08753550634965222,
+              -0.05791439816008401
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8379252566196047,
+            "mean_difference": -0.07258322243695961,
+            "relative": -0.08662254999900358,
+            "t95": [
+              -0.08791744314132349,
+              -0.05724900173259573
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              20.08868749999999,
+              53.43434374999998
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 367.98125000000005,
+            "mean_difference": 36.219999999999985,
+            "relative": 0.0984289281043531,
+            "t95": [
+              18.67501651654252,
+              53.76498348345745
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              28.0,
+              38.35
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 87.275,
+            "mean_difference": 33.25,
+            "relative": 0.38097966198796906,
+            "t95": [
+              27.895155912521115,
+              38.60484408747888
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.24937979531575447,
+              -0.18994062292751676
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9849965942016008,
+            "mean_difference": -0.21965456001895517,
+            "relative": -0.22300032437878473,
+            "t95": [
+              -0.2508117197717128,
+              -0.18849740026619752
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              210.15146875,
+              277.68737500000003
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 161.26375000000002,
+            "mean_difference": 242.9375,
+            "relative": 1.5064606893985784,
+            "t95": [
+              207.26140343710233,
+              278.61359656289767
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      }
+    },
+    "volatile": {
+      "B0-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              25.7,
+              35.8
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.7,
+            "mean_difference": 30.825,
+            "relative": 0.5163316582914572,
+            "t95": [
+              25.537115235087423,
+              36.11288476491258
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.17488027913235302,
+              -0.11208470448212217
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9772484055244973,
+            "mean_difference": -0.142273110765545,
+            "relative": -0.1455854109981237,
+            "t95": [
+              -0.17511088622949064,
+              -0.10943533530159935
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              149.58206249999998,
+              219.05021875
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.28500000000001,
+            "mean_difference": 181.09375000000006,
+            "relative": 1.9005483549351947,
+            "t95": [
+              145.14355362629652,
+              217.0439463737036
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-B0": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              6.475,
+              15.050624999999991
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 90.525,
+            "mean_difference": 10.825,
+            "relative": 0.11958022645677988,
+            "t95": [
+              6.340040376780525,
+              15.309959623219473
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              0.05265926681753632,
+              0.09599894275322662
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.8349752947589522,
+            "mean_difference": 0.07410483218199597,
+            "relative": 0.08875092789827894,
+            "t95": [
+              0.05128688030090593,
+              0.096922784063086
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -78.86024999999998,
+              -20.843812500000016
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 276.37874999999997,
+            "mean_difference": -47.48875,
+            "relative": -0.17182489608915305,
+            "t95": [
+              -77.9831439189927,
+              -16.994356081007314
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "B1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              36.55,
+              46.525
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.7,
+            "mean_difference": 41.65,
+            "relative": 0.6976549413735342,
+            "t95": [
+              36.45888972949186,
+              46.84111027050814
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.08889166940664399,
+              -0.049171045731911035
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9772484055244973,
+            "mean_difference": -0.06816827858354904,
+            "relative": -0.06975532341438057,
+            "t95": [
+              -0.08875854377995465,
+              -0.04757801338714343
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              118.78846874999998,
+              151.3889375
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.28500000000001,
+            "mean_difference": 133.60500000000002,
+            "relative": 1.402161935246891,
+            "t95": [
+              116.66961381760105,
+              150.54038618239898
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -8.725,
+              -3.3
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 101.35,
+            "mean_difference": -6.05,
+            "relative": -0.05969412925505674,
+            "t95": [
+              -8.838980499693909,
+              -3.261019500306091
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.04394814654383338,
+              -0.023625514409116068
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9090801269409482,
+            "mean_difference": -0.03353073729775875,
+            "relative": -0.036884248488182864,
+            "t95": [
+              -0.0440868598880804,
+              -0.022974614707437106
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -6.969999999999999,
+              9.043781249999997
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 228.89000000000004,
+            "mean_difference": 0.6324999999999974,
+            "relative": 0.0027633361003101807,
+            "t95": [
+              -7.669628114787398,
+              8.934628114787392
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              30.474375000000002,
+              40.7
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.7,
+            "mean_difference": 35.6,
+            "relative": 0.5963149078726968,
+            "t95": [
+              30.30521959526638,
+              40.89478040473362
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12483484155293625,
+              -0.07988654199200826
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9772484055244973,
+            "mean_difference": -0.10169901588130781,
+            "relative": -0.10406669922037387,
+            "t95": [
+              -0.12525241622278374,
+              -0.07814561553983188
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              116.22821875,
+              155.01731249999997
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.28500000000001,
+            "mean_difference": 134.23750000000004,
+            "relative": 1.4087999160413498,
+            "t95": [
+              113.73938757368336,
+              154.73561242631672
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.1,
+              0.325
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 95.675,
+            "mean_difference": -0.375,
+            "relative": -0.003919519205644107,
+            "t95": [
+              -1.1230644092971516,
+              0.37306440929715146
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.002193325417241794,
+              0.0051921902114212505
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.8739295981218052,
+            "mean_difference": 0.001619791521384531,
+            "relative": 0.0018534576753844768,
+            "t95": [
+              -0.002235726915644427,
+              0.005475309958413489
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -1.712531250000005,
+              1.1574999999999889
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 229.78125,
+            "mean_difference": -0.258750000000007,
+            "relative": -0.0011260709914320988,
+            "t95": [
+              -1.754413725890225,
+              1.2369137258902112
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M1-M2*": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -1.1,
+              0.325
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 95.675,
+            "mean_difference": -0.375,
+            "relative": -0.003919519205644107,
+            "t95": [
+              -1.1230644092971516,
+              0.37306440929715146
+            ],
+            "t_contains_zero": true
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.002193325417241794,
+              0.0051921902114212505
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 0.8739295981218052,
+            "mean_difference": 0.001619791521384531,
+            "relative": 0.0018534576753844768,
+            "t95": [
+              -0.002235726915644427,
+              0.005475309958413489
+            ],
+            "t_contains_zero": true
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -1.712531250000005,
+              1.1574999999999889
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 229.78125,
+            "mean_difference": -0.258750000000007,
+            "relative": -0.0011260709914320988,
+            "t95": [
+              -1.754413725890225,
+              1.2369137258902112
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2*-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              30.874375,
+              40.95
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.7,
+            "mean_difference": 35.975,
+            "relative": 0.6025963149078727,
+            "t95": [
+              30.755203446279086,
+              41.19479655372091
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12632428392239461,
+              -0.08150472046907246
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9772484055244973,
+            "mean_difference": -0.10331880740269231,
+            "relative": -0.10572420156289766,
+            "t95": [
+              -0.12701033297313566,
+              -0.07962728183224896
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              116.40256249999999,
+              155.185
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.28500000000001,
+            "mean_difference": 134.49624999999997,
+            "relative": 1.4115154536390824,
+            "t95": [
+              114.0834351539308,
+              154.90906484606916
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      },
+      "M2-B1": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              -8.175,
+              -3.1
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 101.35,
+            "mean_difference": -5.675,
+            "relative": -0.055994079921065615,
+            "t95": [
+              -8.311657134684893,
+              -3.0383428653151063
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.046576894732199565,
+              -0.024552700703844747
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9090801269409482,
+            "mean_difference": -0.03515052881914328,
+            "relative": -0.03866604029440694,
+            "t95": [
+              -0.04668051042755208,
+              -0.023620547210734484
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              -6.723781249999991,
+              9.316437500000006
+            ],
+            "bootstrap_contains_zero": true,
+            "comparator_mean": 228.89000000000004,
+            "mean_difference": 0.8912500000000044,
+            "relative": 0.0038937917777098355,
+            "t95": [
+              -7.393748588375319,
+              9.176248588375328
+            ],
+            "t_contains_zero": true
+          }
+        },
+        "pairs": 40
+      },
+      "M2-LB": {
+        "metrics": {
+          "emissions": {
+            "bootstrap95": [
+              30.874375,
+              40.95
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 59.7,
+            "mean_difference": 35.975,
+            "relative": 0.6025963149078727,
+            "t95": [
+              30.755203446279086,
+              41.19479655372091
+            ],
+            "t_contains_zero": false
+          },
+          "immediate_fill_rate": {
+            "bootstrap95": [
+              -0.12632428392239461,
+              -0.08150472046907246
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 0.9772484055244973,
+            "mean_difference": -0.10331880740269231,
+            "relative": -0.10572420156289766,
+            "t95": [
+              -0.12701033297313566,
+              -0.07962728183224896
+            ],
+            "t_contains_zero": false
+          },
+          "total_cost": {
+            "bootstrap95": [
+              116.40256249999999,
+              155.185
+            ],
+            "bootstrap_contains_zero": false,
+            "comparator_mean": 95.28500000000001,
+            "mean_difference": 134.49624999999997,
+            "relative": 1.4115154536390824,
+            "t95": [
+              114.0834351539308,
+              154.90906484606916
+            ],
+            "t_contains_zero": false
+          }
+        },
+        "pairs": 40
+      }
+    }
+  },
+  "computation": {
+    "B0": {
+      "count": 1920,
+      "fallbacks": 0,
+      "incomplete": 0,
+      "mean": 0.00037724760416798137,
+      "nonoptimal": 0,
+      "p95": 0.0007836549993953668,
+      "solves": 0,
+      "timeouts": 0
+    },
+    "B1": {
+      "count": 1920,
+      "fallbacks": 0,
+      "incomplete": 0,
+      "mean": 0.010959126562541617,
+      "nonoptimal": 0,
+      "p95": 0.02067137001140508,
+      "solves": 1920,
+      "timeouts": 0
+    },
+    "LB": {
+      "count": 160,
+      "fallbacks": 0,
+      "incomplete": 0,
+      "mean": 0.010310108124758698,
+      "nonoptimal": 0,
+      "p95": 0.01841444499441422,
+      "solves": 160,
+      "timeouts": 0
+    },
+    "M1": {
+      "count": 1920,
+      "fallbacks": 0,
+      "incomplete": 0,
+      "mean": 0.25130513020865997,
+      "nonoptimal": 0,
+      "p95": 0.7297714949978398,
+      "solves": 1760,
+      "timeouts": 0
+    },
+    "M2": {
+      "count": 1920,
+      "fallbacks": 0,
+      "incomplete": 0,
+      "mean": 0.2708815334892885,
+      "nonoptimal": 0,
+      "p95": 0.794743345009919,
+      "solves": 1760,
+      "timeouts": 0
+    },
+    "M2*": {
+      "count": 1920,
+      "fallbacks": 16,
+      "incomplete": 0,
+      "mean": 1.5745101385418365,
+      "nonoptimal": 16,
+      "p95": 8.255640149979444,
+      "solves": 3520,
+      "timeouts": 16
+    }
+  },
+  "decision": "equivalent",
+  "first_divergence": {
+    "by_route": [
+      126,
+      24
+    ],
+    "by_sku": [
+      74,
+      71,
+      67
+    ],
+    "by_sku_route": [
+      [
+        73,
+        7
+      ],
+      [
+        66,
+        10
+      ],
+      [
+        66,
+        9
+      ]
+    ],
+    "by_t": {
+      "0": 26,
+      "1": 17,
+      "2": 25,
+      "3": 18,
+      "4": 10,
+      "5": 6,
+      "6": 13,
+      "7": 6,
+      "8": 6,
+      "9": 6
+    },
+    "divergent_D": {
+      "count": 133,
+      "mean": 0.2462406015037578,
+      "p95": 15.469999999999974
+    },
+    "identical_D": {
+      "count": 27,
+      "mean": 0.0,
+      "p95": 0.0
+    },
+    "resources": {
+      "M1": {
+        "carbon_binding_share": 0.15037593984962405,
+        "slow_full_share": 0.6090225563909775
+      },
+      "M2": {
+        "carbon_binding_share": 0.11278195488721804,
+        "slow_full_share": 0.5714285714285714
+      }
+    }
+  },
+  "margin": 5.101906250000003,
+  "primary_omissions": []
+}
