@@ -246,7 +246,7 @@ PPO − BC = +0.0298 个百分点，配对种子 × 分层情境自助法的近�
 
 #### 5.3 公告事实抽取（`notice_benchmark/`、`notice_facts/`、`real_notice_eval/`）
 
-合成留出 400 条：固定 LLM（gpt-6-luna）400/400，冻结规则 204/400（重复调用一致；合成数据，不证明广泛泛化）。真实材料：8 条数量案例，模型 7/8，规则 6/8；参考答案是大模型标注，未经人工复核。
+合成留出 400 条：固定 LLM（gpt-6-luna）400/400，冻结规则 204/400（重复调用一致；合成数据，不证明广泛泛化）。真实材料：8 条数量案例，模型 7/8，规则 6/8；参考答案为暂定标注，未经人工复核。
 
 ### 6. 实验与性能分析
 
@@ -579,7 +579,7 @@ PPO − BC = +0.0298 percentage points, approximate 95% interval from a paired s
 
 #### 5.3 Notice fact extraction (`notice_benchmark/`, `notice_facts/`, `real_notice_eval/`)
 
-400 synthetic hold-out notices: a fixed LLM (gpt-6-luna) 400/400, frozen rules 204/400 (repeat calls agree; synthetic data, no claim of broad generalisation). Real material: 8 quantity cases, model 7/8, rules 6/8; references are model-written and not reviewed by a person.
+400 synthetic hold-out notices: a fixed LLM (gpt-6-luna) 400/400, frozen rules 204/400 (repeat calls agree; synthetic data, no claim of broad generalisation). Real material: 8 quantity cases, model 7/8, rules 6/8; references are provisional and not reviewed by a person.
 
 ### 6. Experiments and performance
 

@@ -92,7 +92,7 @@ This document provides Chinese first and English second. The 60 original runs, t
 
 ### 3. C03：待人工复核
 
-任务、公告、预期行为、3 次原始回答、评分依据和复核表都在 [c03_review_case.md](c03_review_case.md)。冻结规则和修正评分都判为失败。回答在业务上看来合理，但这个判断来自大模型，尚未经过人工。复核完成之前，读法保持为“业务合理但不符合原评分规则”。
+任务、公告、预期行为、3 次原始回答、评分依据和复核表都在 [c03_review_case.md](c03_review_case.md)。冻结规则和修正评分都判为失败。回答在业务上看来合理，但这个判断尚未经过人工复核。复核完成之前，读法保持为“业务合理但不符合原评分规则”。
 
 ### 4. 怎样解读
 
@@ -218,7 +218,7 @@ The six `solve_plan` calls in the retest pass only `network`, `scenario` and `la
 
 ### 3. C03: pending human review
 
-The task, notice, expected behaviour, three raw answers, scoring basis and review form are in [c03_review_case.md](c03_review_case.md). The frozen and corrected scorers both fail it. The answers look reasonable for the business, but that judgement is the model's and no person has reviewed it. Until reviewed, the reading stays "reasonable for the business but not meeting the original scoring rule".
+The task, notice, expected behaviour, three raw answers, scoring basis and review form are in [c03_review_case.md](c03_review_case.md). The frozen and corrected scorers both fail it. The answers look reasonable for the business, but no person has reviewed that judgement. Until reviewed, the reading stays "reasonable for the business but not meeting the original scoring rule".
 
 ### 4. How to read this
 
