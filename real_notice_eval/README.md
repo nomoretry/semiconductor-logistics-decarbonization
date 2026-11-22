@@ -8,7 +8,7 @@ credential or sends a request.
 The original task remains `NL_ocean` on the published 16-week dispatch grid.
 Official service names, voyage numbers, publication dates, and calendar weeks do
 not create a missing route or calendar mapping. The reviewed narrow references
-are assistant decisions pending independent human review. The corpus is an
+are model decisions pending independent human review. The corpus is an
 exploratory short-excerpt abstention audit, not a held-out extraction benchmark.
 An all-clarification corpus cannot establish useful update extraction: the
 always-clarify baseline obtains the same reference agreement.
@@ -24,7 +24,7 @@ The `offline` command writes `report.json` and `report.md`. `score-api` writes t
 requested JSON and a Markdown file beside it. Both accept `--github-summary FILE`
 to append a sanitized numeric assessment without raw provider text.
 
-The corpus validator checks assistant/pending declarations, the exact recorded
+The corpus validator checks the declared reference source and pending-review status, the exact recorded
 excerpt and SHA-256, recorded official-source provenance, fixed inference
 context, reference schema, and case/source/event/correlation identities. Source
 URLs are unique after removing fragments. Empty development data is allowed; if
@@ -33,7 +33,7 @@ correlation groups cannot overlap. Exclusions have explicit identities and
 reasons and remain visible in reports. Unknown publication dates remain null.
 Hashes verify the stored excerpt, not official authenticity or human review.
 Full source pages are not archived, so the package cannot independently replay
-the assistant's full-page review.
+the model's full-page review.
 
 The input export contains only case IDs and exact `model_input` objects within
 the split arrays. References, source records, rationale, and broad factual
