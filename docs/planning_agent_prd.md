@@ -61,9 +61,9 @@ This document is available in Chinese and English; the English version follows t
 ### 路线图
 
 1. **M1（已完成）**：运筹引擎、规则 Agent、工具层、护栏、评测集、离线 CI。
-2. **M2**：接入 LLM（DeepSeek / Qwen / OpenAI 兼容接口），在 24 条评测上与规则 Agent 对比；扩充到 100 条并请业务同事独立出题。
-3. **M3**：Web 界面（对话 + KPI 卡片 + 前沿图）；接入真实运价、运力与订单数据。
-4. **M4**：多仓选址、滚动计划、CVaR 等风险偏好。
+2. **M2（部分完成）**：已接入 OpenAI 兼容接口，并用 gpt-6.1-sol 在 24 条评测上与规则 Agent 对比（运行一次，修复护栏后离线重评）；扩充到 100 条并请业务同事独立出题尚未开始。
+3. **M3（部分完成）**：公告到备忘录的网页（参数确认、方案对比、KPI、备忘录下载）和真实船公司公告检索已实现；对话界面、前沿图以及真实运价、运力与订单数据尚未接入。
+4. **M4（未开始）**：多仓选址、滚动计划、CVaR 等风险偏好。
 
 ### 成功标准
 
@@ -83,4 +83,4 @@ M2 结束时：LLM Agent 在鲁棒性集上的成功率明显高于规则 Agent�
 
 **Risks.** Hallucinated numbers (tool-only numbers + guardrail), misread intent (clarifying questions + evaluation set), hidden assumptions (explicit assumption lists), latency (continuous tactical flows), data quality (synthetic today), key safety (environment variables only).
 
-**Roadmap.** M1 engine, rule agent, guardrail, evaluation and CI (done); M2 LLM comparison and 100 independent questions; M3 web UI and real data; M4 multi-warehouse design, rolling planning and risk measures.
+**Roadmap.** M1 engine, rule agent, guardrail, evaluation and CI (done). M2 partly done: the OpenAI-compatible client is in place and gpt-6.1-sol was compared with the rule agent on the 24 questions (one run, rescored offline after a guardrail fix); 100 independently written questions have not started. M3 partly done: the notice-to-memo web page (parameter confirmation, plan comparison, KPIs, memo download) and retrieval over real carrier notices exist; a chat interface, a frontier chart and real rate, capacity and order data do not. M4 not started: multi-warehouse design, rolling planning and risk measures such as CVaR.

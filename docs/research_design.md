@@ -44,8 +44,8 @@ This document provides Chinese first and English second.
 | 决策价值 | 同信息强基线、成本/服务/排放取舍、最优平局审计；不只看预测准确率 | 已完成多轮；滚动学习教师仍未通过 |
 | 实验可信度 | 训练/选参/测试隔离，报告独立情境数；按研究问题选择种子和规模 | 查询五种子千题完成；追索36模型仅机制诊断 |
 | 计算价值 | 测量实际运行时间、硬件与允许质量损失，不能用调用数直接代替速度 | 已有计时，尚无部署时限或可接受质量损失定义 |
-| 可复算交付 | 源码、配置、原始结果、哈希、重执行与CI对应同一版本 | 已实现；本次补齐35份已授权分布证据 |
-| 可发布工程 | 完整依赖锁、静态检查、跨平台验收、固定Release及完整双语文档 | 仍有工作待完成，见[进度](progress.md) |
+| 可复算交付 | 源码、配置、原始结果、哈希、重执行与CI对应同一版本 | 已实现：各研究的证据包记录源码与文件哈希，CI重执行 |
+| 可发布工程 | 完整依赖锁、静态检查、跨平台验收、固定Release及完整双语文档 | 部分完成：已有带哈希的依赖锁和规划模块的静态检查；尚无跨平台验收、固定Release，部分历史文档只有中文 |
 
 ### 下一项研究
 
@@ -94,8 +94,8 @@ Every new module must address an unresolved logistics question with a testable h
 | Decision value | Equal-information strong baselines, cost/service/emission tradeoffs and optimal-tie audits, beyond forecast accuracy | Multiple studies completed; rolling teacher screen remains unmet |
 | Evaluation validity | Training/tuning/test separation and distinct-case counts; seeds and scale justified by the question | Five-seed query final complete; 36 recourse models are mechanism diagnostics |
 | Computation value | Actual timings, hardware and allowed quality loss; solve counts alone are insufficient | Timing evidence exists; deployment deadline and acceptable loss remain unspecified |
-| Reproducibility | Source, configuration, raw results, hashes, replay and CI for one version | Implemented; this change completes the 35 authorized distribution evidence files |
-| Release engineering | Full lockfile, static checks, cross-platform acceptance, fixed Release and complete bilingual documentation | Still unfinished; see [progress](progress.md) |
+| Reproducibility | Source, configuration, raw results, hashes, replay and CI for one version | Implemented: each study's evidence bundle records source and file hashes, and CI replays it |
+| Release engineering | Full lockfile, static checks, cross-platform acceptance, fixed Release and complete bilingual documentation | Partly done: hash-locked dependencies and static checks for the planning modules exist; cross-platform acceptance, a fixed Release and English versions of some historical documents do not |
 
 ### Next study
 

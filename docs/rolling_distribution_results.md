@@ -5,8 +5,6 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开证据已补齐：** 35份分布研究文件按用户明确批准的SHA256清单归档，实验数值不变。合并前须通过当前提交的七项CI；见[归档记录](rolling_distribution_publication.md)。
-
 ### 结论
 
 残差负二项模型略微改善一步边际NLL，但没有降低总体滚动成本。相对原独立Poisson，平均成本增加2.06%，配对差值区间跨零；未通过预先固定的质量教师筛选。继续保留原EWMA＋Poisson情景MPC作为比较基线，不训练滚动BC/PPO。
@@ -42,15 +40,15 @@ This document is available in Chinese and English; English follows Chinese.
 | 独立NB | 1.582202 | 0.711919 | 4.529341 | 2.498033 |
 | NB联合重排诊断 | 1.582202 | 0.711919 | 4.540171 | 2.491267 |
 
-指标越小越好；各指标方向不完全一致。NB改善NLL及窗口总量energy，一步CRPS却略差，不能概括为所有预测指标改善。联合重排精确保留每SKU完整路径，因此边际NLL/CRPS相同；联合评分可以变化，当前规划目标却不变。这个结论来自可分目标结构及数值复核，不是“物流中相关性没有价值”。联合服务风险、随机共享容量或情景相关未来追索可能改变它，但本轮没有实现这些新问题。
+指标越小越好；各指标方向不完全一致。NB改善NLL及窗口总量energy，一步CRPS却略差，不能概括为所有预测指标改善。联合重排精确保留每SKU完整路径，因此边际NLL/CRPS相同；联合评分可以变化，当前规划目标却不变。这个结论来自可分目标结构及数值复核，不是“物流中相关性没有价值”。联合服务风险、随机共享容量或情景相关未来追索可能改变它，但本研究没有实现这些新问题。
 
 128成员经验集合的80%一步覆盖为Poisson89.24%、NB91.32%，窗口总量覆盖为68.06%/72.01%。离散区间、均值偏差与窗口误差都影响覆盖，不将覆盖更高自动当作校准更好。完整指标和逐值样本在本地汇总及`forecasts-*.jsonl.gz`。
 
 ### 学习策略判断与复现
 
-质量教师的成本降幅、区间上界和跨采样种子方向三项均未通过；满足率与排放阈值通过。当前没有新的稳定教师。部署时限与允许损失仍未指定，不能把本地计时称为计算瓶颈。本轮既不启动滚动BC，也不启动PPO；预知未来下界不能作为可实现教师。
+质量教师的成本降幅、区间上界和跨采样种子方向三项均未通过；满足率与排放阈值通过。当前没有新的稳定教师。部署时限与允许损失仍未指定，不能把本地计时称为计算瓶颈。本研究既不启动滚动BC，也不启动PPO；预知未来下界不能作为可实现教师。
 
-下一项有意义的建模工作是明确联合风险或非预知未来的追索决策是否属于实际业务目标，并单独固定新协议。不能修改本轮确认集、阈值或损失函数来制造成功；已查看的64路径不再是新测试。
+下一项有意义的建模工作是明确联合风险或非预知未来的追索决策是否属于实际业务目标，并单独固定新协议。不能修改本研究的确认集、阈值或损失函数来制造成功；已查看的64路径不再是新测试。
 
 ```bash
 python -m semiconductor_logistics rolling-distribution run --output artifacts/distribution-new
@@ -58,11 +56,9 @@ make verify-distribution
 python -m scripts.check_research_progress
 ```
 
-10项新增测试覆盖原基线兼容、未来隔离、划分约束、概率评分、依赖识别、整段路径不变性、篡改和计时检查；全套341项测试通过。全部划分、选择、512条策略轨迹及768次审计在另一BLAS分派下完整重执行通过；GitHub当前提交另做七项验收，本地成功不替代远端检查。原冻结研究代码、数据、提示词和证据包不变。
+10项新增测试覆盖原基线兼容、未来隔离、划分约束、概率评分、依赖识别、整段路径不变性、篡改和计时检查；全套341项测试通过。全部划分、选择、512条策略轨迹及768次审计在另一BLAS分派下完整重执行通过；原冻结研究代码、数据、提示词和证据包不变。
 
 ## English
-
-**Evidence publication complete:** all 35 distribution files are archived under the explicitly approved SHA256 manifest, with results unchanged. Require all seven checks on the current commit before merge; see the [publication record](rolling_distribution_publication.md).
 
 ### Conclusion
 
@@ -109,4 +105,4 @@ The teacher screen fails cost reduction, interval and sampler consistency; fill/
 
 The next substantive modeling question is whether joint risk or nonclairvoyant recourse reflects the intended business objective. It needs a separate protocol. Do not revise this confirmation set, thresholds or loss to manufacture success. These 64 inspected paths cannot be reused as new tests.
 
-Use the commands above for a new run, complete replay and saved-result inventory. Ten new tests cover baseline compatibility, future isolation, split guards, probability scores, dependence detection, whole-path invariance, tampering and timing. All 341 tests pass. Full replay under another BLAS dispatch regenerates all splits, selection,512 trajectories and 768 audits successfully. Seven remote checks on the current commit remain separate; local success does not replace GitHub CI. Prior frozen code, data, prompts and evidence remain unchanged.
+Use the commands above for a new run, complete replay and saved-result inventory. Ten new tests cover baseline compatibility, future isolation, split guards, probability scores, dependence detection, whole-path invariance, tampering and timing. All 341 tests pass. Full replay under another BLAS dispatch regenerates all splits, selection,512 trajectories and 768 audits successfully. Prior frozen code, data, prompts and evidence remain unchanged.

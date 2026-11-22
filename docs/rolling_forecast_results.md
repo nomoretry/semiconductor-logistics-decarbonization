@@ -5,17 +5,17 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-**公开归档已补齐：** 73份文件已获明确授权并按原SHA256归档，见[文件清单与验收](rolling_forecast_publication.md)。合并使用当前提交的六项GitHub CI结果，本地通过不替代远端验收。
+证据包共73份文件，按原SHA256归档，见[文件清单与验收](rolling_forecast_publication.md)。
 
 ### 结论与范围
 
-新预测器没有优于原EWMA。快速EWMA成本增加7.19%，季节调整短窗增加8.48%；三个采样种子和四类需求过程的平均成本方向一致。两者均未通过预先固定的描述性教师稳定条件。本轮完成预测与决策对照，继续保留原EWMA情景MPC作为比较基线，不训练滚动BC/PPO。
+新预测器没有优于原EWMA。快速EWMA成本增加7.19%，季节调整短窗增加8.48%；三个采样种子和四类需求过程的平均成本方向一致。两者均未通过预先固定的描述性教师稳定条件。本研究完成预测与决策对照，继续保留原EWMA情景MPC作为比较基线，不训练滚动BC/PPO。
 
 [协议和配置](rolling_forecast_protocol.md)在[提交a0089c5](https://github.com/nomoretry/semiconductor-logistics-decarbonization/commit/a0089c5dda6541fa3ca62f8a3d77098113a4976b)中先于执行固定。12条新校准路径、32条新开发路径来自4类合成过程，每条12期；3预测器×3采样种子，加base-stock与预知需求下界，共352条轨迹、4,224期。32条路径各自的采样重复不能算96个独立案例；这不是正式最终集或企业数据。
 
 ### 预测与选参
 
-[校准结果](../benchmark_results/rolling_forecast_development/selection.json)按一步、逐SKU Poisson NLL选择快速EWMA α=0.55、短窗长度6。原EWMA保持α=0.35。候选分别为0.55/0.70/0.85和2/4/6，开发结果没有反过来调参。校准选择分别落在候选边界，这是后续研究线索，不能据此修改本轮候选或删除失败方法。
+[校准结果](../benchmark_results/rolling_forecast_development/selection.json)按一步、逐SKU Poisson NLL选择快速EWMA α=0.55、短窗长度6。原EWMA保持α=0.35。候选分别为0.55/0.70/0.85和2/4/6，开发结果没有反过来调参。校准选择分别落在候选边界，这是后续研究线索，不能据此修改本研究的候选或删除失败方法。
 
 | 方法 | 一步MAE | RMSE | Poisson NLL |
 |---|---:|---:|---:|
@@ -59,7 +59,7 @@ This document is available in Chinese and English; English follows Chinese.
 | 季节短窗 | 5.947 | 11.817 |
 | Base-stock | 0.249 | 0.460 |
 
-这是当前CPU上的本地测量，包含预测与规划，不是部署延迟承诺。没有业务在线时限和允许质量损失，本轮也没有得到优于原EWMA的新教师，因此继续延后滚动BC/PPO。下一项可研究更强收缩的历史预测或历史残差估计的分布模型，但应先固定协议，在新的校准和确认路径上检验；不得重复使用这32条路径声称未知测试。
+这是当前CPU上的本地测量，包含预测与规划，不是部署延迟承诺。没有业务在线时限和允许质量损失，本研究也没有得到优于原EWMA的新教师，因此继续延后滚动BC/PPO。下一项可研究更强收缩的历史预测或历史残差估计的分布模型，但应先固定协议，在新的校准和确认路径上检验；不得重复使用这32条路径声称未知测试。
 
 ### 复现与证据
 
@@ -69,13 +69,13 @@ make verify-forecast
 python -m scripts.check_research_progress
 ```
 
-[73文件证据包](../benchmark_results/rolling_forecast_development)含72份数据/运行文件及manifest，保存全部候选校准分数、预测、动作、物理台账、逐步计时和SHA256。[验证器](../rolling_forecast/experiment.py)再生成数据并重新选参和求解352轨迹，独立核对库存/在途守恒、容量、累计碳、实际成本及下界，再比较预测和结果。计时汇总由归档计时重新计算；不要求另一次计时相等。哈希被重算后的动作篡改仍被重执行拒绝。9项新测试覆盖未来输入隔离、原方法兼容、精确NLL、季节调整、选参隔离和篡改拒绝；331项测试及另一BLAS分派下的完整复算均通过。GitHub当前提交的CI状态另行验收，不用本地结果替代。
+[73文件证据包](../benchmark_results/rolling_forecast_development)含72份数据/运行文件及manifest，保存全部候选校准分数、预测、动作、物理台账、逐步计时和SHA256。[验证器](../rolling_forecast/experiment.py)再生成数据并重新选参和求解352轨迹，独立核对库存/在途守恒、容量、累计碳、实际成本及下界，再比较预测和结果。计时汇总由归档计时重新计算；不要求另一次计时相等。哈希被重算后的动作篡改仍被重执行拒绝。9项新测试覆盖未来输入隔离、原方法兼容、精确NLL、季节调整、选参隔离和篡改拒绝；331项测试及另一BLAS分派下的完整复算均通过。
 
-旧源码、冻结协议、数据和API响应保持原字节。本轮没有新LLM API请求、人工标签或滚动学习训练。
+旧源码、冻结协议、数据和API响应保持原字节。本研究没有新的LLM API请求、人工标签或滚动学习训练。
 
 ## English
 
-**Public archive complete:** all 73 files received explicit approval and were archived with their original SHA256 digests. See the [manifest and verification](rolling_forecast_publication.md). Merge acceptance uses all six CI jobs on the current commit; local validation does not replace remote checks.
+The evidence bundle has 73 files archived with their original SHA256 digests; see the [manifest and verification](rolling_forecast_publication.md).
 
 ### Conclusion and scope
 
@@ -139,6 +139,6 @@ make verify-forecast
 python -m scripts.check_research_progress
 ```
 
-The [73-file bundle](../benchmark_results/rolling_forecast_development) contains 72 data/runtime files plus a manifest: every candidate calibration score, forecast, action, physical ledger, step timing and SHA256. The [verifier](../rolling_forecast/experiment.py) regenerates data, repeats parameter selection, resolves 352 trajectories, independently audits stock/pipeline conservation, capacity, cumulative carbon, realized costs and lower bounds, then compares forecasts and results. Archived timing summaries are recomputed; fresh timing equality is not required. Rehashed action tampering is still rejected by reexecution. Nine new tests cover future-input isolation, baseline compatibility, exact NLL, seasonality, split isolation and tamper rejection. All 331 tests and full replay under another BLAS dispatch passed. Current-commit GitHub CI is checked separately.
+The [73-file bundle](../benchmark_results/rolling_forecast_development) contains 72 data/runtime files plus a manifest: every candidate calibration score, forecast, action, physical ledger, step timing and SHA256. The [verifier](../rolling_forecast/experiment.py) regenerates data, repeats parameter selection, resolves 352 trajectories, independently audits stock/pipeline conservation, capacity, cumulative carbon, realized costs and lower bounds, then compares forecasts and results. Archived timing summaries are recomputed; fresh timing equality is not required. Rehashed action tampering is still rejected by reexecution. Nine new tests cover future-input isolation, baseline compatibility, exact NLL, seasonality, split isolation and tamper rejection. All 331 tests and full replay under another BLAS dispatch passed.
 
 Earlier source files, frozen protocols, data and API responses retain their original bytes. There are no new LLM API requests, human labels or rolling-policy training runs.

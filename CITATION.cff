@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Semiconductor Logistics Decarbonization"
+abstract: >-
+  Reproducible inventory and transport optimization for semiconductor logistics under transport-capacity,
+  delivery and carbon constraints, with a tool-calling planning agent and auditable evaluations.
+authors:
+  - alias: nomoretry
+repository-code: "https://github.com/nomoretry/semiconductor-logistics-decarbonization"
+license: MIT
+keywords:
+  - supply chain
+  - logistics
+  - operations research
+  - mixed-integer programming
+  - carbon constraints
+  - planning agent

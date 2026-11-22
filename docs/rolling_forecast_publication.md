@@ -5,23 +5,19 @@ This document is available in Chinese and English; English follows Chinese.
 
 ## 中文
 
-维护者已明确批准按清单SHA256公开上传全部73份预测研究证据。现已补齐，原文件字节、实验参数、模型选择和结果均未改变；不需要再次授权。本地331项测试、wheel安装检查和352轨迹完整重执行均通过。合并前仍须确认当前提交的全部六项GitHub CI成功，不能用旧提交的检查代替。
+预测研究的证据包位于`benchmark_results/rolling_forecast_development/`，共73份文件：32份预测、32份轨迹，以及配置、任务、校准、选参、结果、计时、汇总、运行版本和manifest。原文件字节、实验参数、模型选择和结果在归档时未改变；下表列出每个文件的字节数和SHA256。
 
-[完整轨迹字段与独立物理审核](../data_sources/rolling_forecast_artifact_audit.json)覆盖32份轨迹文件、352条轨迹和4,224期，并与再生成的合成任务及源码/文件哈希匹配。轨迹字段只允许合成任务ID、固定方法名、SHA256及数值；没有自由文本、真实公司订单或API密钥。完整政策重执行仍由`make verify-forecast`完成。
+[完整轨迹字段与独立物理审核](../data_sources/rolling_forecast_artifact_audit.json)覆盖32份轨迹文件、352条轨迹和4,224期，并与再生成的合成任务及源码/文件哈希匹配。轨迹字段只允许合成任务ID、固定方法名、SHA256及数值；没有自由文本、真实公司订单或API密钥。[上传清单](../data_sources/rolling_forecast_pending_uploads.json)记录了归档时的文件列表。
 
-此前自动审批认为原授权只覆盖三份敏感性文件，因此草稿先仅提交代码、说明及摘要，保留完整验收对缺证据的失败。收到针对本清单的明确授权后，才补齐预测证据；没有改写、拆分、重编码或跳过检查。原[申请清单文件](../data_sources/rolling_forecast_pending_uploads.json)保留原文件名，状态已标为完成。
-
-归档位于公开仓库`nomoretry/semiconductor-logistics-decarbonization`的`benchmark_results/rolling_forecast_development/`。73份文件包括32份预测、32份轨迹，以及配置、任务、校准、选参、结果、计时、汇总、运行版本和manifest。下表保留批准时的SHA256，公开文件可由任何人读取。
+完整策略重执行由`make verify-forecast`完成。归档时，331项测试、wheel安装检查和352条轨迹的完整重执行均通过。
 
 ## English
 
-The maintainer explicitly approved public upload of all 73 forecast-study evidence files with their listed SHA256 digests. The archive is now complete. Original bytes, experiment settings, model selection and numerical results are unchanged; no additional authorization is required. All 331 local tests, wheel checks and complete reexecution of 352 trajectories passed. Merge acceptance still requires all six GitHub CI jobs on the current commit; old-commit checks do not substitute for them.
+The forecast-study bundle is `benchmark_results/rolling_forecast_development/`: 73 files comprising 32 forecast files, 32 trace files, and configuration, tasks, calibration, selection, outcomes, timing, summary, runtime and manifest. Original bytes, experiment settings, model selection and numerical results were unchanged when archived; the table lists each file's size and SHA256.
 
-The [complete trace-field and independent physical audit](../data_sources/rolling_forecast_artifact_audit.json) covers 32 trace files, 352 trajectories and 4,224 periods, matching regenerated synthetic tasks and source/artifact hashes. Trace values are limited to generated task IDs, fixed method names, SHA256 hex and numerical fields, without free text, actual company orders or API keys. Complete policy reexecution remains available through `make verify-forecast`.
+The [complete trace-field and independent physical audit](../data_sources/rolling_forecast_artifact_audit.json) covers 32 trace files, 352 trajectories and 4,224 periods, matching regenerated synthetic tasks and source/artifact hashes. Trace values are limited to generated task IDs, fixed method names, SHA256 hex and numerical fields, without free text, actual company orders or API keys. The [upload manifest](../data_sources/rolling_forecast_pending_uploads.json) records the file list at archive time.
 
-Earlier automatic approval review treated the prior approval as covering only three sensitivity files. The draft therefore initially contained code, reports and checksum metadata while complete verification continued to reject missing evidence. The forecast files were added only after explicit approval of this manifest, without modifying, splitting, re-encoding or bypassing checks. The [original request-manifest filename](../data_sources/rolling_forecast_pending_uploads.json) is retained with its status marked complete.
-
-The public archive is `nomoretry/semiconductor-logistics-decarbonization`, directory `benchmark_results/rolling_forecast_development/`. Its 73 files comprise 32 forecast files, 32 trace files, and configuration, tasks, calibration, selection, outcomes, timing, summary, runtime and manifest. The table preserves the approved SHA256 digests; the files are publicly readable.
+`make verify-forecast` reexecutes every policy. At archive time, 331 tests, wheel checks and complete reexecution of 352 trajectories passed.
 
 ## 文件清单 / File manifest
 
@@ -107,6 +103,6 @@ python -m scripts.check_research_progress
 python -m scripts.audit_rolling_forecast_artifacts
 ```
 
-验收依次检查文件覆盖与哈希、源码身份、任务再生成与选参、完整策略重执行、物理台账及汇总。计时汇总从原计时重算，不要求新计时与旧计时逐值相等。CI通过后按[操作说明](manual_steps.md)合并。
+验收依次检查文件覆盖与哈希、源码身份、任务再生成与选参、完整策略重执行、物理台账及汇总。计时汇总从原计时重算，不要求新计时与旧计时逐值相等。
 
-Verification checks file coverage and hashes, source identity, regenerated tasks and selection, complete policy reexecution, physical ledgers and summaries. Archived timing summaries are recomputed without requiring fresh wall-time measurements to match. After CI passes, follow the [manual steps](manual_steps.md) to merge.
+Verification checks file coverage and hashes, source identity, regenerated tasks and selection, complete policy reexecution, physical ledgers and summaries. Archived timing summaries are recomputed without requiring fresh wall-time measurements to match.

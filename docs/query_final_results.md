@@ -63,7 +63,7 @@ python -m semiconductor_logistics query-study verify-final
 
 完整重放会重新训练5套BC、15套PPO，并由保存模型重执行全部27,000条最终评估，复算物理方案、成本和区间。文件与源码哈希只是一层检查，不能替代重执行。小样本训练种子下的bootstrap区间是近似描述；固定合成生成器上的最终留出不能支持广泛泛化。
 
-本轮完成五种子、两项优化组件消融和冻结千题评测；进度奖励/Action Mask等其他消融、完整依赖锁、发布验收与未知需求滚动决策仍需分别推进。此前开发稳定条件失败的结论保留，不能用当前更大的样本量抹去种子间差异。
+本研究完成五种子、两项优化组件消融和冻结千题评测；进度奖励/Action Mask等其他消融与未知需求滚动决策另作研究。此前开发稳定条件失败的结论保留，不能用当前更大的样本量抹去种子间差异。
 
 ## English
 
@@ -125,4 +125,4 @@ python -m semiconductor_logistics query-study verify-final
 
 Full replay retrains five BC and 15 PPO runs, executes all 27,000 final evaluations from saved models and recomputes physical plans, costs and intervals. File/source hashes supplement reexecution. With few training seeds, bootstrap intervals are approximate descriptions. A final holdout from a fixed synthetic generator does not support broad generalization.
 
-This stage completes five seeds, two optimization-component ablations and the frozen 1,000-context evaluation. Potential-shaping/action-mask ablations, complete dependency locking, release acceptance and unknown-demand rolling decisions remain separate work. The failed development stability condition is retained; a larger case count does not erase differences across training seeds.
+This stage completes five seeds, two optimization-component ablations and the frozen 1,000-context evaluation. Potential-shaping/action-mask ablations and unknown-demand rolling decisions are separate studies. The failed development stability condition is retained; a larger case count does not erase differences across training seeds.

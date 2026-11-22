@@ -7,6 +7,8 @@ name = "semiconductor-logistics"
 version = "0.1.0"
 description = "Reproducible logistics optimization and auditable notice-to-action benchmarks"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
 requires-python = ">=3.10"
 dependencies = [
   "numpy>=1.26,<3",

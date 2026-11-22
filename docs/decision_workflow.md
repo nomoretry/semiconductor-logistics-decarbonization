@@ -21,12 +21,13 @@ This document provides Chinese first and English second.
 | 模式 | 参数从哪里来 | 是否调用大模型 |
 |---|---|---|
 | 离线规则 `rule` | `rules.py` 的规则解析器 | 否，结果确定，能识别的写法有限 |
+| 公告检索 `notice` | 同一规则解析器解析计划员的文字，并检索真实船公司公告给出出处和缺失信息（见[真实公告检索](notice_retrieval.md)） | 否 |
 | 录制回放 `replay` | 24 题正式评测中，真实模型（gpt-6.1-sol，Responses 接口，xhigh）对案例 D13、H05 实际给出的场景参数 | 否，本次不调用模型；界面标明“录制回放” |
 | 实时模型 `live` | 大模型经 LangGraph Agent 提出参数，任何工具执行前暂停 | 是，付费；需要 `LLM_API_KEY` 和 token 上限，预算须先经用户批准 |
 
 不论哪种模式，优化计算都在确认之后实时求解（MILP，HiGHS），不使用预先算好的结果；数字都来自引擎。
 
-**不包括**：真实公告检索（RAG）、跨进程的会话记忆、多用户和部署。这些是后续里程碑。
+**不包括**：跨进程的会话记忆、多用户和部署。真实公告检索后来作为 `notice` 模式加入同一流程，见[真实公告检索](notice_retrieval.md)。
 
 ### 验收条件
 
@@ -45,6 +46,7 @@ python -m pip install --require-hashes -r requirements/planning.txt
 python -m pip install --no-deps --no-build-isolation -e .
 python -m planning_agent flow                                   # 命令行，规则模式，默认公告
 python -m planning_agent flow --mode replay --case D13          # 命令行，录制回放
+python -m planning_agent flow --mode notice                     # 命令行，公告检索 + 规则解析
 python -m planning_agent flow --notice "第5到8周海运延误1周，舱位减少20%，对 ASML 影响多大？"
 python -m streamlit run planning_agent/app.py                   # 网页
 ```
@@ -67,12 +69,13 @@ A minimal business loop that a planner can operate, built on the existing planni
 | Mode | Parameters come from | Model call |
 |---|---|---|
 | Offline rule `rule` | the rule parser in `rules.py` | No; deterministic, limited wording |
+| Notice retrieval `notice` | the same rule parser on the planner's words, plus real carrier notices retrieved with their sources and missing information (see [notice retrieval](notice_retrieval.md)) | No |
 | Recorded replay `replay` | scenario arguments a real model (gpt-6.1-sol, Responses API, xhigh) produced for cases D13 and H05 in the 24-question evaluation | No; labelled as a replay |
 | Live model `live` | a model proposes arguments through the LangGraph agent, paused before any tool runs | Yes, paid; needs `LLM_API_KEY` and a token cap, with the budget approved by the user first |
 
 In every mode the optimization is solved live after confirmation (MILP, HiGHS); no precomputed results are shown, and every number comes from the engine.
 
-**Out of scope**: retrieval over real notices (RAG), memory across processes, multiple users and deployment. These are later milestones.
+**Out of scope**: memory across processes, multiple users and deployment. Retrieval over real carrier notices was added later as the `notice` mode of the same workflow; see [notice retrieval](notice_retrieval.md).
 
 ### Acceptance
 
@@ -91,6 +94,7 @@ python -m pip install --require-hashes -r requirements/planning.txt
 python -m pip install --no-deps --no-build-isolation -e .
 python -m planning_agent flow
 python -m planning_agent flow --mode replay --case D13
+python -m planning_agent flow --mode notice
 python -m planning_agent flow --notice "Weeks 5-8 ocean delayed 1 week, capacity cut 20%: impact on ASML?"
 python -m streamlit run planning_agent/app.py
 ```
