@@ -16,7 +16,7 @@ This document provides Chinese first and English second.
 | `LLM_API_KEY` | 是 | 服务商密钥。只从环境变量读取（托管平台的 Secrets 顶层字符串也会进入环境变量） |
 | `LLM_MODEL_ID` | 是 | 模型名，没有内置默认值 |
 | `LLM_BASE_URL` | 否 | OpenAI 兼容接口地址，默认 `https://api.openai.com/v1`。必须是 https（本机地址除外），不能带账号、查询串 |
-| `LLM_API_STYLE`、`LLM_REASONING_EFFORT`、`LLM_TIMEOUT` | 否 | 接口类型、推理强度、单次超时 |
+| `LLM_API_STYLE`、`LLM_REASONING_EFFORT`、`LLM_REASONING_MODE`、`LLM_SERVICE_TIER`、`LLM_TIMEOUT` | 否 | 接口类型、推理强度、推理模式、处理档位、单次超时 |
 | `LLM_MAX_REQUESTS` | 是 | 发出的 HTTP 请求总数，重试和回退都计入 |
 | `LLM_MAX_TOTAL_TOKENS` | 是 | 输入加输出的总 token（`eval`、`flow` 的 `--max-tokens` 可覆盖） |
 | `LLM_MAX_OUTPUT_TOKENS` | 是 | 每次请求的输出上限，随请求发给服务商 |
@@ -97,7 +97,7 @@ $env:LLM_API_KEY = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.I
 | `LLM_API_KEY` | Yes | Provider key. Read from the environment only (root-level strings in a host's Secrets also reach the environment) |
 | `LLM_MODEL_ID` | Yes | Model id; there is no built-in default |
 | `LLM_BASE_URL` | No | OpenAI-compatible endpoint, default `https://api.openai.com/v1`. Must be https (loopback excepted), with no credentials or query |
-| `LLM_API_STYLE`, `LLM_REASONING_EFFORT`, `LLM_TIMEOUT` | No | API style, reasoning effort, per-request timeout |
+| `LLM_API_STYLE`, `LLM_REASONING_EFFORT`, `LLM_REASONING_MODE`, `LLM_SERVICE_TIER`, `LLM_TIMEOUT` | No | API style, reasoning effort, reasoning mode, processing tier, per-request timeout |
 | `LLM_MAX_REQUESTS` | Yes | HTTP requests sent, retries and fallbacks included |
 | `LLM_MAX_TOTAL_TOKENS` | Yes | Input plus output tokens (`--max-tokens` on `eval` and `flow` overrides it) |
 | `LLM_MAX_OUTPUT_TOKENS` | Yes | Output cap of each request, sent to the provider |

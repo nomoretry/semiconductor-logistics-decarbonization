@@ -1,1 +1,9 @@
 reports/*.svg linguist-generated=true
+
+# Evidence is bound by SHA-256, so checkouts must keep its bytes.
+benchmark_results/planning_agent_v2/** -text
+benchmarks/planning_agent_v2/** -text
+planning_agent/*.py text eol=lf
+network_planning/config.json text eol=lf
+benchmark_results/planning_agent_v2_1/** -text
+benchmarks/planning_agent_v2_1/** -text

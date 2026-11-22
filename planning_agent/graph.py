@@ -208,11 +208,11 @@ def replay(source: Path, output: Path | None = None, *, recorded: str = "llm_res
     """
     from .evaluate import Gold, load_cases, score
     from .tools import Session
-    settings = settings or {}
+    settings = {"additive_mode_lanes": True, **(settings or {})}  # the tool contract the recording was made with
     rows = [json.loads(line) for line in (Path(source) / f"{recorded}_cases.jsonl").read_text(encoding="utf-8")
             .splitlines() if line.strip()]
     cases = {c["id"]: c for c in load_cases()}
-    gold, compared = Gold(settings), []
+    gold, compared = Gold({k: v for k, v in settings.items() if k != "additive_mode_lanes"}), []
     for row in rows:
         if ids and row["id"] not in ids:
             continue

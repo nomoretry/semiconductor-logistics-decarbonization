@@ -9,6 +9,7 @@ This document provides Chinese first and English second.
 
 ### 使用指南
 
+- [使用手册](user_guide.md)：从安装到运行：四种模式、密钥配置、命令行和网页步骤、完整示例、排错和可分享的导出。
 - [命令参考](commands.md)：规划引擎、决策流程、研究实验和校验命令。
 - [公告到备忘录的决策流程](decision_workflow.md)：参数与假设、人工确认、方案对比和备忘录；四种参数来源。
 - [实时模型调用的配置与限额](live_model_safety.md)：密钥、请求前生效的限额、公开网页的开关和三种证据的区分。
@@ -20,6 +21,7 @@ This document provides Chinese first and English second.
 
 ### 架构与设计
 
+- [技术总览](technical_overview.md)：背景、架构、数学模型、Agent 设计、强化学习和预测研究、实验与局限。
 - [系统结构](architecture.md)：各研究线的实现、连接和信息边界。
 - [研究问题、设计与验收](research_design.md)：研究问题、方法选择和验收条件。
 - [研究说明与证据索引](research_guide.md)：各研究的模型口径、结果边界和复算命令。
@@ -43,6 +45,7 @@ This document provides Chinese first and English second.
 
 ### 结果
 
+- 规划 Agent：[评测 v2（20 题，每题 3 次，真实模型）](results/planning_agent_v2.md)及其[协议](../benchmarks/planning_agent_v2/PROTOCOL.md)；[后续报告](results/planning_agent_v2_followup.md)（A04 修复与复测、修正评分）；[20×3 结果表与评分说明](results/planning_agent_v2_scoring.md)；[C03 待人工复核案例](results/c03_review_case.md)。
 - 规划引擎：[网络规划报告](../benchmark_results/network_planning/report.md)。原始案例研究：[实验报告](../reports/study_report.md)。
 - 公告抽取：[合成留出集](results/api_test.md)（仅中文）、[连接测试](results/api_smoke.md)（仅中文）、[真实数量抽取](results/notice_facts_api.md)（仅中文）。
 - 查询规划：[规模审计](decision_scale.md)（仅中文）、[计算预算](query_budget_results.md)（仅中文）、[BC](query_policy_results.md)（仅中文）、[PPO](query_ppo_results.md)、[多种子开发](query_study_development_results.md)、[冻结千题](query_final_results.md)、[组件对照](query_components_results.md)。
@@ -64,6 +67,7 @@ Documents are grouped by purpose. "Chinese only" marks earlier documents; "froze
 
 ### User guides
 
+- [User guide](user_guide.md): from installation to running: the four modes, key setup, command line and web steps, a complete example, troubleshooting and shareable exports.
 - [Command reference](commands.md): planning engine, decision workflow, research studies and verification commands.
 - [Notice-to-memo decision workflow](decision_workflow.md): parameters and assumptions, confirmation, plan comparison and memo; four parameter sources.
 - [Live model calls: configuration and limits](live_model_safety.md): the key, limits applied before a request, the switch on the public page and how evidence is labelled.
@@ -75,6 +79,7 @@ Documents are grouped by purpose. "Chinese only" marks earlier documents; "froze
 
 ### Architecture and design
 
+- [Technical overview](technical_overview.md): background, architecture, the mathematical model, agent design, RL and forecasting studies, experiments and limits.
 - [Architecture](architecture.md): implementation, connections and information boundaries of each research line.
 - [Research questions, design and acceptance](research_design.md).
 - [Research guide and evidence index](research_guide.md): model scope, result boundaries and replay commands per study.
@@ -98,6 +103,7 @@ Documents are grouped by purpose. "Chinese only" marks earlier documents; "froze
 
 ### Results
 
+- Planning agent: [evaluation v2 (20 tasks, three runs each, real model)](results/planning_agent_v2.md) and its [protocol](../benchmarks/planning_agent_v2/PROTOCOL.md); [follow-up report](results/planning_agent_v2_followup.md) (the A04 fix and retest, corrected scoring); [the 20 × 3 table and scoring notes](results/planning_agent_v2_scoring.md); [C03 case pending human review](results/c03_review_case.md).
 - Planning engine: [network planning report](../benchmark_results/network_planning/report.md). Original case studies: [study report](../reports/study_report.md).
 - Notice extraction: [synthetic held-out set](results/api_test.md) (Chinese only), [connection smoke test](results/api_smoke.md) (Chinese only), [real quantity extraction](results/notice_facts_api.md) (Chinese only).
 - Query planning: [scale audit](decision_scale.md) (Chinese only), [computation budgets](query_budget_results.md) (Chinese only), [BC](query_policy_results.md) (Chinese only), [PPO](query_ppo_results.md), [multi-seed development](query_study_development_results.md), [frozen 1,000 contexts](query_final_results.md), [components](query_components_results.md).

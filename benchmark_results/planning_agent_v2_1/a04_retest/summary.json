@@ -1,0 +1,157 @@
+{
+  "label": "post_fix_development_retest",
+  "note": "A development retest of one task after the tool fix. It is not part of the 60 runs and does not change their result. The other 19 tasks were not rerun.",
+  "task": "A04",
+  "runs": [
+    {
+      "run": 1,
+      "success": true,
+      "labels": [],
+      "fields": "6/6",
+      "params_exact": true,
+      "numbers_found": "2/2",
+      "faithful": true,
+      "requests": 5,
+      "tool_calls": [
+        "describe_network",
+        "solve_plan",
+        "create_scenario",
+        "solve_plan",
+        "compare_plans",
+        "explain_plan"
+      ],
+      "tool_calls_failed": [],
+      "lanes_built": [
+        [
+          "TW_air"
+        ]
+      ],
+      "seconds": 75.22,
+      "cost_usd_at_list_price": 0.039384,
+      "effective": {
+        "endpoints": [
+          "responses"
+        ],
+        "models": [
+          "gpt-6.1-sol"
+        ],
+        "reasoning_efforts": [
+          "max"
+        ],
+        "reasoning_modes": [
+          "standard"
+        ],
+        "service_tiers": [
+          "default"
+        ]
+      },
+      "tool_strict": [
+        "False"
+      ],
+      "input_tokens": 15442,
+      "output_tokens": 2691,
+      "reasoning_tokens": 1987
+    },
+    {
+      "run": 2,
+      "success": true,
+      "labels": [],
+      "fields": "6/6",
+      "params_exact": true,
+      "numbers_found": "2/2",
+      "faithful": true,
+      "requests": 5,
+      "tool_calls": [
+        "describe_network",
+        "solve_plan",
+        "create_scenario",
+        "solve_plan",
+        "compare_plans",
+        "explain_plan"
+      ],
+      "tool_calls_failed": [],
+      "lanes_built": [
+        [
+          "TW_air"
+        ]
+      ],
+      "seconds": 90.19,
+      "cost_usd_at_list_price": 0.043042,
+      "effective": {
+        "endpoints": [
+          "responses"
+        ],
+        "models": [
+          "gpt-6.1-sol"
+        ],
+        "reasoning_efforts": [
+          "max"
+        ],
+        "reasoning_modes": [
+          "standard"
+        ],
+        "service_tiers": [
+          "default"
+        ]
+      },
+      "tool_strict": [
+        "False"
+      ],
+      "input_tokens": 15876,
+      "output_tokens": 3383,
+      "reasoning_tokens": 2622
+    },
+    {
+      "run": 3,
+      "success": true,
+      "labels": [],
+      "fields": "6/6",
+      "params_exact": true,
+      "numbers_found": "2/2",
+      "faithful": true,
+      "requests": 5,
+      "tool_calls": [
+        "describe_network",
+        "solve_plan",
+        "create_scenario",
+        "solve_plan",
+        "compare_plans",
+        "explain_plan"
+      ],
+      "tool_calls_failed": [],
+      "lanes_built": [
+        [
+          "TW_air"
+        ]
+      ],
+      "seconds": 75.98,
+      "cost_usd_at_list_price": 0.036636,
+      "effective": {
+        "endpoints": [
+          "responses"
+        ],
+        "models": [
+          "gpt-6.1-sol"
+        ],
+        "reasoning_efforts": [
+          "max"
+        ],
+        "reasoning_modes": [
+          "standard"
+        ],
+        "service_tiers": [
+          "default"
+        ]
+      },
+      "tool_strict": [
+        "False"
+      ],
+      "input_tokens": 15701,
+      "output_tokens": 2760,
+      "reasoning_tokens": 2043
+    }
+  ],
+  "successes": "3/3",
+  "cost_usd_at_list_price": 0.1191,
+  "budget_limit_usd": 1.0
+}

@@ -3,7 +3,7 @@
 本文提供中英文版本，中文在前，英文在后。
 This document is available in Chinese and English; English follows Chinese.
 
-本文限定原已知订单实验；后续查询学习与未知需求模型见[架构](architecture.md)和[研究说明](research_guide.md)。
+本文限定原已知订单实验；后续查询学习与未知需求模型见[架构](architecture.md)和[研究说明](research_guide.md)，规划引擎的模型见[技术总览](technical_overview.md)。
 
 ## 中文
 

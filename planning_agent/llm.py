@@ -7,7 +7,9 @@ Configure with environment variables, the same names as in many LangChain exampl
                           https://api.openai.com/v1 (default)
     LLM_MODEL_ID          required, e.g. deepseek-chat, qwen-plus, gpt-6-luna
     LLM_API_STYLE         "chat" (default) or "responses" (OpenAI /v1/responses)
-    LLM_REASONING_EFFORT  optional, e.g. low / medium / high / xhigh for reasoning models
+    LLM_REASONING_EFFORT  optional, e.g. low / medium / high / xhigh / max for reasoning models
+    LLM_REASONING_MODE    optional, Responses API only: standard or pro
+    LLM_SERVICE_TIER      optional, e.g. default for standard processing; omit to use the project's setting
     LLM_TIMEOUT           seconds per request (default 600; high reasoning effort can be slow)
 
 Limits, all checked before a request is sent (see spending.py). No limits, no call:
@@ -107,6 +109,19 @@ def _open(request: urllib.request.Request, timeout: float) -> Any:
     return _OPENER.open(request, timeout=timeout)
 
 
+def _retry_delay(error: urllib.error.HTTPError, attempt: int) -> float:
+    """Wait as long as the service asks, within reason; otherwise back off."""
+    try:
+        asked = float(error.headers.get("Retry-After") or 0) if error.headers else 0.0
+    except ValueError:
+        asked = 0.0
+    return min(max(asked, 2.0 ** attempt), 120.0)
+
+
+def usable_key(key: str) -> bool:
+    return key.isascii() and key.isprintable() and " " not in key
+
+
 def configured() -> bool:
     return bool(os.getenv("LLM_API_KEY"))
 
@@ -137,7 +152,8 @@ def status() -> dict[str, Any]:
     return {"key_set": configured(), "endpoint": f"{parts.scheme}://{parts.hostname}{parts.path}",
             "call_kind": "local" if _is_loopback(parts.hostname or "") else "real",
             "model": os.getenv("LLM_MODEL_ID"), "api_style": os.getenv("LLM_API_STYLE") or "chat",
-            "reasoning_effort": os.getenv("LLM_REASONING_EFFORT"), "limits": limits,
+            "reasoning_effort": os.getenv("LLM_REASONING_EFFORT"), "reasoning_mode": os.getenv("LLM_REASONING_MODE"),
+            "service_tier": os.getenv("LLM_SERVICE_TIER"), "limits": limits,
             "ledger": os.getenv("LLM_LEDGER_PATH"), "problems": problems()}
 
 
@@ -148,6 +164,8 @@ class OpenAICompatibleClient:
         self._api_key = api_key or os.getenv("LLM_API_KEY")
         if not self._api_key:
             raise LLMError("LLM_API_KEY is not set")
+        if not usable_key(self._api_key):  # a pasted control character reaches the service as a bare HTTP 400
+            raise LLMError("the API key holds spaces or control characters; enter it again")
         self.base_url = check_base_url(base_url or os.getenv("LLM_BASE_URL") or DEFAULT_BASE_URL)
         self.model = model or os.getenv("LLM_MODEL_ID")
         if not self.model:
@@ -160,6 +178,9 @@ class OpenAICompatibleClient:
         self.call_kind = "local" if _is_loopback(urllib.parse.urlsplit(self.base_url).hostname or "") else "real"
         self.api_style = os.getenv("LLM_API_STYLE") or "chat"
         self.reasoning_effort = os.getenv("LLM_REASONING_EFFORT") or None
+        self.reasoning_mode = os.getenv("LLM_REASONING_MODE") or None
+        self.service_tier = os.getenv("LLM_SERVICE_TIER") or None
+        self.request_log: list[dict[str, Any]] = []  # what each HTTP attempt returned; holds no text or credentials
         self.timeout = timeout or float(os.getenv("LLM_TIMEOUT") or 600)
         self.retries = retries
         self.send_temperature = True  # reasoning models reject a custom temperature; dropped after the first 400
@@ -188,6 +209,8 @@ class OpenAICompatibleClient:
             body["temperature"] = temperature
         if self.reasoning_effort:
             body["reasoning_effort"] = self.reasoning_effort
+        if self.service_tier:
+            body["service_tier"] = self.service_tier
         if tools:
             body.update(tools=tools, tool_choice="auto")
         try:
@@ -223,16 +246,28 @@ class OpenAICompatibleClient:
         body: dict[str, Any] = {"model": self.model, "input": self._to_input(messages),
                                 "max_output_tokens": self.max_output_tokens}
         if tools:
-            body["tools"] = [{"type": "function", **t["function"]} for t in tools]
-        if self.reasoning_effort:
-            body["reasoning"] = {"effort": self.reasoning_effort}
+            # The tool schemas have optional fields whose absence means something ("not given", reported as an
+            # assumption). Left unset, the Responses API attempts strict mode, which makes the model fill them all.
+            body["tools"] = [{"type": "function", "strict": False, **t["function"]} for t in tools]
+        reasoning = {k: v for k, v in (("effort", self.reasoning_effort), ("mode", self.reasoning_mode)) if v}
+        if reasoning:
+            body["reasoning"] = reasoning
+        if self.service_tier:
+            body["service_tier"] = self.service_tier
         data = self._post("responses", body)
         usage = data.get("usage") or {}
         self._count(usage.get("input_tokens", 0), usage.get("output_tokens", 0),
                     (usage.get("output_tokens_details") or {}).get("reasoning_tokens", 0),
                     (usage.get("input_tokens_details") or {}).get("cached_tokens", 0))
-        if data.get("status") == "incomplete":
-            raise LLMError(f"output stopped at the cap of {self.max_output_tokens:,} tokens; reply discarded")
+        status = data.get("status")
+        if status == "incomplete":
+            reason = (data.get("incomplete_details") or {}).get("reason", "max_output_tokens")
+            if reason == "max_output_tokens":
+                raise LLMError(f"output stopped at the cap of {self.max_output_tokens:,} tokens; reply discarded")
+            raise LLMError(f"reply incomplete: {reason}; reply discarded")
+        if status == "failed":
+            detail = redact(json.dumps(data.get("error") or {}, ensure_ascii=False), self._api_key)[:300]
+            raise LLMError(f"the response failed: {detail}")
         output = data.get("output") or []
         text, calls = [], []
         for item in output:
@@ -277,31 +312,71 @@ class OpenAICompatibleClient:
         bound = input_bound(payload)
         for attempt in range(self.retries + 1):
             held = reserve_all(self.meters, bound, self.max_output_tokens)  # raises before anything is sent
+            started = time.perf_counter()
             try:
                 with _open(request, self.timeout) as response:
                     data = cast(dict[str, Any], json.load(response))
             except urllib.error.HTTPError as error:
+                self._log_failure(path, started, f"HTTP {error.code}")
                 if error.code < 500:  # rejected before the model ran
                     self._settle(held, 0, 0)
-                if error.code in (429, 500, 502, 503, 504) and attempt < self.retries:
-                    time.sleep(2 ** attempt)
+                detail = redact(error.read().decode("utf-8", "replace"), self._api_key)
+                retryable = error.code in (429, 500, 502, 503, 504) and "insufficient_quota" not in detail
+                if retryable and attempt < self.retries:
+                    time.sleep(_retry_delay(error, attempt))
                     continue
-                detail = redact(error.read().decode("utf-8", "replace"), self._api_key)[:400]
-                raise LLMError(f"HTTP {error.code} from {self.base_url}/{path}: {detail}") from None
-            except (urllib.error.URLError, TimeoutError) as error:  # may have run and been billed: stays charged
+                raise LLMError(f"HTTP {error.code} from {self.base_url}/{path}: {detail[:400]}") from None
+            except (urllib.error.URLError, TimeoutError, ConnectionError) as error:
+                self._log_failure(path, started, type(error).__name__)  # may have run and been billed: stays charged
                 if attempt < self.retries:
                     time.sleep(2 ** attempt)
                     continue
                 raise LLMError(f"cannot reach {self.base_url}: " + redact(str(error), self._api_key)) from None
             except ValueError:
+                self._log_failure(path, started, "unreadable reply")
                 raise LLMError(f"unreadable reply from {self.base_url}/{path}") from None
             usage = data.get("usage") or {}
             used_input = usage.get("prompt_tokens", usage.get("input_tokens"))
             used_output = usage.get("completion_tokens", usage.get("output_tokens"))
             if used_input is not None and used_output is not None:  # otherwise the reservation stays charged
                 self._settle(held, used_input, used_output)
+            self._log_reply(path, started, data)
             return data
         raise LLMError("unreachable")
+
+    def stored_response(self, response_id: str) -> dict[str, Any]:
+        """Read back a stored response: no model runs and nothing is billed, so no meter is involved."""
+        request = urllib.request.Request(f"{self.base_url}/responses/{response_id}",
+                                         headers={"Authorization": f"Bearer {self._api_key}"})
+        try:
+            with _open(request, self.timeout) as response:
+                return cast(dict[str, Any], json.load(response))
+        except urllib.error.HTTPError as error:
+            raise LLMError(f"HTTP {error.code} reading a stored response") from None
+        except (urllib.error.URLError, TimeoutError, ConnectionError, ValueError) as error:
+            raise LLMError("cannot read a stored response: " + redact(str(error), self._api_key)) from None
+
+    def _log_failure(self, path: str, started: float, failure: str) -> None:
+        self.request_log.append({"endpoint": path, "seconds": round(time.perf_counter() - started, 2),
+                                 "failure": failure})
+
+    def _log_reply(self, path: str, started: float, data: dict[str, Any]) -> None:
+        """Record what the service says it did, which may differ from what was requested."""
+        usage = data.get("usage") or {}
+        input_details = usage.get("input_tokens_details") or usage.get("prompt_tokens_details") or {}
+        output_details = usage.get("output_tokens_details") or usage.get("completion_tokens_details") or {}
+        reasoning = data.get("reasoning") or {}
+        self.request_log.append({
+            "endpoint": path, "seconds": round(time.perf_counter() - started, 2), "response_id": data.get("id"),
+            "model": data.get("model"), "reasoning_effort": reasoning.get("effort"),
+            "reasoning_mode": reasoning.get("mode"), "service_tier": data.get("service_tier"),
+            "status": data.get("status"),
+            "tool_strict": sorted({str(t.get("strict")) for t in data.get("tools") or []}),
+            "input_tokens": usage.get("input_tokens", usage.get("prompt_tokens")),
+            "cached_tokens": input_details.get("cached_tokens", 0),
+            "cache_write_tokens": input_details.get("cache_write_tokens", 0),
+            "output_tokens": usage.get("output_tokens", usage.get("completion_tokens")),
+            "reasoning_tokens": output_details.get("reasoning_tokens", 0)})
 
     @staticmethod
     def _settle(held: list[tuple[Meter, str]], input_tokens: int, output_tokens: int) -> None:

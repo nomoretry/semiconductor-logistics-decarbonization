@@ -1,0 +1,139 @@
+{
+  "schema": "planning-agent-eval-v2",
+  "description": "Twenty planner tasks for comparing the LLM planning agent with the rule agent. Group A: extracting parameters and assumptions from notices. Group B: choosing tools, optimisation decisions and business understanding. Group C: real carrier notices that do not by themselves give executable parameters. Written by the project author before any agent ran on them; this is not an independent test. Networks, demand and rates are synthetic.",
+  "notice_selection": "Group C: real_notices_v1 test items split by whether the assistant-written reference lists a quantity; items were shuffled with random.Random(20261104), then three were taken from each stratum without repeating an event group. Reference answers are assistant-written and pending human review.",
+  "notice_question": {
+    "zh": "下面是船公司发布的公告（原文摘录）：\n“{text}”\n这条公告对我们荷兰到新加坡的 ASML 备件海运有什么影响？成本和排放会变多少？",
+    "en": "Here is an excerpt from a carrier notice:\n\"{text}\"\nWhat does it mean for our ASML spare-parts ocean shipments from the Netherlands to Singapore? How much will cost and emissions change?"
+  },
+  "cases": [
+    {
+      "id": "A01", "group": "A", "kind": "scenario", "language": "zh",
+      "question": "货代通知：第5周至第11周发出的海运货物，受鹿特丹港作业影响，到港时间比平常晚两周，可订舱位只有平时的七成。这对我们新加坡备件仓的总成本和排放有什么影响？",
+      "network": "asml",
+      "disruptions": [{"lanes": ["NL_ocean"], "start_week": 5, "end_week": 11, "extra_lead_weeks": 2, "capacity_change_pct": -30}],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct", "emissions_change_pct"]
+    },
+    {
+      "id": "A02", "group": "A", "kind": "scenario", "language": "en",
+      "question": "Forwarder advisory for our spare-parts flow: ocean departures from week 6 through week 9 are rerouted, so the voyage distance grows 35% and transit takes 14 days longer; capacity is unchanged. What happens to total cost and to the air share?",
+      "network": "asml",
+      "disruptions": [{"lanes": ["NL_ocean"], "start_week": 6, "end_week": 9, "extra_lead_weeks": 2, "distance_factor": 1.35}],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct", "air_share_pct"]
+    },
+    {
+      "id": "A03", "group": "A", "kind": "scenario", "language": "zh",
+      "question": "航空货运代理来函：第三周到第八周，荷兰到新加坡的空运舱位减少四分之一，运价同时上涨两成。备件网络的成本会增加多少？",
+      "network": "asml",
+      "disruptions": [{"lanes": ["NL_air"], "start_week": 3, "end_week": 8, "capacity_change_pct": -25, "cost_change_pct": 20}],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct"]
+    },
+    {
+      "id": "A04", "group": "A", "kind": "scenario", "language": "en",
+      "question": "Airline notice for our chip shipments: from week 7 to week 9, air capacity out of Taiwan is cut by one third and rates rise 15%. What is the effect on cost and emissions?",
+      "network": "marvell",
+      "disruptions": [{"lanes": ["TW_air"], "start_week": 7, "end_week": 9, "capacity_change_pct": -33.3, "cost_change_pct": 15}],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct", "emissions_change_pct"]
+    },
+    {
+      "id": "A05", "group": "A", "kind": "scenario", "language": "zh",
+      "question": "两条通知同时生效：第4到6周海运延误1周；第5到7周空运舱位减半。备件网络的成本和排放分别变化多少？",
+      "network": "asml",
+      "disruptions": [
+        {"lanes": ["NL_ocean"], "start_week": 4, "end_week": 6, "extra_lead_weeks": 1},
+        {"lanes": ["NL_air"], "start_week": 5, "end_week": 7, "capacity_change_pct": -50}
+      ],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct", "emissions_change_pct"]
+    },
+    {
+      "id": "A06", "group": "A", "kind": "scenario", "language": "zh",
+      "question": "客户爬坡：第8到12周承诺需求上调25%。同一时间，马来西亚到新加坡的公路运力在第9到10周下降20%。芯片网络的成本变化和服务水平如何？",
+      "network": "marvell",
+      "disruptions": [{"lanes": ["MY_road"], "start_week": 9, "end_week": 10, "capacity_change_pct": -20}],
+      "demand_change_pct": 25, "demand_weeks": [8, 12],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct", "service_level_pct"]
+    },
+    {
+      "id": "A07", "group": "A", "kind": "scenario", "language": "en",
+      "question": "Weeks 6-10: ocean capacity drops 40% on the Netherlands-Singapore lane. The carrier said nothing about transit times or freight rates. What is the cost impact on the spare-parts network?",
+      "network": "asml",
+      "disruptions": [{"lanes": ["NL_ocean"], "start_week": 6, "end_week": 10, "capacity_change_pct": -40}],
+      "expect_tools": ["create_scenario", "solve_plan", "compare_plans"],
+      "metrics": ["cost_change_pct"],
+      "must_flag_assumption": true
+    },
+    {
+      "id": "A08", "group": "A", "kind": "clarify", "language": "zh",
+      "question": "船公司说下个月起海运会比较紧张，舱位可能会减少一些。我们备件仓的成本会涨多少？",
+      "network": "asml"
+    },
+    {
+      "id": "B01", "group": "B", "kind": "tool", "language": "zh",
+      "question": "马来西亚到新加坡有哪几种运输方式？各自的周运力和每公斤排放是多少？",
+      "expect_tools": ["describe_network"],
+      "expect_args": {"describe_network": {"network": "marvell"}},
+      "facts": [
+        {"kind": "lane", "network": "marvell", "lane": "MY_air", "field": "weekly_capacity_kg"},
+        {"kind": "lane", "network": "marvell", "lane": "MY_air", "field": "kgco2e_per_kg"},
+        {"kind": "lane", "network": "marvell", "lane": "MY_road", "field": "weekly_capacity_kg"},
+        {"kind": "lane", "network": "marvell", "lane": "MY_road", "field": "kgco2e_per_kg"}
+      ]
+    },
+    {
+      "id": "B02", "group": "B", "kind": "tool", "language": "en",
+      "question": "If the Malaysia-Singapore border gets congested as in your predefined case, how much does cost change for the chip network, and does the service level hold?",
+      "expect_tools": ["solve_plan", "compare_plans"],
+      "expect_args": {"solve_plan": {"network": "marvell", "scenario": "border_congestion"}},
+      "facts": [
+        {"kind": "change", "metric": "cost_change_pct", "network": "marvell", "scenario": "border_congestion"},
+        {"kind": "change", "metric": "service_level_pct", "network": "marvell", "scenario": "border_congestion"}
+      ]
+    },
+    {
+      "id": "B03", "group": "B", "kind": "tool", "language": "zh",
+      "question": "备件网络想看减排成本曲线：排放上限分别设为基准的 90%、80%、70% 时，成本增幅和平均边际减排成本各是多少？",
+      "expect_tools": ["carbon_frontier"],
+      "expect_args": {"carbon_frontier": {"network": "asml", "levels_pct": [90, 80, 70]}},
+      "facts": [
+        {"kind": "frontier_point", "network": "asml", "levels": [90, 80, 70], "level": 90, "field": "cost_increase_pct"},
+        {"kind": "frontier_point", "network": "asml", "levels": [90, 80, 70], "level": 80, "field": "cost_increase_pct"},
+        {"kind": "frontier_point", "network": "asml", "levels": [90, 80, 70], "level": 70, "field": "cost_increase_pct"},
+        {"kind": "frontier_point", "network": "asml", "levels": [90, 80, 70], "level": 80, "field": "mac_avg_usd_per_t"}
+      ]
+    },
+    {
+      "id": "B04", "group": "B", "kind": "tool", "language": "en",
+      "question": "For the spare-parts network there is roughly a 30% chance that the Red Sea route closes and ships divert around the Cape. Should we change the plan now, and what is planning for that risk worth compared with following the normal plan?",
+      "expect_tools": ["hedge_disruption_risk"],
+      "expect_args": {"hedge_disruption_risk": {"network": "asml", "scenarios": ["normal", "red_sea"], "probabilities": [70, 30]}},
+      "facts": [
+        {"kind": "hedge", "network": "asml", "scenarios": ["normal", "red_sea"], "probabilities": [70, 30], "field": "VSS_usd"}
+      ]
+    },
+    {
+      "id": "B05", "group": "B", "kind": "tool", "language": "zh",
+      "question": "红海绕行的情况下，备件网络哪几周、哪条线路最吃紧？主要成本来自哪里？把结论写成备忘录给物流经理。",
+      "expect_tools": ["solve_plan", "explain_plan", "write_memo"],
+      "expect_args": {"solve_plan": {"network": "asml", "scenario": "red_sea"}},
+      "facts": [
+        {"kind": "change", "metric": "total_cost_usd", "network": "asml", "scenario": "red_sea"}
+      ]
+    },
+    {
+      "id": "B06", "group": "B", "kind": "refuse", "language": "en",
+      "question": "Can you book me a flight to Singapore next Tuesday and tell me TSMC's share price?"
+    },
+    {"id": "C01", "group": "C", "kind": "notice", "language": "zh", "notice_id": "real_r009"},
+    {"id": "C02", "group": "C", "kind": "notice", "language": "en", "notice_id": "real_r015"},
+    {"id": "C03", "group": "C", "kind": "notice", "language": "zh", "notice_id": "real_r016"},
+    {"id": "C04", "group": "C", "kind": "notice", "language": "en", "notice_id": "real_r011"},
+    {"id": "C05", "group": "C", "kind": "notice", "language": "zh", "notice_id": "real_r003"},
+    {"id": "C06", "group": "C", "kind": "notice", "language": "en", "notice_id": "real_r008"}
+  ]
+}

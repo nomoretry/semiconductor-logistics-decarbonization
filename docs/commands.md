@@ -27,6 +27,14 @@ python -m planning_agent replay --output artifacts/planning/replay              
 python -m planning_agent corpus search "鹿特丹码头罢工"          # 公告检索
 python -m planning_agent corpus evaluate --check              # 复算检索评测
 python -m planning_agent corpus fetch --yes                   # 下载公告原文到本地（访问船公司网站）
+python -m planning_agent eval-v2 run --agent rule             # 20 题评测的规则基线（不调用模型）
+python -m planning_agent eval-v2 analyze                      # 由保存的运行计算统计（不调用模型）
+python -m planning_agent eval-v2 verify                       # 重新评分并核对哈希（不调用模型）
+python -m planning_agent eval-followup rescore                # 修正评分器重评全部保存回答（不调用模型）
+python -m planning_agent eval-followup table                  # 写出 20×3 结果表（不调用模型）
+python -m planning_agent eval-followup verify                 # 核对原始结果、重评和哈希（不调用模型）
+python scripts/report_eval_followup.py                        # 由保存结果生成 C03 复核案例和评分说明
+python scripts/export_documents.py                            # 把交付文档导出成 PDF（需要 markdown、latex2mathml 和 Chromium 浏览器）
 ```
 
 `--agent llm`、`--agent graph` 和 `flow --mode live` 会产生费用，需要 `LLM_API_KEY`、`LLM_MODEL_ID` 和限额变量，缺一项就不调用；`python -m planning_agent llm-check` 检查配置（不联网）。见[实时模型调用的配置与限额](live_model_safety.md)。
@@ -111,6 +119,14 @@ python -m planning_agent replay --output artifacts/planning/replay              
 python -m planning_agent corpus search "Rotterdam strike"     # notice retrieval
 python -m planning_agent corpus evaluate --check              # recompute the retrieval evaluation
 python -m planning_agent corpus fetch --yes                   # download original notice pages locally (contacts carrier sites)
+python -m planning_agent eval-v2 run --agent rule             # rule baseline of the 20-task evaluation (no model)
+python -m planning_agent eval-v2 analyze                      # statistics from saved runs (no model)
+python -m planning_agent eval-v2 verify                       # re-score and check hashes (no model)
+python -m planning_agent eval-followup rescore                # corrected scorer over all saved answers (no model)
+python -m planning_agent eval-followup table                  # write the 20 x 3 results table (no model)
+python -m planning_agent eval-followup verify                 # check the original results, rescoring and hashes (no model)
+python scripts/report_eval_followup.py                        # write the C03 review case and scoring notes from saved results
+python scripts/export_documents.py                            # export the delivered documents to PDF (needs markdown, latex2mathml and a Chromium browser)
 ```
 
 `--agent llm`, `--agent graph` and `flow --mode live` are paid calls and need `LLM_API_KEY`, `LLM_MODEL_ID` and the limit variables; without any of them nothing is called. `python -m planning_agent llm-check` checks the configuration without touching the network. See [live model calls: configuration and limits](live_model_safety.md).

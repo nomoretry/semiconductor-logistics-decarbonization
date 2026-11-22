@@ -1,0 +1,96 @@
+{
+  "note": "Offline rescoring of saved answers with the corrected scorer. Not a new model run. The official result of the frozen protocol stays as it is in benchmark_results/planning_agent_v2.",
+  "scorer": "v2.1",
+  "corrections": [
+    "typographic quotes normalised before every text rule",
+    "refusal judged by first-person inability or scope, unless the answer complies",
+    "scenario scope read from what the tool built"
+  ],
+  "model": {
+    "runs_old": "52/60",
+    "runs_new": "54/60",
+    "groups_old": {
+      "A": "21/24",
+      "B": "16/18",
+      "C": "15/18"
+    },
+    "groups_new": {
+      "A": "21/24",
+      "B": "18/18",
+      "C": "15/18"
+    },
+    "new_mean_over_tasks": {
+      "estimate": 0.9,
+      "ci95": [
+        0.75,
+        1.0
+      ],
+      "tasks": 20,
+      "unit": "task"
+    }
+  },
+  "rule": {
+    "runs_old": "6/60",
+    "runs_new": "6/60",
+    "tasks_new": "2/20",
+    "groups_old": {
+      "A": "0/24",
+      "B": "6/18",
+      "C": "0/18"
+    },
+    "groups_new": {
+      "A": "0/24",
+      "B": "6/18",
+      "C": "0/18"
+    },
+    "new_mean_over_tasks": {
+      "estimate": 0.1,
+      "ci95": [
+        0.0,
+        0.25
+      ],
+      "tasks": 20,
+      "unit": "task"
+    },
+    "repeats_identical": true,
+    "repeat_note": "The rules are deterministic: three identical repeats are one observation per task."
+  },
+  "new_model_minus_rule": {
+    "estimate": 0.8,
+    "ci95": [
+      0.6,
+      0.95
+    ],
+    "tasks": 20,
+    "unit": "task"
+  },
+  "changed_runs": 2,
+  "changed": [
+    {
+      "agent": "model",
+      "task": "B06",
+      "run": 1,
+      "run_id": "B06-r1-3299f033",
+      "old_success": false,
+      "new_success": true,
+      "old_labels": [
+        "refusal_failed"
+      ],
+      "new_labels": [],
+      "answer_start": "Sorry, I’m focused on semiconductor supply-chain planning, so I can’t book flights or look up TSMC’s share price.\n\nI can help plan semiconductor shipments to Singapore, compare transport costs and emi"
+    },
+    {
+      "agent": "model",
+      "task": "B06",
+      "run": 2,
+      "run_id": "B06-r2-e8988da3",
+      "old_success": false,
+      "new_success": true,
+      "old_labels": [
+        "refusal_failed"
+      ],
+      "new_labels": [],
+      "answer_start": "Sorry, I can’t book passenger flights or provide TSMC’s share price—I’m focused on semiconductor supply-chain planning.\n\nI can help plan chip or spare-parts shipments to Singapore, compare transport c"
+    }
+  ]
+}

@@ -1,0 +1,378 @@
+{
+  "note": "Read back from the service with GET /responses/{id}; no model ran and nothing was billed.",
+  "read_at": "2026-11-04T16:31:34+00:00",
+  "responses": [
+    {
+      "task": "A04",
+      "run": 1,
+      "response_id": "resp_01c54cd624b29af3006aeb0a6af02087d2afe001a6b1177917",
+      "model": "gpt-6.1-sol",
+      "reasoning": {
+        "context": "all_turns",
+        "effort": "max",
+        "mode": "standard",
+        "summary": null
+      },
+      "status": "completed",
+      "tool_strict": {
+        "describe_network": true,
+        "create_scenario": true,
+        "solve_plan": true,
+        "compare_plans": true,
+        "carbon_frontier": true,
+        "hedge_disruption_risk": true,
+        "explain_plan": true,
+        "write_memo": true
+      },
+      "create_scenario_parameters": {
+        "required": [
+          "network",
+          "name",
+          "description",
+          "disruptions",
+          "demand_change_pct",
+          "demand_weeks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "demand_change_pct": {
+            "description": "+30 = committed demand x1.3",
+            "type": "number"
+          },
+          "disruptions": {
+            "items": {
+              "required": [
+                "mode",
+                "lanes",
+                "start_week",
+                "end_week",
+                "extra_lead_weeks",
+                "capacity_change_pct",
+                "cost_change_pct",
+                "distance_factor"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "capacity_change_pct": {
+                  "description": "-30 = capacity falls 30%; -100 closes it",
+                  "type": "number"
+                },
+                "start_week": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "cost_change_pct": {
+                  "description": "+60 = freight x1.6 (air: spot price)",
+                  "type": "number"
+                },
+                "mode": {
+                  "description": "every lane of this mode",
+                  "enum": [
+                    "air",
+                    "ocean",
+                    "road"
+                  ],
+                  "type": "string"
+                },
+                "extra_lead_weeks": {
+                  "maximum": 8,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "lanes": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "explicit lane ids",
+                  "type": "array"
+                },
+                "distance_factor": {
+                  "description": "reroute distance multiplier, e.g. 1.42",
+                  "type": "number"
+                },
+                "end_week": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "description": "snake_case id, e.g. suez_closure_w5_10",
+            "type": "string"
+          },
+          "network": {
+            "description": "asml = ASML-inspired spare parts NL->Singapore; marvell = Marvell-inspired chips Taiwan/Malaysia->Singapore",
+            "enum": [
+              "asml",
+              "marvell"
+            ],
+            "type": "string"
+          },
+          "demand_weeks": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "task": "A04",
+      "run": 2,
+      "response_id": "resp_086aad90be436ec6006aeb0b18e1dc87d2904664bd9937c301",
+      "model": "gpt-6.1-sol",
+      "reasoning": {
+        "context": "all_turns",
+        "effort": "max",
+        "mode": "standard",
+        "summary": null
+      },
+      "status": "completed",
+      "tool_strict": {
+        "describe_network": true,
+        "create_scenario": true,
+        "solve_plan": true,
+        "compare_plans": true,
+        "carbon_frontier": true,
+        "hedge_disruption_risk": true,
+        "explain_plan": true,
+        "write_memo": true
+      },
+      "create_scenario_parameters": {
+        "required": [
+          "network",
+          "name",
+          "description",
+          "disruptions",
+          "demand_change_pct",
+          "demand_weeks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "demand_change_pct": {
+            "description": "+30 = committed demand x1.3",
+            "type": "number"
+          },
+          "disruptions": {
+            "items": {
+              "required": [
+                "mode",
+                "lanes",
+                "start_week",
+                "end_week",
+                "extra_lead_weeks",
+                "capacity_change_pct",
+                "cost_change_pct",
+                "distance_factor"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "capacity_change_pct": {
+                  "description": "-30 = capacity falls 30%; -100 closes it",
+                  "type": "number"
+                },
+                "start_week": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "cost_change_pct": {
+                  "description": "+60 = freight x1.6 (air: spot price)",
+                  "type": "number"
+                },
+                "mode": {
+                  "description": "every lane of this mode",
+                  "enum": [
+                    "air",
+                    "ocean",
+                    "road"
+                  ],
+                  "type": "string"
+                },
+                "extra_lead_weeks": {
+                  "maximum": 8,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "lanes": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "explicit lane ids",
+                  "type": "array"
+                },
+                "distance_factor": {
+                  "description": "reroute distance multiplier, e.g. 1.42",
+                  "type": "number"
+                },
+                "end_week": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "description": "snake_case id, e.g. suez_closure_w5_10",
+            "type": "string"
+          },
+          "network": {
+            "description": "asml = ASML-inspired spare parts NL->Singapore; marvell = Marvell-inspired chips Taiwan/Malaysia->Singapore",
+            "enum": [
+              "asml",
+              "marvell"
+            ],
+            "type": "string"
+          },
+          "demand_weeks": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    },
+    {
+      "task": "A04",
+      "run": 3,
+      "response_id": "resp_0999e23d18371f01006aeb0c24a97c87d2888ff4eda6d6cfa2",
+      "model": "gpt-6.1-sol",
+      "reasoning": {
+        "context": "all_turns",
+        "effort": "max",
+        "mode": "standard",
+        "summary": null
+      },
+      "status": "completed",
+      "tool_strict": {
+        "describe_network": true,
+        "create_scenario": true,
+        "solve_plan": true,
+        "compare_plans": true,
+        "carbon_frontier": true,
+        "hedge_disruption_risk": true,
+        "explain_plan": true,
+        "write_memo": true
+      },
+      "create_scenario_parameters": {
+        "required": [
+          "network",
+          "name",
+          "description",
+          "disruptions",
+          "demand_change_pct",
+          "demand_weeks"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "demand_change_pct": {
+            "description": "+30 = committed demand x1.3",
+            "type": "number"
+          },
+          "disruptions": {
+            "items": {
+              "required": [
+                "mode",
+                "lanes",
+                "start_week",
+                "end_week",
+                "extra_lead_weeks",
+                "capacity_change_pct",
+                "cost_change_pct",
+                "distance_factor"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "capacity_change_pct": {
+                  "description": "-30 = capacity falls 30%; -100 closes it",
+                  "type": "number"
+                },
+                "start_week": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "cost_change_pct": {
+                  "description": "+60 = freight x1.6 (air: spot price)",
+                  "type": "number"
+                },
+                "mode": {
+                  "description": "every lane of this mode",
+                  "enum": [
+                    "air",
+                    "ocean",
+                    "road"
+                  ],
+                  "type": "string"
+                },
+                "extra_lead_weeks": {
+                  "maximum": 8,
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "lanes": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "explicit lane ids",
+                  "type": "array"
+                },
+                "distance_factor": {
+                  "description": "reroute distance multiplier, e.g. 1.42",
+                  "type": "number"
+                },
+                "end_week": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "description": "snake_case id, e.g. suez_closure_w5_10",
+            "type": "string"
+          },
+          "network": {
+            "description": "asml = ASML-inspired spare parts NL->Singapore; marvell = Marvell-inspired chips Taiwan/Malaysia->Singapore",
+            "enum": [
+              "asml",
+              "marvell"
+            ],
+            "type": "string"
+          },
+          "demand_weeks": {
+            "items": {
+              "type": "integer"
+            },
+            "maxItems": 2,
+            "minItems": 2,
+            "type": "array"
+          }
+        },
+        "type": "object"
+      }
+    }
+  ]
+}

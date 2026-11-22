@@ -1,0 +1,31 @@
+{
+  "sha256": {
+    "analysis/audit.json": "6d33276ad315cca2d6511805eb02a475f7b231ea8fd20f727d8eacece0d45c1f",
+    "analysis/notice_workflow_exploratory.json": "2b4f8470be14b1be3bb598ae7e8336b472423b21cc171606b58c2fa56bded03d",
+    "analysis/per_case.csv": "890032ce33e4c96b35d1a0938d1aaa32f1dc8f99446f202376872114dd8cd874",
+    "analysis/sensitivity.json": "23caa6f2ef8602c522ada77a8b5d29decffc42e46da363ba6b20e9e6f3109a05",
+    "analysis/summary.json": "838d593c5b62ab22c3052257ad461889a006828e62566748e5b6948d89a32b5b",
+    "analysis/tables.md": "c3069d27cdbb6546987d77bc7b7bd6e94dbf9f68b98f6374dba93f3c2a5cdcb3",
+    "gold.json": "cfd1d91f0239d933d8f4bd44347ca3bf59b197a73a1ef783fbcb0d5e70df592b",
+    "gpt-6.1-sol-max/attempts.jsonl": "fc55b1f45eac979e7e3fb9e510f62de0a92941d1bf5fe4dcd884e02a0a030358",
+    "gpt-6.1-sol-max/last_run.json": "36be6b9582b004feb57a5f32eaed58f0641ccca1b8ea77354cf663002cd98d67",
+    "gpt-6.1-sol-max/ledger.jsonl": "74c749aa4969d362c7ee15afa58854c7e40d1cedf428dea30761575ed2a3f430",
+    "gpt-6.1-sol-max/memos/B05-r1-46580afd/memo-0cf881f811.md": "f6b8a48647949447fc5ecd191813705cbbada18db1b875dcae11700e27b5ee09",
+    "gpt-6.1-sol-max/memos/B05-r1-46580afd/memo-5fbc1639c4.md": "9149f21663c60005bcbf8d4d835a56db451596a72a988bfe823e3eea72412dbd",
+    "gpt-6.1-sol-max/memos/B05-r1-46580afd/memo-cd573e8b5d.md": "0aeef13f3dfde79053259cf1c5d0b3593ea1f1c501016f5bd9c4fd309eca1812",
+    "gpt-6.1-sol-max/memos/B05-r2-5f81aa45/memo-0831c5872a.md": "8141ad498fcdc9dba669b96a61667125a2ed4b5e7f22b19e5753f5602768002d",
+    "gpt-6.1-sol-max/memos/B05-r2-5f81aa45/memo-2d69a18de9.md": "0245d63aafc43754e709e91ba757ff11d99349a214edffc09f9ab7a5f0acafea",
+    "gpt-6.1-sol-max/memos/B05-r2-5f81aa45/memo-4611ab8c49.md": "72ee55c0cb5bfb4093a03ace26228b872c0e63b473d70e8c3d521c48717eb3ff",
+    "gpt-6.1-sol-max/memos/B05-r3-b9d82e4a/memo-3fcdb9d85b.md": "5c8c9c195141ed64e8d8e7ca687f9fbf6dfa593292416d04ee85f8e6c1968d2b",
+    "gpt-6.1-sol-max/memos/B05-r3-b9d82e4a/memo-b1f3bf136f.md": "e66eb17b3a3c1b2879d023387cc2374422c1cec7c038ef0f024dd32abfe60145",
+    "gpt-6.1-sol-max/memos/B05-r3-b9d82e4a/memo-e05b9c31c7.md": "8cc2d7f8fa56235e4718df3fb2966efd816bd9750de342a9e2f2c2a44fdcab73",
+    "gpt-6.1-sol-max/runs.jsonl": "3b1d086a0c80f11ffc6b152a176faa74b21353b09309fb6871db8fba07a67bce",
+    "gpt-6.1-sol-max/sessions.jsonl": "6be8b95660d2a03d577ef970c91c2ff5942006de6293274d93573109baba5493",
+    "rule/last_run.json": "dd57c54d54834d97764b280463befac788a7ecdde2876bebebe1c5253cff8087",
+    "rule/memos/B05-r1-14f6ce3a/memo-249ad3738f.md": "ea4e60bccaa782b98d4aa3f84d97cc72bd818e6dce63b427f287a90fc0eea74a",
+    "rule/memos/B05-r2-bed40a4a/memo-249ad3738f.md": "ea4e60bccaa782b98d4aa3f84d97cc72bd818e6dce63b427f287a90fc0eea74a",
+    "rule/memos/B05-r3-102c7821/memo-249ad3738f.md": "ea4e60bccaa782b98d4aa3f84d97cc72bd818e6dce63b427f287a90fc0eea74a",
+    "rule/runs.jsonl": "b6018efd0d9b6d65501af92921156bad99a553bf48bd332c3fad58fa0f2b13fa",
+    "rule/sessions.jsonl": "14ae338afbca04ec32672891e3a5f1982816d237ba640e8242d86b74156fb66c"
+  }
+}

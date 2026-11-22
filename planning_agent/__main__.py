@@ -9,6 +9,8 @@ python -m planning_agent flow                       # notice -> parameters -> co
 python -m planning_agent flow --mode notice         # the same, with real carrier notices retrieved and cited
 python -m planning_agent corpus search "红海绕行"     # search the notice corpus (build, evaluate, fetch --yes)
 python -m planning_agent llm-check                  # show the live-call configuration; never touches the network
+python -m planning_agent eval-v2 run --agent rule    # frozen 20-task evaluation (see eval_v2.py)
+python -m planning_agent eval-followup rescore       # corrected scorer over its saved answers (see eval_followup.py)
 
 --agent auto uses the LLM agent only when LLM_API_KEY, LLM_MODEL_ID and the spending limits are all set, otherwise the
 offline rule agent. --agent llm and --agent graph refuse to start without them; graph runs the same model, tools and
@@ -258,6 +260,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     c.add_argument("--yes", action="store_true", help="consent to contacting the carrier websites")
     c.add_argument("--ids", help="comma-separated notice ids, e.g. R014,E02")
     sub.add_parser("llm-check", help="show the live-call configuration and what is missing (no network, no key shown)")
+    from .eval_v2 import add_arguments as add_eval_v2
+    add_eval_v2(sub.add_parser("eval-v2", help="frozen 20-task evaluation with three runs per task"))
+    from .eval_followup import add_arguments as add_followup
+    add_followup(sub.add_parser("eval-followup", help="corrected scorer and the A04 retest; never changes the 60 runs"))
     p = sub.add_parser("replay", help="replay recorded model runs through the LangGraph agent (no API calls)")
     p.add_argument("--source", type=Path, default=Path("benchmark_results/planning_agent"))
     p.add_argument("--output", type=Path)
@@ -266,6 +272,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
+    if args.command == "eval-followup":
+        from .eval_followup import command as eval_followup
+        return eval_followup(args)
+    if args.command == "eval-v2":
+        from .eval_v2 import command as eval_v2
+        return eval_v2(args)
     if args.command == "llm-check":
         report = llm.status()
         print(json.dumps(report, indent=2, ensure_ascii=False))

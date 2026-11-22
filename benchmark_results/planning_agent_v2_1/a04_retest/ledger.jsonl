@@ -1,0 +1,30 @@
+{"id": "4dfb4262ee7e414ea229c47d44fc4e11", "day": "2026-11-04", "time": 1793809898.252, "state": "reserved", "reserved": 33202, "tokens": 33202, "usd": 0.270505}
+{"id": "4dfb4262ee7e414ea229c47d44fc4e11", "day": "2026-11-04", "time": 1793809898.252, "state": "settled", "reserved": 33202, "tokens": 1924, "usd": 0.00793, "input": 1508, "output": 416}
+{"id": "adac33c0b753443c9cc5576d03b8170e", "day": "2026-11-04", "time": 1793809911.046, "state": "reserved", "reserved": 42297, "tokens": 42297, "usd": 0.2932425}
+{"id": "adac33c0b753443c9cc5576d03b8170e", "day": "2026-11-04", "time": 1793809911.046, "state": "settled", "reserved": 42297, "tokens": 2973, "usd": 0.0091425, "input": 2745, "output": 228}
+{"id": "a9dd90590fb2423e82ee7bb06c6e1c63", "day": "2026-11-04", "time": 1793809918.378, "state": "reserved", "reserved": 46710, "tokens": 46710, "usd": 0.304275}
+{"id": "a9dd90590fb2423e82ee7bb06c6e1c63", "day": "2026-11-04", "time": 1793809918.378, "state": "settled", "reserved": 46710, "tokens": 3246, "usd": 0.008445, "input": 3202, "output": 44}
+{"id": "0afaa624eb554b06b88051cbd61acd73", "day": "2026-11-04", "time": 1793809921.133, "state": "reserved", "reserved": 47643, "tokens": 47643, "usd": 0.3066075}
+{"id": "0afaa624eb554b06b88051cbd61acd73", "day": "2026-11-04", "time": 1793809921.133, "state": "settled", "reserved": 47643, "tokens": 3500, "usd": 0.009185, "input": 3442, "output": 58}
+{"id": "013bd0a68e644f94801e8f751c6528cb", "day": "2026-11-04", "time": 1793809923.618, "state": "reserved", "reserved": 50929, "tokens": 50929, "usd": 0.3148225}
+{"id": "013bd0a68e644f94801e8f751c6528cb", "day": "2026-11-04", "time": 1793809923.618, "state": "settled", "reserved": 50929, "tokens": 6490, "usd": 0.0308125, "input": 4545, "output": 1945}
+{"id": "eb9251b90c6544e7b8b2283d855300f8", "day": "2026-11-04", "time": 1793809973.472, "state": "reserved", "reserved": 33202, "tokens": 33202, "usd": 0.270505}
+{"id": "eb9251b90c6544e7b8b2283d855300f8", "day": "2026-11-04", "time": 1793809973.472, "state": "settled", "reserved": 33202, "tokens": 2002, "usd": 0.00871, "input": 1508, "output": 494}
+{"id": "dfb83890bf36465b9f436e6ca1fbdf96", "day": "2026-11-04", "time": 1793809988.444, "state": "reserved", "reserved": 43276, "tokens": 43276, "usd": 0.29569}
+{"id": "dfb83890bf36465b9f436e6ca1fbdf96", "day": "2026-11-04", "time": 1793809988.444, "state": "settled", "reserved": 43276, "tokens": 3129, "usd": 0.0101625, "input": 2817, "output": 312}
+{"id": "e821b12f216b4506a1eb11738a9e3f67", "day": "2026-11-04", "time": 1793809995.998, "state": "reserved", "reserved": 48297, "tokens": 48297, "usd": 0.3082425}
+{"id": "e821b12f216b4506a1eb11738a9e3f67", "day": "2026-11-04", "time": 1793809995.998, "state": "settled", "reserved": 48297, "tokens": 3363, "usd": 0.008775, "input": 3314, "output": 49}
+{"id": "6f49d6bf10bb4dba8411f67beb11cb6f", "day": "2026-11-04", "time": 1793809998.682, "state": "reserved", "reserved": 49300, "tokens": 49300, "usd": 0.31075}
+{"id": "6f49d6bf10bb4dba8411f67beb11cb6f", "day": "2026-11-04", "time": 1793809998.682, "state": "settled", "reserved": 49300, "tokens": 3622, "usd": 0.00949, "input": 3564, "output": 58}
+{"id": "4d848a088e7b4e309075d89fe211b7ed", "day": "2026-11-04", "time": 1793810001.607, "state": "reserved", "reserved": 52631, "tokens": 52631, "usd": 0.3190775}
+{"id": "4d848a088e7b4e309075d89fe211b7ed", "day": "2026-11-04", "time": 1793810001.607, "state": "settled", "reserved": 52631, "tokens": 7143, "usd": 0.0363825, "input": 4673, "output": 2470}
+{"id": "e6bd8f9854ed47b8b104f789b2004979", "day": "2026-11-04", "time": 1793810063.668, "state": "reserved", "reserved": 33202, "tokens": 33202, "usd": 0.270505}
+{"id": "e6bd8f9854ed47b8b104f789b2004979", "day": "2026-11-04", "time": 1793810063.668, "state": "settled", "reserved": 33202, "tokens": 1988, "usd": 0.00857, "input": 1508, "output": 480}
+{"id": "d4ce4e4244e84d7d85016907eb9269af", "day": "2026-11-04", "time": 1793810076.682, "state": "reserved", "reserved": 43155, "tokens": 43155, "usd": 0.2953875}
+{"id": "d4ce4e4244e84d7d85016907eb9269af", "day": "2026-11-04", "time": 1793810076.682, "state": "settled", "reserved": 43155, "tokens": 3035, "usd": 0.009245, "input": 2814, "output": 221}
+{"id": "a61ff36ea9fb4d2891c39271945d75ae", "day": "2026-11-04", "time": 1793810082.376, "state": "reserved", "reserved": 47461, "tokens": 47461, "usd": 0.3061525}
+{"id": "a61ff36ea9fb4d2891c39271945d75ae", "day": "2026-11-04", "time": 1793810082.376, "state": "settled", "reserved": 47461, "tokens": 3310, "usd": 0.0085975, "input": 3267, "output": 43}
+{"id": "a133be9c2b324b70b724c80f775b139c", "day": "2026-11-04", "time": 1793810085.376, "state": "reserved", "reserved": 48424, "tokens": 48424, "usd": 0.30856}
+{"id": "a133be9c2b324b70b724c80f775b139c", "day": "2026-11-04", "time": 1793810085.376, "state": "settled", "reserved": 48424, "tokens": 3563, "usd": 0.0093425, "input": 3505, "output": 58}
+{"id": "1ee9db097c38468dabeca40997219419", "day": "2026-11-04", "time": 1793810087.803, "state": "reserved", "reserved": 51725, "tokens": 51725, "usd": 0.3168125}
+{"id": "1ee9db097c38468dabeca40997219419", "day": "2026-11-04", "time": 1793810087.803, "state": "settled", "reserved": 51725, "tokens": 6565, "usd": 0.0310975, "input": 4607, "output": 1958}
