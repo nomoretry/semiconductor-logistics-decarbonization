@@ -7,13 +7,13 @@ This document provides Chinese first and English second; the raw answers appear 
 
 ## 中文
 
-**任务。** 题目和公告原文见下面的“原始材料”。公告编号 `real_r016`，公告里的数量是运输时间缩短 5–7 天。参考答案状态 `assistant_reference_pending_human_review`，即由助手编写、尚未人工复核。
+**任务。** 题目和公告原文见下面的“原始材料”。公告编号 `real_r016`，公告里的数量是运输时间缩短 5–7 天。参考答案状态 `assistant_reference_pending_human_review`，即由大模型生成、尚未人工复核。
 
 **预期行为（事前冻结）。** 公告说的是孟买港到北欧，不是荷兰到新加坡。这类任务不能直接执行，回答应说明缺什么（路线映射、周次、幅度三类至少说到两类，并有表示缺失或提问的字眼）；如果仍然建场景或求解，必须标为假设；数字审查通过；没有错误。
 
 **冻结评分依据。** `planning_agent/eval_v2.py` 的 `score_run`，`clarify` 和 `notice` 分支：`len(families) >= 2`。3 次回答都只匹配 `route` 一类，所以都得到 `missing_info_not_stated`。修正后的评分器 v2.1 没有改动这条规则，3 次仍判为失败。
 
-**争议点。** 公告说的航线如果不适用，周次和幅度可能已经不重要。这是从业务上为回答辩护的理由，也是这条规则可能过严的原因；但 3 次回答是否足够好，要由人判断，不由看过结果的作者或助手决定。
+**争议点。** 公告说的航线如果不适用，周次和幅度可能已经不重要。这是从业务上为回答辩护的理由，也是这条规则可能过严的原因；但 3 次回答是否足够好，要由人判断，不由看过结果的作者或大模型决定。
 
 **请复核人判断：**
 
@@ -29,13 +29,13 @@ This document provides Chinese first and English second; the raw answers appear 
 
 ## English
 
-**Task.** The question and the notice text are under "Raw material" below. The notice id is `real_r016`, and its quantity is a transit time shortened by 5–7 days. The reference status is `assistant_reference_pending_human_review`: written by an assistant and not yet reviewed by a person.
+**Task.** The question and the notice text are under "Raw material" below. The notice id is `real_r016`, and its quantity is a transit time shortened by 5–7 days. The reference status is `assistant_reference_pending_human_review`: written by a language model and not yet reviewed by a person.
 
 **Expected behaviour (frozen in advance).** The notice concerns Mumbai ports to North Europe, not the Netherlands to Singapore. A task like this cannot be executed directly, so the answer should say what is missing (at least two of route mapping, weeks and magnitude, with a word signalling a gap or a question); if it still builds a scenario or solves, it must label that as an assumption; numeric review passes; no error.
 
 **Frozen scoring basis.** `score_run` in `planning_agent/eval_v2.py`, the `clarify` and `notice` branch: `len(families) >= 2`. All three answers match only the `route` family, so all three get `missing_info_not_stated`. The corrected scorer v2.1 does not change this rule, and the three runs still fail.
 
-**The point in dispute.** If the trade named in the notice does not apply, the weeks and the magnitude may no longer matter. That is the business argument for the answers and the reason the rule may be too strict; but whether these answers are good enough is for a person to judge, not the author or the assistant who have seen the results.
+**The point in dispute.** If the trade named in the notice does not apply, the weeks and the magnitude may no longer matter. That is the business argument for the answers and the reason the rule may be too strict; but whether these answers are good enough is for a person to judge, not the author or the language model, both of which have seen the results.
 
 **Questions for the reviewer:**
 
