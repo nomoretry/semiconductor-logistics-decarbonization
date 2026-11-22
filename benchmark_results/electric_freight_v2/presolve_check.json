@@ -1,0 +1,483 @@
+{
+  "deterministic/base/normal/C": {
+    "target": "deterministic/base/normal/C",
+    "code_version": "62dc6a6",
+    "original": {
+      "status": "optimal",
+      "objective_usd": 51020.23445784105
+    },
+    "original_bound": 50973.50118098272,
+    "presolve_off": {
+      "status": "optimal",
+      "objective_usd": 51020.23445784105,
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 3.23,
+        "solve_seconds": 13.84,
+        "mip_gap": 0.0009159753449777297,
+        "dual_bound": 50973.50118098264
+      },
+      "step_1": null,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "week_types": {
+        "1": "normal|0",
+        "2": "normal|0",
+        "3": "normal|0",
+        "4": "normal|0",
+        "5": "normal|0",
+        "6": "normal|0",
+        "7": "normal|0",
+        "8": "normal|0",
+        "9": "normal|0",
+        "10": "normal|0",
+        "11": "normal|0",
+        "12": "normal|0",
+        "13": "normal|0",
+        "14": "normal|0",
+        "15": "normal|0",
+        "16": "normal|0"
+      },
+      "trips": {
+        "normal|0": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 6,
+            "dwell": 4,
+            "arrive": 13,
+            "back": 17,
+            "home": 24
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 54,
+            "dwell": 4,
+            "arrive": 61,
+            "back": 65,
+            "home": 72
+          },
+          {
+            "kind": "task4",
+            "truck": "T1",
+            "depart": 102,
+            "dwell": 4,
+            "arrive": 109,
+            "back": 113,
+            "home": 120
+          },
+          {
+            "kind": "task1",
+            "truck": "T2",
+            "depart": 31,
+            "dwell": 4,
+            "arrive": 38,
+            "back": 42,
+            "home": 49
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task5",
+            "truck": "T2",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          }
+        ]
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.78991596638657,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "accounting": {
+        "total_cost_usd": 51020.2345,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1811.1187,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_HUB": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 24.79
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      },
+      "delivered": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "air": 0
+      },
+      "input": "reconstructed from b2ceb2b; checked against saved decisions and accounting; the historical full vector was not archived"
+    },
+    "comparison_status": "compared",
+    "seconds": 247.38
+  },
+  "deterministic/base/tight_space/B*": {
+    "target": "deterministic/base/tight_space/B*",
+    "code_version": "62dc6a6",
+    "original": {
+      "status": "optimal",
+      "objective_usd": 53119.34190820159
+    },
+    "original_bound": 53095.91463034799,
+    "presolve_off": {
+      "status": "feasible",
+      "objective_usd": 55826.93344278118,
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15992,
+        "build_seconds": 2.81,
+        "solve_seconds": 904.24,
+        "mip_gap": 0.07112867488158815,
+        "dual_bound": 51856.037644293494
+      },
+      "step_1": null,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 0,
+            "MY_DEPOT|dc150": 1,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "week_types": {
+        "1": "normal|0",
+        "2": "normal|0",
+        "3": "normal|0",
+        "4": "normal|0",
+        "5": "normal|0",
+        "6": "normal|0",
+        "7": "normal|0",
+        "8": "normal|0",
+        "9": "normal|0",
+        "10": "normal|0",
+        "11": "normal|0",
+        "12": "normal|0",
+        "13": "normal|0",
+        "14": "normal|0",
+        "15": "normal|1",
+        "16": "normal|0"
+      },
+      "trips": {
+        "normal|0": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 7,
+            "dwell": 4,
+            "arrive": 14,
+            "back": 18,
+            "home": 25
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 55,
+            "dwell": 4,
+            "arrive": 62,
+            "back": 66,
+            "home": 73
+          },
+          {
+            "kind": "task5",
+            "truck": "T1",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          },
+          {
+            "kind": "task1",
+            "truck": "T2",
+            "depart": 31,
+            "dwell": 4,
+            "arrive": 38,
+            "back": 42,
+            "home": 49
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task4",
+            "truck": "T2",
+            "depart": 104,
+            "dwell": 4,
+            "arrive": 111,
+            "back": 115,
+            "home": 122
+          }
+        ],
+        "normal|1": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 6,
+            "dwell": 4,
+            "arrive": 13,
+            "back": 17,
+            "home": 24
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 54,
+            "dwell": 4,
+            "arrive": 61,
+            "back": 65,
+            "home": 72
+          },
+          {
+            "kind": "task4",
+            "truck": "T1",
+            "depart": 102,
+            "dwell": 4,
+            "arrive": 109,
+            "back": 113,
+            "home": 120
+          },
+          {
+            "kind": "extra0",
+            "truck": "T1",
+            "depart": 132,
+            "dwell": 4,
+            "arrive": 139,
+            "back": 143,
+            "home": 150
+          },
+          {
+            "kind": "task1",
+            "truck": "T2",
+            "depart": 32,
+            "dwell": 4,
+            "arrive": 39,
+            "back": 43,
+            "home": 50
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task5",
+            "truck": "T2",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          }
+        ]
+      },
+      "peak_kw": {
+        "MY_DEPOT": 53.19444444444443,
+        "SG_HUB": 150.00000000000074,
+        "SG_YARD": 0.0
+      },
+      "accounting": {
+        "total_cost_usd": 55826.9334,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 10088.15,
+          "trips": 29100.0,
+          "waiting": 0.0,
+          "energy": 12379.9201,
+          "demand_charge": 3886.3163
+        },
+        "total_emissions_kg": 58115.854,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58110.58
+        },
+        "energy_kwh": {
+          "SG_HUB": 43745.556,
+          "MY_DEPOT": 54763.333
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 53.194
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      },
+      "delivered": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6
+      },
+      "input": "reconstructed from b2ceb2b; checked against saved decisions and accounting; the historical full vector was not archived"
+    },
+    "comparison_status": "compared",
+    "seconds": 1102.26
+  },
+  "stochastic/RP/tight_space": {
+    "target": "stochastic/RP/tight_space",
+    "code_version": "62dc6a6",
+    "comparison_status": "no eligible saved result",
+    "original": {
+      "objective_usd": 52308.629235969885,
+      "status": "feasible",
+      "mip_gap": 0.008827295708314947,
+      "dual_bound": 51846.88549760737,
+      "solve_seconds": 905.54,
+      "accounting": {
+        "total_cost_usd": 52308.6292,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29160.0,
+          "waiting": 0.0,
+          "energy": 12072.113,
+          "demand_charge": 2220.7522
+        },
+        "total_emissions_kg": 58894.005,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58888.731
+        },
+        "energy_kwh": {
+          "SG_HUB": 41443.333,
+          "MY_DEPOT": 57065.556
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 30.397
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      }
+    },
+    "seconds": 0.0
+  },
+  "horizon": {
+    "target": "",
+    "code_version": "62dc6a6",
+    "comparison_status": "no eligible saved result",
+    "original": {},
+    "seconds": 0.0
+  }
+}

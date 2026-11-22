@@ -1,0 +1,295 @@
+{
+  "description": "Model v2 of the Malaysia-Singapore corridor: trucks are scheduled hour by hour (which truck runs which trip, when it leaves, how long it waits), and charging equipment, charger power, grid connection and substation expansion are chosen with them. Every value states its source or that it is assumed.",
+  "currency": "USD",
+  "horizon": {
+    "weeks": 16,
+    "slots_per_week": 168,
+    "slot_hours": 1,
+    "basis": "Monday 00:00 is hour 0 of a week. One representative week per week type, with all trucks at the depot and at a common state of charge at every Monday 00:00; checked against an unbroken 16-week horizon."
+  },
+  "finance": {
+    "discount_rate": 0.08,
+    "lifetime_years": 10,
+    "weeks_per_year": 52,
+    "weeks_per_month": 4.345,
+    "myr_per_usd": 4.5,
+    "basis": "Assumed. Upfront costs are annualised with the capital recovery factor and charged for the modelled weeks only."
+  },
+  "corridor": {
+    "distance_km": 400,
+    "drive_hours": 6,
+    "crossing_hours": {
+      "normal": 1,
+      "congested": 3
+    },
+    "sg_min_dwell_hours": 4,
+    "sg_max_dwell_hours": 12,
+    "my_min_turnaround_hours": 2,
+    "waiting_usd_per_hour": 15,
+    "basis": "400 km is the illustrative distance of marvell/config.json. Driving, crossing, unloading (minimum dwell), the longest stay a driver may wait at the destination, depot loading time and the cost of an extra waiting hour (driver and truck time) are assumed."
+  },
+  "truck": {
+    "battery_usable_kwh": 590,
+    "min_energy_kwh": 59,
+    "drive_kwh_per_km": 1.13,
+    "auxiliary_kw_waiting": 5,
+    "charging_efficiency": 0.9,
+    "vehicle_max_charge_kw": 400,
+    "basis": "eActros 600: 621 kWh installed, about 95% usable, CCS up to 400 kW (manufacturer and press). 1.13 kWh/km derived from the TUMFTM simulated German long-haul tracks archived in UM-RESEARCH; its transfer here is an assumption. 10% reserve and 0.9 charging efficiency assumed. Every truck is full at Monday 00:00 ('full'); background trips run Monday to Saturday, so trucks stand at the depot on Sunday. 'free' makes it a decision shared by all weeks of a scenario.",
+    "week_boundary": "full"
+  },
+  "fleet": {
+    "own": [
+      "T1",
+      "T2"
+    ],
+    "lease": {
+      "L1": {
+        "usd_per_week": 1000
+      }
+    },
+    "basis": "Two own electric trucks. A third truck can be leased for the whole season before it starts; 1,000 USD a week is an assumption (about a 300,000 USD truck at the capital recovery factor, plus insurance)."
+  },
+  "trips": {
+    "trip_cost_usd": 300,
+    "night_premium_usd": 60,
+    "night_hours": [
+      20,
+      6
+    ],
+    "sunday_premium_usd": 90,
+    "congested_surcharge_usd": 40,
+    "max_extra_per_week": 1,
+    "basis": "Assumed driver, toll and maintenance cost of a round trip without energy; night (departure 20:00-05:59) and Sunday premiums; a surcharge in congested weeks. As in model v1 for daytime and night trips. At most one extra trip a week: one carries 5,000 kg of chips and no week has more than about 700 kg, so a second one is never needed for cargo."
+  },
+  "background": {
+    "instances": {
+      "base": {
+        "departures": [
+          6,
+          30,
+          54,
+          78,
+          102,
+          126
+        ],
+        "window_before": 2,
+        "window_after": 2,
+        "own_trucks": 2
+      },
+      "dense": {
+        "departures": [
+          6,
+          18,
+          30,
+          42,
+          54,
+          66,
+          78,
+          90,
+          102,
+          114,
+          126,
+          138
+        ],
+        "window_before": 2,
+        "window_after": 2,
+        "own_trucks": 2
+      },
+      "fleet": {
+        "departures": [
+          6,
+          14,
+          22,
+          30,
+          38,
+          46,
+          54,
+          62,
+          70,
+          78,
+          86,
+          94,
+          102,
+          110,
+          118,
+          126,
+          134,
+          142
+        ],
+        "window_before": 2,
+        "window_after": 2,
+        "own_trucks": 3
+      }
+    },
+    "basis": "Round trips the carrier runs for other customers every week; each must leave the depot within its window. 'base' is model v1's timetable (daily 06:00, Monday to Saturday) with a two-hour window either side. 'dense' adds 18:00 departures; 'fleet' runs three a day with three trucks. Synthetic."
+  },
+  "carrier": {
+    "weekly_consolidation_kg": 276.6,
+    "premium_kg_per_week": 50,
+    "premium_usd_per_kg": 2.1,
+    "extra_trip_chip_capacity_kg": 5000,
+    "base_rate_usd_per_kg": 0.7,
+    "basis": "As model v1: chips' weekly space on the background trips is the MY_road capacity of network_planning; up to 50 kg a week more can be bought at three times the base rate. The base rate is a payment from shipper to carrier and is reported, not added to system cost."
+  },
+  "cargo": {
+    "release_lead_weeks": 1,
+    "max_late_weeks": 1,
+    "holding_multiplier": 1.0,
+    "basis": "As model v1: an order may leave one week before or after the week the weekly plan dispatched it, paying the SKU's holding or backlog cost."
+  },
+  "congestion": {
+    "consolidation_factor": 0.6,
+    "road_delay_weeks": 1,
+    "basis": "border_congestion of network_planning: road space x0.6 and one more week of lead time; here also three hours at the border."
+  },
+  "air_fallback": {
+    "lane": "MY_air",
+    "enabled": true,
+    "basis": "Due-week spot air within the space the weekly plan left."
+  },
+  "diesel": {
+    "litres_per_km": 0.3,
+    "idle_litres_per_hour": 3,
+    "price_usd_per_litre": 0.744,
+    "kg_co2e_per_litre": 2.68,
+    "basis": "Peninsular Malaysia retail diesel RM 3.35/L from 10 June 2024 (Ministry of Finance); RM 2.15/L fleet-card price is a sensitivity. Consumption and emission factor assumed."
+  },
+  "vehicle_capital": {
+    "electric_premium_usd_per_truck": 200000,
+    "basis": "Assumed order of magnitude of the purchase price difference between a battery electric and a diesel tractor; reported separately in the diesel comparison and never added to the electric plans' system cost."
+  },
+  "planning": {
+    "energy_usd_per_kwh": 0.133,
+    "charge_kw": 150,
+    "basis": "Sequential plan, step 1: the transport planner assumes a 150 kW charger wherever a truck stands and prices energy at the mean of the two sides."
+  },
+  "carbon": {
+    "price_usd_per_t": 0,
+    "basis": "A carbon price on electricity bought (site grid factor), diesel burnt and air freight; 0 in all main runs, used only in the sensitivity runs. Reported separately as carbon cost."
+  },
+  "sites": {
+    "MY_DEPOT": {
+      "side": "MY",
+      "open_capex_usd": 40000,
+      "max_connectors": 4,
+      "tiers": {
+        "dc50": {
+          "kw": 50,
+          "capex_usd": 25000
+        },
+        "dc150": {
+          "kw": 150,
+          "capex_usd": 60000
+        }
+      },
+      "base_kw": 200,
+      "upgrades": [
+        {
+          "id": "plus_200",
+          "kw": 200,
+          "capex_usd": 50000
+        }
+      ],
+      "connections": {
+        "MY_SUB": 0
+      },
+      "energy_usd_per_kwh": 0.0663,
+      "demand_usd_per_kw_month": 19.84,
+      "grid_kg_co2e_per_kwh": 0.74,
+      "access_delay_hours": 0,
+      "unavailable_hours_of_day": []
+    },
+    "SG_HUB": {
+      "side": "SG",
+      "open_capex_usd": 40000,
+      "max_connectors": 3,
+      "tiers": {
+        "dc150": {
+          "kw": 150,
+          "capex_usd": 60000
+        },
+        "dc350": {
+          "kw": 350,
+          "capex_usd": 134500
+        }
+      },
+      "base_kw": 150,
+      "upgrades": [
+        {
+          "id": "plus_150",
+          "kw": 150,
+          "capex_usd": 60000
+        },
+        {
+          "id": "plus_350",
+          "kw": 350,
+          "capex_usd": 110000
+        }
+      ],
+      "connections": {
+        "SG_SUB_N": 20000,
+        "SG_SUB_S": 80000
+      },
+      "energy_usd_per_kwh": 0.2,
+      "demand_usd_per_kw_month": 0,
+      "grid_kg_co2e_per_kwh": 0.402,
+      "access_delay_hours": 0,
+      "unavailable_hours_of_day": []
+    },
+    "SG_YARD": {
+      "side": "SG",
+      "open_capex_usd": 60000,
+      "max_connectors": 2,
+      "tiers": {
+        "dc150": {
+          "kw": 150,
+          "capex_usd": 60000
+        },
+        "dc350": {
+          "kw": 350,
+          "capex_usd": 134500
+        }
+      },
+      "base_kw": 150,
+      "upgrades": [
+        {
+          "id": "plus_150",
+          "kw": 150,
+          "capex_usd": 60000
+        }
+      ],
+      "connections": {
+        "SG_SUB_N": 30000,
+        "SG_SUB_S": 40000
+      },
+      "energy_usd_per_kwh": 0.2,
+      "demand_usd_per_kw_month": 0,
+      "grid_kg_co2e_per_kwh": 0.402,
+      "access_delay_hours": 1,
+      "unavailable_hours_of_day": []
+    }
+  },
+  "site_basis": "Tariffs and grid factors as model v1 (TNB July 2025 medium voltage via a secondary source; Energy Commission 2024 provisional; EMA 2024; Singapore price assumed). 350 kW charger hardware 134,500 USD from ICCT (2021 table); 50 and 150 kW chargers, opening, connection and upgrade costs are assumed. Connections: each opened site is wired to exactly one substation; a longer cable costs more.",
+  "substations": {
+    "MY_SUB": {
+      "headroom_kw": 2000,
+      "expansions": []
+    },
+    "SG_SUB_N": {
+      "headroom_kw": 300,
+      "expansions": [
+        {
+          "id": "plus_300",
+          "kw": 300,
+          "capex_usd": 150000
+        }
+      ]
+    },
+    "SG_SUB_S": {
+      "headroom_kw": 800,
+      "expansions": []
+    }
+  },
+  "substation_basis": "Assumed remaining headroom at the hour of the truck's charge; an expansion is a transformer step. No network topology: this is connection capacity planning, not a power flow."
+}

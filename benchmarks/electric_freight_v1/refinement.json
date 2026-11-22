@@ -1,0 +1,15 @@
+{
+  "note": "Post hoc: chosen after the main results, to locate thresholds and to test one explanation. Exploratory; the main protocol is config.json.",
+  "base_overrides": {"carrier.weekly_consolidation_kg": 200},
+  "groups": {
+    "refine_consolidation": {"key": "carrier.weekly_consolidation_kg", "values": [220, 215, 210, 205], "plans": ["C_joint"],
+                             "reason": "The first extra trip appears between 225 and 200 kg."},
+    "refine_holding": {"key": "cargo.holding_multiplier", "values": [0.25, 0.3, 0.35, 0.4, 0.45], "plans": ["C_joint"],
+                       "reason": "At 200 kg, early dispatch gives way to an extra trip between multipliers 0.2 and 0.5."},
+    "refine_headroom": {"key": "substations.SG_SUB.headroom_kw", "values": [106, 107, 110, 212, 213], "plans": ["C_joint", "B_sequential"],
+                        "reason": "Analytic bounds: one truck at the Singapore side needs (516 - 133) / 0.9 / 4 = 106.4 kW over its four-hour stay; two trucks there at once need 212.8 kW."},
+    "day_slot_only": {"key": "substation_rule", "values": ["shared", "split"], "plans": ["C_joint", "B_sequential"],
+                      "extra_overrides": {"carrier.extra_options": {"day": {"depart_hour": 54, "trip_cost_usd": 300}}},
+                      "reason": "If the extra trip can only leave in the day slot, when it meets a base trip at the destination, what does the joint plan build?"}
+  }
+}

@@ -1,0 +1,4500 @@
+{
+  "protocol_sha256": "ae60c6fc252cc12dc4bb77ae27b1d4acd9946f6d22d2dbcd64ad2dc990569d9e",
+  "cargo": {
+    "source": {
+      "network": "marvell",
+      "scenario": "normal",
+      "lane": "MY_road",
+      "weeks": 16,
+      "seed": 7,
+      "plan_cost_usd": 464433.1,
+      "plan_status": "optimal",
+      "note": "Orders are the weekly plan's dispatches on this lane; units are continuous as there."
+    },
+    "weekly_kg": [
+      0,
+      43.14,
+      133.25,
+      189.23,
+      148.29,
+      154.81,
+      133.41,
+      199.06,
+      196.84,
+      176.89,
+      219.87,
+      143.23,
+      220.45,
+      276.6,
+      276.6,
+      0
+    ],
+    "total_kg": 2511.67,
+    "peak_weekly_kg": 276.6,
+    "eligible_skus": [
+      "custom_silicon_carton_004",
+      "custom_silicon_carton_008",
+      "custom_silicon_carton_012",
+      "storage_controller_carton_003",
+      "storage_controller_carton_007",
+      "storage_controller_carton_011"
+    ]
+  },
+  "air_available_kg": [
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    147.5,
+    0.0,
+    147.5
+  ],
+  "bridge": [
+    {
+      "capacity_kg": 200,
+      "early_weeks": 1,
+      "late_weeks": 0,
+      "excess_over_capacity_kg": 193.52,
+      "unabsorbed_kg": 0.0,
+      "unabsorbed_by_week": {},
+      "moved_kg": {
+        "7->6": 42.95,
+        "8->7": 109.54,
+        "9->8": 110.48,
+        "10->9": 113.64,
+        "11->10": 136.75,
+        "12->11": 116.88,
+        "13->12": 173.65,
+        "14->13": 153.2,
+        "15->14": 76.6
+      }
+    },
+    {
+      "capacity_kg": 200,
+      "early_weeks": 1,
+      "late_weeks": 1,
+      "excess_over_capacity_kg": 193.52,
+      "unabsorbed_kg": 0.0,
+      "unabsorbed_by_week": {},
+      "moved_kg": {
+        "11->10": 19.87,
+        "13->12": 56.77,
+        "14->13": 36.32,
+        "14->15": 40.28,
+        "15->16": 116.88
+      }
+    },
+    {
+      "capacity_kg": 200,
+      "early_weeks": 2,
+      "late_weeks": 0,
+      "excess_over_capacity_kg": 193.52,
+      "unabsorbed_kg": 0.0,
+      "unabsorbed_by_week": {},
+      "moved_kg": {
+        "8->6": 42.95,
+        "9->7": 66.59,
+        "10->8": 43.89,
+        "11->9": 69.75,
+        "12->10": 67.0,
+        "13->11": 49.88,
+        "14->12": 123.77,
+        "15->13": 29.43,
+        "15->14": 47.17
+      }
+    }
+  ],
+  "rows": [
+    {
+      "id": "scenario/normal/C_joint",
+      "status": "optimal",
+      "solve_seconds": 43.99,
+      "mip_gap": 5.007147415601832e-05,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/normal/A_diesel",
+      "status": "optimal",
+      "solve_seconds": 0.09,
+      "mip_gap": 0.0,
+      "total_cost_usd": 44858.88,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 16058.88,
+        "demand_charge": 0.0,
+        "equipment": 0.0,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 63290.9,
+      "emissions_by_source": {
+        "electricity": 0,
+        "diesel": 63290.9,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {},
+      "peak_kw": {},
+      "energy_kwh": {},
+      "issues": []
+    },
+    {
+      "id": "scenario/normal/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 6.6,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/normal/C_no_chips",
+      "status": "optimal",
+      "solve_seconds": 24.72,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 0.0
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/border_congestion/A_diesel",
+      "status": "optimal",
+      "solve_seconds": 0.2,
+      "mip_gap": 1.3193609958907038e-10,
+      "total_cost_usd": 48301.83,
+      "cost_usd": {
+        "base_trips": 29520.0,
+        "extra_trips": 0.0,
+        "energy": 16205.76,
+        "demand_charge": 0.0,
+        "equipment": 0.0,
+        "displaced_cargo": 85.95,
+        "holding": 1470.01,
+        "backlog": 0.0,
+        "air_freight": 1020.11
+      },
+      "emissions_kg": 63899.2,
+      "emissions_by_source": {
+        "electricity": 0,
+        "diesel": 63869.8,
+        "air_freight": 29.4
+      },
+      "delivered_kg": {
+        "consolidated": 2322.36,
+        "premium": 40.93,
+        "extra_trip": 0.0,
+        "air": 148.38,
+        "early": 51.56,
+        "late": 0.0,
+        "on_time": 2311.73
+      },
+      "extra_trip_weeks": {},
+      "equipment": {},
+      "peak_kw": {},
+      "energy_kwh": {},
+      "issues": []
+    },
+    {
+      "id": "scenario/border_congestion/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 4.36,
+      "mip_gap": 0.0,
+      "total_cost_usd": 55197.01,
+      "cost_usd": {
+        "base_trips": 29520.0,
+        "extra_trips": 0.0,
+        "energy": 12034.42,
+        "demand_charge": 1895.47,
+        "equipment": 9171.05,
+        "displaced_cargo": 85.95,
+        "holding": 1470.01,
+        "backlog": 0.0,
+        "air_freight": 1020.11
+      },
+      "emissions_kg": 58454.8,
+      "emissions_by_source": {
+        "electricity": 58425.3,
+        "diesel": 0.0,
+        "air_freight": 29.4
+      },
+      "delivered_kg": {
+        "consolidated": 2322.36,
+        "premium": 40.93,
+        "extra_trip": 0.0,
+        "air": 148.38,
+        "early": 51.56,
+        "late": 0.0,
+        "on_time": 2311.73
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 25.9,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56426.7,
+        "SG_HUB": 41466.7,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/border_congestion/C_joint",
+      "status": "optimal",
+      "solve_seconds": 63.83,
+      "mip_gap": 9.650891410879778e-11,
+      "total_cost_usd": 55197.01,
+      "cost_usd": {
+        "base_trips": 29520.0,
+        "extra_trips": 0.0,
+        "energy": 12034.42,
+        "demand_charge": 1895.47,
+        "equipment": 9171.05,
+        "displaced_cargo": 85.95,
+        "holding": 1470.01,
+        "backlog": 0.0,
+        "air_freight": 1020.11
+      },
+      "emissions_kg": 58454.8,
+      "emissions_by_source": {
+        "electricity": 58425.3,
+        "diesel": 0.0,
+        "air_freight": 29.4
+      },
+      "delivered_kg": {
+        "consolidated": 2322.36,
+        "premium": 40.93,
+        "extra_trip": 0.0,
+        "air": 148.38,
+        "early": 51.56,
+        "late": 0.0,
+        "on_time": 2311.73
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 25.9,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56426.7,
+        "SG_HUB": 41466.7,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/border_congestion/C_no_chips",
+      "status": "optimal",
+      "solve_seconds": 53.12,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52620.93,
+      "cost_usd": {
+        "base_trips": 29520.0,
+        "extra_trips": 0.0,
+        "energy": 12034.42,
+        "demand_charge": 1895.47,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58425.3,
+      "emissions_by_source": {
+        "electricity": 58425.3,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 0.0
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 25.9,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56426.7,
+        "SG_HUB": 41466.7,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/border_congestion/C_fixed_normal_equipment",
+      "status": "optimal",
+      "solve_seconds": 3.23,
+      "mip_gap": 9.65057970971671e-11,
+      "total_cost_usd": 55197.01,
+      "cost_usd": {
+        "base_trips": 29520.0,
+        "extra_trips": 0.0,
+        "energy": 12034.42,
+        "demand_charge": 1895.47,
+        "equipment": 9171.05,
+        "displaced_cargo": 85.95,
+        "holding": 1470.01,
+        "backlog": 0.0,
+        "air_freight": 1020.11
+      },
+      "emissions_kg": 58454.8,
+      "emissions_by_source": {
+        "electricity": 58425.3,
+        "diesel": 0.0,
+        "air_freight": 29.4
+      },
+      "delivered_kg": {
+        "consolidated": 2322.36,
+        "premium": 40.93,
+        "extra_trip": 0.0,
+        "air": 148.38,
+        "early": 51.56,
+        "late": 0.0,
+        "on_time": 2311.73
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 25.9,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56426.7,
+        "SG_HUB": 41466.7,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/tight_space/A_diesel",
+      "status": "optimal",
+      "solve_seconds": 0.27,
+      "mip_gap": 0.0,
+      "total_cost_usd": 45698.71,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 16226.16,
+        "demand_charge": 0.0,
+        "equipment": 0.0,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 63955.4,
+      "emissions_by_source": {
+        "electricity": 0,
+        "diesel": 63950.2,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {},
+      "peak_kw": {},
+      "energy_kwh": {},
+      "issues": []
+    },
+    {
+      "id": "scenario/tight_space/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 15.15,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58080.32,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/tight_space/C_joint",
+      "status": "optimal",
+      "solve_seconds": 108.92,
+      "mip_gap": 1.3254610757217503e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/tight_space/C_no_chips",
+      "status": "optimal",
+      "solve_seconds": 24.82,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 0.0
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/tight_space/C_fixed_normal_equipment",
+      "status": "optimal",
+      "solve_seconds": 10.87,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/grid_limited/A_diesel",
+      "status": "optimal",
+      "solve_seconds": 0.34,
+      "mip_gap": 0.0,
+      "total_cost_usd": 45698.71,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 16226.16,
+        "demand_charge": 0.0,
+        "equipment": 0.0,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 63955.4,
+      "emissions_by_source": {
+        "electricity": 0,
+        "diesel": 63950.2,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {},
+      "peak_kw": {},
+      "energy_kwh": {},
+      "issues": []
+    },
+    {
+      "id": "scenario/grid_limited/B_sequential",
+      "status": "infeasible",
+      "solve_seconds": 0.84,
+      "mip_gap": Infinity
+    },
+    {
+      "id": "scenario/grid_limited/C_joint",
+      "status": "optimal",
+      "solve_seconds": 83.83,
+      "mip_gap": 9.761922862695874e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/grid_limited/C_no_chips",
+      "status": "optimal",
+      "solve_seconds": 22.95,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 0.0
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "scenario/grid_limited/C_fixed_normal_equipment",
+      "status": "optimal",
+      "solve_seconds": 10.05,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "substation_rule/shared/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 13.74,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58080.32,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "substation_rule/shared/C_joint",
+      "status": "optimal",
+      "solve_seconds": 100.28,
+      "mip_gap": 1.3254610757217503e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "substation_rule/split/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 14.24,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58116.56,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12119.35,
+        "demand_charge": 1850.99,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58774.6,
+      "emissions_by_source": {
+        "electricity": 58769.3,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c",
+        "SG_YARD": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 25.3,
+        "SG_HUB": 150.0,
+        "SG_YARD": 150.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56712.2,
+        "SG_HUB": 9413.3,
+        "SG_YARD": 32383.3
+      },
+      "issues": []
+    },
+    {
+      "id": "substation_rule/split/C_joint",
+      "status": "optimal",
+      "solve_seconds": 71.04,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2206.55,
+        "premium": 90.32,
+        "extra_trip": 188.2,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=276.6/C_joint",
+      "status": "optimal",
+      "solve_seconds": 63.39,
+      "mip_gap": 5.007147415601832e-05,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=276.6/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 6.48,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=250/C_joint",
+      "status": "optimal",
+      "solve_seconds": 102.11,
+      "mip_gap": 1.7083807741430954e-05,
+      "total_cost_usd": 51804.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 111.72,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2458.47,
+        "premium": 53.2,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=250/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 6.1,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51804.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 111.72,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2458.47,
+        "premium": 53.2,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=225/C_joint",
+      "status": "optimal",
+      "solve_seconds": 111.51,
+      "mip_gap": 4.55640025382249e-05,
+      "total_cost_usd": 51974.6,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 210.0,
+        "holding": 49.63,
+        "backlog": 0.0,
+        "air_freight": 22.0
+      },
+      "emissions_kg": 58337.3,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.6
+      },
+      "delivered_kg": {
+        "consolidated": 2408.47,
+        "premium": 100.0,
+        "extra_trip": 0.0,
+        "air": 3.2,
+        "early": 1.6,
+        "late": 0.0,
+        "on_time": 2506.87
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=225/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 5.64,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51974.6,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 210.0,
+        "holding": 49.63,
+        "backlog": 0.0,
+        "air_freight": 22.0
+      },
+      "emissions_kg": 58337.3,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.6
+      },
+      "delivered_kg": {
+        "consolidated": 2408.47,
+        "premium": 100.0,
+        "extra_trip": 0.0,
+        "air": 3.2,
+        "early": 1.6,
+        "late": 0.0,
+        "on_time": 2506.87
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=200/C_joint",
+      "status": "optimal",
+      "solve_seconds": 101.37,
+      "mip_gap": 1.3254610757217503e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=200/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 11.84,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58080.32,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=175/C_joint",
+      "status": "optimal",
+      "solve_seconds": 94.75,
+      "mip_gap": 9.121754341018624e-05,
+      "total_cost_usd": 53044.81,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 424.91,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 354.75
+      },
+      "emissions_kg": 58760.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 10.2
+      },
+      "delivered_kg": {
+        "consolidated": 1981.13,
+        "premium": 202.34,
+        "extra_trip": 276.6,
+        "air": 51.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2460.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=175/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 15.12,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58528.86,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 600.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 319.91,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59162.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1960.76,
+        "premium": 152.34,
+        "extra_trip": 398.57,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=150/C_joint",
+      "status": "optimal",
+      "solve_seconds": 95.52,
+      "mip_gap": 0.0,
+      "total_cost_usd": 53663.87,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 720.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 560.34,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 277.2
+      },
+      "emissions_kg": 59170.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 8.0
+      },
+      "delivered_kg": {
+        "consolidated": 1951.32,
+        "premium": 266.83,
+        "extra_trip": 253.2,
+        "air": 40.32,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2471.35
+      },
+      "extra_trip_weeks": {
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=150/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 17.6,
+      "mip_gap": 0.0,
+      "total_cost_usd": 59046.49,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 600.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 560.34,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 277.2
+      },
+      "emissions_kg": 59170.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 8.0
+      },
+      "delivered_kg": {
+        "consolidated": 1651.32,
+        "premium": 266.83,
+        "extra_trip": 553.2,
+        "air": 40.32,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2471.35
+      },
+      "extra_trip_weeks": {
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=125/C_joint",
+      "status": "optimal",
+      "solve_seconds": 82.43,
+      "mip_gap": 6.862782821225279e-05,
+      "total_cost_usd": 54688.44,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 720.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 814.78,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 1047.34
+      },
+      "emissions_kg": 59193.1,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 30.2
+      },
+      "delivered_kg": {
+        "consolidated": 1668.14,
+        "premium": 387.99,
+        "extra_trip": 303.2,
+        "air": 152.34,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2359.33
+      },
+      "extra_trip_weeks": {
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=125/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 16.01,
+      "mip_gap": 0.0,
+      "total_cost_usd": 60071.07,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 600.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 814.78,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 1047.34
+      },
+      "emissions_kg": 59193.1,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 30.2
+      },
+      "delivered_kg": {
+        "consolidated": 1443.52,
+        "premium": 387.99,
+        "extra_trip": 527.82,
+        "air": 152.34,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2359.33
+      },
+      "extra_trip_weeks": {
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=100/C_joint",
+      "status": "optimal",
+      "solve_seconds": 130.47,
+      "mip_gap": 1.4902345612981174e-05,
+      "total_cost_usd": 55952.82,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 1440.0,
+        "energy": 12730.62,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 857.18,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 1146.96
+      },
+      "emissions_kg": 60022.3,
+      "emissions_by_source": {
+        "electricity": 59989.2,
+        "diesel": 0.0,
+        "air_freight": 33.1
+      },
+      "delivered_kg": {
+        "consolidated": 1156.25,
+        "premium": 408.18,
+        "extra_trip": 780.41,
+        "air": 166.83,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2344.84
+      },
+      "extra_trip_weeks": {
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56697.8,
+        "SG_HUB": 44857.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=100/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 19.16,
+      "mip_gap": 0.0,
+      "total_cost_usd": 61274.34,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 1500.0,
+        "energy": 12931.8,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 752.18,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 809.67
+      },
+      "emissions_kg": 60425.7,
+      "emissions_by_source": {
+        "electricity": 60402.3,
+        "diesel": 0.0,
+        "air_freight": 23.3
+      },
+      "delivered_kg": {
+        "consolidated": 1043.14,
+        "premium": 358.18,
+        "extra_trip": 992.58,
+        "air": 117.77,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2393.9
+      },
+      "extra_trip_weeks": {
+        "8": "day",
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56712.2,
+        "SG_HUB": 45858.9,
+        "SG_YARD": -0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=75/C_joint",
+      "status": "optimal",
+      "solve_seconds": 143.38,
+      "mip_gap": 4.3199040933748095e-05,
+      "total_cost_usd": 57123.25,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2520.0,
+        "energy": 12795.5,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 630.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 961.67
+      },
+      "emissions_kg": 62618.1,
+      "emissions_by_source": {
+        "electricity": 62590.4,
+        "diesel": 0.0,
+        "air_freight": 27.7
+      },
+      "delivered_kg": {
+        "consolidated": 1018.14,
+        "premium": 300.0,
+        "extra_trip": 1053.65,
+        "air": 139.88,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2371.79
+      },
+      "extra_trip_weeks": {
+        "4": "night",
+        "8": "night",
+        "9": "night",
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 60770.0,
+        "SG_HUB": 43832.2,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=75/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 22.1,
+      "mip_gap": 0.0,
+      "total_cost_usd": 62168.36,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2400.0,
+        "energy": 12919.72,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 525.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 604.93
+      },
+      "emissions_kg": 63215.5,
+      "emissions_by_source": {
+        "electricity": 63198.0,
+        "diesel": 0.0,
+        "air_freight": 17.4
+      },
+      "delivered_kg": {
+        "consolidated": 539.38,
+        "premium": 250.0,
+        "extra_trip": 1634.3,
+        "air": 87.99,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2423.68
+      },
+      "extra_trip_weeks": {
+        "4": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 61360.0,
+        "SG_HUB": 44257.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=50/C_joint",
+      "status": "optimal",
+      "solve_seconds": 114.33,
+      "mip_gap": 9.956480467044823e-05,
+      "total_cost_usd": 58007.52,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3240.0,
+        "energy": 13043.95,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 420.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 1087.49
+      },
+      "emissions_kg": 63837.1,
+      "emissions_by_source": {
+        "electricity": 63805.7,
+        "diesel": 0.0,
+        "air_freight": 31.4
+      },
+      "delivered_kg": {
+        "consolidated": 640.39,
+        "premium": 200.0,
+        "extra_trip": 1513.1,
+        "air": 158.18,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2353.49
+      },
+      "extra_trip_weeks": {
+        "4": "night",
+        "6": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 61950.0,
+        "SG_HUB": 44683.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=50/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 13.68,
+      "mip_gap": 0.0,
+      "total_cost_usd": 62957.38,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3000.0,
+        "energy": 13168.18,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 315.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 755.49
+      },
+      "emissions_kg": 64435.2,
+      "emissions_by_source": {
+        "electricity": 64413.4,
+        "diesel": 0.0,
+        "air_freight": 21.8
+      },
+      "delivered_kg": {
+        "consolidated": 343.14,
+        "premium": 150.0,
+        "extra_trip": 1908.64,
+        "air": 109.89,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2401.78
+      },
+      "extra_trip_weeks": {
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 62540.0,
+        "SG_HUB": 45108.9,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=25/C_joint",
+      "status": "optimal",
+      "solve_seconds": 111.9,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58475.04,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 4680.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 38.09,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 264.8,
+        "premium": 18.14,
+        "extra_trip": 2228.73,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "night",
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "7": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=25/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 10.06,
+      "mip_gap": 0.0,
+      "total_cost_usd": 63197.66,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3900.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 38.09,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 350.0,
+        "premium": 18.14,
+        "extra_trip": 2143.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "day",
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "7": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=0/C_joint",
+      "status": "optimal",
+      "solve_seconds": 70.28,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58527.54,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 4680.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 90.59,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 43.14,
+        "extra_trip": 2468.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "night",
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "7": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=True/kg=0/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 8.53,
+      "mip_gap": 0.0,
+      "total_cost_usd": 63250.16,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3900.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 90.59,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 43.14,
+        "extra_trip": 2468.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "day",
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "7": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=276.6/C_joint",
+      "status": "optimal",
+      "solve_seconds": 78.54,
+      "mip_gap": 1.0824069720729582e-10,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=276.6/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 3.92,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=250/C_joint",
+      "status": "optimal",
+      "solve_seconds": 60.91,
+      "mip_gap": 6.317396524115808e-05,
+      "total_cost_usd": 51804.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 111.72,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2458.47,
+        "premium": 53.2,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=250/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 3.86,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51804.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 111.72,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2458.47,
+        "premium": 53.2,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=225/C_joint",
+      "status": "optimal",
+      "solve_seconds": 63.7,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52041.04,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 210.0,
+        "holding": 138.07,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2411.67,
+        "premium": 100.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 4.8,
+        "late": 0.0,
+        "on_time": 2506.87
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=225/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 3.88,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52041.04,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 210.0,
+        "holding": 138.07,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2411.67,
+        "premium": 100.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 4.8,
+        "late": 0.0,
+        "on_time": 2506.87
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=200/C_joint",
+      "status": "optimal",
+      "solve_seconds": 62.78,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52910.99,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 720.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 84.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59162.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2165.4,
+        "premium": 40.32,
+        "extra_trip": 305.95,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=200/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 12.17,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58293.62,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 600.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 84.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59162.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2211.63,
+        "premium": 40.32,
+        "extra_trip": 259.72,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=175/C_joint",
+      "status": "optimal",
+      "solve_seconds": 78.09,
+      "mip_gap": 1.753876651778288e-05,
+      "total_cost_usd": 53146.24,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 720.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 319.91,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59162.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2123.1,
+        "premium": 152.34,
+        "extra_trip": 236.23,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=175/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 12.12,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58528.86,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 600.0,
+        "energy": 12328.26,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 319.91,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59162.9,
+      "emissions_by_source": {
+        "electricity": 59162.9,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1981.13,
+        "premium": 152.34,
+        "extra_trip": 378.2,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56668.9,
+        "SG_HUB": 42855.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=150/C_joint",
+      "status": "optimal",
+      "solve_seconds": 62.61,
+      "mip_gap": 0.0,
+      "total_cost_usd": 54299.03,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 1440.0,
+        "energy": 12730.62,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 350.34,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59989.2,
+      "emissions_by_source": {
+        "electricity": 59989.2,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1902.23,
+        "premium": 166.83,
+        "extra_trip": 442.61,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56697.8,
+        "SG_HUB": 44857.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=150/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 8.91,
+      "mip_gap": 0.0,
+      "total_cost_usd": 59561.65,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 1200.0,
+        "energy": 12730.62,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 350.34,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 59989.2,
+      "emissions_by_source": {
+        "electricity": 59989.2,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1398.57,
+        "premium": 166.83,
+        "extra_trip": 946.27,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56697.8,
+        "SG_HUB": 44857.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=125/C_joint",
+      "status": "optimal",
+      "solve_seconds": 73.23,
+      "mip_gap": 0.0,
+      "total_cost_usd": 55873.59,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2520.0,
+        "energy": 12795.5,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 289.78,
+        "holding": 52.23,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 62590.4,
+      "emissions_by_source": {
+        "electricity": 62590.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 898.52,
+        "premium": 137.99,
+        "extra_trip": 1475.16,
+        "air": 0.0,
+        "early": 1.89,
+        "late": 0.0,
+        "on_time": 2509.78
+      },
+      "extra_trip_weeks": {
+        "4": "night",
+        "8": "night",
+        "9": "night",
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 60770.0,
+        "SG_HUB": 43832.2,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=125/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 15.27,
+      "mip_gap": 0.0,
+      "total_cost_usd": 60956.21,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2100.0,
+        "energy": 12795.5,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 289.78,
+        "holding": 52.23,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 62590.4,
+      "emissions_by_source": {
+        "electricity": 62590.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1098.13,
+        "premium": 137.99,
+        "extra_trip": 1275.55,
+        "air": 0.0,
+        "early": 1.89,
+        "late": 0.0,
+        "on_time": 2509.78
+      },
+      "extra_trip_weeks": {
+        "4": "day",
+        "8": "day",
+        "9": "day",
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 60770.0,
+        "SG_HUB": 43832.2,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=100/C_joint",
+      "status": "optimal",
+      "solve_seconds": 82.62,
+      "mip_gap": 0.0,
+      "total_cost_usd": 56685.67,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2880.0,
+        "energy": 12919.72,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 440.77,
+        "holding": 229.1,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 63198.0,
+      "emissions_by_source": {
+        "electricity": 63198.0,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 1146.21,
+        "premium": 209.89,
+        "extra_trip": 1155.57,
+        "air": 0.0,
+        "early": 7.91,
+        "late": 0.0,
+        "on_time": 2503.76
+      },
+      "extra_trip_weeks": {
+        "4": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 61360.0,
+        "SG_HUB": 44257.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=100/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 12.21,
+      "mip_gap": 0.0,
+      "total_cost_usd": 61708.3,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 2400.0,
+        "energy": 12919.72,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 440.77,
+        "holding": 229.1,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 63198.0,
+      "emissions_by_source": {
+        "electricity": 63198.0,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 959.66,
+        "premium": 209.89,
+        "extra_trip": 1342.12,
+        "air": 0.0,
+        "early": 7.91,
+        "late": 0.0,
+        "on_time": 2503.76
+      },
+      "extra_trip_weeks": {
+        "4": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 61360.0,
+        "SG_HUB": 44257.8,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=75/C_joint",
+      "status": "optimal",
+      "solve_seconds": 137.61,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58138.92,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3960.0,
+        "energy": 13292.41,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 210.0,
+        "holding": 460.43,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 65021.0,
+      "emissions_by_source": {
+        "electricity": 65021.0,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 782.29,
+        "premium": 100.0,
+        "extra_trip": 1629.38,
+        "air": 0.0,
+        "early": 16.66,
+        "late": 0.0,
+        "on_time": 2495.01
+      },
+      "extra_trip_weeks": {
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 63130.0,
+        "SG_HUB": 45534.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=75/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 20.53,
+      "mip_gap": 0.0,
+      "total_cost_usd": 62981.55,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3300.0,
+        "energy": 13292.41,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 210.0,
+        "holding": 460.43,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 65021.0,
+      "emissions_by_source": {
+        "electricity": 65021.0,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 364.34,
+        "premium": 100.0,
+        "extra_trip": 2047.33,
+        "air": 0.0,
+        "early": 16.66,
+        "late": 0.0,
+        "on_time": 2495.01
+      },
+      "extra_trip_weeks": {
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 63130.0,
+        "SG_HUB": 45534.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=50/C_joint",
+      "status": "optimal",
+      "solve_seconds": 80.95,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58436.94,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 4680.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 611.29,
+        "premium": 0.0,
+        "extra_trip": 1900.38,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "night",
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "7": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=50/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 7.69,
+      "mip_gap": 0.0,
+      "total_cost_usd": 63159.57,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3900.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 693.14,
+        "premium": 0.0,
+        "extra_trip": 1818.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "day",
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "7": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=25/C_joint",
+      "status": "optimal",
+      "solve_seconds": 55.49,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58475.04,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 4680.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 38.09,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 119.89,
+        "premium": 18.14,
+        "extra_trip": 2373.64,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "night",
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "7": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=25/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 8.12,
+      "mip_gap": 0.0,
+      "total_cost_usd": 63197.66,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3900.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 38.09,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 350.0,
+        "premium": 18.14,
+        "extra_trip": 2143.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "day",
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "7": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=0/C_joint",
+      "status": "optimal",
+      "solve_seconds": 65.19,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58527.54,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 4680.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 90.59,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 43.14,
+        "extra_trip": 2468.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "night",
+        "4": "night",
+        "5": "night",
+        "6": "night",
+        "7": "night",
+        "8": "night",
+        "9": "night",
+        "10": "night",
+        "11": "night",
+        "12": "night",
+        "13": "night",
+        "14": "night",
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_consolidation/air=False/kg=0/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 7.82,
+      "mip_gap": 0.0,
+      "total_cost_usd": 63250.16,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 3900.0,
+        "energy": 13540.86,
+        "demand_charge": 2245.03,
+        "equipment": 14673.67,
+        "displaced_cargo": 90.59,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 66236.4,
+      "emissions_by_source": {
+        "electricity": 66236.4,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 0.0,
+        "premium": 43.14,
+        "extra_trip": 2468.53,
+        "air": 0.0,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2511.67
+      },
+      "extra_trip_weeks": {
+        "3": "day",
+        "4": "day",
+        "5": "day",
+        "6": "day",
+        "7": "day",
+        "8": "day",
+        "9": "day",
+        "10": "day",
+        "11": "day",
+        "12": "day",
+        "13": "day",
+        "14": "day",
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 30.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 64310.0,
+        "SG_HUB": 46385.6,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0/C_joint",
+      "status": "optimal",
+      "solve_seconds": 35.75,
+      "mip_gap": 0.0,
+      "total_cost_usd": 51692.97,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 0.0,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 2032.0,
+        "late": 0.0,
+        "on_time": 479.67
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0.02/C_joint",
+      "status": "optimal",
+      "solve_seconds": 64.5,
+      "mip_gap": 9.277944292646543e-05,
+      "total_cost_usd": 52025.49,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 238.64,
+        "holding": 93.87,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2398.03,
+        "premium": 113.64,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 166.16,
+        "late": 0.0,
+        "on_time": 2345.51
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0.05/C_joint",
+      "status": "optimal",
+      "solve_seconds": 56.96,
+      "mip_gap": 8.372177085255631e-05,
+      "total_cost_usd": 52159.12,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 245.45,
+        "holding": 220.7,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2394.79,
+        "premium": 116.88,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 156.44,
+        "late": 0.0,
+        "on_time": 2355.23
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0.1/C_joint",
+      "status": "optimal",
+      "solve_seconds": 40.97,
+      "mip_gap": 5.226176112578566e-05,
+      "total_cost_usd": 52344.6,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 356.73,
+        "holding": 294.91,
+        "backlog": 0.0,
+        "air_freight": 0.0
+      },
+      "emissions_kg": 58336.6,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 0.0
+      },
+      "delivered_kg": {
+        "consolidated": 2341.8,
+        "premium": 169.87,
+        "extra_trip": 0.0,
+        "air": 0.0,
+        "early": 103.45,
+        "late": 0.0,
+        "on_time": 2408.22
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0.2/C_joint",
+      "status": "optimal",
+      "solve_seconds": 71.06,
+      "mip_gap": 1.8835859818968027e-05,
+      "total_cost_usd": 52518.43,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 0.0,
+        "energy": 11925.9,
+        "demand_charge": 1796.03,
+        "equipment": 9171.05,
+        "displaced_cargo": 294.67,
+        "holding": 165.03,
+        "backlog": 0.0,
+        "air_freight": 365.75
+      },
+      "emissions_kg": 58347.2,
+      "emissions_by_source": {
+        "electricity": 58336.6,
+        "diesel": 0.0,
+        "air_freight": 10.5
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 140.32,
+        "extra_trip": 0.0,
+        "air": 53.2,
+        "early": 26.6,
+        "late": 0.0,
+        "on_time": 2431.87
+      },
+      "extra_trip_weeks": {},
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.6,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56640.0,
+        "SG_HUB": 40853.3,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=0.5/C_joint",
+      "status": "optimal",
+      "solve_seconds": 96.9,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2206.55,
+        "premium": 90.32,
+        "extra_trip": 188.2,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_holding/multiplier=1/C_joint",
+      "status": "optimal",
+      "solve_seconds": 74.7,
+      "mip_gap": 1.3254610757217503e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=300/C_joint",
+      "status": "optimal",
+      "solve_seconds": 74.28,
+      "mip_gap": 1.3254610757217503e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=300/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 9.84,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58080.32,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 300.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=250/C_joint",
+      "status": "optimal",
+      "solve_seconds": 61.01,
+      "mip_gap": 0.0,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2165.4,
+        "premium": 90.32,
+        "extra_trip": 229.35,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=250/B_sequential",
+      "status": "optimal",
+      "solve_seconds": 6.85,
+      "mip_gap": 0.0,
+      "total_cost_usd": 58090.08,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 300.0,
+        "energy": 12125.0,
+        "demand_charge": 1818.86,
+        "equipment": 14673.67,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58760.3,
+      "emissions_by_source": {
+        "electricity": 58755.0,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2306.35,
+        "premium": 90.32,
+        "extra_trip": 88.4,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "day"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "2c+plus_150"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.9,
+        "SG_HUB": 250.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56670.0,
+        "SG_HUB": 41838.9,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=200/C_joint",
+      "status": "optimal",
+      "solve_seconds": 32.0,
+      "mip_gap": 5.7038876818260114e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2118.15,
+        "premium": 90.32,
+        "extra_trip": 276.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=200/B_sequential",
+      "status": "infeasible",
+      "solve_seconds": 0.64,
+      "mip_gap": Infinity
+    },
+    {
+      "id": "sweep_headroom/kw=150/C_joint",
+      "status": "optimal",
+      "solve_seconds": 52.13,
+      "mip_gap": 9.761922862695874e-05,
+      "total_cost_usd": 52637.69,
+      "cost_usd": {
+        "base_trips": 28800.0,
+        "extra_trips": 360.0,
+        "energy": 12127.08,
+        "demand_charge": 1807.02,
+        "equipment": 9171.05,
+        "displaced_cargo": 189.67,
+        "holding": 0.0,
+        "backlog": 0.0,
+        "air_freight": 182.87
+      },
+      "emissions_kg": 58755.0,
+      "emissions_by_source": {
+        "electricity": 58749.8,
+        "diesel": 0.0,
+        "air_freight": 5.3
+      },
+      "delivered_kg": {
+        "consolidated": 2318.15,
+        "premium": 90.32,
+        "extra_trip": 76.6,
+        "air": 26.6,
+        "early": 0.0,
+        "late": 0.0,
+        "on_time": 2485.07
+      },
+      "extra_trip_weeks": {
+        "15": "night"
+      },
+      "equipment": {
+        "MY_DEPOT": "1c",
+        "SG_HUB": "1c"
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.7,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "energy_kwh": {
+        "MY_DEPOT": 56654.4,
+        "SG_HUB": 41854.4,
+        "SG_YARD": 0.0
+      },
+      "issues": []
+    },
+    {
+      "id": "sweep_headroom/kw=150/B_sequential",
+      "status": "infeasible",
+      "solve_seconds": 0.65,
+      "mip_gap": Infinity
+    },
+    {
+      "id": "sweep_headroom/kw=100/C_joint",
+      "status": "infeasible",
+      "solve_seconds": 0.67,
+      "mip_gap": Infinity
+    },
+    {
+      "id": "sweep_headroom/kw=100/B_sequential",
+      "status": "infeasible",
+      "solve_seconds": 0.63,
+      "mip_gap": Infinity
+    }
+  ]
+}

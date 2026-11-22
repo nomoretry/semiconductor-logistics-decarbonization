@@ -1,0 +1,4586 @@
+{
+  "scenarios": {
+    "normal": 0.45,
+    "border_congestion": 0.15,
+    "tight_space": 0.15,
+    "demand_surge": 0.1,
+    "grid_cut": 0.1,
+    "sg_window": 0.05
+  },
+  "wait_and_see": {
+    "normal": {
+      "objective_usd": 51020.23445784105,
+      "status": "optimal",
+      "mip_gap": 0.0009159753449761611,
+      "dual_bound": 50973.50118098272,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    },
+    "border_congestion": {
+      "objective_usd": 54509.17996894534,
+      "status": "optimal",
+      "mip_gap": 0.0007807315635276116,
+      "dual_bound": 54466.622931641534,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    },
+    "tight_space": {
+      "objective_usd": 52308.629235969885,
+      "status": "feasible",
+      "mip_gap": 0.008827295708314947,
+      "dual_bound": 51846.88549760737,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    },
+    "demand_surge": {
+      "objective_usd": 51005.141804910156,
+      "status": "optimal",
+      "mip_gap": 0.0006203418480519051,
+      "dual_bound": 50973.50118098272,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    },
+    "grid_cut": {
+      "objective_usd": 52308.6292359699,
+      "status": "feasible",
+      "mip_gap": 0.008757928538132618,
+      "dual_bound": 51850.51399919359,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    },
+    "sg_window": {
+      "objective_usd": 52380.798620418405,
+      "status": "optimal",
+      "mip_gap": 0.0009647613052683378,
+      "dual_bound": 52330.26365277032,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      }
+    }
+  },
+  "WS": {
+    "value": 51932.19392187468,
+    "interval": [
+      51784.0164964857,
+      51932.19392187468
+    ]
+  },
+  "candidates": [
+    {
+      "key": "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_HUB|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_HUB|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_HUB\": 1}, \"up\": {}}",
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "origin": [
+        "normal",
+        "border_congestion",
+        "tight_space",
+        "demand_surge",
+        "grid_cut"
+      ],
+      "status": "ok",
+      "expected_usd": 52126.63233305367,
+      "interval": [
+        51820.56806960196,
+        52126.63233305367
+      ],
+      "per_scenario": {
+        "normal": 51020.23445784105,
+        "border_congestion": 54509.17996894534,
+        "tight_space": 52308.629235969885,
+        "demand_surge": 51005.141804910156,
+        "grid_cut": 52308.6292359699,
+        "sg_window": 56269.566843998124
+      },
+      "first_stage_usd": 8483.217048910441
+    },
+    {
+      "key": "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_YARD|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_YARD|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_YARD\": 1}, \"up\": {}}",
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "origin": [
+        "sg_window"
+      ],
+      "status": "ok",
+      "expected_usd": 53299.51578023184,
+      "interval": [
+        53131.28300574965,
+        53299.51578023184
+      ],
+      "per_scenario": {
+        "normal": 52380.798620418405,
+        "border_congestion": 56029.598212730816,
+        "tight_space": 53866.38750299113,
+        "demand_surge": 52380.798623652394,
+        "grid_cut": 53866.38750299113,
+        "sg_window": 52380.798620418405
+      },
+      "first_stage_usd": 9858.873867652675
+    }
+  ],
+  "deterministic_candidate": "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_HUB|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_HUB|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_HUB\": 1}, \"up\": {}}",
+  "EEV": {
+    "status": "ok",
+    "expected_usd": 52126.63233305367,
+    "interval": [
+      51820.56806960196,
+      52126.63233305367
+    ],
+    "per_scenario": {
+      "normal": 51020.23445784105,
+      "border_congestion": 54509.17996894534,
+      "tight_space": 52308.629235969885,
+      "demand_surge": 51005.141804910156,
+      "grid_cut": 52308.6292359699,
+      "sg_window": 56269.566843998124
+    },
+    "first_stage_usd": 8483.217048910441
+  },
+  "RP": {
+    "candidate": "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_HUB|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_HUB|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_HUB\": 1}, \"up\": {}}",
+    "status": "ok",
+    "expected_usd": 52126.63233305367,
+    "interval": [
+      51784.0164964857,
+      52126.63233305367
+    ],
+    "per_scenario": {
+      "normal": 51020.23445784105,
+      "border_congestion": 54509.17996894534,
+      "tight_space": 52308.629235969885,
+      "demand_surge": 51005.141804910156,
+      "grid_cut": 52308.6292359699,
+      "sg_window": 56269.566843998124
+    },
+    "first_stage_usd": 8483.217048910441,
+    "fixed_design_interval": [
+      51820.56806960196,
+      52126.63233305367
+    ]
+  },
+  "presolve_input": {
+    "fixed_first_stage": null,
+    "start": {
+      "air_tight_space_68": 8.986486472972985,
+      "be_tight_space_1": 745.3686666666628,
+      "be_tight_space_10": 745.3686666666666,
+      "be_tight_space_11": 745.3686666666666,
+      "be_tight_space_12": 745.3686666666666,
+      "be_tight_space_13": 745.3686666666666,
+      "be_tight_space_14": 745.3686666666666,
+      "be_tight_space_15": 891.5829999999992,
+      "be_tight_space_16": 745.3686666666666,
+      "be_tight_space_2": 745.3686666666628,
+      "be_tight_space_3": 745.3686666666628,
+      "be_tight_space_4": 745.3686666666666,
+      "be_tight_space_5": 745.3686666666666,
+      "be_tight_space_6": 745.3686666666666,
+      "be_tight_space_7": 745.3686666666666,
+      "be_tight_space_8": 745.3686666666666,
+      "be_tight_space_9": 745.3686666666666,
+      "bt_tight_space_1": 1800.0,
+      "bt_tight_space_10": 1800.0,
+      "bt_tight_space_11": 1800.0,
+      "bt_tight_space_12": 1800.0,
+      "bt_tight_space_13": 1800.0,
+      "bt_tight_space_14": 1800.0,
+      "bt_tight_space_15": 2160.0,
+      "bt_tight_space_16": 1800.0,
+      "bt_tight_space_2": 1800.0,
+      "bt_tight_space_3": 1800.0,
+      "bt_tight_space_4": 1800.0,
+      "bt_tight_space_5": 1800.0,
+      "bt_tight_space_6": 1800.0,
+      "bt_tight_space_7": 1800.0,
+      "bt_tight_space_8": 1800.0,
+      "bt_tight_space_9": 1800.0,
+      "conn_MY_DEPOT_MY_SUB": 1.0,
+      "conn_SG_HUB_SG_SUB_N": 1.0,
+      "e_tight_space_normal_0_L1_0": 590.0,
+      "e_tight_space_normal_0_L1_1": 590.0,
+      "e_tight_space_normal_0_L1_10": 590.0,
+      "e_tight_space_normal_0_L1_100": 590.0,
+      "e_tight_space_normal_0_L1_101": 590.0,
+      "e_tight_space_normal_0_L1_102": 590.0,
+      "e_tight_space_normal_0_L1_103": 590.0,
+      "e_tight_space_normal_0_L1_104": 590.0,
+      "e_tight_space_normal_0_L1_105": 590.0,
+      "e_tight_space_normal_0_L1_106": 590.0,
+      "e_tight_space_normal_0_L1_107": 590.0,
+      "e_tight_space_normal_0_L1_108": 590.0,
+      "e_tight_space_normal_0_L1_109": 590.0,
+      "e_tight_space_normal_0_L1_11": 590.0,
+      "e_tight_space_normal_0_L1_110": 590.0,
+      "e_tight_space_normal_0_L1_111": 590.0,
+      "e_tight_space_normal_0_L1_112": 590.0,
+      "e_tight_space_normal_0_L1_113": 590.0,
+      "e_tight_space_normal_0_L1_114": 590.0,
+      "e_tight_space_normal_0_L1_115": 590.0,
+      "e_tight_space_normal_0_L1_116": 590.0,
+      "e_tight_space_normal_0_L1_117": 590.0,
+      "e_tight_space_normal_0_L1_118": 590.0,
+      "e_tight_space_normal_0_L1_119": 590.0,
+      "e_tight_space_normal_0_L1_12": 590.0,
+      "e_tight_space_normal_0_L1_120": 590.0,
+      "e_tight_space_normal_0_L1_121": 590.0,
+      "e_tight_space_normal_0_L1_122": 590.0,
+      "e_tight_space_normal_0_L1_123": 590.0,
+      "e_tight_space_normal_0_L1_124": 590.0,
+      "e_tight_space_normal_0_L1_125": 590.0,
+      "e_tight_space_normal_0_L1_126": 590.0,
+      "e_tight_space_normal_0_L1_127": 590.0,
+      "e_tight_space_normal_0_L1_128": 590.0,
+      "e_tight_space_normal_0_L1_129": 590.0,
+      "e_tight_space_normal_0_L1_13": 590.0,
+      "e_tight_space_normal_0_L1_130": 590.0,
+      "e_tight_space_normal_0_L1_131": 590.0,
+      "e_tight_space_normal_0_L1_132": 590.0,
+      "e_tight_space_normal_0_L1_133": 590.0,
+      "e_tight_space_normal_0_L1_134": 590.0,
+      "e_tight_space_normal_0_L1_135": 590.0,
+      "e_tight_space_normal_0_L1_136": 590.0,
+      "e_tight_space_normal_0_L1_137": 590.0,
+      "e_tight_space_normal_0_L1_138": 590.0,
+      "e_tight_space_normal_0_L1_139": 590.0,
+      "e_tight_space_normal_0_L1_14": 590.0,
+      "e_tight_space_normal_0_L1_140": 590.0,
+      "e_tight_space_normal_0_L1_141": 590.0,
+      "e_tight_space_normal_0_L1_142": 590.0,
+      "e_tight_space_normal_0_L1_143": 590.0,
+      "e_tight_space_normal_0_L1_144": 590.0,
+      "e_tight_space_normal_0_L1_145": 590.0,
+      "e_tight_space_normal_0_L1_146": 590.0,
+      "e_tight_space_normal_0_L1_147": 590.0,
+      "e_tight_space_normal_0_L1_148": 590.0,
+      "e_tight_space_normal_0_L1_149": 590.0,
+      "e_tight_space_normal_0_L1_15": 590.0,
+      "e_tight_space_normal_0_L1_150": 590.0,
+      "e_tight_space_normal_0_L1_151": 590.0,
+      "e_tight_space_normal_0_L1_152": 590.0,
+      "e_tight_space_normal_0_L1_153": 590.0,
+      "e_tight_space_normal_0_L1_154": 590.0,
+      "e_tight_space_normal_0_L1_155": 590.0,
+      "e_tight_space_normal_0_L1_156": 590.0,
+      "e_tight_space_normal_0_L1_157": 590.0,
+      "e_tight_space_normal_0_L1_158": 590.0,
+      "e_tight_space_normal_0_L1_159": 590.0,
+      "e_tight_space_normal_0_L1_16": 590.0,
+      "e_tight_space_normal_0_L1_160": 590.0,
+      "e_tight_space_normal_0_L1_161": 590.0,
+      "e_tight_space_normal_0_L1_162": 590.0,
+      "e_tight_space_normal_0_L1_163": 590.0,
+      "e_tight_space_normal_0_L1_164": 590.0,
+      "e_tight_space_normal_0_L1_165": 590.0,
+      "e_tight_space_normal_0_L1_166": 590.0,
+      "e_tight_space_normal_0_L1_167": 590.0,
+      "e_tight_space_normal_0_L1_168": 590.0,
+      "e_tight_space_normal_0_L1_17": 590.0,
+      "e_tight_space_normal_0_L1_18": 590.0,
+      "e_tight_space_normal_0_L1_19": 590.0,
+      "e_tight_space_normal_0_L1_2": 590.0,
+      "e_tight_space_normal_0_L1_20": 590.0,
+      "e_tight_space_normal_0_L1_21": 590.0,
+      "e_tight_space_normal_0_L1_22": 590.0,
+      "e_tight_space_normal_0_L1_23": 590.0,
+      "e_tight_space_normal_0_L1_24": 590.0,
+      "e_tight_space_normal_0_L1_25": 590.0,
+      "e_tight_space_normal_0_L1_26": 590.0,
+      "e_tight_space_normal_0_L1_27": 590.0,
+      "e_tight_space_normal_0_L1_28": 590.0,
+      "e_tight_space_normal_0_L1_29": 590.0,
+      "e_tight_space_normal_0_L1_3": 590.0,
+      "e_tight_space_normal_0_L1_30": 590.0,
+      "e_tight_space_normal_0_L1_31": 590.0,
+      "e_tight_space_normal_0_L1_32": 590.0,
+      "e_tight_space_normal_0_L1_33": 590.0,
+      "e_tight_space_normal_0_L1_34": 590.0,
+      "e_tight_space_normal_0_L1_35": 590.0,
+      "e_tight_space_normal_0_L1_36": 590.0,
+      "e_tight_space_normal_0_L1_37": 590.0,
+      "e_tight_space_normal_0_L1_38": 590.0,
+      "e_tight_space_normal_0_L1_39": 590.0,
+      "e_tight_space_normal_0_L1_4": 590.0,
+      "e_tight_space_normal_0_L1_40": 590.0,
+      "e_tight_space_normal_0_L1_41": 590.0,
+      "e_tight_space_normal_0_L1_42": 590.0,
+      "e_tight_space_normal_0_L1_43": 590.0,
+      "e_tight_space_normal_0_L1_44": 590.0,
+      "e_tight_space_normal_0_L1_45": 590.0,
+      "e_tight_space_normal_0_L1_46": 590.0,
+      "e_tight_space_normal_0_L1_47": 590.0,
+      "e_tight_space_normal_0_L1_48": 590.0,
+      "e_tight_space_normal_0_L1_49": 590.0,
+      "e_tight_space_normal_0_L1_5": 590.0,
+      "e_tight_space_normal_0_L1_50": 590.0,
+      "e_tight_space_normal_0_L1_51": 590.0,
+      "e_tight_space_normal_0_L1_52": 590.0,
+      "e_tight_space_normal_0_L1_53": 590.0,
+      "e_tight_space_normal_0_L1_54": 590.0,
+      "e_tight_space_normal_0_L1_55": 590.0,
+      "e_tight_space_normal_0_L1_56": 590.0,
+      "e_tight_space_normal_0_L1_57": 590.0,
+      "e_tight_space_normal_0_L1_58": 590.0,
+      "e_tight_space_normal_0_L1_59": 590.0,
+      "e_tight_space_normal_0_L1_6": 590.0,
+      "e_tight_space_normal_0_L1_60": 590.0,
+      "e_tight_space_normal_0_L1_61": 590.0,
+      "e_tight_space_normal_0_L1_62": 590.0,
+      "e_tight_space_normal_0_L1_63": 590.0,
+      "e_tight_space_normal_0_L1_64": 590.0,
+      "e_tight_space_normal_0_L1_65": 590.0,
+      "e_tight_space_normal_0_L1_66": 590.0,
+      "e_tight_space_normal_0_L1_67": 590.0,
+      "e_tight_space_normal_0_L1_68": 590.0,
+      "e_tight_space_normal_0_L1_69": 590.0,
+      "e_tight_space_normal_0_L1_7": 590.0,
+      "e_tight_space_normal_0_L1_70": 590.0,
+      "e_tight_space_normal_0_L1_71": 590.0,
+      "e_tight_space_normal_0_L1_72": 590.0,
+      "e_tight_space_normal_0_L1_73": 590.0,
+      "e_tight_space_normal_0_L1_74": 590.0,
+      "e_tight_space_normal_0_L1_75": 590.0,
+      "e_tight_space_normal_0_L1_76": 590.0,
+      "e_tight_space_normal_0_L1_77": 590.0,
+      "e_tight_space_normal_0_L1_78": 590.0,
+      "e_tight_space_normal_0_L1_79": 590.0,
+      "e_tight_space_normal_0_L1_8": 590.0,
+      "e_tight_space_normal_0_L1_80": 590.0,
+      "e_tight_space_normal_0_L1_81": 590.0,
+      "e_tight_space_normal_0_L1_82": 590.0,
+      "e_tight_space_normal_0_L1_83": 590.0,
+      "e_tight_space_normal_0_L1_84": 590.0,
+      "e_tight_space_normal_0_L1_85": 590.0,
+      "e_tight_space_normal_0_L1_86": 590.0,
+      "e_tight_space_normal_0_L1_87": 590.0,
+      "e_tight_space_normal_0_L1_88": 590.0,
+      "e_tight_space_normal_0_L1_89": 590.0,
+      "e_tight_space_normal_0_L1_9": 590.0,
+      "e_tight_space_normal_0_L1_90": 590.0,
+      "e_tight_space_normal_0_L1_91": 590.0,
+      "e_tight_space_normal_0_L1_92": 590.0,
+      "e_tight_space_normal_0_L1_93": 590.0,
+      "e_tight_space_normal_0_L1_94": 590.0,
+      "e_tight_space_normal_0_L1_95": 590.0,
+      "e_tight_space_normal_0_L1_96": 590.0,
+      "e_tight_space_normal_0_L1_97": 590.0,
+      "e_tight_space_normal_0_L1_98": 590.0,
+      "e_tight_space_normal_0_L1_99": 590.0,
+      "e_tight_space_normal_0_T1_0": 590.0,
+      "e_tight_space_normal_0_T1_1": 590.0,
+      "e_tight_space_normal_0_T1_10": 328.85714285714255,
+      "e_tight_space_normal_0_T1_100": 535.2857142857143,
+      "e_tight_space_normal_0_T1_101": 562.6428571428571,
+      "e_tight_space_normal_0_T1_102": 590.0,
+      "e_tight_space_normal_0_T1_103": 524.7142857142857,
+      "e_tight_space_normal_0_T1_104": 459.4285714285714,
+      "e_tight_space_normal_0_T1_105": 394.1428571428571,
+      "e_tight_space_normal_0_T1_106": 328.85714285714283,
+      "e_tight_space_normal_0_T1_107": 263.57142857142856,
+      "e_tight_space_normal_0_T1_108": 198.28571428571428,
+      "e_tight_space_normal_0_T1_109": 133.0,
+      "e_tight_space_normal_0_T1_11": 263.57142857142827,
+      "e_tight_space_normal_0_T1_110": 133.0,
+      "e_tight_space_normal_0_T1_111": 245.99999999999994,
+      "e_tight_space_normal_0_T1_112": 381.0,
+      "e_tight_space_normal_0_T1_113": 516.0,
+      "e_tight_space_normal_0_T1_114": 450.71428571428567,
+      "e_tight_space_normal_0_T1_115": 385.4285714285714,
+      "e_tight_space_normal_0_T1_116": 320.1428571428571,
+      "e_tight_space_normal_0_T1_117": 254.85714285714283,
+      "e_tight_space_normal_0_T1_118": 189.57142857142856,
+      "e_tight_space_normal_0_T1_119": 124.28571428571428,
+      "e_tight_space_normal_0_T1_12": 198.285714285714,
+      "e_tight_space_normal_0_T1_120": 59.0,
+      "e_tight_space_normal_0_T1_121": 59.0,
+      "e_tight_space_normal_0_T1_122": 59.0,
+      "e_tight_space_normal_0_T1_123": 59.0,
+      "e_tight_space_normal_0_T1_124": 59.0,
+      "e_tight_space_normal_0_T1_125": 59.0,
+      "e_tight_space_normal_0_T1_126": 59.0,
+      "e_tight_space_normal_0_T1_127": 86.35714285714285,
+      "e_tight_space_normal_0_T1_128": 108.78571428571466,
+      "e_tight_space_normal_0_T1_129": 136.1428571428575,
+      "e_tight_space_normal_0_T1_13": 132.99999999999972,
+      "e_tight_space_normal_0_T1_130": 163.50000000000037,
+      "e_tight_space_normal_0_T1_131": 190.8571428571432,
+      "e_tight_space_normal_0_T1_132": 218.21428571428606,
+      "e_tight_space_normal_0_T1_133": 218.21428571428606,
+      "e_tight_space_normal_0_T1_134": 245.57142857142892,
+      "e_tight_space_normal_0_T1_135": 272.9285714285718,
+      "e_tight_space_normal_0_T1_136": 300.2857142857146,
+      "e_tight_space_normal_0_T1_137": 327.64285714285745,
+      "e_tight_space_normal_0_T1_138": 355.0000000000003,
+      "e_tight_space_normal_0_T1_139": 382.3571428571431,
+      "e_tight_space_normal_0_T1_14": 132.99999999999972,
+      "e_tight_space_normal_0_T1_140": 382.3571428571431,
+      "e_tight_space_normal_0_T1_141": 382.3571428571431,
+      "e_tight_space_normal_0_T1_142": 409.71428571428595,
+      "e_tight_space_normal_0_T1_143": 437.07142857142884,
+      "e_tight_space_normal_0_T1_144": 464.4285714285717,
+      "e_tight_space_normal_0_T1_145": 464.4285714285717,
+      "e_tight_space_normal_0_T1_146": 464.4285714285717,
+      "e_tight_space_normal_0_T1_147": 464.4285714285717,
+      "e_tight_space_normal_0_T1_148": 464.4285714285717,
+      "e_tight_space_normal_0_T1_149": 464.4285714285717,
+      "e_tight_space_normal_0_T1_15": 246.0,
+      "e_tight_space_normal_0_T1_150": 491.7857142857145,
+      "e_tight_space_normal_0_T1_151": 491.7857142857145,
+      "e_tight_space_normal_0_T1_152": 519.1428571428573,
+      "e_tight_space_normal_0_T1_153": 519.1428571428573,
+      "e_tight_space_normal_0_T1_154": 519.1428571428573,
+      "e_tight_space_normal_0_T1_155": 519.1428571428573,
+      "e_tight_space_normal_0_T1_156": 519.1428571428573,
+      "e_tight_space_normal_0_T1_157": 519.1428571428573,
+      "e_tight_space_normal_0_T1_158": 519.1428571428573,
+      "e_tight_space_normal_0_T1_159": 519.1428571428573,
+      "e_tight_space_normal_0_T1_16": 381.0,
+      "e_tight_space_normal_0_T1_160": 519.1428571428573,
+      "e_tight_space_normal_0_T1_161": 546.5000000000002,
+      "e_tight_space_normal_0_T1_162": 546.5000000000002,
+      "e_tight_space_normal_0_T1_163": 573.8571428571431,
+      "e_tight_space_normal_0_T1_164": 573.8571428571431,
+      "e_tight_space_normal_0_T1_165": 590.0,
+      "e_tight_space_normal_0_T1_166": 590.0,
+      "e_tight_space_normal_0_T1_167": 590.0,
+      "e_tight_space_normal_0_T1_168": 590.0,
+      "e_tight_space_normal_0_T1_17": 516.0,
+      "e_tight_space_normal_0_T1_18": 450.71428571428567,
+      "e_tight_space_normal_0_T1_19": 385.4285714285714,
+      "e_tight_space_normal_0_T1_2": 590.0,
+      "e_tight_space_normal_0_T1_20": 320.1428571428571,
+      "e_tight_space_normal_0_T1_21": 254.8571428571428,
+      "e_tight_space_normal_0_T1_22": 189.57142857142853,
+      "e_tight_space_normal_0_T1_23": 124.28571428571425,
+      "e_tight_space_normal_0_T1_24": 58.99999999999998,
+      "e_tight_space_normal_0_T1_25": 58.99999999999998,
+      "e_tight_space_normal_0_T1_26": 86.35714285714283,
+      "e_tight_space_normal_0_T1_27": 86.35714285714283,
+      "e_tight_space_normal_0_T1_28": 113.71428571428568,
+      "e_tight_space_normal_0_T1_29": 113.71428571428568,
+      "e_tight_space_normal_0_T1_3": 590.0,
+      "e_tight_space_normal_0_T1_30": 113.71428571428568,
+      "e_tight_space_normal_0_T1_31": 141.07142857142853,
+      "e_tight_space_normal_0_T1_32": 168.4285714285714,
+      "e_tight_space_normal_0_T1_33": 195.78571428571422,
+      "e_tight_space_normal_0_T1_34": 223.14285714285262,
+      "e_tight_space_normal_0_T1_35": 223.14285714285262,
+      "e_tight_space_normal_0_T1_36": 250.49999999999548,
+      "e_tight_space_normal_0_T1_37": 277.85714285713834,
+      "e_tight_space_normal_0_T1_38": 277.85714285713834,
+      "e_tight_space_normal_0_T1_39": 305.2142857142812,
+      "e_tight_space_normal_0_T1_4": 590.0,
+      "e_tight_space_normal_0_T1_40": 332.57142857142395,
+      "e_tight_space_normal_0_T1_41": 359.9285714285668,
+      "e_tight_space_normal_0_T1_42": 359.9285714285668,
+      "e_tight_space_normal_0_T1_43": 387.2857142857096,
+      "e_tight_space_normal_0_T1_44": 414.64285714285245,
+      "e_tight_space_normal_0_T1_45": 441.99999999999534,
+      "e_tight_space_normal_0_T1_46": 441.99999999999534,
+      "e_tight_space_normal_0_T1_47": 469.3571428571382,
+      "e_tight_space_normal_0_T1_48": 496.714285714281,
+      "e_tight_space_normal_0_T1_49": 496.714285714281,
+      "e_tight_space_normal_0_T1_5": 590.0,
+      "e_tight_space_normal_0_T1_50": 524.0714285714239,
+      "e_tight_space_normal_0_T1_51": 535.2857142857143,
+      "e_tight_space_normal_0_T1_52": 562.6428571428571,
+      "e_tight_space_normal_0_T1_53": 562.6428571428571,
+      "e_tight_space_normal_0_T1_54": 590.0,
+      "e_tight_space_normal_0_T1_55": 524.7142857142858,
+      "e_tight_space_normal_0_T1_56": 459.42857142857144,
+      "e_tight_space_normal_0_T1_57": 394.14285714285717,
+      "e_tight_space_normal_0_T1_58": 328.8571428571429,
+      "e_tight_space_normal_0_T1_59": 263.5714285714286,
+      "e_tight_space_normal_0_T1_6": 589.9999999999997,
+      "e_tight_space_normal_0_T1_60": 198.28571428571433,
+      "e_tight_space_normal_0_T1_61": 133.00000000000006,
+      "e_tight_space_normal_0_T1_62": 133.00000000000006,
+      "e_tight_space_normal_0_T1_63": 245.99999999999994,
+      "e_tight_space_normal_0_T1_64": 381.0,
+      "e_tight_space_normal_0_T1_65": 516.0,
+      "e_tight_space_normal_0_T1_66": 450.71428571428567,
+      "e_tight_space_normal_0_T1_67": 385.4285714285714,
+      "e_tight_space_normal_0_T1_68": 320.1428571428571,
+      "e_tight_space_normal_0_T1_69": 254.85714285714283,
+      "e_tight_space_normal_0_T1_7": 524.7142857142853,
+      "e_tight_space_normal_0_T1_70": 189.57142857142856,
+      "e_tight_space_normal_0_T1_71": 124.28571428571428,
+      "e_tight_space_normal_0_T1_72": 59.0,
+      "e_tight_space_normal_0_T1_73": 59.0,
+      "e_tight_space_normal_0_T1_74": 59.0,
+      "e_tight_space_normal_0_T1_75": 59.0,
+      "e_tight_space_normal_0_T1_76": 59.0,
+      "e_tight_space_normal_0_T1_77": 59.0,
+      "e_tight_space_normal_0_T1_78": 63.928571428566116,
+      "e_tight_space_normal_0_T1_79": 70.2142857142859,
+      "e_tight_space_normal_0_T1_8": 459.4285714285711,
+      "e_tight_space_normal_0_T1_80": 70.2142857142859,
+      "e_tight_space_normal_0_T1_81": 70.2142857142859,
+      "e_tight_space_normal_0_T1_82": 70.2142857142859,
+      "e_tight_space_normal_0_T1_83": 97.57142857142874,
+      "e_tight_space_normal_0_T1_84": 97.57142857142875,
+      "e_tight_space_normal_0_T1_85": 124.9285714285716,
+      "e_tight_space_normal_0_T1_86": 152.28571428571445,
+      "e_tight_space_normal_0_T1_87": 179.6428571428573,
+      "e_tight_space_normal_0_T1_88": 207.00000000000017,
+      "e_tight_space_normal_0_T1_89": 234.357142857143,
+      "e_tight_space_normal_0_T1_9": 394.1428571428568,
+      "e_tight_space_normal_0_T1_90": 261.71428571428584,
+      "e_tight_space_normal_0_T1_91": 289.07142857142867,
+      "e_tight_space_normal_0_T1_92": 316.4285714285715,
+      "e_tight_space_normal_0_T1_93": 343.7857142857144,
+      "e_tight_space_normal_0_T1_94": 371.1428571428572,
+      "e_tight_space_normal_0_T1_95": 398.5000000000001,
+      "e_tight_space_normal_0_T1_96": 425.85714285714295,
+      "e_tight_space_normal_0_T1_97": 453.2142857142858,
+      "e_tight_space_normal_0_T1_98": 480.5714285714286,
+      "e_tight_space_normal_0_T1_99": 507.92857142857144,
+      "e_tight_space_normal_0_T2_0": 590.0,
+      "e_tight_space_normal_0_T2_1": 590.0,
+      "e_tight_space_normal_0_T2_10": 590.0,
+      "e_tight_space_normal_0_T2_100": 59.0,
+      "e_tight_space_normal_0_T2_101": 59.00000000000005,
+      "e_tight_space_normal_0_T2_102": 59.00000000000005,
+      "e_tight_space_normal_0_T2_103": 59.00000000000005,
+      "e_tight_space_normal_0_T2_104": 70.21428571428594,
+      "e_tight_space_normal_0_T2_105": 70.21428571428594,
+      "e_tight_space_normal_0_T2_106": 70.21428571428594,
+      "e_tight_space_normal_0_T2_107": 70.21428571428594,
+      "e_tight_space_normal_0_T2_108": 97.57142857142878,
+      "e_tight_space_normal_0_T2_109": 124.92857142857163,
+      "e_tight_space_normal_0_T2_11": 590.0,
+      "e_tight_space_normal_0_T2_110": 152.28571428571448,
+      "e_tight_space_normal_0_T2_111": 179.64285714285734,
+      "e_tight_space_normal_0_T2_112": 207.00000000000006,
+      "e_tight_space_normal_0_T2_113": 234.35714285714292,
+      "e_tight_space_normal_0_T2_114": 261.7142857142858,
+      "e_tight_space_normal_0_T2_115": 289.0714285714286,
+      "e_tight_space_normal_0_T2_116": 316.42857142857144,
+      "e_tight_space_normal_0_T2_117": 343.78571428571433,
+      "e_tight_space_normal_0_T2_118": 371.14285714285717,
+      "e_tight_space_normal_0_T2_119": 398.50000000000006,
+      "e_tight_space_normal_0_T2_12": 590.0,
+      "e_tight_space_normal_0_T2_120": 425.8571428571429,
+      "e_tight_space_normal_0_T2_121": 453.2142857142857,
+      "e_tight_space_normal_0_T2_122": 480.5714285714286,
+      "e_tight_space_normal_0_T2_123": 507.92857142857144,
+      "e_tight_space_normal_0_T2_124": 535.2857142857143,
+      "e_tight_space_normal_0_T2_125": 562.6428571428572,
+      "e_tight_space_normal_0_T2_126": 590.0,
+      "e_tight_space_normal_0_T2_127": 524.7142857142858,
+      "e_tight_space_normal_0_T2_128": 459.4285714285715,
+      "e_tight_space_normal_0_T2_129": 394.1428571428572,
+      "e_tight_space_normal_0_T2_13": 590.0,
+      "e_tight_space_normal_0_T2_130": 328.85714285714295,
+      "e_tight_space_normal_0_T2_131": 263.57142857142867,
+      "e_tight_space_normal_0_T2_132": 198.2857142857144,
+      "e_tight_space_normal_0_T2_133": 133.0000000000001,
+      "e_tight_space_normal_0_T2_134": 133.0000000000001,
+      "e_tight_space_normal_0_T2_135": 245.99999999999994,
+      "e_tight_space_normal_0_T2_136": 381.0,
+      "e_tight_space_normal_0_T2_137": 516.0,
+      "e_tight_space_normal_0_T2_138": 450.71428571428567,
+      "e_tight_space_normal_0_T2_139": 385.4285714285714,
+      "e_tight_space_normal_0_T2_14": 590.0,
+      "e_tight_space_normal_0_T2_140": 320.1428571428571,
+      "e_tight_space_normal_0_T2_141": 254.85714285714283,
+      "e_tight_space_normal_0_T2_142": 189.57142857142856,
+      "e_tight_space_normal_0_T2_143": 124.28571428571428,
+      "e_tight_space_normal_0_T2_144": 59.0,
+      "e_tight_space_normal_0_T2_145": 86.35714285714285,
+      "e_tight_space_normal_0_T2_146": 113.7142857142857,
+      "e_tight_space_normal_0_T2_147": 141.07142857142853,
+      "e_tight_space_normal_0_T2_148": 168.4285714285714,
+      "e_tight_space_normal_0_T2_149": 195.78571428571425,
+      "e_tight_space_normal_0_T2_15": 590.0,
+      "e_tight_space_normal_0_T2_150": 195.78571428571425,
+      "e_tight_space_normal_0_T2_151": 223.1428571428571,
+      "e_tight_space_normal_0_T2_152": 223.14285714285708,
+      "e_tight_space_normal_0_T2_153": 250.49999999999994,
+      "e_tight_space_normal_0_T2_154": 277.8571428571428,
+      "e_tight_space_normal_0_T2_155": 305.21428571428567,
+      "e_tight_space_normal_0_T2_156": 332.5714285714285,
+      "e_tight_space_normal_0_T2_157": 359.9285714285714,
+      "e_tight_space_normal_0_T2_158": 387.2857142857142,
+      "e_tight_space_normal_0_T2_159": 414.64285714285705,
+      "e_tight_space_normal_0_T2_16": 590.0,
+      "e_tight_space_normal_0_T2_160": 441.9999999999999,
+      "e_tight_space_normal_0_T2_161": 441.9999999999999,
+      "e_tight_space_normal_0_T2_162": 469.3571428571428,
+      "e_tight_space_normal_0_T2_163": 469.3571428571428,
+      "e_tight_space_normal_0_T2_164": 496.71428571428567,
+      "e_tight_space_normal_0_T2_165": 507.9285714285716,
+      "e_tight_space_normal_0_T2_166": 535.2857142857143,
+      "e_tight_space_normal_0_T2_167": 562.6428571428571,
+      "e_tight_space_normal_0_T2_168": 590.0,
+      "e_tight_space_normal_0_T2_17": 590.0,
+      "e_tight_space_normal_0_T2_18": 590.0,
+      "e_tight_space_normal_0_T2_19": 590.0,
+      "e_tight_space_normal_0_T2_2": 590.0,
+      "e_tight_space_normal_0_T2_20": 590.0,
+      "e_tight_space_normal_0_T2_21": 590.0,
+      "e_tight_space_normal_0_T2_22": 590.0,
+      "e_tight_space_normal_0_T2_23": 590.0,
+      "e_tight_space_normal_0_T2_24": 590.0,
+      "e_tight_space_normal_0_T2_25": 590.0,
+      "e_tight_space_normal_0_T2_26": 590.0,
+      "e_tight_space_normal_0_T2_27": 590.0,
+      "e_tight_space_normal_0_T2_28": 590.0,
+      "e_tight_space_normal_0_T2_29": 590.0,
+      "e_tight_space_normal_0_T2_3": 590.0,
+      "e_tight_space_normal_0_T2_30": 590.0,
+      "e_tight_space_normal_0_T2_31": 524.7142857142858,
+      "e_tight_space_normal_0_T2_32": 459.42857142857144,
+      "e_tight_space_normal_0_T2_33": 394.1428571428572,
+      "e_tight_space_normal_0_T2_34": 328.85714285714295,
+      "e_tight_space_normal_0_T2_35": 263.5714285714288,
+      "e_tight_space_normal_0_T2_36": 198.2857142857145,
+      "e_tight_space_normal_0_T2_37": 133.00000000000026,
+      "e_tight_space_normal_0_T2_38": 268.0000000000003,
+      "e_tight_space_normal_0_T2_39": 268.0000000000003,
+      "e_tight_space_normal_0_T2_4": 590.0,
+      "e_tight_space_normal_0_T2_40": 380.9999999999995,
+      "e_tight_space_normal_0_T2_41": 515.9999999999995,
+      "e_tight_space_normal_0_T2_42": 450.7142857142852,
+      "e_tight_space_normal_0_T2_43": 385.42857142857093,
+      "e_tight_space_normal_0_T2_44": 320.1428571428567,
+      "e_tight_space_normal_0_T2_45": 254.85714285714246,
+      "e_tight_space_normal_0_T2_46": 189.57142857142819,
+      "e_tight_space_normal_0_T2_47": 124.28571428571394,
+      "e_tight_space_normal_0_T2_48": 58.99999999999968,
+      "e_tight_space_normal_0_T2_49": 58.9999999999997,
+      "e_tight_space_normal_0_T2_5": 590.0,
+      "e_tight_space_normal_0_T2_50": 58.9999999999997,
+      "e_tight_space_normal_0_T2_51": 75.14285714285212,
+      "e_tight_space_normal_0_T2_52": 75.14285714285212,
+      "e_tight_space_normal_0_T2_53": 102.49999999999497,
+      "e_tight_space_normal_0_T2_54": 102.49999999999487,
+      "e_tight_space_normal_0_T2_55": 102.49999999999487,
+      "e_tight_space_normal_0_T2_56": 129.85714285713772,
+      "e_tight_space_normal_0_T2_57": 157.21428571428058,
+      "e_tight_space_normal_0_T2_58": 157.21428571428058,
+      "e_tight_space_normal_0_T2_59": 184.57142857142344,
+      "e_tight_space_normal_0_T2_6": 590.0,
+      "e_tight_space_normal_0_T2_60": 211.92857142856627,
+      "e_tight_space_normal_0_T2_61": 239.28571428570913,
+      "e_tight_space_normal_0_T2_62": 239.28571428570913,
+      "e_tight_space_normal_0_T2_63": 266.642857142852,
+      "e_tight_space_normal_0_T2_64": 293.9999999999947,
+      "e_tight_space_normal_0_T2_65": 321.35714285713755,
+      "e_tight_space_normal_0_T2_66": 348.7142857142804,
+      "e_tight_space_normal_0_T2_67": 348.7142857142804,
+      "e_tight_space_normal_0_T2_68": 376.07142857142327,
+      "e_tight_space_normal_0_T2_69": 403.4285714285661,
+      "e_tight_space_normal_0_T2_7": 590.0,
+      "e_tight_space_normal_0_T2_70": 430.785714285709,
+      "e_tight_space_normal_0_T2_71": 458.1428571428518,
+      "e_tight_space_normal_0_T2_72": 458.1428571428518,
+      "e_tight_space_normal_0_T2_73": 458.1428571428518,
+      "e_tight_space_normal_0_T2_74": 485.49999999999466,
+      "e_tight_space_normal_0_T2_75": 512.8571428571375,
+      "e_tight_space_normal_0_T2_76": 540.2142857142803,
+      "e_tight_space_normal_0_T2_77": 567.5714285714232,
+      "e_tight_space_normal_0_T2_78": 590.0,
+      "e_tight_space_normal_0_T2_79": 524.7142857142858,
+      "e_tight_space_normal_0_T2_8": 590.0,
+      "e_tight_space_normal_0_T2_80": 459.42857142857144,
+      "e_tight_space_normal_0_T2_81": 394.14285714285717,
+      "e_tight_space_normal_0_T2_82": 328.8571428571429,
+      "e_tight_space_normal_0_T2_83": 263.5714285714286,
+      "e_tight_space_normal_0_T2_84": 198.28571428571433,
+      "e_tight_space_normal_0_T2_85": 133.00000000000006,
+      "e_tight_space_normal_0_T2_86": 133.00000000000006,
+      "e_tight_space_normal_0_T2_87": 245.99999999999994,
+      "e_tight_space_normal_0_T2_88": 381.0,
+      "e_tight_space_normal_0_T2_89": 516.0,
+      "e_tight_space_normal_0_T2_9": 590.0,
+      "e_tight_space_normal_0_T2_90": 450.71428571428567,
+      "e_tight_space_normal_0_T2_91": 385.4285714285714,
+      "e_tight_space_normal_0_T2_92": 320.1428571428571,
+      "e_tight_space_normal_0_T2_93": 254.85714285714283,
+      "e_tight_space_normal_0_T2_94": 189.57142857142856,
+      "e_tight_space_normal_0_T2_95": 124.28571428571428,
+      "e_tight_space_normal_0_T2_96": 59.0,
+      "e_tight_space_normal_0_T2_97": 59.0,
+      "e_tight_space_normal_0_T2_98": 59.0,
+      "e_tight_space_normal_0_T2_99": 59.0,
+      "e_tight_space_normal_1_L1_0": 590.0,
+      "e_tight_space_normal_1_L1_1": 590.0,
+      "e_tight_space_normal_1_L1_10": 590.0,
+      "e_tight_space_normal_1_L1_100": 590.0,
+      "e_tight_space_normal_1_L1_101": 590.0,
+      "e_tight_space_normal_1_L1_102": 590.0,
+      "e_tight_space_normal_1_L1_103": 590.0,
+      "e_tight_space_normal_1_L1_104": 590.0,
+      "e_tight_space_normal_1_L1_105": 590.0,
+      "e_tight_space_normal_1_L1_106": 590.0,
+      "e_tight_space_normal_1_L1_107": 590.0,
+      "e_tight_space_normal_1_L1_108": 590.0,
+      "e_tight_space_normal_1_L1_109": 590.0,
+      "e_tight_space_normal_1_L1_11": 590.0,
+      "e_tight_space_normal_1_L1_110": 590.0,
+      "e_tight_space_normal_1_L1_111": 590.0,
+      "e_tight_space_normal_1_L1_112": 590.0,
+      "e_tight_space_normal_1_L1_113": 590.0,
+      "e_tight_space_normal_1_L1_114": 590.0,
+      "e_tight_space_normal_1_L1_115": 590.0,
+      "e_tight_space_normal_1_L1_116": 590.0,
+      "e_tight_space_normal_1_L1_117": 590.0,
+      "e_tight_space_normal_1_L1_118": 590.0,
+      "e_tight_space_normal_1_L1_119": 590.0,
+      "e_tight_space_normal_1_L1_12": 590.0,
+      "e_tight_space_normal_1_L1_120": 590.0,
+      "e_tight_space_normal_1_L1_121": 590.0,
+      "e_tight_space_normal_1_L1_122": 590.0,
+      "e_tight_space_normal_1_L1_123": 590.0,
+      "e_tight_space_normal_1_L1_124": 590.0,
+      "e_tight_space_normal_1_L1_125": 590.0,
+      "e_tight_space_normal_1_L1_126": 590.0,
+      "e_tight_space_normal_1_L1_127": 590.0,
+      "e_tight_space_normal_1_L1_128": 590.0,
+      "e_tight_space_normal_1_L1_129": 590.0,
+      "e_tight_space_normal_1_L1_13": 590.0,
+      "e_tight_space_normal_1_L1_130": 590.0,
+      "e_tight_space_normal_1_L1_131": 590.0,
+      "e_tight_space_normal_1_L1_132": 590.0,
+      "e_tight_space_normal_1_L1_133": 590.0,
+      "e_tight_space_normal_1_L1_134": 590.0,
+      "e_tight_space_normal_1_L1_135": 590.0,
+      "e_tight_space_normal_1_L1_136": 590.0,
+      "e_tight_space_normal_1_L1_137": 590.0,
+      "e_tight_space_normal_1_L1_138": 590.0,
+      "e_tight_space_normal_1_L1_139": 590.0,
+      "e_tight_space_normal_1_L1_14": 590.0,
+      "e_tight_space_normal_1_L1_140": 590.0,
+      "e_tight_space_normal_1_L1_141": 590.0,
+      "e_tight_space_normal_1_L1_142": 590.0,
+      "e_tight_space_normal_1_L1_143": 590.0,
+      "e_tight_space_normal_1_L1_144": 590.0,
+      "e_tight_space_normal_1_L1_145": 590.0,
+      "e_tight_space_normal_1_L1_146": 590.0,
+      "e_tight_space_normal_1_L1_147": 590.0,
+      "e_tight_space_normal_1_L1_148": 590.0,
+      "e_tight_space_normal_1_L1_149": 590.0,
+      "e_tight_space_normal_1_L1_15": 590.0,
+      "e_tight_space_normal_1_L1_150": 590.0,
+      "e_tight_space_normal_1_L1_151": 590.0,
+      "e_tight_space_normal_1_L1_152": 590.0,
+      "e_tight_space_normal_1_L1_153": 590.0,
+      "e_tight_space_normal_1_L1_154": 590.0,
+      "e_tight_space_normal_1_L1_155": 590.0,
+      "e_tight_space_normal_1_L1_156": 590.0,
+      "e_tight_space_normal_1_L1_157": 590.0,
+      "e_tight_space_normal_1_L1_158": 590.0,
+      "e_tight_space_normal_1_L1_159": 590.0,
+      "e_tight_space_normal_1_L1_16": 590.0,
+      "e_tight_space_normal_1_L1_160": 590.0,
+      "e_tight_space_normal_1_L1_161": 590.0,
+      "e_tight_space_normal_1_L1_162": 590.0,
+      "e_tight_space_normal_1_L1_163": 590.0,
+      "e_tight_space_normal_1_L1_164": 590.0,
+      "e_tight_space_normal_1_L1_165": 590.0,
+      "e_tight_space_normal_1_L1_166": 590.0,
+      "e_tight_space_normal_1_L1_167": 590.0,
+      "e_tight_space_normal_1_L1_168": 590.0,
+      "e_tight_space_normal_1_L1_17": 590.0,
+      "e_tight_space_normal_1_L1_18": 590.0,
+      "e_tight_space_normal_1_L1_19": 590.0,
+      "e_tight_space_normal_1_L1_2": 590.0,
+      "e_tight_space_normal_1_L1_20": 590.0,
+      "e_tight_space_normal_1_L1_21": 590.0,
+      "e_tight_space_normal_1_L1_22": 590.0,
+      "e_tight_space_normal_1_L1_23": 590.0,
+      "e_tight_space_normal_1_L1_24": 590.0,
+      "e_tight_space_normal_1_L1_25": 590.0,
+      "e_tight_space_normal_1_L1_26": 590.0,
+      "e_tight_space_normal_1_L1_27": 590.0,
+      "e_tight_space_normal_1_L1_28": 590.0,
+      "e_tight_space_normal_1_L1_29": 590.0,
+      "e_tight_space_normal_1_L1_3": 590.0,
+      "e_tight_space_normal_1_L1_30": 590.0,
+      "e_tight_space_normal_1_L1_31": 590.0,
+      "e_tight_space_normal_1_L1_32": 590.0,
+      "e_tight_space_normal_1_L1_33": 590.0,
+      "e_tight_space_normal_1_L1_34": 590.0,
+      "e_tight_space_normal_1_L1_35": 590.0,
+      "e_tight_space_normal_1_L1_36": 590.0,
+      "e_tight_space_normal_1_L1_37": 590.0,
+      "e_tight_space_normal_1_L1_38": 590.0,
+      "e_tight_space_normal_1_L1_39": 590.0,
+      "e_tight_space_normal_1_L1_4": 590.0,
+      "e_tight_space_normal_1_L1_40": 590.0,
+      "e_tight_space_normal_1_L1_41": 590.0,
+      "e_tight_space_normal_1_L1_42": 590.0,
+      "e_tight_space_normal_1_L1_43": 590.0,
+      "e_tight_space_normal_1_L1_44": 590.0,
+      "e_tight_space_normal_1_L1_45": 590.0,
+      "e_tight_space_normal_1_L1_46": 590.0,
+      "e_tight_space_normal_1_L1_47": 590.0,
+      "e_tight_space_normal_1_L1_48": 590.0,
+      "e_tight_space_normal_1_L1_49": 590.0,
+      "e_tight_space_normal_1_L1_5": 590.0,
+      "e_tight_space_normal_1_L1_50": 590.0,
+      "e_tight_space_normal_1_L1_51": 590.0,
+      "e_tight_space_normal_1_L1_52": 590.0,
+      "e_tight_space_normal_1_L1_53": 590.0,
+      "e_tight_space_normal_1_L1_54": 590.0,
+      "e_tight_space_normal_1_L1_55": 590.0,
+      "e_tight_space_normal_1_L1_56": 590.0,
+      "e_tight_space_normal_1_L1_57": 590.0,
+      "e_tight_space_normal_1_L1_58": 590.0,
+      "e_tight_space_normal_1_L1_59": 590.0,
+      "e_tight_space_normal_1_L1_6": 590.0,
+      "e_tight_space_normal_1_L1_60": 590.0,
+      "e_tight_space_normal_1_L1_61": 590.0,
+      "e_tight_space_normal_1_L1_62": 590.0,
+      "e_tight_space_normal_1_L1_63": 590.0,
+      "e_tight_space_normal_1_L1_64": 590.0,
+      "e_tight_space_normal_1_L1_65": 590.0,
+      "e_tight_space_normal_1_L1_66": 590.0,
+      "e_tight_space_normal_1_L1_67": 590.0,
+      "e_tight_space_normal_1_L1_68": 590.0,
+      "e_tight_space_normal_1_L1_69": 590.0,
+      "e_tight_space_normal_1_L1_7": 590.0,
+      "e_tight_space_normal_1_L1_70": 590.0,
+      "e_tight_space_normal_1_L1_71": 590.0,
+      "e_tight_space_normal_1_L1_72": 590.0,
+      "e_tight_space_normal_1_L1_73": 590.0,
+      "e_tight_space_normal_1_L1_74": 590.0,
+      "e_tight_space_normal_1_L1_75": 590.0,
+      "e_tight_space_normal_1_L1_76": 590.0,
+      "e_tight_space_normal_1_L1_77": 590.0,
+      "e_tight_space_normal_1_L1_78": 590.0,
+      "e_tight_space_normal_1_L1_79": 590.0,
+      "e_tight_space_normal_1_L1_8": 590.0,
+      "e_tight_space_normal_1_L1_80": 590.0,
+      "e_tight_space_normal_1_L1_81": 590.0,
+      "e_tight_space_normal_1_L1_82": 590.0,
+      "e_tight_space_normal_1_L1_83": 590.0,
+      "e_tight_space_normal_1_L1_84": 590.0,
+      "e_tight_space_normal_1_L1_85": 590.0,
+      "e_tight_space_normal_1_L1_86": 590.0,
+      "e_tight_space_normal_1_L1_87": 590.0,
+      "e_tight_space_normal_1_L1_88": 590.0,
+      "e_tight_space_normal_1_L1_89": 590.0,
+      "e_tight_space_normal_1_L1_9": 590.0,
+      "e_tight_space_normal_1_L1_90": 590.0,
+      "e_tight_space_normal_1_L1_91": 590.0,
+      "e_tight_space_normal_1_L1_92": 590.0,
+      "e_tight_space_normal_1_L1_93": 590.0,
+      "e_tight_space_normal_1_L1_94": 590.0,
+      "e_tight_space_normal_1_L1_95": 590.0,
+      "e_tight_space_normal_1_L1_96": 590.0,
+      "e_tight_space_normal_1_L1_97": 590.0,
+      "e_tight_space_normal_1_L1_98": 590.0,
+      "e_tight_space_normal_1_L1_99": 590.0,
+      "e_tight_space_normal_1_T1_0": 590.0,
+      "e_tight_space_normal_1_T1_1": 590.0,
+      "e_tight_space_normal_1_T1_10": 328.8571428571429,
+      "e_tight_space_normal_1_T1_100": 562.6428571428571,
+      "e_tight_space_normal_1_T1_101": 562.6428571428571,
+      "e_tight_space_normal_1_T1_102": 590.0,
+      "e_tight_space_normal_1_T1_103": 524.7142857142858,
+      "e_tight_space_normal_1_T1_104": 459.4285714285715,
+      "e_tight_space_normal_1_T1_105": 394.1428571428572,
+      "e_tight_space_normal_1_T1_106": 328.85714285714295,
+      "e_tight_space_normal_1_T1_107": 263.57142857142867,
+      "e_tight_space_normal_1_T1_108": 198.2857142857144,
+      "e_tight_space_normal_1_T1_109": 133.0000000000001,
+      "e_tight_space_normal_1_T1_11": 263.5714285714286,
+      "e_tight_space_normal_1_T1_110": 133.0000000000001,
+      "e_tight_space_normal_1_T1_111": 268.0000000000001,
+      "e_tight_space_normal_1_T1_112": 381.0,
+      "e_tight_space_normal_1_T1_113": 516.0,
+      "e_tight_space_normal_1_T1_114": 450.71428571428567,
+      "e_tight_space_normal_1_T1_115": 385.4285714285714,
+      "e_tight_space_normal_1_T1_116": 320.1428571428571,
+      "e_tight_space_normal_1_T1_117": 254.85714285714283,
+      "e_tight_space_normal_1_T1_118": 189.57142857142856,
+      "e_tight_space_normal_1_T1_119": 124.28571428571428,
+      "e_tight_space_normal_1_T1_12": 198.28571428571433,
+      "e_tight_space_normal_1_T1_120": 59.00000000000001,
+      "e_tight_space_normal_1_T1_121": 59.00000000000001,
+      "e_tight_space_normal_1_T1_122": 59.0,
+      "e_tight_space_normal_1_T1_123": 59.0,
+      "e_tight_space_normal_1_T1_124": 59.0,
+      "e_tight_space_normal_1_T1_125": 86.35714285714289,
+      "e_tight_space_normal_1_T1_126": 113.71428571428574,
+      "e_tight_space_normal_1_T1_127": 113.71428571428574,
+      "e_tight_space_normal_1_T1_128": 113.71428571428574,
+      "e_tight_space_normal_1_T1_129": 113.71428571428574,
+      "e_tight_space_normal_1_T1_13": 133.00000000000006,
+      "e_tight_space_normal_1_T1_130": 141.07142857142858,
+      "e_tight_space_normal_1_T1_131": 141.07142857142858,
+      "e_tight_space_normal_1_T1_132": 141.07142857142858,
+      "e_tight_space_normal_1_T1_133": 163.50000000000017,
+      "e_tight_space_normal_1_T1_134": 190.85714285714303,
+      "e_tight_space_normal_1_T1_135": 218.2142857142859,
+      "e_tight_space_normal_1_T1_136": 245.57142857142875,
+      "e_tight_space_normal_1_T1_137": 272.9285714285716,
+      "e_tight_space_normal_1_T1_138": 300.28571428571445,
+      "e_tight_space_normal_1_T1_139": 327.6428571428573,
+      "e_tight_space_normal_1_T1_14": 268.00000000000006,
+      "e_tight_space_normal_1_T1_140": 355.0000000000001,
+      "e_tight_space_normal_1_T1_141": 382.35714285714295,
+      "e_tight_space_normal_1_T1_142": 409.7142857142858,
+      "e_tight_space_normal_1_T1_143": 437.0714285714286,
+      "e_tight_space_normal_1_T1_144": 464.42857142857144,
+      "e_tight_space_normal_1_T1_145": 464.42857142857144,
+      "e_tight_space_normal_1_T1_146": 464.42857142857144,
+      "e_tight_space_normal_1_T1_147": 464.42857142857144,
+      "e_tight_space_normal_1_T1_148": 464.42857142857144,
+      "e_tight_space_normal_1_T1_149": 464.42857142857144,
+      "e_tight_space_normal_1_T1_15": 403.0000000000001,
+      "e_tight_space_normal_1_T1_150": 464.42857142857144,
+      "e_tight_space_normal_1_T1_151": 464.42857142857144,
+      "e_tight_space_normal_1_T1_152": 464.42857142857144,
+      "e_tight_space_normal_1_T1_153": 464.42857142857144,
+      "e_tight_space_normal_1_T1_154": 464.42857142857144,
+      "e_tight_space_normal_1_T1_155": 464.42857142857144,
+      "e_tight_space_normal_1_T1_156": 464.42857142857144,
+      "e_tight_space_normal_1_T1_157": 464.42857142857144,
+      "e_tight_space_normal_1_T1_158": 491.7857142857143,
+      "e_tight_space_normal_1_T1_159": 519.1428571428571,
+      "e_tight_space_normal_1_T1_16": 403.0000000000001,
+      "e_tight_space_normal_1_T1_160": 546.5,
+      "e_tight_space_normal_1_T1_161": 546.5,
+      "e_tight_space_normal_1_T1_162": 573.8571428571429,
+      "e_tight_space_normal_1_T1_163": 573.8571428571429,
+      "e_tight_space_normal_1_T1_164": 590.0,
+      "e_tight_space_normal_1_T1_165": 590.0,
+      "e_tight_space_normal_1_T1_166": 590.0,
+      "e_tight_space_normal_1_T1_167": 590.0,
+      "e_tight_space_normal_1_T1_168": 590.0,
+      "e_tight_space_normal_1_T1_17": 516.0,
+      "e_tight_space_normal_1_T1_18": 450.71428571428567,
+      "e_tight_space_normal_1_T1_19": 385.4285714285714,
+      "e_tight_space_normal_1_T1_2": 590.0,
+      "e_tight_space_normal_1_T1_20": 320.1428571428571,
+      "e_tight_space_normal_1_T1_21": 254.85714285714283,
+      "e_tight_space_normal_1_T1_22": 189.57142857142856,
+      "e_tight_space_normal_1_T1_23": 124.28571428571428,
+      "e_tight_space_normal_1_T1_24": 59.0,
+      "e_tight_space_normal_1_T1_25": 59.0,
+      "e_tight_space_normal_1_T1_26": 59.0,
+      "e_tight_space_normal_1_T1_27": 59.0,
+      "e_tight_space_normal_1_T1_28": 59.0,
+      "e_tight_space_normal_1_T1_29": 59.0,
+      "e_tight_space_normal_1_T1_3": 590.0,
+      "e_tight_space_normal_1_T1_30": 59.0,
+      "e_tight_space_normal_1_T1_31": 59.0,
+      "e_tight_space_normal_1_T1_32": 59.0,
+      "e_tight_space_normal_1_T1_33": 86.35714285714297,
+      "e_tight_space_normal_1_T1_34": 113.71428571428582,
+      "e_tight_space_normal_1_T1_35": 141.07142857142867,
+      "e_tight_space_normal_1_T1_36": 141.07142857142867,
+      "e_tight_space_normal_1_T1_37": 168.4285714285715,
+      "e_tight_space_normal_1_T1_38": 195.78571428571436,
+      "e_tight_space_normal_1_T1_39": 223.14285714285722,
+      "e_tight_space_normal_1_T1_4": 590.0,
+      "e_tight_space_normal_1_T1_40": 250.50000000000009,
+      "e_tight_space_normal_1_T1_41": 277.85714285714295,
+      "e_tight_space_normal_1_T1_42": 305.2142857142858,
+      "e_tight_space_normal_1_T1_43": 332.5714285714286,
+      "e_tight_space_normal_1_T1_44": 343.7857142857144,
+      "e_tight_space_normal_1_T1_45": 343.7857142857144,
+      "e_tight_space_normal_1_T1_46": 371.1428571428573,
+      "e_tight_space_normal_1_T1_47": 398.5000000000001,
+      "e_tight_space_normal_1_T1_48": 425.85714285714295,
+      "e_tight_space_normal_1_T1_49": 425.85714285714295,
+      "e_tight_space_normal_1_T1_5": 590.0,
+      "e_tight_space_normal_1_T1_50": 453.2142857142858,
+      "e_tight_space_normal_1_T1_51": 480.5714285714286,
+      "e_tight_space_normal_1_T1_52": 507.9285714285715,
+      "e_tight_space_normal_1_T1_53": 535.2857142857143,
+      "e_tight_space_normal_1_T1_54": 535.2857142857143,
+      "e_tight_space_normal_1_T1_55": 562.6428571428572,
+      "e_tight_space_normal_1_T1_56": 590.0,
+      "e_tight_space_normal_1_T1_57": 524.7142857142858,
+      "e_tight_space_normal_1_T1_58": 459.4285714285715,
+      "e_tight_space_normal_1_T1_59": 394.1428571428572,
+      "e_tight_space_normal_1_T1_6": 590.0,
+      "e_tight_space_normal_1_T1_60": 328.85714285714295,
+      "e_tight_space_normal_1_T1_61": 263.57142857142867,
+      "e_tight_space_normal_1_T1_62": 198.2857142857144,
+      "e_tight_space_normal_1_T1_63": 133.0000000000001,
+      "e_tight_space_normal_1_T1_64": 133.0000000000001,
+      "e_tight_space_normal_1_T1_65": 245.99999999999994,
+      "e_tight_space_normal_1_T1_66": 380.99999999999994,
+      "e_tight_space_normal_1_T1_67": 516.0,
+      "e_tight_space_normal_1_T1_68": 450.71428571428567,
+      "e_tight_space_normal_1_T1_69": 385.4285714285714,
+      "e_tight_space_normal_1_T1_7": 524.7142857142858,
+      "e_tight_space_normal_1_T1_70": 320.1428571428571,
+      "e_tight_space_normal_1_T1_71": 254.85714285714283,
+      "e_tight_space_normal_1_T1_72": 189.57142857142856,
+      "e_tight_space_normal_1_T1_73": 124.28571428571428,
+      "e_tight_space_normal_1_T1_74": 59.0,
+      "e_tight_space_normal_1_T1_75": 59.0,
+      "e_tight_space_normal_1_T1_76": 59.0,
+      "e_tight_space_normal_1_T1_77": 59.0,
+      "e_tight_space_normal_1_T1_78": 59.00000000000001,
+      "e_tight_space_normal_1_T1_79": 86.35714285714286,
+      "e_tight_space_normal_1_T1_8": 459.42857142857144,
+      "e_tight_space_normal_1_T1_80": 113.71428571428571,
+      "e_tight_space_normal_1_T1_81": 141.07142857142856,
+      "e_tight_space_normal_1_T1_82": 168.42857142857142,
+      "e_tight_space_normal_1_T1_83": 179.64285714285722,
+      "e_tight_space_normal_1_T1_84": 179.64285714285722,
+      "e_tight_space_normal_1_T1_85": 207.00000000000009,
+      "e_tight_space_normal_1_T1_86": 234.35714285714295,
+      "e_tight_space_normal_1_T1_87": 261.7142857142858,
+      "e_tight_space_normal_1_T1_88": 289.0714285714286,
+      "e_tight_space_normal_1_T1_89": 316.4285714285715,
+      "e_tight_space_normal_1_T1_9": 394.14285714285717,
+      "e_tight_space_normal_1_T1_90": 343.7857142857144,
+      "e_tight_space_normal_1_T1_91": 371.1428571428572,
+      "e_tight_space_normal_1_T1_92": 398.5000000000001,
+      "e_tight_space_normal_1_T1_93": 425.85714285714295,
+      "e_tight_space_normal_1_T1_94": 453.2142857142858,
+      "e_tight_space_normal_1_T1_95": 480.5714285714286,
+      "e_tight_space_normal_1_T1_96": 507.92857142857144,
+      "e_tight_space_normal_1_T1_97": 507.92857142857144,
+      "e_tight_space_normal_1_T1_98": 535.2857142857142,
+      "e_tight_space_normal_1_T1_99": 535.2857142857142,
+      "e_tight_space_normal_1_T2_0": 590.0,
+      "e_tight_space_normal_1_T2_1": 524.7142857142858,
+      "e_tight_space_normal_1_T2_10": 455.0,
+      "e_tight_space_normal_1_T2_100": 86.35714285714285,
+      "e_tight_space_normal_1_T2_101": 86.35714285714285,
+      "e_tight_space_normal_1_T2_102": 86.35714285714286,
+      "e_tight_space_normal_1_T2_103": 113.71428571428571,
+      "e_tight_space_normal_1_T2_104": 113.71428571428571,
+      "e_tight_space_normal_1_T2_105": 124.92857142857154,
+      "e_tight_space_normal_1_T2_106": 152.2857142857144,
+      "e_tight_space_normal_1_T2_107": 179.64285714285725,
+      "e_tight_space_normal_1_T2_108": 179.64285714285725,
+      "e_tight_space_normal_1_T2_109": 207.00000000000009,
+      "e_tight_space_normal_1_T2_11": 590.0,
+      "e_tight_space_normal_1_T2_110": 234.35714285714295,
+      "e_tight_space_normal_1_T2_111": 261.7142857142858,
+      "e_tight_space_normal_1_T2_112": 289.0714285714286,
+      "e_tight_space_normal_1_T2_113": 316.42857142857144,
+      "e_tight_space_normal_1_T2_114": 343.78571428571433,
+      "e_tight_space_normal_1_T2_115": 371.14285714285717,
+      "e_tight_space_normal_1_T2_116": 398.50000000000006,
+      "e_tight_space_normal_1_T2_117": 425.8571428571429,
+      "e_tight_space_normal_1_T2_118": 453.2142857142857,
+      "e_tight_space_normal_1_T2_119": 480.57142857142856,
+      "e_tight_space_normal_1_T2_12": 524.7142857142857,
+      "e_tight_space_normal_1_T2_120": 507.9285714285714,
+      "e_tight_space_normal_1_T2_121": 535.2857142857142,
+      "e_tight_space_normal_1_T2_122": 562.6428571428571,
+      "e_tight_space_normal_1_T2_123": 590.0,
+      "e_tight_space_normal_1_T2_124": 590.0,
+      "e_tight_space_normal_1_T2_125": 590.0,
+      "e_tight_space_normal_1_T2_126": 590.0,
+      "e_tight_space_normal_1_T2_127": 524.7142857142857,
+      "e_tight_space_normal_1_T2_128": 459.4285714285714,
+      "e_tight_space_normal_1_T2_129": 394.1428571428571,
+      "e_tight_space_normal_1_T2_13": 459.4285714285714,
+      "e_tight_space_normal_1_T2_130": 328.85714285714283,
+      "e_tight_space_normal_1_T2_131": 263.57142857142856,
+      "e_tight_space_normal_1_T2_132": 198.28571428571428,
+      "e_tight_space_normal_1_T2_133": 133.0,
+      "e_tight_space_normal_1_T2_134": 133.0,
+      "e_tight_space_normal_1_T2_135": 245.99999999999994,
+      "e_tight_space_normal_1_T2_136": 380.99999999999994,
+      "e_tight_space_normal_1_T2_137": 516.0,
+      "e_tight_space_normal_1_T2_138": 450.71428571428567,
+      "e_tight_space_normal_1_T2_139": 385.4285714285714,
+      "e_tight_space_normal_1_T2_14": 394.1428571428571,
+      "e_tight_space_normal_1_T2_140": 320.1428571428571,
+      "e_tight_space_normal_1_T2_141": 254.85714285714283,
+      "e_tight_space_normal_1_T2_142": 189.57142857142856,
+      "e_tight_space_normal_1_T2_143": 124.28571428571428,
+      "e_tight_space_normal_1_T2_144": 59.0,
+      "e_tight_space_normal_1_T2_145": 86.35714285714285,
+      "e_tight_space_normal_1_T2_146": 113.7142857142857,
+      "e_tight_space_normal_1_T2_147": 141.07142857142853,
+      "e_tight_space_normal_1_T2_148": 168.4285714285714,
+      "e_tight_space_normal_1_T2_149": 195.78571428571428,
+      "e_tight_space_normal_1_T2_15": 328.85714285714283,
+      "e_tight_space_normal_1_T2_150": 223.1428571428571,
+      "e_tight_space_normal_1_T2_151": 250.49999999999997,
+      "e_tight_space_normal_1_T2_152": 277.85714285714283,
+      "e_tight_space_normal_1_T2_153": 305.21428571428567,
+      "e_tight_space_normal_1_T2_154": 332.57142857142856,
+      "e_tight_space_normal_1_T2_155": 359.9285714285714,
+      "e_tight_space_normal_1_T2_156": 387.28571428571433,
+      "e_tight_space_normal_1_T2_157": 414.64285714285717,
+      "e_tight_space_normal_1_T2_158": 414.64285714285717,
+      "e_tight_space_normal_1_T2_159": 414.64285714285717,
+      "e_tight_space_normal_1_T2_16": 263.57142857142856,
+      "e_tight_space_normal_1_T2_160": 414.64285714285717,
+      "e_tight_space_normal_1_T2_161": 442.0,
+      "e_tight_space_normal_1_T2_162": 442.0,
+      "e_tight_space_normal_1_T2_163": 469.35714285714283,
+      "e_tight_space_normal_1_T2_164": 480.5714285714286,
+      "e_tight_space_normal_1_T2_165": 507.92857142857144,
+      "e_tight_space_normal_1_T2_166": 535.2857142857143,
+      "e_tight_space_normal_1_T2_167": 562.6428571428571,
+      "e_tight_space_normal_1_T2_168": 590.0,
+      "e_tight_space_normal_1_T2_17": 198.28571428571428,
+      "e_tight_space_normal_1_T2_18": 133.0,
+      "e_tight_space_normal_1_T2_19": 160.35714285714286,
+      "e_tight_space_normal_1_T2_2": 459.4285714285716,
+      "e_tight_space_normal_1_T2_20": 187.7142857142857,
+      "e_tight_space_normal_1_T2_21": 215.07142857142856,
+      "e_tight_space_normal_1_T2_22": 242.42857142857147,
+      "e_tight_space_normal_1_T2_23": 269.78571428571433,
+      "e_tight_space_normal_1_T2_24": 297.14285714285717,
+      "e_tight_space_normal_1_T2_25": 324.50000000000006,
+      "e_tight_space_normal_1_T2_26": 351.8571428571429,
+      "e_tight_space_normal_1_T2_27": 379.2142857142857,
+      "e_tight_space_normal_1_T2_28": 406.57142857142856,
+      "e_tight_space_normal_1_T2_29": 433.9285714285714,
+      "e_tight_space_normal_1_T2_3": 394.14285714285734,
+      "e_tight_space_normal_1_T2_30": 461.2857142857143,
+      "e_tight_space_normal_1_T2_31": 488.6428571428571,
+      "e_tight_space_normal_1_T2_32": 516.0,
+      "e_tight_space_normal_1_T2_33": 450.71428571428567,
+      "e_tight_space_normal_1_T2_34": 385.4285714285714,
+      "e_tight_space_normal_1_T2_35": 320.1428571428571,
+      "e_tight_space_normal_1_T2_36": 254.85714285714283,
+      "e_tight_space_normal_1_T2_37": 189.57142857142856,
+      "e_tight_space_normal_1_T2_38": 124.28571428571428,
+      "e_tight_space_normal_1_T2_39": 59.0,
+      "e_tight_space_normal_1_T2_4": 328.85714285714306,
+      "e_tight_space_normal_1_T2_40": 110.99999999999994,
+      "e_tight_space_normal_1_T2_41": 246.0,
+      "e_tight_space_normal_1_T2_42": 381.0,
+      "e_tight_space_normal_1_T2_43": 516.0,
+      "e_tight_space_normal_1_T2_44": 450.71428571428567,
+      "e_tight_space_normal_1_T2_45": 385.4285714285714,
+      "e_tight_space_normal_1_T2_46": 320.1428571428571,
+      "e_tight_space_normal_1_T2_47": 254.85714285714286,
+      "e_tight_space_normal_1_T2_48": 189.57142857142858,
+      "e_tight_space_normal_1_T2_49": 124.2857142857143,
+      "e_tight_space_normal_1_T2_5": 263.5714285714287,
+      "e_tight_space_normal_1_T2_50": 59.00000000000003,
+      "e_tight_space_normal_1_T2_51": 59.00000000000003,
+      "e_tight_space_normal_1_T2_52": 59.00000000000003,
+      "e_tight_space_normal_1_T2_53": 59.00000000000003,
+      "e_tight_space_normal_1_T2_54": 86.35714285714288,
+      "e_tight_space_normal_1_T2_55": 86.35714285714288,
+      "e_tight_space_normal_1_T2_56": 86.35714285714288,
+      "e_tight_space_normal_1_T2_57": 97.5714285714287,
+      "e_tight_space_normal_1_T2_58": 97.5714285714287,
+      "e_tight_space_normal_1_T2_59": 124.92857142857154,
+      "e_tight_space_normal_1_T2_6": 198.28571428571453,
+      "e_tight_space_normal_1_T2_60": 124.9285714285716,
+      "e_tight_space_normal_1_T2_61": 152.28571428571445,
+      "e_tight_space_normal_1_T2_62": 152.28571428571445,
+      "e_tight_space_normal_1_T2_63": 179.64285714285708,
+      "e_tight_space_normal_1_T2_64": 206.99999999999994,
+      "e_tight_space_normal_1_T2_65": 234.3571428571428,
+      "e_tight_space_normal_1_T2_66": 261.71428571428567,
+      "e_tight_space_normal_1_T2_67": 289.07142857142856,
+      "e_tight_space_normal_1_T2_68": 316.4285714285714,
+      "e_tight_space_normal_1_T2_69": 343.7857142857143,
+      "e_tight_space_normal_1_T2_7": 133.00000000000034,
+      "e_tight_space_normal_1_T2_70": 371.1428571428571,
+      "e_tight_space_normal_1_T2_71": 398.5,
+      "e_tight_space_normal_1_T2_72": 425.85714285714283,
+      "e_tight_space_normal_1_T2_73": 453.21428571428567,
+      "e_tight_space_normal_1_T2_74": 480.57142857142867,
+      "e_tight_space_normal_1_T2_75": 507.9285714285715,
+      "e_tight_space_normal_1_T2_76": 535.2857142857143,
+      "e_tight_space_normal_1_T2_77": 562.6428571428571,
+      "e_tight_space_normal_1_T2_78": 590.0,
+      "e_tight_space_normal_1_T2_79": 524.7142857142857,
+      "e_tight_space_normal_1_T2_8": 268.0000000000003,
+      "e_tight_space_normal_1_T2_80": 459.4285714285714,
+      "e_tight_space_normal_1_T2_81": 394.1428571428571,
+      "e_tight_space_normal_1_T2_82": 328.85714285714283,
+      "e_tight_space_normal_1_T2_83": 263.57142857142856,
+      "e_tight_space_normal_1_T2_84": 198.28571428571428,
+      "e_tight_space_normal_1_T2_85": 133.0,
+      "e_tight_space_normal_1_T2_86": 133.0,
+      "e_tight_space_normal_1_T2_87": 245.99999999999994,
+      "e_tight_space_normal_1_T2_88": 381.0,
+      "e_tight_space_normal_1_T2_89": 516.0,
+      "e_tight_space_normal_1_T2_9": 320.0,
+      "e_tight_space_normal_1_T2_90": 450.71428571428567,
+      "e_tight_space_normal_1_T2_91": 385.4285714285714,
+      "e_tight_space_normal_1_T2_92": 320.1428571428571,
+      "e_tight_space_normal_1_T2_93": 254.85714285714283,
+      "e_tight_space_normal_1_T2_94": 189.57142857142856,
+      "e_tight_space_normal_1_T2_95": 124.28571428571428,
+      "e_tight_space_normal_1_T2_96": 59.0,
+      "e_tight_space_normal_1_T2_97": 59.0,
+      "e_tight_space_normal_1_T2_98": 59.0,
+      "e_tight_space_normal_1_T2_99": 86.35714285714285,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_110": 125.55555555555549,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_111": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_112": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_134": 125.55555555555537,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_135": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_136": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_14": 125.55555555555577,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_15": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_16": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_37": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_39": 125.55555555555469,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_40": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_62": 125.55555555555543,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_63": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_64": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_86": 125.55555555555543,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_87": 150.0,
+      "f_tight_space_normal_0_SG_HUB_SG_SUB_N_88": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_10": 149.99999999999997,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_110": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_111": 125.55555555555543,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_112": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_13": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_134": 125.55555555555549,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_135": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_136": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_14": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_16": 125.55555555555543,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_39": 57.777777777777715,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_40": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_41": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_42": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_64": 125.55555555555536,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_65": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_66": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_7": 149.99999999999997,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_8": 57.77777777777746,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_86": 125.55555555555549,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_87": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_88": 150.0,
+      "f_tight_space_normal_1_SG_HUB_SG_SUB_N_9": 149.99999999999997,
+      "n_MY_DEPOT_dc50": 1.0,
+      "n_SG_HUB_dc150": 1.0,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_100": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_101": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_126": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_127": 0.49841269841270686,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_128": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_129": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_130": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_131": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_133": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_134": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_135": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_136": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_137": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_138": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_141": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_142": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_143": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_149": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_151": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_160": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_162": 1.0,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_164": 0.3587301587301527,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_25": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_27": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_30": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_31": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_32": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_33": 0.6079365079364085,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_35": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_36": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_38": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_39": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_40": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_42": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_43": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_44": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_46": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_47": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_49": 0.6079365079365077,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_50": 0.249206349206454,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_51": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_53": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_77": 0.10952380952369119,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_78": 0.13968253968266175,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_82": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_84": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_85": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_86": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_87": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_88": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_89": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_90": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_91": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_92": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_93": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_94": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_95": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_96": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_97": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_98": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_MY_DEPOT_dc50_99": 0.6079365079365078,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_110": 0.8370370370370366,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_111": 1.0,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_112": 1.0,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_14": 0.8370370370370385,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_15": 1.0,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_16": 1.0,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_62": 0.8370370370370362,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_63": 1.0,
+      "o_tight_space_normal_0_T1_SG_HUB_dc150_64": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_10": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_103": 0.249206349206353,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_107": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_108": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_109": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_11": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_110": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_111": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_112": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_113": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_114": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_115": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_116": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_117": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_118": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_119": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_12": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_120": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_121": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_122": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_123": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_124": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_125": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_13": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_14": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_144": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_145": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_146": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_147": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_148": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_15": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_150": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_152": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_153": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_154": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_155": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_156": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_157": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_158": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_159": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_16": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_160": 0.3920634920634922,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_161": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_163": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_164": 0.6412698412698473,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_165": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_166": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_167": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_17": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_18": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_19": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_20": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_21": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_50": 0.35873015873005376,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_52": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_55": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_56": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_58": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_59": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_60": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_62": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_63": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_64": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_65": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_67": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_68": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_69": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_70": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_73": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_74": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_75": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_76": 0.6079365079365078,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_77": 0.4984126984128167,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_8": 1.0,
+      "o_tight_space_normal_0_T2_MY_DEPOT_dc50_9": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_134": 0.8370370370370358,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_135": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_136": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_37": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_39": 0.8370370370370313,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_40": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_86": 0.8370370370370362,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_87": 1.0,
+      "o_tight_space_normal_0_T2_SG_HUB_dc150_88": 1.0,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_101": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_124": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_125": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_129": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_132": 0.498412698412702,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_133": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_134": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_135": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_136": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_137": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_138": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_139": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_140": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_141": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_142": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_143": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_157": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_158": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_159": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_161": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_163": 0.358730158730158,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_167": 0.3920634920634922,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_32": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_33": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_34": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_36": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_37": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_38": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_39": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_40": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_41": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_42": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_43": 0.2492063492063505,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_45": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_46": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_47": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_49": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_50": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_51": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_52": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_54": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_55": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_78": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_79": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_80": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_81": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_82": 0.24920634920635137,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_84": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_85": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_86": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_87": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_88": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_89": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_90": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_91": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_92": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_93": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_94": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_95": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_97": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_MY_DEPOT_dc50_99": 0.6079365079365078,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_110": 1.0,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_111": 0.8370370370370362,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_112": 1.0,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_13": 1.0,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_14": 1.0,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_16": 0.8370370370370362,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_64": 0.8370370370370357,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_65": 1.0,
+      "o_tight_space_normal_1_T1_SG_HUB_dc150_66": 1.0,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_102": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_104": 0.2492063492063518,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_105": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_106": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_108": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_109": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_110": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_111": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_112": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_113": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_114": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_115": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_116": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_117": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_118": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_119": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_120": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_121": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_122": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_144": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_145": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_146": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_147": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_148": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_149": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_150": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_151": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_152": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_153": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_154": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_155": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_156": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_160": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_162": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_163": 0.24920634920634974,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_164": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_165": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_166": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_167": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_18": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_19": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_20": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_21": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_22": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_23": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_24": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_25": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_26": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_27": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_28": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_29": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_30": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_31": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_4": 2.220446049250313e-16,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_53": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_56": 0.2492063492063515,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_58": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_60": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_62": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_63": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_64": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_65": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_66": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_67": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_68": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_69": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_70": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_71": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_72": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_73": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_74": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_75": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_76": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_77": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_MY_DEPOT_dc50_98": 0.6079365079365078,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_10": 0.9999999999999998,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_134": 0.8370370370370366,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_135": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_136": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_39": 0.38518518518518474,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_40": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_41": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_42": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_7": 0.9999999999999998,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_8": 0.3851851851851831,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_86": 0.8370370370370366,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_87": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_88": 1.0,
+      "o_tight_space_normal_1_T2_SG_HUB_dc150_9": 0.9999999999999998,
+      "open_MY_DEPOT": 1.0,
+      "open_SG_HUB": 1.0,
+      "p_tight_space_normal_0_T1_MY_DEPOT_100": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_101": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_126": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_127": 24.920634920635344,
+      "p_tight_space_normal_0_T1_MY_DEPOT_128": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_129": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_130": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_131": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_133": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_134": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_135": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_136": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_137": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_138": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_141": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_142": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_143": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_149": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_151": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_160": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_162": 30.39682539682538,
+      "p_tight_space_normal_0_T1_MY_DEPOT_164": 17.936507936507635,
+      "p_tight_space_normal_0_T1_MY_DEPOT_25": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_27": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_30": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_31": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_32": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_33": 30.396825396820425,
+      "p_tight_space_normal_0_T1_MY_DEPOT_35": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_36": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_38": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_39": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_40": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_42": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_43": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_44": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_46": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_47": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_49": 30.396825396825385,
+      "p_tight_space_normal_0_T1_MY_DEPOT_50": 12.460317460322699,
+      "p_tight_space_normal_0_T1_MY_DEPOT_51": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_53": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_77": 5.476190476184559,
+      "p_tight_space_normal_0_T1_MY_DEPOT_78": 6.984126984133088,
+      "p_tight_space_normal_0_T1_MY_DEPOT_82": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_84": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_85": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_86": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_87": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_88": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_89": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_90": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_91": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_92": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_93": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_94": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_95": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_96": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_97": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_98": 30.39682539682539,
+      "p_tight_space_normal_0_T1_MY_DEPOT_99": 30.39682539682539,
+      "p_tight_space_normal_0_T1_SG_HUB_110": 125.55555555555549,
+      "p_tight_space_normal_0_T1_SG_HUB_111": 150.0,
+      "p_tight_space_normal_0_T1_SG_HUB_112": 150.0,
+      "p_tight_space_normal_0_T1_SG_HUB_14": 125.55555555555577,
+      "p_tight_space_normal_0_T1_SG_HUB_15": 150.0,
+      "p_tight_space_normal_0_T1_SG_HUB_16": 150.0,
+      "p_tight_space_normal_0_T1_SG_HUB_62": 125.55555555555543,
+      "p_tight_space_normal_0_T1_SG_HUB_63": 150.0,
+      "p_tight_space_normal_0_T1_SG_HUB_64": 150.0,
+      "p_tight_space_normal_0_T2_MY_DEPOT_103": 12.46031746031765,
+      "p_tight_space_normal_0_T2_MY_DEPOT_107": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_108": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_109": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_110": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_111": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_112": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_113": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_114": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_115": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_116": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_117": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_118": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_119": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_120": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_121": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_122": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_123": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_124": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_125": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_144": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_145": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_146": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_147": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_148": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_150": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_152": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_153": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_154": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_155": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_156": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_157": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_158": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_159": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_161": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_163": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_164": 12.460317460317754,
+      "p_tight_space_normal_0_T2_MY_DEPOT_165": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_166": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_167": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_50": 17.93650793650269,
+      "p_tight_space_normal_0_T2_MY_DEPOT_52": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_55": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_56": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_58": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_59": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_60": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_62": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_63": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_64": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_65": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_67": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_68": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_69": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_70": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_73": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_74": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_75": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_76": 30.39682539682539,
+      "p_tight_space_normal_0_T2_MY_DEPOT_77": 24.920634920640836,
+      "p_tight_space_normal_0_T2_SG_HUB_134": 125.55555555555537,
+      "p_tight_space_normal_0_T2_SG_HUB_135": 150.0,
+      "p_tight_space_normal_0_T2_SG_HUB_136": 150.0,
+      "p_tight_space_normal_0_T2_SG_HUB_37": 150.0,
+      "p_tight_space_normal_0_T2_SG_HUB_39": 125.55555555555469,
+      "p_tight_space_normal_0_T2_SG_HUB_40": 150.0,
+      "p_tight_space_normal_0_T2_SG_HUB_86": 125.55555555555543,
+      "p_tight_space_normal_0_T2_SG_HUB_87": 150.0,
+      "p_tight_space_normal_0_T2_SG_HUB_88": 150.0,
+      "p_tight_space_normal_1_T1_MY_DEPOT_101": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_124": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_125": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_129": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_132": 24.920634920635102,
+      "p_tight_space_normal_1_T1_MY_DEPOT_133": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_134": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_135": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_136": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_137": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_138": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_139": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_140": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_141": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_142": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_143": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_157": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_158": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_159": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_161": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_163": 17.9365079365079,
+      "p_tight_space_normal_1_T1_MY_DEPOT_32": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_33": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_34": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_36": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_37": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_38": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_39": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_40": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_41": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_42": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_43": 12.460317460317526,
+      "p_tight_space_normal_1_T1_MY_DEPOT_45": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_46": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_47": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_49": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_50": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_51": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_52": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_54": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_55": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_78": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_79": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_80": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_81": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_82": 12.460317460317569,
+      "p_tight_space_normal_1_T1_MY_DEPOT_84": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_85": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_86": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_87": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_88": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_89": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_90": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_91": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_92": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_93": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_94": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_95": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_97": 30.39682539682539,
+      "p_tight_space_normal_1_T1_MY_DEPOT_99": 30.39682539682539,
+      "p_tight_space_normal_1_T1_SG_HUB_110": 150.0,
+      "p_tight_space_normal_1_T1_SG_HUB_111": 125.55555555555543,
+      "p_tight_space_normal_1_T1_SG_HUB_112": 150.0,
+      "p_tight_space_normal_1_T1_SG_HUB_13": 150.0,
+      "p_tight_space_normal_1_T1_SG_HUB_14": 150.0,
+      "p_tight_space_normal_1_T1_SG_HUB_16": 125.55555555555543,
+      "p_tight_space_normal_1_T1_SG_HUB_64": 125.55555555555536,
+      "p_tight_space_normal_1_T1_SG_HUB_65": 150.0,
+      "p_tight_space_normal_1_T1_SG_HUB_66": 150.0,
+      "p_tight_space_normal_1_T2_MY_DEPOT_102": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_104": 12.46031746031759,
+      "p_tight_space_normal_1_T2_MY_DEPOT_105": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_106": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_108": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_109": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_110": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_111": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_112": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_113": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_114": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_115": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_116": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_117": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_118": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_119": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_120": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_121": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_122": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_144": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_145": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_146": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_147": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_148": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_149": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_150": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_151": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_152": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_153": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_154": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_155": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_156": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_160": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_162": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_163": 12.460317460317487,
+      "p_tight_space_normal_1_T2_MY_DEPOT_164": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_165": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_166": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_167": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_18": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_19": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_20": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_21": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_22": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_23": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_24": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_25": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_26": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_27": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_28": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_29": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_30": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_31": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_53": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_56": 12.460317460317576,
+      "p_tight_space_normal_1_T2_MY_DEPOT_58": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_60": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_62": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_63": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_64": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_65": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_66": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_67": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_68": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_69": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_70": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_71": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_72": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_73": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_74": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_75": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_76": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_77": 30.39682539682539,
+      "p_tight_space_normal_1_T2_MY_DEPOT_98": 30.39682539682539,
+      "p_tight_space_normal_1_T2_SG_HUB_10": 149.99999999999997,
+      "p_tight_space_normal_1_T2_SG_HUB_134": 125.55555555555549,
+      "p_tight_space_normal_1_T2_SG_HUB_135": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_136": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_39": 57.777777777777715,
+      "p_tight_space_normal_1_T2_SG_HUB_40": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_41": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_42": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_7": 149.99999999999997,
+      "p_tight_space_normal_1_T2_SG_HUB_8": 57.77777777777746,
+      "p_tight_space_normal_1_T2_SG_HUB_86": 125.55555555555549,
+      "p_tight_space_normal_1_T2_SG_HUB_87": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_88": 150.0,
+      "p_tight_space_normal_1_T2_SG_HUB_9": 149.99999999999997,
+      "peak_tight_space_MY_DEPOT": 30.39682539682539,
+      "peak_tight_space_SG_HUB": 150.0,
+      "u_tight_space_normal_0": 1.0,
+      "u_tight_space_normal_1": 1.0,
+      "x_tight_space_0_2_consolidated": 6.0,
+      "x_tight_space_10_4_consolidated": 26.0,
+      "x_tight_space_11_4_consolidated": 15.0,
+      "x_tight_space_12_4_consolidated": 12.0,
+      "x_tight_space_13_4_consolidated": 8.0,
+      "x_tight_space_14_5_consolidated": 14.0,
+      "x_tight_space_15_5_consolidated": 14.0,
+      "x_tight_space_16_5_consolidated": 13.0,
+      "x_tight_space_17_5_consolidated": 17.0,
+      "x_tight_space_18_5_consolidated": 13.0,
+      "x_tight_space_19_6_consolidated": 26.0,
+      "x_tight_space_1_2_consolidated": 1.0,
+      "x_tight_space_20_6_consolidated": 15.0,
+      "x_tight_space_21_6_consolidated": 13.0,
+      "x_tight_space_22_6_consolidated": 6.0,
+      "x_tight_space_23_6_consolidated": 12.0,
+      "x_tight_space_24_6_consolidated": 10.0,
+      "x_tight_space_25_7_consolidated": 25.0,
+      "x_tight_space_26_7_consolidated": 8.0,
+      "x_tight_space_27_7_consolidated": 22.0,
+      "x_tight_space_28_7_consolidated": 9.0,
+      "x_tight_space_29_7_consolidated": 5.0,
+      "x_tight_space_2_2_consolidated": 9.0,
+      "x_tight_space_30_8_consolidated": 25.0,
+      "x_tight_space_31_8_consolidated": 16.0,
+      "x_tight_space_32_8_consolidated": 24.0,
+      "x_tight_space_33_8_consolidated": 12.0,
+      "x_tight_space_34_8_consolidated": 17.0,
+      "x_tight_space_35_8_consolidated": 11.0,
+      "x_tight_space_36_9_consolidated": 36.0,
+      "x_tight_space_37_9_consolidated": 19.0,
+      "x_tight_space_38_9_consolidated": 15.0,
+      "x_tight_space_39_9_consolidated": 14.0,
+      "x_tight_space_3_3_consolidated": 13.0,
+      "x_tight_space_40_9_consolidated": 14.0,
+      "x_tight_space_41_10_consolidated": 25.0,
+      "x_tight_space_42_10_consolidated": 18.0,
+      "x_tight_space_43_10_consolidated": 17.0,
+      "x_tight_space_44_10_consolidated": 11.0,
+      "x_tight_space_45_10_consolidated": 11.0,
+      "x_tight_space_46_10_consolidated": 9.0,
+      "x_tight_space_47_11_consolidated": 15.013071895424842,
+      "x_tight_space_47_11_premium": 12.986928104575158,
+      "x_tight_space_48_11_consolidated": 15.0,
+      "x_tight_space_49_11_consolidated": 28.0,
+      "x_tight_space_4_3_consolidated": 12.0,
+      "x_tight_space_50_11_consolidated": 6.0,
+      "x_tight_space_51_11_consolidated": 19.0,
+      "x_tight_space_52_11_consolidated": 20.0,
+      "x_tight_space_53_12_consolidated": 35.0,
+      "x_tight_space_54_12_consolidated": 23.0,
+      "x_tight_space_55_12_consolidated": 15.0,
+      "x_tight_space_56_12_consolidated": 12.0,
+      "x_tight_space_57_13_consolidated": 37.0,
+      "x_tight_space_58_13_consolidated": 14.0,
+      "x_tight_space_59_13_consolidated": 9.75449101796408,
+      "x_tight_space_59_13_premium": 12.24550898203592,
+      "x_tight_space_5_3_consolidated": 12.0,
+      "x_tight_space_60_13_consolidated": 11.0,
+      "x_tight_space_61_13_consolidated": 16.0,
+      "x_tight_space_62_13_consolidated": 16.0,
+      "x_tight_space_63_14_consolidated": 91.026144,
+      "x_tight_space_64_14_premium": 6.855263,
+      "x_tight_space_65_14_premium": 18.0,
+      "x_tight_space_66_14_consolidated": 9.0,
+      "x_tight_space_67_14_consolidated": 13.89523775238098,
+      "x_tight_space_67_14_premium": 4.1047622476190195,
+      "x_tight_space_68_14_consolidated": 7.0135135270270155,
+      "x_tight_space_69_15_extra_trip": 41.0,
+      "x_tight_space_6_3_consolidated": 20.0,
+      "x_tight_space_70_15_extra_trip": 14.592199,
+      "x_tight_space_71_15_extra_trip": 45.0,
+      "x_tight_space_72_15_extra_trip": 32.0,
+      "x_tight_space_7_3_consolidated": 13.0,
+      "x_tight_space_8_4_consolidated": 35.0,
+      "x_tight_space_9_4_consolidated": 6.0,
+      "x_tight_space_normal_0_108": 1.0,
+      "x_tight_space_normal_0_1647": 1.0,
+      "x_tight_space_normal_0_1656": -3.7315154613221905e-16,
+      "x_tight_space_normal_0_1737": 1.0,
+      "x_tight_space_normal_0_18": 1.0,
+      "x_tight_space_normal_0_1827": 1.0,
+      "x_tight_space_normal_0_198": 1.0,
+      "x_tight_space_normal_1_126": 1.0,
+      "x_tight_space_normal_1_1665": 1.0,
+      "x_tight_space_normal_1_1737": 1.0,
+      "x_tight_space_normal_1_18": 1.0,
+      "x_tight_space_normal_1_1827": 1.0,
+      "x_tight_space_normal_1_1854": 0.9999999999999998,
+      "x_tight_space_normal_1_198": 1.0,
+      "z_tight_space_10_normal_0": 1.0,
+      "z_tight_space_11_normal_0": 1.0,
+      "z_tight_space_12_normal_0": 1.0,
+      "z_tight_space_13_normal_0": 1.0,
+      "z_tight_space_14_normal_0": 1.0,
+      "z_tight_space_15_normal_1": 1.0,
+      "z_tight_space_16_normal_0": 1.0,
+      "z_tight_space_1_normal_0": 1.0,
+      "z_tight_space_2_normal_0": 1.0,
+      "z_tight_space_3_normal_0": 1.0,
+      "z_tight_space_4_normal_0": 1.0,
+      "z_tight_space_5_normal_0": 1.0,
+      "z_tight_space_6_normal_0": 1.0,
+      "z_tight_space_7_normal_0": 1.0,
+      "z_tight_space_8_normal_0": 1.0,
+      "z_tight_space_9_normal_0": 1.0
+    }
+  },
+  "EVPI": {
+    "value": 194.43841117899137,
+    "interval": [
+      0.0,
+      342.61583656796574
+    ]
+  },
+  "VSS": {
+    "value": 0.0,
+    "interval": [
+      0.0,
+      342.61583656796574
+    ]
+  },
+  "table": {
+    "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_HUB|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_HUB|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_HUB\": 1}, \"up\": {}}": {
+      "normal": {
+        "objective_usd": 51020.23445784105,
+        "status": "optimal",
+        "mip_gap": 0.0009159753449761611,
+        "dual_bound": 50973.50118098272,
+        "solve_seconds": 35.08,
+        "accounting": {
+          "total_cost_usd": 51020.2345,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1811.1187,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58336.64,
+          "emissions_kg": {
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_HUB": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 24.79
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "border_congestion": {
+        "objective_usd": 54509.17996894534,
+        "status": "optimal",
+        "mip_gap": 0.0007807315635276116,
+        "dual_bound": 54466.622931641534,
+        "solve_seconds": 400.53,
+        "accounting": {
+          "total_cost_usd": 54509.18,
+          "cost_usd": {
+            "holding": 1470.009,
+            "backlog": 0.0,
+            "displaced_cargo": 85.953,
+            "air_freight": 1020.1125,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 29520.0,
+            "waiting": 0.0,
+            "energy": 12034.4213,
+            "demand_charge": 1895.4671
+          },
+          "total_emissions_kg": 58454.75,
+          "emissions_kg": {
+            "air_freight": 29.417,
+            "electricity": 58425.333
+          },
+          "energy_kwh": {
+            "SG_HUB": 41466.667,
+            "MY_DEPOT": 56426.667
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 25.944
+          },
+          "week_type_counts": {
+            "normal|0": 13,
+            "congested|0": 3
+          },
+          "issues": []
+        }
+      },
+      "tight_space": {
+        "objective_usd": 52308.629235969885,
+        "status": "feasible",
+        "mip_gap": 0.008827295708314947,
+        "dual_bound": 51846.88549760737,
+        "solve_seconds": 905.54,
+        "accounting": {
+          "total_cost_usd": 52308.6292,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 189.672,
+            "air_freight": 182.875,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 29160.0,
+            "waiting": 0.0,
+            "energy": 12072.113,
+            "demand_charge": 2220.7522
+          },
+          "total_emissions_kg": 58894.005,
+          "emissions_kg": {
+            "air_freight": 5.274,
+            "electricity": 58888.731
+          },
+          "energy_kwh": {
+            "SG_HUB": 41443.333,
+            "MY_DEPOT": 57065.556
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 30.397
+          },
+          "week_type_counts": {
+            "normal|0": 15,
+            "normal|1": 1
+          },
+          "issues": []
+        }
+      },
+      "demand_surge": {
+        "objective_usd": 51005.141804910156,
+        "status": "optimal",
+        "mip_gap": 0.0006203418480519051,
+        "dual_bound": 50973.50118098272,
+        "solve_seconds": 51.79,
+        "accounting": {
+          "total_cost_usd": 51005.1418,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58336.64,
+          "emissions_kg": {
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_HUB": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "grid_cut": {
+        "objective_usd": 52308.6292359699,
+        "status": "feasible",
+        "mip_gap": 0.008757928538132618,
+        "dual_bound": 51850.51399919359,
+        "solve_seconds": 907.93,
+        "accounting": {
+          "total_cost_usd": 52308.6292,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 189.672,
+            "air_freight": 182.875,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 29160.0,
+            "waiting": 0.0,
+            "energy": 12072.113,
+            "demand_charge": 2220.7522
+          },
+          "total_emissions_kg": 58894.005,
+          "emissions_kg": {
+            "air_freight": 5.274,
+            "electricity": 58888.731
+          },
+          "energy_kwh": {
+            "SG_HUB": 41443.333,
+            "MY_DEPOT": 57065.556
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 30.397
+          },
+          "week_type_counts": {
+            "normal|0": 15,
+            "normal|1": 1
+          },
+          "issues": []
+        }
+      },
+      "sg_window": {
+        "objective_usd": 56269.566843998124,
+        "status": "feasible",
+        "mip_gap": 0.057016108508481766,
+        "dual_bound": 53061.29511509542,
+        "solve_seconds": 904.23,
+        "accounting": {
+          "total_cost_usd": 56269.5668,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 8483.217,
+            "trips": 28800.0,
+            "waiting": 2880.0,
+            "energy": 14040.4124,
+            "demand_charge": 2065.9373,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58204.444,
+          "emissions_kg": {
+            "electricity": 58204.444
+          },
+          "energy_kwh": {
+            "SG_HUB": 41244.444,
+            "MY_DEPOT": 56248.889
+          },
+          "peak_kw": {
+            "SG_HUB": 150.0,
+            "MY_DEPOT": 28.278
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      }
+    },
+    "{\"conn\": {\"MY_DEPOT|MY_SUB\": 1, \"SG_YARD|SG_SUB_N\": 1}, \"exp\": {}, \"lease\": {}, \"n\": {\"MY_DEPOT|dc50\": 1, \"SG_YARD|dc150\": 1}, \"open\": {\"MY_DEPOT\": 1, \"SG_YARD\": 1}, \"up\": {}}": {
+      "sg_window": {
+        "objective_usd": 52380.798620418405,
+        "status": "optimal",
+        "mip_gap": 0.0009647613052683378,
+        "dual_bound": 52330.26365277032,
+        "solve_seconds": 407.09,
+        "accounting": {
+          "total_cost_usd": 52380.7986,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58336.64,
+          "emissions_kg": {
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_YARD": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "normal": {
+        "objective_usd": 52380.798620418405,
+        "status": "optimal",
+        "mip_gap": 4.730842189241164e-11,
+        "dual_bound": 52380.79861794031,
+        "solve_seconds": 64.79,
+        "accounting": {
+          "total_cost_usd": 52380.7986,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58336.64,
+          "emissions_kg": {
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_YARD": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "border_congestion": {
+        "objective_usd": 56029.598212730816,
+        "status": "optimal",
+        "mip_gap": 0.0009509899782989679,
+        "dual_bound": 55976.314626342355,
+        "solve_seconds": 414.71,
+        "accounting": {
+          "total_cost_usd": 56029.5982,
+          "cost_usd": {
+            "holding": 1470.009,
+            "backlog": 0.0,
+            "displaced_cargo": 85.953,
+            "air_freight": 1020.1125,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 29520.0,
+            "waiting": 45.0,
+            "energy": 12034.4213,
+            "demand_charge": 1995.2285
+          },
+          "total_emissions_kg": 58454.75,
+          "emissions_kg": {
+            "air_freight": 29.417,
+            "electricity": 58425.333
+          },
+          "energy_kwh": {
+            "SG_YARD": 41466.667,
+            "MY_DEPOT": 56426.667
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 27.31
+          },
+          "week_type_counts": {
+            "normal|0": 13,
+            "congested|0": 3
+          },
+          "issues": []
+        }
+      },
+      "tight_space": {
+        "objective_usd": 53866.38750299113,
+        "status": "feasible",
+        "mip_gap": 0.01171145820360847,
+        "dual_bound": 53235.53355717044,
+        "solve_seconds": 916.64,
+        "accounting": {
+          "total_cost_usd": 53866.3875,
+          "cost_usd": {
+            "holding": 825.1669,
+            "backlog": 0.0,
+            "displaced_cargo": 294.672,
+            "air_freight": 365.75,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261
+          },
+          "total_emissions_kg": 58347.187,
+          "emissions_kg": {
+            "air_freight": 10.547,
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_YARD": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "demand_surge": {
+        "objective_usd": 52380.798623652394,
+        "status": "optimal",
+        "mip_gap": 1.0904921770101481e-10,
+        "dual_bound": 52380.79861794027,
+        "solve_seconds": 50.55,
+        "accounting": {
+          "total_cost_usd": 52380.7986,
+          "cost_usd": {
+            "holding": 0.0,
+            "backlog": 0.0,
+            "displaced_cargo": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261,
+            "carbon": 0.0
+          },
+          "total_emissions_kg": 58336.64,
+          "emissions_kg": {
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_YARD": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      },
+      "grid_cut": {
+        "objective_usd": 53866.38750299113,
+        "status": "feasible",
+        "mip_gap": 0.01171145820360847,
+        "dual_bound": 53235.53355717044,
+        "solve_seconds": 912.43,
+        "accounting": {
+          "total_cost_usd": 53866.3875,
+          "cost_usd": {
+            "holding": 825.1669,
+            "backlog": 0.0,
+            "displaced_cargo": 294.672,
+            "air_freight": 365.75,
+            "carbon": 0.0,
+            "lease": 0,
+            "equipment": 9858.8739,
+            "trips": 28800.0,
+            "waiting": 0.0,
+            "energy": 11925.8987,
+            "demand_charge": 1796.0261
+          },
+          "total_emissions_kg": 58347.187,
+          "emissions_kg": {
+            "air_freight": 10.547,
+            "electricity": 58336.64
+          },
+          "energy_kwh": {
+            "SG_YARD": 40853.333,
+            "MY_DEPOT": 56640.0
+          },
+          "peak_kw": {
+            "SG_YARD": 150.0,
+            "MY_DEPOT": 24.583
+          },
+          "week_type_counts": {
+            "normal|0": 16
+          },
+          "issues": []
+        }
+      }
+    }
+  },
+  "solves": [
+    {
+      "scenario": "border_congestion",
+      "phase": "normal design",
+      "status": "optimal",
+      "objective_usd": 54509.17996894534,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 41677,
+        "integers": 18848,
+        "constraints": 31566,
+        "build_seconds": 7.79,
+        "solve_seconds": 315.4,
+        "mip_gap": 0.0009205156117199068,
+        "dual_bound": 54459.003417801825
+      },
+      "accounting": {
+        "total_cost_usd": 54509.18,
+        "cost_usd": {
+          "holding": 1470.009,
+          "backlog": 0.0,
+          "displaced_cargo": 85.953,
+          "air_freight": 1020.1125,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29520.0,
+          "waiting": 0.0,
+          "energy": 12034.4213,
+          "demand_charge": 1895.4671
+        },
+        "total_emissions_kg": 58454.75,
+        "emissions_kg": {
+          "air_freight": 29.417,
+          "electricity": 58425.333
+        },
+        "energy_kwh": {
+          "SG_HUB": 41466.667,
+          "MY_DEPOT": 56426.667
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 25.944
+        },
+        "week_type_counts": {
+          "normal|0": 13,
+          "congested|0": 3
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "tight_space",
+      "phase": "normal design",
+      "status": "feasible",
+      "objective_usd": 52308.629235969915,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 4.1,
+        "solve_seconds": 906.95,
+        "mip_gap": 0.008871695536647677,
+        "dual_bound": 51844.56300344899
+      },
+      "accounting": {
+        "total_cost_usd": 52308.6292,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29160.0,
+          "waiting": 0.0,
+          "energy": 12072.113,
+          "demand_charge": 2220.7522
+        },
+        "total_emissions_kg": 58894.005,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58888.731
+        },
+        "energy_kwh": {
+          "SG_HUB": 41443.333,
+          "MY_DEPOT": 57065.556
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 30.397
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "demand_surge",
+      "phase": "normal design",
+      "status": "optimal",
+      "objective_usd": 51005.141804910156,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21393,
+        "integers": 9558,
+        "constraints": 15988,
+        "build_seconds": 4.1,
+        "solve_seconds": 59.2,
+        "mip_gap": 1.119885235661637e-10,
+        "dual_bound": 51005.14179919813
+      },
+      "accounting": {
+        "total_cost_usd": 51005.1418,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_HUB": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "grid_cut",
+      "phase": "normal design",
+      "status": "feasible",
+      "objective_usd": 52308.629235969915,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 3.74,
+        "solve_seconds": 904.29,
+        "mip_gap": 0.008871695536647677,
+        "dual_bound": 51844.56300344899
+      },
+      "accounting": {
+        "total_cost_usd": 52308.6292,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29160.0,
+          "waiting": 0.0,
+          "energy": 12072.113,
+          "demand_charge": 2220.7522
+        },
+        "total_emissions_kg": 58894.005,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58888.731
+        },
+        "energy_kwh": {
+          "SG_HUB": 41443.333,
+          "MY_DEPOT": 57065.556
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 30.397
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "sg_window",
+      "phase": "normal design",
+      "status": "feasible",
+      "objective_usd": 56269.566843998124,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 19883,
+        "integers": 9558,
+        "constraints": 14591,
+        "build_seconds": 3.22,
+        "solve_seconds": 904.23,
+        "mip_gap": 0.057016108508481766,
+        "dual_bound": 53061.29511509542
+      },
+      "accounting": {
+        "total_cost_usd": 56269.5668,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 2880.0,
+          "energy": 14040.4124,
+          "demand_charge": 2065.9373,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58204.444,
+        "emissions_kg": {
+          "electricity": 58204.444
+        },
+        "energy_kwh": {
+          "SG_HUB": 41244.444,
+          "MY_DEPOT": 56248.889
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 28.278
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "normal",
+      "phase": "perfect information",
+      "status": "optimal",
+      "objective_usd": 51020.23445784105,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 2.48,
+        "solve_seconds": 35.08,
+        "mip_gap": 0.0009159753449761611,
+        "dual_bound": 50973.50118098272
+      },
+      "accounting": {
+        "total_cost_usd": 51020.2345,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1811.1187,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_HUB": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 24.79
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "border_congestion",
+      "phase": "perfect information",
+      "status": "optimal",
+      "objective_usd": 54509.17996894534,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 41677,
+        "integers": 18848,
+        "constraints": 31566,
+        "build_seconds": 8.03,
+        "solve_seconds": 400.53,
+        "mip_gap": 0.0007807315635276116,
+        "dual_bound": 54466.622931641534
+      },
+      "accounting": {
+        "total_cost_usd": 54509.18,
+        "cost_usd": {
+          "holding": 1470.009,
+          "backlog": 0.0,
+          "displaced_cargo": 85.953,
+          "air_freight": 1020.1125,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29520.0,
+          "waiting": 0.0,
+          "energy": 12034.4213,
+          "demand_charge": 1895.4671
+        },
+        "total_emissions_kg": 58454.75,
+        "emissions_kg": {
+          "air_freight": 29.417,
+          "electricity": 58425.333
+        },
+        "energy_kwh": {
+          "SG_HUB": 41466.667,
+          "MY_DEPOT": 56426.667
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 25.944
+        },
+        "week_type_counts": {
+          "normal|0": 13,
+          "congested|0": 3
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "tight_space",
+      "phase": "perfect information",
+      "status": "feasible",
+      "objective_usd": 52308.629235969885,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 4.15,
+        "solve_seconds": 905.54,
+        "mip_gap": 0.008827295708314947,
+        "dual_bound": 51846.88549760737
+      },
+      "accounting": {
+        "total_cost_usd": 52308.6292,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29160.0,
+          "waiting": 0.0,
+          "energy": 12072.113,
+          "demand_charge": 2220.7522
+        },
+        "total_emissions_kg": 58894.005,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58888.731
+        },
+        "energy_kwh": {
+          "SG_HUB": 41443.333,
+          "MY_DEPOT": 57065.556
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 30.397
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "demand_surge",
+      "phase": "perfect information",
+      "status": "optimal",
+      "objective_usd": 51005.141804910156,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21393,
+        "integers": 9558,
+        "constraints": 15988,
+        "build_seconds": 3.97,
+        "solve_seconds": 51.79,
+        "mip_gap": 0.0006203418480519051,
+        "dual_bound": 50973.50118098272
+      },
+      "accounting": {
+        "total_cost_usd": 51005.1418,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_HUB": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "grid_cut",
+      "phase": "perfect information",
+      "status": "feasible",
+      "objective_usd": 52308.6292359699,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 5.37,
+        "solve_seconds": 907.93,
+        "mip_gap": 0.008757928538132618,
+        "dual_bound": 51850.51399919359
+      },
+      "accounting": {
+        "total_cost_usd": 52308.6292,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 189.672,
+          "air_freight": 182.875,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 29160.0,
+          "waiting": 0.0,
+          "energy": 12072.113,
+          "demand_charge": 2220.7522
+        },
+        "total_emissions_kg": 58894.005,
+        "emissions_kg": {
+          "air_freight": 5.274,
+          "electricity": 58888.731
+        },
+        "energy_kwh": {
+          "SG_HUB": 41443.333,
+          "MY_DEPOT": 57065.556
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 30.397
+        },
+        "week_type_counts": {
+          "normal|0": 15,
+          "normal|1": 1
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "sg_window",
+      "phase": "perfect information",
+      "status": "optimal",
+      "objective_usd": 52380.798620418405,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 19883,
+        "integers": 9558,
+        "constraints": 14591,
+        "build_seconds": 4.7,
+        "solve_seconds": 407.09,
+        "mip_gap": 0.0009647613052683378,
+        "dual_bound": 52330.26365277032
+      },
+      "accounting": {
+        "total_cost_usd": 52380.7986,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_YARD": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "normal",
+      "phase": "other designs",
+      "status": "optimal",
+      "objective_usd": 52380.798620418405,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 4.71,
+        "solve_seconds": 64.79,
+        "mip_gap": 4.730842189241164e-11,
+        "dual_bound": 52380.79861794031
+      },
+      "accounting": {
+        "total_cost_usd": 52380.7986,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_YARD": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "border_congestion",
+      "phase": "other designs",
+      "status": "optimal",
+      "objective_usd": 56029.598212730816,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 41677,
+        "integers": 18848,
+        "constraints": 31566,
+        "build_seconds": 8.85,
+        "solve_seconds": 414.71,
+        "mip_gap": 0.0009509899782989679,
+        "dual_bound": 55976.314626342355
+      },
+      "accounting": {
+        "total_cost_usd": 56029.5982,
+        "cost_usd": {
+          "holding": 1470.009,
+          "backlog": 0.0,
+          "displaced_cargo": 85.953,
+          "air_freight": 1020.1125,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 29520.0,
+          "waiting": 45.0,
+          "energy": 12034.4213,
+          "demand_charge": 1995.2285
+        },
+        "total_emissions_kg": 58454.75,
+        "emissions_kg": {
+          "air_freight": 29.417,
+          "electricity": 58425.333
+        },
+        "energy_kwh": {
+          "SG_YARD": 41466.667,
+          "MY_DEPOT": 56426.667
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 27.31
+        },
+        "week_type_counts": {
+          "normal|0": 13,
+          "congested|0": 3
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "tight_space",
+      "phase": "other designs",
+      "status": "feasible",
+      "objective_usd": 53866.38750299113,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 4.29,
+        "solve_seconds": 916.64,
+        "mip_gap": 0.01171145820360847,
+        "dual_bound": 53235.53355717044
+      },
+      "accounting": {
+        "total_cost_usd": 53866.3875,
+        "cost_usd": {
+          "holding": 825.1669,
+          "backlog": 0.0,
+          "displaced_cargo": 294.672,
+          "air_freight": 365.75,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261
+        },
+        "total_emissions_kg": 58347.187,
+        "emissions_kg": {
+          "air_freight": 10.547,
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_YARD": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "demand_surge",
+      "phase": "other designs",
+      "status": "optimal",
+      "objective_usd": 52380.798623652394,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21393,
+        "integers": 9558,
+        "constraints": 15988,
+        "build_seconds": 3.71,
+        "solve_seconds": 50.55,
+        "mip_gap": 1.0904921770101481e-10,
+        "dual_bound": 52380.79861794027
+      },
+      "accounting": {
+        "total_cost_usd": 52380.7986,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_YARD": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    },
+    {
+      "scenario": "grid_cut",
+      "phase": "other designs",
+      "status": "feasible",
+      "objective_usd": 53866.38750299113,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 0,
+            "SG_YARD": 1
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 0,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 1,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 0,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 1,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15991,
+        "build_seconds": 3.85,
+        "solve_seconds": 912.43,
+        "mip_gap": 0.01171145820360847,
+        "dual_bound": 53235.53355717044
+      },
+      "accounting": {
+        "total_cost_usd": 53866.3875,
+        "cost_usd": {
+          "holding": 825.1669,
+          "backlog": 0.0,
+          "displaced_cargo": 294.672,
+          "air_freight": 365.75,
+          "carbon": 0.0,
+          "lease": 0,
+          "equipment": 9858.8739,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1796.0261
+        },
+        "total_emissions_kg": 58347.187,
+        "emissions_kg": {
+          "air_freight": 10.547,
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_YARD": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_YARD": 150.0,
+          "MY_DEPOT": 24.583
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      }
+    }
+  ],
+  "warmups": {
+    "step_1": {
+      "status": "optimal",
+      "objective_usd": 41766.6133358113,
+      "stats": {
+        "variables": 13331,
+        "integers": 9539,
+        "constraints": 4342,
+        "build_seconds": 1.92,
+        "solve_seconds": 177.74,
+        "mip_gap": 5.932955809971362e-11,
+        "dual_bound": 41766.613333333335
+      },
+      "step_1": null,
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        }
+      },
+      "week_types": {
+        "1": "normal|0",
+        "2": "normal|0",
+        "3": "normal|0",
+        "4": "normal|0",
+        "5": "normal|0",
+        "6": "normal|0",
+        "7": "normal|0",
+        "8": "normal|0",
+        "9": "normal|0",
+        "10": "normal|0",
+        "11": "normal|0",
+        "12": "normal|0",
+        "13": "normal|0",
+        "14": "normal|0",
+        "15": "normal|0",
+        "16": "normal|0"
+      },
+      "trips": {
+        "normal|0": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 6,
+            "dwell": 4,
+            "arrive": 13,
+            "back": 17,
+            "home": 24
+          },
+          {
+            "kind": "task1",
+            "truck": "T1",
+            "depart": 30,
+            "dwell": 4,
+            "arrive": 37,
+            "back": 41,
+            "home": 48
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 55,
+            "dwell": 4,
+            "arrive": 62,
+            "back": 66,
+            "home": 73
+          },
+          {
+            "kind": "task4",
+            "truck": "T1",
+            "depart": 103,
+            "dwell": 4,
+            "arrive": 110,
+            "back": 114,
+            "home": 121
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task5",
+            "truck": "T2",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          }
+        ]
+      },
+      "peak_kw": {},
+      "accounting": {
+        "total_cost_usd": 41766.6133,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 12966.6133
+        },
+        "total_emissions_kg": 0.0,
+        "emissions_kg": {
+          "electricity_unassigned": 0.0
+        },
+        "energy_kwh": {
+          "SG": 48746.667,
+          "MY": 48746.667
+        },
+        "peak_kw": {
+          "SG": 150.0,
+          "MY": 300.0
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      },
+      "delivered": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "air": 0
+      }
+    },
+    "B": {
+      "status": "optimal",
+      "objective_usd": 56547.63814740521,
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15992,
+        "build_seconds": 2.96,
+        "solve_seconds": 7.97,
+        "mip_gap": 4.38214940477866e-11,
+        "dual_bound": 56547.63814492717
+      },
+      "step_1": {
+        "status": "optimal",
+        "stats": {
+          "variables": 13331,
+          "integers": 9539,
+          "constraints": 4342,
+          "build_seconds": 1.92,
+          "solve_seconds": 177.74,
+          "mip_gap": 5.932955809971362e-11,
+          "dual_bound": 41766.613333333335
+        },
+        "objective_usd": 41766.6133358113
+      },
+      "cargo_fixing": "week_types",
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 0,
+            "MY_DEPOT|dc150": 1,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "week_types": {
+        "1": "normal|0",
+        "2": "normal|0",
+        "3": "normal|0",
+        "4": "normal|0",
+        "5": "normal|0",
+        "6": "normal|0",
+        "7": "normal|0",
+        "8": "normal|0",
+        "9": "normal|0",
+        "10": "normal|0",
+        "11": "normal|0",
+        "12": "normal|0",
+        "13": "normal|0",
+        "14": "normal|0",
+        "15": "normal|0",
+        "16": "normal|0"
+      },
+      "trips": {
+        "normal|0": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 6,
+            "dwell": 4,
+            "arrive": 13,
+            "back": 17,
+            "home": 24
+          },
+          {
+            "kind": "task1",
+            "truck": "T1",
+            "depart": 30,
+            "dwell": 4,
+            "arrive": 37,
+            "back": 41,
+            "home": 48
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 55,
+            "dwell": 4,
+            "arrive": 62,
+            "back": 66,
+            "home": 73
+          },
+          {
+            "kind": "task4",
+            "truck": "T1",
+            "depart": 103,
+            "dwell": 4,
+            "arrive": 110,
+            "back": 114,
+            "home": 121
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task5",
+            "truck": "T2",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          }
+        ]
+      },
+      "peak_kw": {
+        "MY_DEPOT": 70.92592592592587,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "accounting": {
+        "total_cost_usd": 56547.6381,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 10088.15,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 12477.733,
+          "demand_charge": 5181.7551,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 56941.576,
+        "emissions_kg": {
+          "electricity": 56941.576
+        },
+        "energy_kwh": {
+          "SG_HUB": 44980.741,
+          "MY_DEPOT": 52512.593
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 70.926
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      },
+      "delivered": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "air": 0
+      }
+    },
+    "B*": {
+      "status": "optimal",
+      "objective_usd": 51020.23445784105,
+      "stats": {
+        "variables": 21423,
+        "integers": 9558,
+        "constraints": 15992,
+        "build_seconds": 2.62,
+        "solve_seconds": 9.34,
+        "mip_gap": 0.0002958171165472501,
+        "dual_bound": 51005.14179919812
+      },
+      "step_1": {
+        "status": "optimal",
+        "stats": {
+          "variables": 13331,
+          "integers": 9539,
+          "constraints": 4342,
+          "build_seconds": 1.92,
+          "solve_seconds": 177.74,
+          "mip_gap": 5.932955809971362e-11,
+          "dual_bound": 41766.613333333335
+        },
+        "objective_usd": 41766.6133358113
+      },
+      "first_stage": {
+        "lease": {
+          "L1": 0
+        },
+        "plant": {
+          "open": {
+            "MY_DEPOT": 1,
+            "SG_HUB": 1,
+            "SG_YARD": 0
+          },
+          "n": {
+            "MY_DEPOT|dc50": 1,
+            "MY_DEPOT|dc150": 0,
+            "SG_HUB|dc150": 1,
+            "SG_HUB|dc350": 0,
+            "SG_YARD|dc150": 0,
+            "SG_YARD|dc350": 0
+          },
+          "up": {
+            "MY_DEPOT|plus_200": 0,
+            "SG_HUB|plus_150": 0,
+            "SG_HUB|plus_350": 0,
+            "SG_YARD|plus_150": 0
+          },
+          "conn": {
+            "MY_DEPOT|MY_SUB": 1,
+            "SG_HUB|SG_SUB_N": 1,
+            "SG_HUB|SG_SUB_S": 0,
+            "SG_YARD|SG_SUB_N": 0,
+            "SG_YARD|SG_SUB_S": 0
+          },
+          "exp": {
+            "SG_SUB_N|plus_300": 0
+          }
+        }
+      },
+      "week_types": {
+        "1": "normal|0",
+        "2": "normal|0",
+        "3": "normal|0",
+        "4": "normal|0",
+        "5": "normal|0",
+        "6": "normal|0",
+        "7": "normal|0",
+        "8": "normal|0",
+        "9": "normal|0",
+        "10": "normal|0",
+        "11": "normal|0",
+        "12": "normal|0",
+        "13": "normal|0",
+        "14": "normal|0",
+        "15": "normal|0",
+        "16": "normal|0"
+      },
+      "trips": {
+        "normal|0": [
+          {
+            "kind": "task0",
+            "truck": "T1",
+            "depart": 6,
+            "dwell": 4,
+            "arrive": 13,
+            "back": 17,
+            "home": 24
+          },
+          {
+            "kind": "task2",
+            "truck": "T1",
+            "depart": 54,
+            "dwell": 4,
+            "arrive": 61,
+            "back": 65,
+            "home": 72
+          },
+          {
+            "kind": "task4",
+            "truck": "T1",
+            "depart": 102,
+            "dwell": 4,
+            "arrive": 109,
+            "back": 113,
+            "home": 120
+          },
+          {
+            "kind": "task1",
+            "truck": "T2",
+            "depart": 31,
+            "dwell": 4,
+            "arrive": 38,
+            "back": 42,
+            "home": 49
+          },
+          {
+            "kind": "task3",
+            "truck": "T2",
+            "depart": 78,
+            "dwell": 4,
+            "arrive": 85,
+            "back": 89,
+            "home": 96
+          },
+          {
+            "kind": "task5",
+            "truck": "T2",
+            "depart": 126,
+            "dwell": 4,
+            "arrive": 133,
+            "back": 137,
+            "home": 144
+          }
+        ]
+      },
+      "peak_kw": {
+        "MY_DEPOT": 24.78991596638657,
+        "SG_HUB": 150.0,
+        "SG_YARD": 0.0
+      },
+      "accounting": {
+        "total_cost_usd": 51020.2345,
+        "cost_usd": {
+          "holding": 0.0,
+          "backlog": 0.0,
+          "displaced_cargo": 0.0,
+          "lease": 0,
+          "equipment": 8483.217,
+          "trips": 28800.0,
+          "waiting": 0.0,
+          "energy": 11925.8987,
+          "demand_charge": 1811.1187,
+          "carbon": 0.0
+        },
+        "total_emissions_kg": 58336.64,
+        "emissions_kg": {
+          "electricity": 58336.64
+        },
+        "energy_kwh": {
+          "SG_HUB": 40853.333,
+          "MY_DEPOT": 56640.0
+        },
+        "peak_kw": {
+          "SG_HUB": 150.0,
+          "MY_DEPOT": 24.79
+        },
+        "week_type_counts": {
+          "normal|0": 16
+        },
+        "issues": []
+      },
+      "delivered": {
+        "consolidated": 2511.67,
+        "premium": 0.0,
+        "air": 0
+      }
+    }
+  },
+  "seconds": 3493.4,
+  "code_version": "05dce39",
+  "certified_intervals_usd": {
+    "RP": [
+      51886.51622128878,
+      52126.63233305367
+    ],
+    "EVPI": [
+      0.0,
+      342.61583656796574
+    ],
+    "VSS": [
+      0.0,
+      240.11611176488805
+    ]
+  }
+}

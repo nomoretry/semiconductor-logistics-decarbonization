@@ -1,0 +1,9 @@
+{
+  "code_version": "cbe63ab",
+  "command": "python scripts/run_electric_freight.py --workers 6",
+  "sha256": {
+    "orders.json": "2a510e0690813ab42632034a0c06955c9054d7149fd4ba482cdef331ef12032c",
+    "runs.jsonl": "d0f4340c2e8d7feb5d2f912e1ca2567fded1074817aa2b7f17c1c7e20496ba28",
+    "summary.json": "81d85a4acd42e5c3d97cbc58cf317633f888266dc54acf3f182d562fab1574be"
+  }
+}
