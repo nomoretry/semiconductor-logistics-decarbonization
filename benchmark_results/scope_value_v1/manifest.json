@@ -1,0 +1,8 @@
+{
+  "code_version": "b6e8af4",
+  "command": "python scripts/run_scope_value.py",
+  "sha256": {
+    "cases.jsonl": "845cb566e8c05061f32ea3ec4a2f17226ec235251a00141ab4176976941c5ff4",
+    "summary.json": "b8b6393f2fa82884fa169d8988808b03fc615ca2c457df25e547738b588f06af"
+  }
+}

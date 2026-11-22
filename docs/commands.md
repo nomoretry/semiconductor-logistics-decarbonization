@@ -34,6 +34,9 @@ python -m planning_agent eval-followup rescore                # 修正评分器�
 python -m planning_agent eval-followup table                  # 写出 20×3 结果表（不调用模型）
 python -m planning_agent eval-followup verify                 # 核对原始结果、重评和哈希（不调用模型）
 python scripts/report_eval_followup.py                        # 由保存结果生成 C03 复核案例和评分说明
+python scripts/run_scope_misread.py --check                   # 复算“范围读错”的结果（本地求解，不调用模型）
+python scripts/run_scope_value.py --workers 6 --check         # 复算“事先确认范围的价值”（本地求解，约十分钟）
+python scripts/run_scope_seeds.py --workers 6 --check         # 复算五个需求种子上的范围读错结果（本地求解，约十五分钟）
 python scripts/export_documents.py                            # 把交付文档导出成 PDF（需要 markdown、latex2mathml 和 Chromium 浏览器）
 ```
 
@@ -126,6 +129,9 @@ python -m planning_agent eval-followup rescore                # corrected scorer
 python -m planning_agent eval-followup table                  # write the 20 x 3 results table (no model)
 python -m planning_agent eval-followup verify                 # check the original results, rescoring and hashes (no model)
 python scripts/report_eval_followup.py                        # write the C03 review case and scoring notes from saved results
+python scripts/run_scope_misread.py --check                   # recompute the scope-misreading results (local solver, no model)
+python scripts/run_scope_value.py --workers 6 --check         # recompute the value of confirming the scope (local solver, about ten minutes)
+python scripts/run_scope_seeds.py --workers 6 --check         # recompute scope misreading on five demand seeds (local solver, about fifteen minutes)
 python scripts/export_documents.py                            # export the delivered documents to PDF (needs markdown, latex2mathml and a Chromium browser)
 ```
 

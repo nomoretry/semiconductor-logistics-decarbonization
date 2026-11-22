@@ -1,0 +1,2287 @@
+{
+  "config_sha256": "6a1209114a97d2fb5f895e1e3d2ceb1fb2cf40e47befdcd74fcd9710119ed1b5",
+  "per_seed": [
+    {
+      "seed": 1,
+      "original_network_same_lane_week_loads": true,
+      "planned_broad_but_narrow.reveal_7": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 9974.63,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.reveal_10": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 12459.63,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.never_replanned": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 12459.63,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_7": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 29981.77,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_10": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.0
+        ]
+      },
+      "planned_narrow_but_broad.never_replanned": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.0
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "original_network_same_lane_week_loads": true,
+      "planned_broad_but_narrow.reveal_7": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 31385.49,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.reveal_10": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 34954.25,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.never_replanned": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 34954.25,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_7": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 15956.96,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_10": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": -0.0,
+        "infeasible_at": [
+          0.1,
+          0.0
+        ]
+      },
+      "planned_narrow_but_broad.never_replanned": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": -0.0,
+        "infeasible_at": [
+          0.1,
+          0.0
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "original_network_same_lane_week_loads": true,
+      "planned_broad_but_narrow.reveal_7": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 2580.45,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.reveal_10": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 4692.01,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.never_replanned": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 4692.02,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_7": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 5583.49,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_10": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.0
+        ]
+      },
+      "planned_narrow_but_broad.never_replanned": {
+        "largest_ratio_with_consequence": 0.0,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.0
+        ]
+      }
+    },
+    {
+      "seed": 4,
+      "original_network_same_lane_week_loads": true,
+      "planned_broad_but_narrow.reveal_7": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": 35384.6,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.reveal_10": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": 46775.95,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.never_replanned": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": 46775.95,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_7": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": 44133.29,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_10": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.2,
+          0.1,
+          0.0
+        ]
+      },
+      "planned_narrow_but_broad.never_replanned": {
+        "largest_ratio_with_consequence": 0.2,
+        "largest_regret_usd": -0.0,
+        "infeasible_at": [
+          0.2,
+          0.1,
+          0.0
+        ]
+      }
+    },
+    {
+      "seed": 5,
+      "original_network_same_lane_week_loads": true,
+      "planned_broad_but_narrow.reveal_7": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 11993.88,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.reveal_10": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 13721.8,
+        "infeasible_at": []
+      },
+      "planned_broad_but_narrow.never_replanned": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 13721.8,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_7": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 24312.42,
+        "infeasible_at": []
+      },
+      "planned_narrow_but_broad.reveal_10": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.1,
+          0.0
+        ]
+      },
+      "planned_narrow_but_broad.never_replanned": {
+        "largest_ratio_with_consequence": 0.1,
+        "largest_regret_usd": 0.0,
+        "infeasible_at": [
+          0.1,
+          0.0
+        ]
+      }
+    }
+  ],
+  "rows": [
+    {
+      "seed": 1,
+      "capacity_ratio": 1.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 1.25,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 1.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 1.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.9,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.8,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.7,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.6,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 30.33,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -30.33,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.4,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 98.8,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -98.8,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.3,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 174.91,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -174.91,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.2,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 251.33,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -251.33,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 354.19,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -354.19,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 1,
+      "capacity_ratio": 0.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": 12865.94,
+        "never_replanned": 12459.63,
+        "reveal_7": 9974.63,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 9974.63,
+        "reveal_10": 12459.63,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": -12865.94,
+        "never_replanned": "infeasible",
+        "reveal_7": 29981.77,
+        "reveal_7_shortfall_units": 60.112,
+        "reveal_7_backlog_unit_weeks": 6.482,
+        "reveal_7_tie_break": 29981.77,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 1.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 1.25,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 1.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 1.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.9,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.8,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": -0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.7,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 2.78,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": -2.78,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.6,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 35.44,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -35.44,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 79.79,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -79.79,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.4,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 138.23,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -138.23,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.3,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 205.05,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -205.05,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.2,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 271.57,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -271.57,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 5,
+        "shipment_variables_differing": 5,
+        "optimum_difference_usd": 11279.57,
+        "never_replanned": 10924.2,
+        "reveal_7": 6594.78,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 6594.78,
+        "reveal_10": 10924.2,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 5,
+        "shipment_variables_differing": 5,
+        "optimum_difference_usd": -11279.57,
+        "never_replanned": "infeasible",
+        "reveal_7": 15956.96,
+        "reveal_7_shortfall_units": 62.804,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 15956.96,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 2,
+      "capacity_ratio": 0.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 5,
+        "shipment_variables_differing": 5,
+        "optimum_difference_usd": 35309.62,
+        "never_replanned": 34954.25,
+        "reveal_7": 31385.49,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 31385.49,
+        "reveal_10": 34954.25,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 5,
+        "shipment_variables_differing": 5,
+        "optimum_difference_usd": -35309.62,
+        "never_replanned": "infeasible",
+        "reveal_7": 6498.29,
+        "reveal_7_shortfall_units": 82.369,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 6498.29,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 1.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 1.25,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 1.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 1.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.9,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.8,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.7,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.6,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 98,
+        "optimum_difference_usd": 1.03,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 98,
+        "optimum_difference_usd": -1.03,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.4,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 104,
+        "optimum_difference_usd": 38.94,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 104,
+        "optimum_difference_usd": -38.94,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.3,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 92.15,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -92.15,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.2,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 145.36,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -145.36,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 198.58,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -198.58,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 3,
+      "capacity_ratio": 0.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 4975.81,
+        "never_replanned": 4692.02,
+        "reveal_7": 2580.45,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 2580.45,
+        "reveal_10": 4692.01,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": -4975.81,
+        "never_replanned": "infeasible",
+        "reveal_7": 5583.49,
+        "reveal_7_shortfall_units": 15.593,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 5583.49,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 1.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 1.25,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 1.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 1.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 38,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 38,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.9,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.8,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.7,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 22.99,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -22.99,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.6,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 73.04,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -73.04,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 148.22,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -148.22,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.4,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 223.09,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -223.09,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.3,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 298.27,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": -298.27,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.2,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 3,
+        "shipment_variables_differing": 3,
+        "optimum_difference_usd": 1032.46,
+        "never_replanned": 634.57,
+        "reveal_7": 66.4,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 66.4,
+        "reveal_10": 634.57,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 3,
+        "shipment_variables_differing": 3,
+        "optimum_difference_usd": -1032.46,
+        "never_replanned": "infeasible",
+        "reveal_7": 385.27,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.502,
+        "reveal_7_tie_break": 385.27,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": 26134.84,
+        "never_replanned": 25734.51,
+        "reveal_7": 21239.27,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 21239.27,
+        "reveal_10": 25734.5,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": -26134.84,
+        "never_replanned": "infeasible",
+        "reveal_7": 44133.29,
+        "reveal_7_shortfall_units": 99.543,
+        "reveal_7_backlog_unit_weeks": 15.189,
+        "reveal_7_tie_break": 44133.29,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 4,
+      "capacity_ratio": 0.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": 47176.28,
+        "never_replanned": 46775.95,
+        "reveal_7": 35384.6,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 35384.6,
+        "reveal_10": 46775.95,
+        "reveal_10_shortfall_units": 9.303,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 4,
+        "optimum_difference_usd": -47176.28,
+        "never_replanned": "infeasible",
+        "reveal_7": 5428.57,
+        "reveal_7_shortfall_units": 99.543,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 5428.57,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 1.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 1.25,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 1.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 1.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.9,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 0,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.8,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 56,
+        "optimum_difference_usd": -0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 56,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": 0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.7,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 78,
+        "optimum_difference_usd": 0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 78,
+        "optimum_difference_usd": -0.0,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.6,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 86,
+        "optimum_difference_usd": 10.59,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 86,
+        "optimum_difference_usd": -10.59,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.5,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 84,
+        "optimum_difference_usd": 26.27,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 84,
+        "optimum_difference_usd": -26.27,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.4,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 80,
+        "optimum_difference_usd": 52.43,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 80,
+        "optimum_difference_usd": -52.43,
+        "never_replanned": -0.0,
+        "reveal_7": -0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.3,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 74,
+        "optimum_difference_usd": 89.85,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 74,
+        "optimum_difference_usd": -89.85,
+        "never_replanned": -0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": -0.0,
+        "reveal_10": -0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.2,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 66,
+        "optimum_difference_usd": 156.73,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 0,
+        "shipment_variables_differing": 66,
+        "optimum_difference_usd": -156.73,
+        "never_replanned": 0.0,
+        "reveal_7": 0.0,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 0.0,
+        "reveal_10": 0.0,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.1,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 40,
+        "optimum_difference_usd": 4143.63,
+        "never_replanned": 3893.03,
+        "reveal_7": 1698.77,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 1698.77,
+        "reveal_10": 3893.03,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 4,
+        "shipment_variables_differing": 40,
+        "optimum_difference_usd": -4143.63,
+        "never_replanned": "infeasible",
+        "reveal_7": 7455.85,
+        "reveal_7_shortfall_units": 13.915,
+        "reveal_7_backlog_unit_weeks": 1.571,
+        "reveal_7_tie_break": 7455.85,
+        "reveal_10": "infeasible"
+      }
+    },
+    {
+      "seed": 5,
+      "capacity_ratio": 0.0,
+      "planned_broad_but_narrow": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": 13972.4,
+        "never_replanned": 13721.8,
+        "reveal_7": 11993.88,
+        "reveal_7_shortfall_units": 0.0,
+        "reveal_7_backlog_unit_weeks": 0.0,
+        "reveal_7_tie_break": 11993.88,
+        "reveal_10": 13721.8,
+        "reveal_10_shortfall_units": 0.0,
+        "reveal_10_backlog_unit_weeks": 0.0
+      },
+      "planned_narrow_but_broad": {
+        "lane_weeks_differing": 7,
+        "shipment_variables_differing": 7,
+        "optimum_difference_usd": -13972.4,
+        "never_replanned": "infeasible",
+        "reveal_7": 24312.42,
+        "reveal_7_shortfall_units": 41.545,
+        "reveal_7_backlog_unit_weeks": 8.678,
+        "reveal_7_tie_break": 24312.42,
+        "reveal_10": "infeasible"
+      }
+    }
+  ]
+}
