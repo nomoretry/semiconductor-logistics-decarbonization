@@ -1,0 +1,10910 @@
+[
+  {
+    "D": -0.5999999999999943,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75011",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 2.849999999999966,
+    "actions": {
+      "M1": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75011",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 40,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 40.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.175,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 39,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 40.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75011",
+    "t": null
+  },
+  {
+    "D": 0.6000000000000085,
+    "actions": {
+      "M1": [
+        [
+          4,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75011",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08653846153846155,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 56,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 69.33333333333333
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.057692307692307696,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 55,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 69.33333333333333
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.3499999999999943,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75023",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-volatile-75023",
+    "t": null
+  },
+  {
+    "D": 38.35000000000002,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75023",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.023529411764705882,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 37,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 85.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.03529411764705882,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 85.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75023",
+    "t": null
+  },
+  {
+    "D": 3.799999999999983,
+    "actions": {
+      "M1": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75037",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2222222222222222,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 68,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 72.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.16666666666666666,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 72.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -2,
+        1
+      ]
+    ]
+  },
+  {
+    "D": -6.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75037",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10349462365591397,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 58,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08870967741935483,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 62,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -6.449999999999989,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75037",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.26666666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.26666666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75037",
+    "t": null
+  },
+  {
+    "D": -2.1999999999999886,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75041",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09375,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 62,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 64.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.125,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 64.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "id": "closing-volatile-75041",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1794871794871795,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 88,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 89.14285714285714
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1794871794871795,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 87,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 89.14285714285714
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -52.69999999999993,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75041",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 58,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75041",
+    "t": null
+  },
+  {
+    "D": -0.20000000000001705,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75053",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10457516339869281,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 62,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 76.5
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10457516339869281,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 50,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 76.5
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -13.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75053",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 46,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 49,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 36.099999999999966,
+    "actions": {
+      "M1": [
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75053",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29333333333333333,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 68,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 68.18181818181819
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29333333333333333,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 68.18181818181819
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.0999999999999943,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75053",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 5.599999999999994,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    "id": "closing-stable-75067",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -7.75,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75067",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 59,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.016666666666666666,
+        "dispatch_carbon": 1,
+        "load_fraction": [
+          0.125,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          1,
+          0
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -3.6500000000000057,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75067",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29569892473118276,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29569892473118276,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75067",
+    "t": null
+  },
+  {
+    "D": -2.8500000000000227,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          6,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          6,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75079",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.23076923076923078,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 26,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 26.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3076923076923077,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 25,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 26.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -4.5,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75079",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.15,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 53.333333333333336
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.13125,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 53.333333333333336
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -12.850000000000023,
+    "actions": {
+      "M1": [
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          2
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75079",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1523809523809524,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          0.5,
+          0.5
+        ],
+        "max_leaf_carbon": 59,
+        "route_mass": [
+          4,
+          2
+        ],
+        "window_allowance": 78.75
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.13968253968253969,
+        "dispatch_carbon": 11,
+        "load_fraction": [
+          0.375,
+          0.5
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          3,
+          2
+        ],
+        "window_allowance": 78.75
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75079",
+    "t": null
+  },
+  {
+    "D": 3.0999999999999943,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75083",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.053516819571865444,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 28,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 93.42857142857143
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.03211009174311927,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 27,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 93.42857142857143
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -3.1000000000000085,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75083",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05952380952380952,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 17,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 84.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08333333333333333,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 15,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 84.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -6.350000000000023,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75083",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 61,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -9.049999999999997,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75083",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.19649122807017544,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 62,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 81.42857142857143
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29473684210526313,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 74,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 81.42857142857143
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        -1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -10.349999999999994,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75097",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1111111111111111,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 42,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 72.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1111111111111111,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 72.0
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.2999999999999545,
+    "actions": {
+      "M1": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75097",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.36363636363636365,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 20,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 22.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2727272727272727,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 22,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 22.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -6.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75097",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2857142857142857,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 28,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 28.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2857142857142857,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 28,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 28.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -17.75,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ]
+    },
+    "id": "closing-downshift-75097",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24444444444444444,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 65.45454545454545
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3666666666666667,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 65.45454545454545
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 5.75,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75109",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.150000000000006,
+    "actions": {
+      "M1": [
+        [
+          7,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75109",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11475409836065574,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 59,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 61.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06557377049180328,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 61.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 14.050000000000011,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75109",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05698005698005698,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 68,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 70.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07122507122507123,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 63,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 70.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.6500000000000057,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75109",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.03333333333333333,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -3.3500000000000227,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "id": "closing-stable-75113",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11827956989247311,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.17741935483870966,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 56,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        -1
+      ]
+    ]
+  },
+  {
+    "D": 10.799999999999983,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          4
+        ]
+      ]
+    },
+    "id": "closing-volatile-75113",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3448275862068966,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 69,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3448275862068966,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 69,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        2,
+        -2
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75113",
+    "t": null
+  },
+  {
+    "D": -0.8000000000000114,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75113",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 58,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75127",
+    "t": null
+  },
+  {
+    "D": 0.19999999999998863,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75127",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.9499999999999886,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ]
+      ]
+    },
+    "id": "closing-upshift-75127",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.19047619047619047,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 42,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 42.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2619047619047619,
+        "dispatch_carbon": 11,
+        "load_fraction": [
+          0.875,
+          0.25
+        ],
+        "max_leaf_carbon": 42,
+        "route_mass": [
+          7,
+          1
+        ],
+        "window_allowance": 42.0
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  {
+    "D": 7.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ]
+    },
+    "id": "closing-downshift-75127",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4166666666666667,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 48.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.3333333333333333,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 48.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ]
+    ]
+  },
+  {
+    "D": -40.14999999999998,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75139",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.0,
+    "actions": {
+      "M1": [
+        [
+          4,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75139",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1092896174863388,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 38,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 73.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09562841530054644,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 38,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 73.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.599999999999994,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75139",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10349462365591397,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08870967741935483,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 39,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.050000000000011,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75139",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 8.050000000000011,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75151",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.1999999999999886,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75151",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11827956989247311,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 46,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08870967741935483,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -5.25,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          2
+        ]
+      ]
+    },
+    "id": "closing-upshift-75151",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.7419354838709677,
+        "dispatch_carbon": 23,
+        "load_fraction": [
+          0.875,
+          1.0
+        ],
+        "max_leaf_carbon": 31,
+        "route_mass": [
+          7,
+          4
+        ],
+        "window_allowance": 31.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.7741935483870968,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 28,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 31.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 10.0,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75151",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.013888888888888888,
+        "dispatch_carbon": 1,
+        "load_fraction": [
+          0.125,
+          0.0
+        ],
+        "max_leaf_carbon": 35,
+        "route_mass": [
+          1,
+          0
+        ],
+        "window_allowance": 72.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.041666666666666664,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 34,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 72.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75163",
+    "t": null
+  },
+  {
+    "D": 0.39999999999997726,
+    "actions": {
+      "M1": [
+        [
+          7,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          6,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75163",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08536585365853659,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 20,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 82.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07317073170731707,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 43,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 82.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.150000000000034,
+    "actions": {
+      "M1": [
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75163",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.13114754098360656,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          0.5,
+          0.25
+        ],
+        "max_leaf_carbon": 37,
+        "route_mass": [
+          4,
+          1
+        ],
+        "window_allowance": 61.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.08196721311475409,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 61,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 61.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 7.650000000000034,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    "id": "closing-downshift-75163",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2368421052631579,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 49,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 50.666666666666664
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2368421052631579,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 50,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 50.666666666666664
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75173",
+    "t": null
+  },
+  {
+    "D": 0.6999999999999318,
+    "actions": {
+      "M1": [
+        [
+          5,
+          4
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          5,
+          4
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75173",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 2.25,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "id": "closing-upshift-75173",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.23809523809523808,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 67.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2976190476190476,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 67.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        -1
+      ]
+    ]
+  },
+  {
+    "D": -11.900000000000006,
+    "actions": {
+      "M1": [
+        [
+          5,
+          4
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          6,
+          4
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75173",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.4736842105263158,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 50,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 50.666666666666664
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.4736842105263158,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 50,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 50.666666666666664
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 6.399999999999977,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75187",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.349999999999966,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75187",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 32,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 33.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.06060606060606061,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 33.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 31.05000000000001,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75187",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.03864734299516908,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 43,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 51.75
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.057971014492753624,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 41,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 51.75
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.1000000000000085,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75187",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 49,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -13.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75193",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.15804597701149425,
+        "dispatch_carbon": 11,
+        "load_fraction": [
+          0.875,
+          0.25
+        ],
+        "max_leaf_carbon": 63,
+        "route_mass": [
+          7,
+          1
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12931034482758622,
+        "dispatch_carbon": 9,
+        "load_fraction": [
+          0.625,
+          0.25
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          5,
+          1
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -7.449999999999989,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75193",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09074074074074075,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 77.14285714285714
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07777777777777778,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 77.14285714285714
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -11.400000000000034,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    "id": "closing-upshift-75193",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2,
+        "dispatch_carbon": 10,
+        "load_fraction": [
+          0.75,
+          0.25
+        ],
+        "max_leaf_carbon": 50,
+        "route_mass": [
+          6,
+          1
+        ],
+        "window_allowance": 50.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 47,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 50.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75193",
+    "t": null
+  },
+  {
+    "D": 0.6000000000000227,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75209",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.2999999999999545,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75209",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06666666666666667,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 2.75,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75209",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08620689655172414,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 52,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07183908045977012,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.5500000000000114,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75209",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07142857142857142,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 19,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 42.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09523809523809523,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 20,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 42.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.4000000000000057,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75217",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.27906976744186046,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 56,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 57.333333333333336
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.27906976744186046,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 57,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 57.333333333333336
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -2.4000000000000057,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          4
+        ]
+      ]
+    },
+    "id": "closing-volatile-75217",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -9.050000000000011,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75217",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.025889967637540454,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 22,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 77.25
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.038834951456310676,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 22,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 77.25
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.6999999999999886,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75217",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12903225806451613,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 62.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12903225806451613,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 62.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 4.299999999999983,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75223",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.17777777777777778,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 45.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.13333333333333333,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 45.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -3.0999999999999943,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75223",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.015873015873015872,
+        "dispatch_carbon": 1,
+        "load_fraction": [
+          0.125,
+          0.0
+        ],
+        "max_leaf_carbon": 9,
+        "route_mass": [
+          1,
+          0
+        ],
+        "window_allowance": 63.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.047619047619047616,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 3,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 63.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 6.149999999999977,
+    "actions": {
+      "M1": [
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75223",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10576923076923077,
+        "dispatch_carbon": 11,
+        "load_fraction": [
+          0.875,
+          0.25
+        ],
+        "max_leaf_carbon": 35,
+        "route_mass": [
+          7,
+          1
+        ],
+        "window_allowance": 104.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09615384615384616,
+        "dispatch_carbon": 10,
+        "load_fraction": [
+          0.75,
+          0.25
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          6,
+          1
+        ],
+        "window_allowance": 104.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75223",
+    "t": null
+  },
+  {
+    "D": 2.450000000000017,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75239",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.027777777777777776,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 72.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.013888888888888888,
+        "dispatch_carbon": 1,
+        "load_fraction": [
+          0.125,
+          0.0
+        ],
+        "max_leaf_carbon": 34,
+        "route_mass": [
+          1,
+          0
+        ],
+        "window_allowance": 72.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.200000000000017,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75239",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 63,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75239",
+    "t": null
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75239",
+    "t": null
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75247",
+    "t": null
+  },
+  {
+    "D": 0.0,
+    "id": "closing-volatile-75247",
+    "t": null
+  },
+  {
+    "D": -1.8499999999999943,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75247",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3448275862068966,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 69,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3448275862068966,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 69,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -3.9499999999999886,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75247",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05263157894736842,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 76.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06578947368421052,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 57,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 76.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -19.400000000000006,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75253",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-volatile-75253",
+    "t": null
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75253",
+    "t": null
+  },
+  {
+    "D": -3.0,
+    "actions": {
+      "M1": [
+        [
+          5,
+          4
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          6,
+          3
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75253",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.32432432432432434,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 72,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 74.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2702702702702703,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 73,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 74.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 9.599999999999994,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75269",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.029569892473118278,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 38,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.059139784946236555,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 25,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.349999999999966,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75269",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10194174757281553,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 68.66666666666667
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11650485436893203,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 68.66666666666667
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.8000000000000682,
+    "actions": {
+      "M1": [
+        [
+          3,
+          2
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75269",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.26666666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 52,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.23333333333333334,
+        "dispatch_carbon": 14,
+        "load_fraction": [
+          0.75,
+          0.5
+        ],
+        "max_leaf_carbon": 46,
+        "route_mass": [
+          6,
+          2
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-downshift-75269",
+    "t": null
+  },
+  {
+    "D": 3.8500000000000227,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75277",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2181818181818182,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 72,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 73.33333333333333
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2181818181818182,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 72,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 73.33333333333333
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -10.0,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75277",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.2222222222222222,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 36.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.16666666666666666,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 34,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 36.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 48.05000000000007,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75277",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 61,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -10.75,
+    "actions": {
+      "M1": [
+        [
+          5,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75277",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11009174311926605,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 38,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 72.66666666666667
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.09633027522935779,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 37,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 72.66666666666667
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.4000000000000057,
+    "actions": {
+      "M1": [
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    "id": "closing-stable-75289",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3214285714285714,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 74,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 74.66666666666667
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3214285714285714,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 74,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 74.66666666666667
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.5500000000000114,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75289",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06956521739130435,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 45,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 86.25
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0463768115942029,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 86.25
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 22.80000000000001,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75289",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2962962962962963,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 80,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 81.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.2962962962962963,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 80,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 81.0
+      }
+    },
+    "t": 7,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -4.25,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75289",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08722741433021808,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 57,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 91.71428571428571
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08722741433021808,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 58,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 91.71428571428571
+      }
+    },
+    "t": 5,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.5999999999999943,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75307",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.03571428571428571,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 49,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 84.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05952380952380952,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 52,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 84.0
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.8499999999999943,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75307",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05825242718446602,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 30,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 103.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.04854368932038835,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 29,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 103.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -16.25,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75307",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -18.75,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75307",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.04225352112676056,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 15,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 71.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.028169014084507043,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 18,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 71.0
+      }
+    },
+    "t": 9,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -2.8499999999999943,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75323",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 1.0,
+    "actions": {
+      "M1": [
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          3
+        ]
+      ]
+    },
+    "id": "closing-volatile-75323",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75323",
+    "t": null
+  },
+  {
+    "D": 1.1999999999999886,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75323",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.11217948717948718,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 49,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 62.4
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08012820512820513,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 52,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 62.4
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -2.4000000000000057,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    },
+    "id": "closing-stable-75337",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.17741935483870966,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29569892473118276,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.8999999999999773,
+    "actions": {
+      "M1": [
+        [
+          2,
+          4
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          4
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75337",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.9499999999999886,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75337",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10396039603960397,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 51,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 67.33333333333333
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07425742574257427,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 67.33333333333333
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -5.099999999999994,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75337",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 44,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -13.75,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75347",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0546448087431694,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 43,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 73.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.040983606557377046,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 32,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 73.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 2.950000000000017,
+    "actions": {
+      "M1": [
+        [
+          4,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          6,
+          2
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75347",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29333333333333333,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 53,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 68.18181818181819
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.23466666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 68,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 68.18181818181819
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        -2,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.799999999999983,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75347",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06756756756756757,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 74.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0945945945945946,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 35,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 74.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -4.050000000000011,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75347",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.02857142857142857,
+        "dispatch_carbon": 2,
+        "load_fraction": [
+          0.25,
+          0.0
+        ],
+        "max_leaf_carbon": 25,
+        "route_mass": [
+          2,
+          0
+        ],
+        "window_allowance": 70.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.04285714285714286,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 29,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 70.0
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 3.6500000000000057,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75353",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.13333333333333333,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 41,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -2.1500000000000057,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75353",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 56,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 58,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -5.150000000000034,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          3
+        ]
+      ]
+    },
+    "id": "closing-upshift-75353",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.23655913978494622,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.29569892473118276,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        2,
+        -1
+      ]
+    ]
+  },
+  {
+    "D": -5.0,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75353",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 47,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75367",
+    "t": null
+  },
+  {
+    "D": -1.6999999999999886,
+    "actions": {
+      "M1": [
+        [
+          2,
+          2
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          2
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75367",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3548387096774193,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 67,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 67.63636363636364
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75367",
+    "t": null
+  },
+  {
+    "D": -5.099999999999994,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75367",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.16494845360824742,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 92,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 97.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.16494845360824742,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 96,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 97.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 9.699999999999989,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75377",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.058252427184466014,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 34,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 68.66666666666667
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08737864077669902,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 41,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 68.66666666666667
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.09999999999999432,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75377",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24742268041237114,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 97.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.24742268041237114,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 97.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75377",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.4878048780487805,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 41,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 41.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3902439024390244,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 40,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 41.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -2,
+        1
+      ]
+    ]
+  },
+  {
+    "D": 3.8499999999999943,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "id": "closing-downshift-75377",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.24242424242424243,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        1,
+        -1
+      ]
+    ]
+  },
+  {
+    "D": -2.5500000000000114,
+    "actions": {
+      "M1": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75389",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.3076923076923077,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 39,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 39.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.3076923076923077,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 39,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 39.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        -2,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -1.8500000000000085,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75389",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.06542056074766354,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 31,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 107.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07476635514018691,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 32,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 107.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75389",
+    "t": null
+  },
+  {
+    "D": -11.25,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75389",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75391",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07183908045977012,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0574712643678161,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 32,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.09999999999999432,
+    "actions": {
+      "M1": [
+        [
+          3,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          3
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75391",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.365296803652968,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 54.75
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.365296803652968,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 54.75
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-upshift-75391",
+    "t": null
+  },
+  {
+    "D": 0.19999999999998863,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75391",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 47,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 65,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -5.349999999999994,
+    "actions": {
+      "M1": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          1
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75401",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.30303030303030304,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 66,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.18181818181818182,
+        "dispatch_carbon": 12,
+        "load_fraction": [
+          1.0,
+          0.25
+        ],
+        "max_leaf_carbon": 62,
+        "route_mass": [
+          8,
+          1
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-volatile-75401",
+    "t": null
+  },
+  {
+    "D": -3.0,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75401",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.05952380952380952,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 47,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 67.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0744047619047619,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 34,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 67.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.9000000000000057,
+    "actions": {
+      "M1": [
+        [
+          2,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          1
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75401",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.20915032679738563,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 76,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 76.5
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.26143790849673204,
+        "dispatch_carbon": 20,
+        "load_fraction": [
+          1.0,
+          0.75
+        ],
+        "max_leaf_carbon": 76,
+        "route_mass": [
+          8,
+          3
+        ],
+        "window_allowance": 76.5
+      }
+    },
+    "t": 4,
+    "unit_difference": [
+      [
+        2,
+        -1
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.0,
+    "id": "closing-stable-75407",
+    "t": null
+  },
+  {
+    "D": 0.09999999999999432,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75407",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.0900900900900901,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 41,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 66.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10510510510510511,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 45,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 66.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.5999999999999943,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75407",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.061224489795918366,
+        "dispatch_carbon": 6,
+        "load_fraction": [
+          0.75,
+          0.0
+        ],
+        "max_leaf_carbon": 42,
+        "route_mass": [
+          6,
+          0
+        ],
+        "window_allowance": 98.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.04081632653061224,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 98.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 2.8500000000000227,
+    "actions": {
+      "M1": [
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75407",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.08163265306122448,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 48,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 49.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.061224489795918366,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 31,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 49.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -4.650000000000006,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75431",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1149425287356322,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 69,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 69.6
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.1149425287356322,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 68,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 69.6
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -2,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.2999999999999545,
+    "actions": {
+      "M1": [
+        [
+          4,
+          3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          4,
+          3
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75431",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.21686746987951808,
+        "dispatch_carbon": 18,
+        "load_fraction": [
+          0.75,
+          0.75
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          6,
+          3
+        ],
+        "window_allowance": 83.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.20481927710843373,
+        "dispatch_carbon": 17,
+        "load_fraction": [
+          0.625,
+          0.75
+        ],
+        "max_leaf_carbon": 54,
+        "route_mass": [
+          5,
+          3
+        ],
+        "window_allowance": 83.0
+      }
+    },
+    "t": 6,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 80.65000000000009,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75431",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.01366120218579235,
+        "dispatch_carbon": 1,
+        "load_fraction": [
+          0.125,
+          0.0
+        ],
+        "max_leaf_carbon": 36,
+        "route_mass": [
+          1,
+          0
+        ],
+        "window_allowance": 73.2
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.040983606557377046,
+        "dispatch_carbon": 3,
+        "load_fraction": [
+          0.375,
+          0.0
+        ],
+        "max_leaf_carbon": 33,
+        "route_mass": [
+          3,
+          0
+        ],
+        "window_allowance": 73.2
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.6500000000000057,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          2
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          4,
+          2
+        ]
+      ]
+    },
+    "id": "closing-downshift-75431",
+    "resources": {
+      "M1": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.26666666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 60.0
+      },
+      "M2": {
+        "carbon_binding": true,
+        "dispatch_allowance_fraction": 0.26666666666666666,
+        "dispatch_carbon": 16,
+        "load_fraction": [
+          1.0,
+          0.5
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          2
+        ],
+        "window_allowance": 60.0
+      }
+    },
+    "t": 2,
+    "unit_difference": [
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": -0.700000000000017,
+    "actions": {
+      "M1": [
+        [
+          1,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-stable-75437",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.10606060606060606,
+        "dispatch_carbon": 7,
+        "load_fraction": [
+          0.875,
+          0.0
+        ],
+        "max_leaf_carbon": 47,
+        "route_mass": [
+          7,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07575757575757576,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 35,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 8,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 10.900000000000006,
+    "actions": {
+      "M1": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-volatile-75437",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.07333333333333333,
+        "dispatch_carbon": 5,
+        "load_fraction": [
+          0.625,
+          0.0
+        ],
+        "max_leaf_carbon": 35,
+        "route_mass": [
+          5,
+          0
+        ],
+        "window_allowance": 68.18181818181819
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.058666666666666666,
+        "dispatch_carbon": 4,
+        "load_fraction": [
+          0.5,
+          0.0
+        ],
+        "max_leaf_carbon": 29,
+        "route_mass": [
+          4,
+          0
+        ],
+        "window_allowance": 68.18181818181819
+      }
+    },
+    "t": 1,
+    "unit_difference": [
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 0.19999999999998863,
+    "actions": {
+      "M1": [
+        [
+          4,
+          4
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ]
+    },
+    "id": "closing-upshift-75437",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3025210084033614,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 79,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 79.33333333333333
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.3025210084033614,
+        "dispatch_carbon": 24,
+        "load_fraction": [
+          1.0,
+          1.0
+        ],
+        "max_leaf_carbon": 79,
+        "route_mass": [
+          8,
+          4
+        ],
+        "window_allowance": 79.33333333333333
+      }
+    },
+    "t": 3,
+    "unit_difference": [
+      [
+        2,
+        0
+      ],
+      [
+        -1,
+        0
+      ],
+      [
+        0,
+        0
+      ]
+    ]
+  },
+  {
+    "D": 17.599999999999994,
+    "actions": {
+      "M1": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1,
+          0
+        ]
+      ],
+      "M2": [
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ]
+    },
+    "id": "closing-downshift-75437",
+    "resources": {
+      "M1": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 64,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      },
+      "M2": {
+        "carbon_binding": false,
+        "dispatch_allowance_fraction": 0.12121212121212122,
+        "dispatch_carbon": 8,
+        "load_fraction": [
+          1.0,
+          0.0
+        ],
+        "max_leaf_carbon": 60,
+        "route_mass": [
+          8,
+          0
+        ],
+        "window_allowance": 66.0
+      }
+    },
+    "t": 0,
+    "unit_difference": [
+      [
+        1,
+        0
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        -1,
+        0
+      ]
+    ]
+  }
+]

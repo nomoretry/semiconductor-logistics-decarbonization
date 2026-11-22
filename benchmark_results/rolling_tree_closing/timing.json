@@ -1,0 +1,24 @@
+{
+  "development": [
+    {
+      "id": "development-stable-72019",
+      "wall_seconds": 6.469224200001918
+    },
+    {
+      "id": "development-volatile-72019",
+      "wall_seconds": 49.191731200000504
+    },
+    {
+      "id": "development-upshift-72019",
+      "wall_seconds": 7.495201599987922
+    },
+    {
+      "id": "development-downshift-72019",
+      "wall_seconds": 10.000130500004161
+    }
+  ],
+  "estimated_seconds": 7930.676992000081,
+  "limit_seconds": 14400,
+  "passed": true,
+  "sampler_seed": 924601
+}

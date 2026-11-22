@@ -1,0 +1,162 @@
+{
+  "estimated_formal_wall_seconds": 6066.942092540322,
+  "formal": {
+    "active_wall_seconds": 0,
+    "completed_observations": 0,
+    "failures": 0,
+    "observation_seconds": null,
+    "observations": 0,
+    "solves": 0,
+    "status_counts": {}
+  },
+  "formal_wall_seconds": null,
+  "results": {
+    "across_seeds": {
+      "above_half_percent_pairs": 0,
+      "archived_changed": 0,
+      "archived_comparisons": 0,
+      "both_directions": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "forward": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "half_percent_resolved_pairs": 0,
+      "material_change_rate": null,
+      "material_changes": 0,
+      "material_share_of_changes": null,
+      "resolved_changes": 0,
+      "reverse": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "unresolved_changes": 0
+    },
+    "across_tiers": {
+      "above_half_percent_pairs": 0,
+      "archived_changed": 0,
+      "archived_comparisons": 0,
+      "both_directions": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "forward": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "half_percent_resolved_pairs": 0,
+      "material_change_rate": null,
+      "material_changes": 0,
+      "material_share_of_changes": null,
+      "resolved_changes": 0,
+      "reverse": {
+        "above_half_percent": 0,
+        "excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "material": 0,
+        "planned": 0,
+        "relative_excess": {
+          "count": 0,
+          "max": null,
+          "median": null,
+          "p90": null
+        },
+        "resolved": 0
+      },
+      "unresolved_changes": 0
+    },
+    "observations": 0
+  },
+  "stop_reason": "estimated_formal_wall_above_budget",
+  "trial": {
+    "active_wall_seconds": 130.84255310001026,
+    "completed_observations": 12,
+    "failures": 0,
+    "observation_seconds": {
+      "max": 37.02861320000375,
+      "mean": 10.903546091667522,
+      "p95": 28.802284265006882
+    },
+    "observations": 12,
+    "solves": 127,
+    "status_counts": {
+      "0": 127
+    }
+  }
+}

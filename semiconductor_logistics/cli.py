@@ -20,6 +20,7 @@ from . import __version__
 
 COMMANDS = {
     "rolling-recourse": ("rolling_recourse", "Check finite-support nonanticipative recourse against exact rolling baselines"),
+    "rolling-tree": ("rolling_tree", "Development pilot for history-conditioned scenario trees with tie-robust audits"),
     "rolling-distribution": ("rolling_distribution", "Compare residual dispersion and audit cross-SKU dependence invariance"),
     "rolling-forecast": ("rolling_forecast", "Compare history-only forecasts and replay paired rolling decisions"),
     "optimize": ("scripts.run_experiments", "Run the company-inspired MILP grids"),

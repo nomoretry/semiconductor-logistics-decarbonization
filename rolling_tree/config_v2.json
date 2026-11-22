@@ -1,0 +1,46 @@
+{
+  "schema": "rolling-tree-development-v2",
+  "scope": "development_diagnostic_not_confirmation_synthetic_not_company_data",
+  "environment": "rolling_inventory/config.json unchanged; tasks from rolling_inventory.environment.generate",
+  "horizon": 6,
+  "paced_carbon": true,
+  "fit_seeds": [71001, 71011, 71023, 71039],
+  "tuning_seeds": [71101, 71119, 71129, 71143],
+  "common_variance_cap": 2.0,
+  "prior_strength_candidates": [12, 48, 192],
+  "energy_score": {"samples": 500, "seed": 977201},
+  "shape_candidates": [
+    {"branching": [9, 3], "continuation": 3},
+    {"branching": [9, 3], "continuation": 1},
+    {"branching": [7, 3], "continuation": 1}
+  ],
+  "shape_rule": {
+    "order": "first candidate in the listed order that meets every condition",
+    "states_per_path": 3,
+    "state_paths": "the first tuning seed under all four profiles, on the rolling baseline's states",
+    "first_period_error": "mean over those states not above the rolling baseline's own seven scenarios",
+    "max_p95_m1_seconds": 2.0,
+    "max_p95_m2_star_seconds": 10.0,
+    "failures": 0
+  },
+  "equal_time_candidates": [27, 54, 108, 216],
+  "permutation_seed": 917351,
+  "sampler_seeds": [924601, 924611, 924617],
+  "pilot": {
+    "split": "development",
+    "seed": 72019,
+    "profiles": ["stable", "volatile", "upshift", "downshift"],
+    "base_stock_z": 1.0
+  },
+  "tie_tolerance": {"relative": 1e-6, "absolute": 1e-7},
+  "solver": {"backend": "scipy.optimize.milp (HiGHS)", "mip_rel_gap": 0.0, "time_limit_seconds": 30.0},
+  "budget_tuning": {"max_solves": 600, "max_wall_seconds": 1800, "start_guard_seconds": 30, "retries": 0},
+  "budget": {"max_solves": 3500, "max_wall_seconds": 5400, "start_guard_seconds": 30, "retries": 0},
+  "reference_thresholds": {
+    "practical_cost_reduction": 0.02,
+    "fill_rate_absolute_drop": 0.005,
+    "emissions_relative_increase": 0.02
+  },
+  "confirmation": "not_generated_not_viewed",
+  "learning_trained": false
+}

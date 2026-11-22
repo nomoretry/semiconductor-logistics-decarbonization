@@ -1,0 +1,352 @@
+[
+  {
+    "id": "development-volatile-72001",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 7,
+      "costs": {
+        "backlog": 64.0,
+        "carbon": 19.0,
+        "freight": 68.0,
+        "holding": 40.1,
+        "terminal_backlog": 162.0
+      },
+      "emissions": 76,
+      "final_backlog": 6,
+      "final_stock": 3,
+      "immediate_fill_rate": 0.8703703703703703,
+      "online_seconds_mean": 0.0003533583342990217,
+      "online_seconds_p95": 0.0007218899962026624,
+      "online_seconds_total": 0.0042403000115882605,
+      "solves": 0,
+      "total_cost": 353.1
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "B0",
+    "metrics": {
+      "backlog_unit_periods": 54,
+      "costs": {
+        "backlog": 462.0,
+        "carbon": 29.0,
+        "freight": 107.0,
+        "holding": 18.2,
+        "terminal_backlog": 240.0
+      },
+      "emissions": 116,
+      "final_backlog": 9,
+      "final_stock": 3,
+      "immediate_fill_rate": 0.5569620253164557,
+      "online_seconds_mean": 0.00048348333075409755,
+      "online_seconds_p95": 0.00067664500529645,
+      "online_seconds_total": 0.005801799969049171,
+      "solves": 0,
+      "total_cost": 856.2
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 4,
+      "costs": {
+        "backlog": 40.0,
+        "carbon": 21.0,
+        "freight": 74.0,
+        "holding": 46.099999999999994,
+        "terminal_backlog": 120.0
+      },
+      "emissions": 84,
+      "final_backlog": 4,
+      "final_stock": 3,
+      "immediate_fill_rate": 0.9259259259259259,
+      "online_seconds_mean": 0.011494274995736001,
+      "online_seconds_p95": 0.020330890016339254,
+      "online_seconds_total": 0.13793129994883202,
+      "solves": 12,
+      "total_cost": 301.1
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "B1",
+    "metrics": {
+      "backlog_unit_periods": 34,
+      "costs": {
+        "backlog": 292.0,
+        "carbon": 33.0,
+        "freight": 119.0,
+        "holding": 26.8,
+        "terminal_backlog": 210.0
+      },
+      "emissions": 132,
+      "final_backlog": 7,
+      "final_stock": 5,
+      "immediate_fill_rate": 0.7088607594936709,
+      "online_seconds_mean": 0.013708124997113677,
+      "online_seconds_p95": 0.027083625001250763,
+      "online_seconds_total": 0.1644974999653641,
+      "solves": 12,
+      "total_cost": 680.8
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 0,
+      "costs": {
+        "backlog": 0.0,
+        "carbon": 14.75,
+        "freight": 59.0,
+        "holding": 11.1,
+        "terminal_backlog": 0.0
+      },
+      "emissions": 59,
+      "final_backlog": 0,
+      "final_stock": 0,
+      "immediate_fill_rate": 1.0,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 84.85
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "LB",
+    "metrics": {
+      "backlog_unit_periods": 13,
+      "costs": {
+        "backlog": 90.0,
+        "carbon": 33.0,
+        "freight": 119.0,
+        "holding": 8.4,
+        "terminal_backlog": 135.0
+      },
+      "emissions": 132,
+      "final_backlog": 6,
+      "final_stock": 0,
+      "immediate_fill_rate": 0.8860759493670886,
+      "online_seconds_mean": 0.0,
+      "online_seconds_p95": 0.0,
+      "online_seconds_total": 0.0,
+      "solves": 1,
+      "total_cost": 385.4
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 60.0,
+        "carbon": 20.75,
+        "freight": 73.0,
+        "holding": 52.3,
+        "terminal_backlog": 150.0
+      },
+      "emissions": 83,
+      "final_backlog": 5,
+      "final_stock": 4,
+      "immediate_fill_rate": 0.9074074074074074,
+      "online_seconds_mean": 0.0759295916626191,
+      "online_seconds_p95": 0.21530914498871417,
+      "online_seconds_total": 0.9111550999514293,
+      "solves": 11,
+      "total_cost": 356.05
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 60.0,
+        "carbon": 20.75,
+        "freight": 73.0,
+        "holding": 52.6,
+        "terminal_backlog": 150.0
+      },
+      "emissions": 83,
+      "final_backlog": 5,
+      "final_stock": 4,
+      "immediate_fill_rate": 0.9074074074074074,
+      "online_seconds_mean": 0.42552340000111144,
+      "online_seconds_p95": 1.766335545000038,
+      "online_seconds_total": 5.106280800013337,
+      "solves": 22,
+      "total_cost": 356.35
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 6,
+      "costs": {
+        "backlog": 60.0,
+        "carbon": 20.75,
+        "freight": 73.0,
+        "holding": 55.4,
+        "terminal_backlog": 150.0
+      },
+      "emissions": 83,
+      "final_backlog": 5,
+      "final_stock": 4,
+      "immediate_fill_rate": 0.9074074074074074,
+      "online_seconds_mean": 0.20531566666613799,
+      "online_seconds_p95": 0.470418465003604,
+      "online_seconds_total": 2.463787999993656,
+      "solves": 22,
+      "total_cost": 359.15
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-volatile-72001",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 2,
+      "costs": {
+        "backlog": 20.0,
+        "carbon": 21.5,
+        "freight": 77.0,
+        "holding": 53.4,
+        "terminal_backlog": 60.0
+      },
+      "emissions": 86,
+      "final_backlog": 2,
+      "final_stock": 4,
+      "immediate_fill_rate": 0.9629629629629629,
+      "online_seconds_mean": 0.044749025003208466,
+      "online_seconds_p95": 0.07010075500875244,
+      "online_seconds_total": 0.5369883000385016,
+      "solves": 11,
+      "total_cost": 231.9
+    },
+    "profile": "volatile",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "M1",
+    "metrics": {
+      "backlog_unit_periods": 34,
+      "costs": {
+        "backlog": 290.0,
+        "carbon": 33.0,
+        "freight": 118.0,
+        "holding": 20.2,
+        "terminal_backlog": 201.0
+      },
+      "emissions": 132,
+      "final_backlog": 7,
+      "final_stock": 1,
+      "immediate_fill_rate": 0.7088607594936709,
+      "online_seconds_mean": 0.21452933333299976,
+      "online_seconds_p95": 0.7546633750142063,
+      "online_seconds_total": 2.574351999995997,
+      "solves": 11,
+      "total_cost": 662.2
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "M2*",
+    "metrics": {
+      "backlog_unit_periods": 37,
+      "costs": {
+        "backlog": 305.0,
+        "carbon": 32.75,
+        "freight": 117.0,
+        "holding": 19.0,
+        "terminal_backlog": 201.0
+      },
+      "emissions": 131,
+      "final_backlog": 7,
+      "final_stock": 0,
+      "immediate_fill_rate": 0.6835443037974683,
+      "online_seconds_mean": 1.1573889583378332,
+      "online_seconds_p95": 4.053100139998422,
+      "online_seconds_total": 13.888667500053998,
+      "solves": 22,
+      "total_cost": 674.75
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "B3",
+    "metrics": {
+      "backlog_unit_periods": 35,
+      "costs": {
+        "backlog": 295.0,
+        "carbon": 32.75,
+        "freight": 117.0,
+        "holding": 20.2,
+        "terminal_backlog": 201.0
+      },
+      "emissions": 131,
+      "final_backlog": 7,
+      "final_stock": 0,
+      "immediate_fill_rate": 0.6962025316455697,
+      "online_seconds_mean": 0.868546924997645,
+      "online_seconds_p95": 3.093632624995369,
+      "online_seconds_total": 10.42256309997174,
+      "solves": 22,
+      "total_cost": 665.95
+    },
+    "profile": "upshift",
+    "status": "complete"
+  },
+  {
+    "id": "development-upshift-72001",
+    "method": "B4",
+    "metrics": {
+      "backlog_unit_periods": 26,
+      "costs": {
+        "backlog": 232.0,
+        "carbon": 32.75,
+        "freight": 118.0,
+        "holding": 22.400000000000002,
+        "terminal_backlog": 180.0
+      },
+      "emissions": 131,
+      "final_backlog": 6,
+      "final_stock": 2,
+      "immediate_fill_rate": 0.759493670886076,
+      "online_seconds_mean": 0.11330406666578104,
+      "online_seconds_p95": 0.3912319049995856,
+      "online_seconds_total": 1.3596487999893725,
+      "solves": 11,
+      "total_cost": 585.15
+    },
+    "profile": "upshift",
+    "status": "complete"
+  }
+]

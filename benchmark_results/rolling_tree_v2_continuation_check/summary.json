@@ -1,0 +1,24 @@
+{
+  "b1_material_under_m3": 90,
+  "continuation": 3,
+  "exploratory": "added after the second pilot; not a protocol readout",
+  "mean_fast_units": {
+    "b1": 0.8863636363636364,
+    "m1_m1": 0.553030303030303,
+    "m1_m3": 0.6742424242424242
+  },
+  "period_0": {
+    "b1_ships_fast": 12,
+    "m1_ships_fast": 0,
+    "m3_ships_fast": 4,
+    "states": 12
+  },
+  "same_first_action_as_m1": 66,
+  "solved": 132,
+  "states": 132,
+  "usage": {
+    "process_cpu_seconds": 85.015625,
+    "solves": 264,
+    "wall_seconds": 78.59423129999777
+  }
+}
