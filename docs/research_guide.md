@@ -28,7 +28,7 @@ This document is available in Chinese and English; English follows Chinese.
 | 实验 | 已有证据 | 可以支持的结论 |
 |---|---|---|
 | [固定LLM](results/api_test.md) | 400个不同合成测试，LLM400/400、规则204/400；重复调用同400条 | 当前接口下模型优于冻结规则；不证明广泛泛化 |
-| [真实公告](data/real_notices.md)、[数量抽取](results/notice_facts_api.md) | 16个澄清案例；8个数量案例，模型7/8、规则6/8 | 大模型参考一致性；没有人工金标准或真实内部路线更新验证 |
+| [真实公告](data/real_notices.md)、[数量抽取](results/notice_facts_api.md) | 16个澄清案例；8个数量案例，模型7/8、规则6/8 | 暂定参考一致性；没有人工金标准或真实内部路线更新验证 |
 | [五种子千题](query_final_results.md) | 5个真实训练种子、1,000情境、27,000次评估 | BC/PPO遗憾3.1179%/3.1477%；无稳定PPO收益 |
 | [组件消融](query_components_results.md) | 掩码×成本势函数，20次PPO训练，36个已查看开发情境 | 掩码减少拒绝；势函数无稳定改善；无新留出确认 |
 | [滚动基线](rolling_inventory_results.md) | 12校准+32开发路径 | 情景MPC优于该base-stock，排放也更高 |
@@ -87,7 +87,7 @@ The rolling environment includes unknown demand, backlog, route lead times, shar
 | Experiment | Evidence | Supported conclusion |
 |---|---|---|
 | [Fixed LLM](results/api_test.md) | 400 distinct synthetic tests: LLM 400/400, rules 204/400; repeat uses the same 400 | Improvement over frozen rules within this interface, not broad generalization |
-| [Real excerpts](data/real_notices.md), [quantities](results/notice_facts_api.md) | 16 clarification cases; 8 quantity cases, model 7/8 vs rules 6/8 | Agreement with model-written references, not human gold or internal-route validation |
+| [Real excerpts](data/real_notices.md), [quantities](results/notice_facts_api.md) | 16 clarification cases; 8 quantity cases, model 7/8 vs rules 6/8 | Agreement with provisional references, not human gold or internal-route validation |
 | [Five-seed final](query_final_results.md) | Five actual training seeds, 1,000 contexts, 27,000 evaluations | BC/PPO regret 3.1179%/3.1477%; no stable PPO gain |
 | [Components](query_components_results.md) | Mask×cost potential,20 PPO fits,36 inspected development contexts | Mask reduces rejection; no stable shaping benefit or new heldout confirmation |
 | [Rolling baselines](rolling_inventory_results.md) | 12 calibration+32 development paths | Scenario MPC beats this base-stock, with higher emissions |
