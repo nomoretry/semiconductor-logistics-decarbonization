@@ -23,7 +23,7 @@ This document provides Chinese first and English second.
 | 离线规则 `rule` | `rules.py` 的规则解析器 | 否，结果确定，能识别的写法有限 |
 | 公告检索 `notice` | 同一规则解析器解析计划员的文字，并检索真实船公司公告给出出处和缺失信息（见[真实公告检索](notice_retrieval.md)） | 否 |
 | 录制回放 `replay` | 24 题正式评测中，真实模型（gpt-6.1-sol，Responses 接口，xhigh）对案例 D13、H05 实际给出的场景参数 | 否，本次不调用模型；界面标明“录制回放” |
-| 实时模型 `live` | 大模型经 LangGraph Agent 提出参数，任何工具执行前暂停 | 是，付费；需要 `LLM_API_KEY` 和 token 上限，预算须先经用户批准 |
+| 实时模型 `live` | 大模型经 LangGraph Agent 提出参数，任何工具执行前暂停 | 是，付费；需要密钥、模型名和限额，在请求发出前检查（见[配置与限额](live_model_safety.md)）。网页上默认没有这个模式 |
 
 不论哪种模式，优化计算都在确认之后实时求解（MILP，HiGHS），不使用预先算好的结果；数字都来自引擎。
 
@@ -36,7 +36,7 @@ This document provides Chinese first and English second.
 3. 确认之后给出正常和扰动两套方案（设了减排上限则三套）的总成本、变化、服务水平、排放和空运占比，与直接调用引擎的结果一致。
 4. 修改参数（例如延误改为 3 周）后再确认，结果随之改变，不会沿用旧的计算缓存。
 5. 备忘录包含方案对比表，网页上可以下载。
-6. 回放模式显示录制来源；实时模式在没有 key 或没有设 token 上限时拒绝运行。
+6. 回放模式显示录制来源；实时模式在没有密钥、模型名或限额时拒绝运行，任何请求都不会发出。
 7. 命令行和网页各用一条命令启动。
 
 ### 启动方式
@@ -71,7 +71,7 @@ A minimal business loop that a planner can operate, built on the existing planni
 | Offline rule `rule` | the rule parser in `rules.py` | No; deterministic, limited wording |
 | Notice retrieval `notice` | the same rule parser on the planner's words, plus real carrier notices retrieved with their sources and missing information (see [notice retrieval](notice_retrieval.md)) | No |
 | Recorded replay `replay` | scenario arguments a real model (gpt-6.1-sol, Responses API, xhigh) produced for cases D13 and H05 in the 24-question evaluation | No; labelled as a replay |
-| Live model `live` | a model proposes arguments through the LangGraph agent, paused before any tool runs | Yes, paid; needs `LLM_API_KEY` and a token cap, with the budget approved by the user first |
+| Live model `live` | a model proposes arguments through the LangGraph agent, paused before any tool runs | Yes, paid; needs a key, a model id and limits, checked before each request (see [configuration and limits](live_model_safety.md)). The web page has no such mode by default |
 
 In every mode the optimization is solved live after confirmation (MILP, HiGHS); no precomputed results are shown, and every number comes from the engine.
 
@@ -84,7 +84,7 @@ In every mode the optimization is solved live after confirmation (MILP, HiGHS); 
 3. After confirmation, the normal and disrupted plans (and a capped plan when a cap is set) show total cost, change, service level, emissions and air share, identical to direct engine calls.
 4. Editing a parameter (for example, a 3-week delay) and confirming again changes the result; no stale cache is reused.
 5. The memo contains the plan comparison and can be downloaded from the web page.
-6. Replay mode shows where the recording came from. Live mode refuses to run without a key or without a token cap.
+6. Replay mode shows where the recording came from. Live mode refuses to run without a key, a model id or limits, and no request is sent.
 7. The command line and the web page each start with one command.
 
 ### How to run

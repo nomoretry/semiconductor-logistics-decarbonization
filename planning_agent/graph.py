@@ -181,6 +181,7 @@ class ReplayClient:
     """
 
     model = "replay"
+    call_kind = "replay"
 
     def __init__(self, tool_calls: list[Message], answer: str) -> None:
         self.turns = [{"content": "", "tool_calls": [{"id": f"call_{i}", "type": "function", "function": {

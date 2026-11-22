@@ -3,11 +3,13 @@
     python -m streamlit run planning_agent/app.py
 
 The page only arranges inputs and outputs; parsing, confirmation, solving and the memo live in workflow.py.
-Rule, notice and replay modes never call a model. Live mode needs LLM_API_KEY, a token cap and an explicit approval.
+Rule, notice and replay modes never call a model. Live mode does not exist on the page unless the operator opened it
+on the server (llm.LiveAccess): a key alone is not enough, and visitors cannot raise any limit.
 """
 from __future__ import annotations
 
 import json
+import logging
 import math
 import os
 import sys
@@ -24,6 +26,13 @@ from planning_agent import llm, retrieval, workflow
 from planning_agent.tools import Session
 
 INTEGER_FIELDS = {"start_week", "end_week", "extra_lead_weeks"}
+MAX_TEXT_CHARS = 2000  # max_chars also cuts the value on the server
+
+
+@st.cache_resource
+def live_access() -> llm.LiveAccess:
+    """One per server process: the daily meter and the access-code lockout are shared by all visitors."""
+    return llm.LiveAccess.from_env()
 
 
 def tool_session() -> Session:
@@ -58,18 +67,23 @@ def cleaned(rows: list[dict[str, Any]], original: list[dict[str, Any]]) -> list[
 
 st.set_page_config(page_title="物流扰动决策", layout="wide")
 st.title("运输公告 → 参数确认 → 方案对比 → 决策备忘录")
-mode = st.sidebar.radio("参数来源", list(workflow.MODE_LABELS), format_func=workflow.MODE_LABELS.__getitem__,
-                        key="mode")
-st.sidebar.caption("规则、公告检索和录制回放模式都不调用大模型；只有实时模式会产生费用。所有方案都在你确认后实时求解。")
+access = live_access()
+modes = [m for m in workflow.MODE_LABELS if m != "live" or access.open]
+mode = st.sidebar.radio("参数来源", modes, format_func=workflow.MODE_LABELS.__getitem__, key="mode")
+live_note = "实时模型模式会产生费用，需要访问码，额度由服务端限定。" if access.open else "实时模型模式没有开放。"
+st.sidebar.caption(f"规则、公告检索和录制回放模式都不调用大模型。所有方案都在你确认后实时求解。{live_note}")
+# The sidebar starts collapsed on a phone, so the mode is also stated here.
+st.caption(f"当前模式：{workflow.MODE_LABELS[mode]}。网络、需求和费率都是合成假设；这是公开演示，请不要输入保密信息。")
 
 if mode == "rule":
-    notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="notice", height=110)
+    notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="notice", height=110,
+                          max_chars=MAX_TEXT_CHARS)
     network = st.selectbox("网络", ["自动识别", "asml", "marvell"], key="network")
     if st.button("解析参数", key="parse"):
         start(workflow.propose_from_rules(notice, None if network == "自动识别" else network))
 elif mode == "notice":
     question = st.text_area("问题或扰动描述（会先检索真实船公司公告）", workflow.NOTICE_QUESTION, key="notice_question",
-                            height=110)
+                            height=110, max_chars=MAX_TEXT_CHARS)
     network = st.selectbox("网络", ["自动识别", "asml", "marvell"], key="notice_network")
     downloaded = retrieval.RAW.exists() and any(retrieval.RAW.glob("*.html"))
     full_text = st.checkbox("同时检索本地下载的公告原文", key="full_text", disabled=not downloaded,
@@ -86,18 +100,28 @@ elif mode == "replay":
     if st.button("载入录制参数", key="load"):
         start(workflow.propose_from_recording(case))
 else:
-    notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="live_notice", height=110)
-    if not llm.configured():
-        st.warning("没有设置 LLM_API_KEY，实时模式不可用。规则模式和录制回放模式不需要 key。")
-    else:
-        cap = int(st.number_input("本次 token 上限（需事先批准）", min_value=0, value=0, step=1000, key="cap"))
-        rag = st.checkbox("把检索到的公告附在提示里（检索增强）", key="live_rag")
-        approved = st.checkbox("我已批准这次付费调用的预算", key="approved")
-        if st.button("调用模型提出参数", key="live", disabled=not (approved and cap > 0)):
-            references = ([retrieval.reference(h) for h in retrieval.default_index().search(notice, k=3)]
-                          if rag else [])
-            start(workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=cap,
-                                              references=references))
+    notice = st.text_area("运输公告或扰动描述", workflow.DEMO_NOTICE, key="live_notice", height=110,
+                          max_chars=MAX_TEXT_CHARS)
+    rag = st.checkbox("把检索到的公告附在提示里（检索增强）", key="live_rag")
+    code = st.text_input("访问码", type="password", key="live_code")
+    meter = st.session_state.setdefault("live_meter", access.session_meter())
+    used = meter.snapshot()
+    st.caption(f"本会话已发送 {used['requests']} / {used['limit_requests']} 次请求；"
+               "每日总额度由服务端限定，页面上不能修改。")
+    if st.button("调用模型提出参数", key="live"):
+        if not access.check_code(code):
+            st.error("访问码不正确，或错误次数过多，请稍后再试。没有调用模型。")
+        else:
+            try:
+                references = ([retrieval.reference(h) for h in retrieval.default_index().search(notice, k=3)]
+                              if rag else [])
+                start(workflow.propose_from_model(notice, access.client(meter), references=references))
+            except llm.LLMError as error:
+                logging.getLogger(__name__).warning("live call failed: %s", llm.redact(str(error)))
+                stopped = meter.stopped or (access.daily.stopped if access.daily else None)
+                st.error("额度已用完，没有调用模型。" if stopped else "模型调用没有完成，没有生成参数。")
+            except ValueError:
+                st.error("模型没有给出可用的参数，请改写公告，或使用规则模式。")
 
 proposal: workflow.Proposal | None = st.session_state.get("proposal")
 if proposal is not None:

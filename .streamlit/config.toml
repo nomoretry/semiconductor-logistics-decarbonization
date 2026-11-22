@@ -1,0 +1,10 @@
+# Settings for a public deployment of planning_agent/app.py. Errors stay in the server log, not on the page.
+[browser]
+gatherUsageStats = false
+
+[client]
+showErrorDetails = "none"
+toolbarMode = "minimal"
+
+[server]
+enableXsrfProtection = true

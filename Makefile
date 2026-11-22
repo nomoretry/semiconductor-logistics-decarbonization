@@ -11,6 +11,8 @@ UV_COMPILE = $(PYTHON) -m uv pip compile pyproject.toml -c constraints.txt --uni
 	--generate-hashes --exclude-newer $(LOCK_DATE) --no-header --quiet
 DEV_EXTRAS = --extra dev
 PLANNING_EXTRAS = --extra dev --extra planning --extra agent --extra ui
+# What a public deployment of planning_agent/app.py installs; hosts look next to the entry point first.
+WEB_EXTRAS = --extra planning --extra ui
 
 sync:
 	$(PYTHON) -m pip install --require-hashes -r requirements/dev.txt
@@ -19,14 +21,17 @@ sync:
 lock:
 	$(UV_COMPILE) $(DEV_EXTRAS) -o requirements/dev.txt
 	$(UV_COMPILE) $(PLANNING_EXTRAS) -o requirements/planning.txt
+	$(UV_COMPILE) $(WEB_EXTRAS) -o planning_agent/requirements.txt
 
 lock-check:
 	tmp=$$(mktemp -d) && $(UV_COMPILE) $(DEV_EXTRAS) -o $$tmp/dev.txt && \
 	$(UV_COMPILE) $(PLANNING_EXTRAS) -o $$tmp/planning.txt && \
-	diff -u requirements/dev.txt $$tmp/dev.txt && diff -u requirements/planning.txt $$tmp/planning.txt
+	$(UV_COMPILE) $(WEB_EXTRAS) -o $$tmp/web.txt && \
+	diff -u requirements/dev.txt $$tmp/dev.txt && diff -u requirements/planning.txt $$tmp/planning.txt && \
+	diff -u planning_agent/requirements.txt $$tmp/web.txt
 
 # Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
-LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py
+LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py tests/test_llm_safety.py
 
 lint:
 	$(PYTHON) -m ruff check $(LINT_PATHS)
@@ -143,7 +148,7 @@ planning-sync:
 	$(PYTHON) -m pip install --no-deps --no-build-isolation -e .
 
 planning-test:
-	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow tests.test_notice_retrieval -v
+	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow tests.test_notice_retrieval tests.test_llm_safety -v
 
 planning-report:
 	$(PYTHON) -m network_planning report --output benchmark_results/network_planning

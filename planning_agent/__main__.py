@@ -8,9 +8,11 @@ python -m planning_agent replay --output benchmark_results/planning_agent
 python -m planning_agent flow                       # notice -> parameters -> confirm -> plans -> memo
 python -m planning_agent flow --mode notice         # the same, with real carrier notices retrieved and cited
 python -m planning_agent corpus search "红海绕行"     # search the notice corpus (build, evaluate, fetch --yes)
+python -m planning_agent llm-check                  # show the live-call configuration; never touches the network
 
---agent auto uses the LLM agent when LLM_API_KEY is set, otherwise the offline rule agent.
---agent graph runs the same model, tools and guardrail as a LangGraph state graph (needs the agent extra).
+--agent auto uses the LLM agent only when LLM_API_KEY, LLM_MODEL_ID and the spending limits are all set, otherwise the
+offline rule agent. --agent llm and --agent graph refuse to start without them; graph runs the same model, tools and
+guardrail as a LangGraph state graph (needs the agent extra).
 """
 from __future__ import annotations
 
@@ -37,10 +39,17 @@ DEMO = (
 )
 
 
-def _agent(choice: str) -> tuple[str, Any]:
+def _agent(choice: str, max_tokens: int | None = None) -> tuple[str, Any]:
     if choice == "rule" or (choice == "auto" and not llm.configured()):
         return "rule", None
-    return ("graph" if choice == "graph" else "llm"), llm.OpenAICompatibleClient()
+    try:
+        client = llm.OpenAICompatibleClient(limits=llm.limits_from_env(max_total_tokens=max_tokens))
+    except llm.LLMError as error:
+        if choice != "auto":
+            raise
+        print(f"已设置 LLM_API_KEY，但模型配置不完整（{error}）：改用离线规则 Agent，不调用模型。", file=sys.stderr)
+        return "rule", None
+    return ("graph" if choice == "graph" else "llm"), client
 
 
 def _conversation(kind: str, session: Session, client: Any) -> Any:
@@ -78,8 +87,13 @@ def _flow(args: argparse.Namespace) -> int:
         if args.retrieve:
             from .retrieval import default_index, reference
             references = [reference(hit) for hit in default_index().search(notice, k=3)]
-        proposal = workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=args.max_tokens,
-                                               network=args.network, references=references)
+        try:
+            client = llm.OpenAICompatibleClient(limits=llm.limits_from_env(max_total_tokens=args.max_tokens))
+            proposal = workflow.propose_from_model(notice, client, network=args.network, references=references)
+        except (llm.LLMError, ValueError) as error:
+            print(f"实时模式没有完成：{error}")
+            return 2
+        print(f"用量：{json.dumps(client.spending(), ensure_ascii=False)}")
     original = proposal
     changes = {k: v for k, v in (("carbon_cap_pct", args.carbon_cap), ("hedge_probability_pct", args.probability))
                if v is not None}
@@ -243,6 +257,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     c = corpus.add_parser("fetch", help="download the original notice pages locally; needs --yes")
     c.add_argument("--yes", action="store_true", help="consent to contacting the carrier websites")
     c.add_argument("--ids", help="comma-separated notice ids, e.g. R014,E02")
+    sub.add_parser("llm-check", help="show the live-call configuration and what is missing (no network, no key shown)")
     p = sub.add_parser("replay", help="replay recorded model runs through the LangGraph agent (no API calls)")
     p.add_argument("--source", type=Path, default=Path("benchmark_results/planning_agent"))
     p.add_argument("--output", type=Path)
@@ -251,6 +266,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
+    if args.command == "llm-check":
+        report = llm.status()
+        print(json.dumps(report, indent=2, ensure_ascii=False))
+        return 2 if report["problems"] else 0
     if args.command == "flow":
         return _flow(args)
     if args.command == "corpus":
@@ -265,7 +284,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         report = rescore(args.agent if args.agent in ("rule", "graph") else "llm", args.output)
         print(json.dumps(report["summary"], indent=2, ensure_ascii=False))
         return 0
-    kind, client = _agent(args.agent)
+    try:
+        kind, client = _agent(args.agent, getattr(args, "max_tokens", None))
+    except llm.LLMError as error:
+        print(f"没有调用模型：{error}")
+        return 2
     if args.command == "eval":
         ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None
         report = evaluate(kind, split=args.split, ids=ids, output=args.output, client=client, resume=args.resume,

@@ -182,8 +182,7 @@ class DecisionWorkflowTests(unittest.TestCase):
                     "disruptions": [{"mode": "ocean", "start_week": 4, "end_week": 12}]})]}
 
         references = [retrieval.reference(h) for h in retrieval.default_index().search("红海绕行好望角", k=2)]
-        proposal = workflow.propose_from_model("红海绕行，对备件有什么影响？", Scripted(), max_tokens=5000,
-                                               references=references)
+        proposal = workflow.propose_from_model("红海绕行，对备件有什么影响？", Scripted(), references=references)
         prompt = json.dumps(seen[0], ensure_ascii=False)
         self.assertIn("[R014]", prompt)
         self.assertIn("Cape of Good Hope adds between 7 to 14 days", prompt)
@@ -191,7 +190,7 @@ class DecisionWorkflowTests(unittest.TestCase):
         self.assertEqual(len(proposal.missing), 3)
 
     @unittest.skipUnless(GRAPH, "requires the agent extra")
-    def test_live_mode_needs_a_token_cap_and_runs_no_scenario_tool(self):
+    def test_live_mode_runs_no_scenario_tool_and_labels_a_scripted_client(self):
         from planning_agent import workflow
 
         class Scripted:
@@ -208,15 +207,44 @@ class DecisionWorkflowTests(unittest.TestCase):
             def chat(self, messages, tools=None):
                 return self.replies.pop(0)
 
-        with self.assertRaises(ValueError):
-            workflow.propose_from_model("第5到8周海运延误1周", Scripted(), max_tokens=None)
         with mock.patch("planning_agent.tools.Session.call", autospec=True,
                         side_effect=lambda self, name, args: {"skus": 12, "lanes": []}) as tool:
-            proposal = workflow.propose_from_model("第5到8周海运延误1周", Scripted(), max_tokens=5000)
+            proposal = workflow.propose_from_model("第5到8周海运延误1周", Scripted())
         self.assertEqual([c.args[1] for c in tool.call_args_list], ["describe_network"])  # read-only lookup only
         self.assertEqual(proposal.mode, "live")
         self.assertIn("1,280", proposal.source)
+        self.assertIn("模拟客户端", proposal.source)
         self.assertEqual(proposal.disruptions[0]["extra_lead_weeks"], 1)
+
+    def test_the_same_parameters_can_be_previewed_and_solved_again_after_a_hedge(self):
+        from planning_agent import workflow
+        session = self.session()
+        proposal = workflow.propose_from_rules(workflow.DEMO_NOTICE).with_changes(hedge_probability_pct=25)
+        first = workflow.run(proposal, session, confirmed=True)
+        self.assertNotIn("error", first.hedge)
+        self.assertIsNone(workflow.preview(proposal, session)["error"])  # the page previews on every rerun
+        second = workflow.run(proposal, session, confirmed=True)
+        self.assertEqual(second.hedge["VSS_usd"], first.hedge["VSS_usd"])
+
+    def test_a_scenario_created_again_after_a_hedge_is_hedged_with_its_new_definition(self):
+        session = self.session()
+        def scenario(capacity):
+            return {"network": "asml", "name": "same_name", "disruptions": [
+                {"mode": "ocean", "start_week": 4, "end_week": 12, "capacity_change_pct": capacity}]}
+        hedge = {"network": "asml", "scenarios": ["normal", "same_name"], "probabilities": [75, 25]}
+        self.assertNotIn("error", session.call("create_scenario", scenario(-10)))
+        self.assertNotIn("error", session.call("hedge_disruption_risk", hedge))
+        self.assertNotIn("error", session.call("create_scenario", scenario(-60)))
+        self.assertNotIn("error", session.call("hedge_disruption_risk", hedge))
+        net = session.network("asml")
+        self.assertEqual(net.scenario("same_name").to_dict()["disruptions"],
+                         session.scenario("asml", "same_name").to_dict()["disruptions"])
+
+    def test_a_predefined_scenario_name_is_still_refused(self):
+        session = self.session()
+        result = session.call("create_scenario", {"network": "asml", "name": "red_sea", "disruptions": [
+            {"mode": "ocean", "start_week": 4, "end_week": 12}]})
+        self.assertIn("predefined", result["error"])
 
     def test_command_line_flow_runs_to_a_memo_and_live_mode_needs_a_key(self):
         from planning_agent.__main__ import main

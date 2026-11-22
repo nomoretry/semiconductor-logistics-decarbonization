@@ -21,7 +21,7 @@ flowchart LR
     L --> G["数字护栏：每个数字可追溯"]
     G -->|不通过：要求重写一次| L
     G --> A["回答 / 决策备忘录"]
-    U -.->|无 LLM_API_KEY| R["规则 Agent（离线兜底与评测基线）"]
+    U -.->|无密钥、模型名或限额| R["规则 Agent（离线兜底与评测基线）"]
     R --> T
 ```
 
@@ -83,7 +83,7 @@ flowchart LR
 4. **假设显式化。** 用户没给的扰动参数保持正常值，并写进 `assumptions`；备忘录固定附“假设与局限”。
 5. **状态用 id 引用。** 完整方案留在会话里，模型只传 `plan_id`，不需要复制大段数字。
 6. **单 Agent 加工具。** 链路短、可验证性更重要，所以没有拆成多个 Agent。
-7. **离线可运行。** 没有 `LLM_API_KEY` 时自动改用规则 Agent，CI 和演示不依赖外部服务。
+7. **离线可运行。** 没有密钥、模型名或限额时自动改用规则 Agent，CI 和演示不依赖外部服务。
 
 ### 评测
 
@@ -134,18 +134,21 @@ python -m planning_agent --agent graph eval --output benchmark_results/planning_
 接入大模型（任意 OpenAI 兼容、支持 function calling 的服务），PowerShell 示例：
 
 ```powershell
-$env:LLM_API_KEY = "<你的 key>"
+$s = Read-Host "LLM_API_KEY" -AsSecureString          # 隐藏输入，不进命令历史
+$env:LLM_API_KEY = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($s))
 $env:LLM_BASE_URL = "https://api.deepseek.com/v1"   # 或 https://dashscope.aliyuncs.com/compatible-mode/v1
 $env:LLM_MODEL_ID = "deepseek-chat"                  # 或 qwen-plus
-python -m planning_agent --agent llm eval --output benchmark_results/planning_agent
+$env:LLM_MAX_REQUESTS = "20"; $env:LLM_MAX_TOTAL_TOKENS = "60000"; $env:LLM_MAX_OUTPUT_TOKENS = "800"
+python -m planning_agent llm-check                   # 不联网，不显示密钥
+python -m planning_agent --agent llm eval --ids D01,D13 --output artifacts/planning_agent/live_check
 ```
 
-key 只从环境变量读取，不会写入文件、日志或评测结果。
+key 只从环境变量读取，不会写入文件、日志或评测结果。没有限额变量时不会发出任何请求，见[配置与限额](live_model_safety.md)。
 
 **推理模型与付费评测的保护措施**：
 
 - 有些 OpenAI 推理模型（如 gpt-6.1-sol）在 `/v1/chat/completions` 上不允许“推理 + 工具调用”，推理强度也不能设为 `none`。客户端遇到这类 400 错误时自动改用 `/v1/responses`，并把推理条目随工具调用一起回传；也可以用 `LLM_API_STYLE=responses` 直接指定。推理强度用 `LLM_REASONING_EFFORT`（low/medium/high/xhigh）设置，单次请求超时用 `LLM_TIMEOUT`（默认 600 秒）。
-- 评测每完成一条就写入 `llm_cases.jsonl`；`--resume` 跳过已保存的用例，中断后重跑不会重复付费；`--max-tokens` 在用例之间检查累计 token，达到预算就停止并在汇总里记录剩余用例；`--ids` 只跑指定用例，用于先小规模试跑。
+- 评测每完成一条就写入 `llm_cases.jsonl`；`--resume` 跳过已保存的用例，中断后重跑不会重复付费；限额在每个请求发出前检查（[配置与限额](live_model_safety.md)），达到后停止，当前用例不计分，并在汇总里记录剩余用例；`--ids` 只跑指定用例，用于先小规模试跑。
 - 汇总文件记录模型、接口、推理强度和总 token（含推理 token），逐条记录每个用例的 token。
 
 ```powershell
@@ -187,6 +190,8 @@ Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool call
 **Design choices.** Tools do all arithmetic (`compare_plans` computes differences); validation errors are actionable feedback; every number in an answer must trace to a tool result or the user's words at the precision shown, otherwise one rewrite is requested and remaining issues are flagged; omitted scenario parameters become explicit assumptions; plans are referenced by id; one agent with tools rather than several agents; offline fallback without an API key.
 
 **Evaluation.** 24 planner questions: 14 development cases written with the rule agent and 10 later robustness cases (English, paraphrases, numbers in words, multi-intent, clarification). Both were written by the same author, so the robustness set is a probe, not an independent test. Gold numbers are recomputed by the engine. The rule agent solves 14/14 development cases and 4/10 robustness cases with 100% numeric faithfulness, failing on wording outside its patterns. The 24-case run (gpt-6.1-sol, Responses API, xhigh, at most 16 model calls) solves 18/24 after the guardrail fix (9/14 development, 9/10 robustness) versus the rule baseline's 14/14 and 4/10, using 102 model calls, 314,075 input and 42,058 output tokens (22,475 reasoning), about 1.05 USD at published rates. The as-run scores were 16/24: a guardrail bug truncated numbers written directly after Chinese characters, flagging D13 and H10; `eval --rescore` replays the recorded tool calls (0 of 102 replayed calls, 17 of them rejected by validation, differ in success) and rechecks the answers offline, keeping both files. The six remaining failures ask for clarification instead of using a preset (D04, D05, H06), assume a week-4 reveal where the gold uses the week-3 default (D10, D11), or omit the gold number (D09). Tool descriptions now state defaults; the prompt is unchanged, and any later prompt revision must be reported as tuned after seeing these 24 questions. A three-case LLM pilot (gpt-6.1-sol, Responses API, xhigh reasoning, at most 8 model calls) solved D03 and D13 with fully traceable numbers and exhausted the step cap on H05; it used 73,898 input and 8,582 output tokens (3,733 reasoning) at about 52 seconds per case. The cap is now 16, evaluation rows keep tool arguments and errors, and validation errors name the failing field and value; the prompt was not changed.
+
+**Limits.** A paid call needs a key, a model id and spending limits, all checked before each request; without them the rule agent runs or the command refuses. See [configuration and limits](live_model_safety.md).
 
 **Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 

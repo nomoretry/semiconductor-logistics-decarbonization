@@ -151,7 +151,8 @@ def evaluate(agent: str, *, split: str = "all", ids: Collection[str] | None = No
     """Run the cases, saving each row as soon as it is scored.
 
     resume skips cases already in <agent>_cases.jsonl, so an interrupted paid run is never repeated;
-    max_tokens stops between cases once the recorded usage reaches the budget.
+    max_tokens stops between cases once the recorded usage reaches the budget. A client's own limits stop it mid-case:
+    that case is not scored or saved, because a budget stop says nothing about the agent.
     """
     from .agent import run_llm
     from .rules import run_rules
@@ -183,6 +184,10 @@ def evaluate(agent: str, *, split: str = "all", ids: Collection[str] | None = No
             result = run_graph(case["question"], session, client)
         else:
             result = run_llm(case["question"], session, client)
+        budget_stop = getattr(client, "budget_stop", None)
+        if budget_stop:
+            stopped = {"reason": budget_stop, "remaining": [c["id"] for c in todo[n - 1:]]}
+            break
         row = score(case, result, gold)
         after = dict(getattr(client, "usage", None) or {})
         row.update(answer=result.answer, model=getattr(client, "model", None),
@@ -200,6 +205,8 @@ def evaluate(agent: str, *, split: str = "all", ids: Collection[str] | None = No
     order = {c["id"]: i for i, c in enumerate(load_cases())}
     rows.sort(key=lambda r: order.get(r["id"], len(order)))
     summary = {"agent": agent, "model": getattr(client, "model", None),
+               "call_kind": getattr(client, "call_kind", "simulated") if client is not None else "none",
+               "spending": client.spending() if hasattr(client, "spending") else None,
                "api_style": getattr(client, "api_style", None),
                "reasoning_effort": getattr(client, "reasoning_effort", None),
                "usage": {k: sum((r.get("usage") or {}).get(k, 0) for r in rows) for k in USAGE_KEYS},
