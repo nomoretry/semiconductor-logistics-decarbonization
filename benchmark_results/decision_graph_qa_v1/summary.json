@@ -1,0 +1,70 @@
+{
+  "attempted": 880,
+  "by_policy": {
+    "base_stock": 440,
+    "mpc_scenarios": 440
+  },
+  "by_profile": {
+    "downshift": 220,
+    "stable": 220,
+    "upshift": 220,
+    "volatile": 220
+  },
+  "by_split": {
+    "dev": 176,
+    "test": 352,
+    "train": 352
+  },
+  "edge_layers": {
+    "object": 10560,
+    "task": 44880
+  },
+  "edges_by_target_stage": {
+    "B": 7040,
+    "M": 6160,
+    "P1": 880,
+    "P2": 22880,
+    "P3": 18480
+  },
+  "estimated_formal_seconds": 482.4455795913234,
+  "extended_planner_presolve": false,
+  "failures": 0,
+  "graphs": 880,
+  "max_abs_difference": 2.842170943040401e-14,
+  "max_relative_difference": 2.9890619893754207e-16,
+  "nodes": {
+    "B": 880,
+    "M": 880,
+    "P1": 10560,
+    "P2": 9680,
+    "P3": 5280
+  },
+  "p95_seconds": 0.4800517949901402,
+  "paths": 40,
+  "phase": "formal",
+  "presolve_retry_confirmed": {},
+  "presolve_retry_recovered": {},
+  "reference_planner_presolve": true,
+  "solves": {
+    "exclude_action": 880,
+    "face_endpoint": 5280,
+    "known_path": 880,
+    "opposite_flag": 2640,
+    "reference": 880,
+    "unrestricted": 880
+  },
+  "status": "complete",
+  "stop_reason": "",
+  "tie_counts": {
+    "B": 215,
+    "P3.emission": 1,
+    "P3.load.0": 0,
+    "P3.load.1": 1,
+    "P3.ship.0": 63,
+    "P3.ship.1": 14,
+    "P3.ship.2": 83,
+    "known_action_differs": 762
+  },
+  "trajectories": 80,
+  "wall_seconds": 221.21649990000878
+}

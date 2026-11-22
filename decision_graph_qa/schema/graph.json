@@ -1,0 +1,981 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rolling inventory decision graph v1",
+  "$defs": {
+    "action": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "state": {
+      "type": "object",
+      "properties": {
+        "t": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "public": {
+          "type": "object",
+          "properties": {
+            "periods": {
+              "const": 12
+            },
+            "horizon": {
+              "const": 6
+            },
+            "scenarios": {
+              "const": 7
+            },
+            "forecast_alpha": {
+              "type": "number"
+            },
+            "scenario_seed": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "holding": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "backlog": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "terminal_backlog": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "mass": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "lead": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "capacity": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "freight": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "emissions": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "carbon_price": {
+              "type": "number"
+            },
+            "initial_inventory": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "base_mean": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "carbon_budget": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "initial_pipeline": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "minItems": 12,
+              "maxItems": 12
+            }
+          },
+          "required": [
+            "periods",
+            "horizon",
+            "scenarios",
+            "forecast_alpha",
+            "scenario_seed",
+            "holding",
+            "backlog",
+            "terminal_backlog",
+            "mass",
+            "lead",
+            "capacity",
+            "freight",
+            "emissions",
+            "carbon_price",
+            "initial_inventory",
+            "base_mean",
+            "carbon_budget",
+            "initial_pipeline"
+          ],
+          "additionalProperties": false
+        },
+        "stock": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "backlog": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "arrivals": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "served_old": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "pipeline": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minItems": 12,
+          "maxItems": 12
+        },
+        "carbon_remaining": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minItems": 0,
+          "maxItems": 10
+        },
+        "forecast": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "minItems": 2,
+          "maxItems": 12
+        }
+      },
+      "required": [
+        "t",
+        "public",
+        "stock",
+        "backlog",
+        "arrivals",
+        "served_old",
+        "pipeline",
+        "carbon_remaining",
+        "history",
+        "forecast"
+      ],
+      "additionalProperties": false
+    },
+    "nodeId": {
+      "enum": [
+        "P1.stock.0",
+        "P1.stock.1",
+        "P1.stock.2",
+        "P1.backlog.0",
+        "P1.backlog.1",
+        "P1.backlog.2",
+        "P1.pipeline.0",
+        "P1.pipeline.1",
+        "P1.pipeline.2",
+        "P2.sum.0",
+        "P2.sum.1",
+        "P2.sum.2",
+        "P2.first.0",
+        "P2.first.1",
+        "P2.first.2",
+        "P2.peak.0",
+        "P2.peak.1",
+        "P2.peak.2",
+        "P3.ship.0",
+        "P3.ship.1",
+        "P3.ship.2",
+        "P1.remaining",
+        "P1.allowance",
+        "P1.routes",
+        "P2.capacity",
+        "P2.carbon",
+        "P3.load.0",
+        "P3.load.1",
+        "P3.emission",
+        "B",
+        "M"
+      ]
+    },
+    "localized": {
+      "type": "object",
+      "properties": {
+        "zh": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "zh",
+        "en"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "split": {
+      "enum": [
+        "train",
+        "dev",
+        "test"
+      ]
+    },
+    "profile": {
+      "enum": [
+        "stable",
+        "volatile",
+        "upshift",
+        "downshift"
+      ]
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "policy": {
+      "enum": [
+        "mpc_scenarios",
+        "base_stock"
+      ]
+    },
+    "observation": {
+      "$ref": "#/$defs/state"
+    },
+    "state_text": {
+      "$ref": "#/$defs/localized"
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "stage": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "B",
+              "M"
+            ]
+          },
+          "question": {
+            "$ref": "#/$defs/localized"
+          },
+          "answer": {}
+        },
+        "required": [
+          "id",
+          "stage",
+          "question",
+          "answer"
+        ],
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.stock.0",
+                    "P1.stock.1",
+                    "P1.stock.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.backlog.0",
+                    "P1.backlog.1",
+                    "P1.backlog.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.pipeline.0",
+                    "P1.pipeline.1",
+                    "P1.pipeline.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "minItems": 2,
+                  "maxItems": 6
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.remaining"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.allowance"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "number"
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P1.routes"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "array",
+                  "items": {
+                    "enum": [
+                      0,
+                      1
+                    ]
+                  },
+                  "minItems": 1,
+                  "maxItems": 2
+                },
+                "stage": {
+                  "const": "P1"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P2.sum.0",
+                    "P2.sum.1",
+                    "P2.sum.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "number"
+                },
+                "stage": {
+                  "const": "P2"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P2.first.0",
+                    "P2.first.1",
+                    "P2.first.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "anyOf": [
+                    {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "stage": {
+                  "const": "P2"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P2.peak.0",
+                    "P2.peak.1",
+                    "P2.peak.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "number"
+                },
+                "stage": {
+                  "const": "P2"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P2.capacity"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "boolean"
+                },
+                "stage": {
+                  "const": "P2"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P2.carbon"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "boolean"
+                },
+                "stage": {
+                  "const": "P2"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P3.ship.0",
+                    "P3.ship.1",
+                    "P3.ship.2"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "boolean"
+                },
+                "stage": {
+                  "const": "P3"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P3.load.0",
+                    "P3.load.1"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stage": {
+                  "const": "P3"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "P3.emission"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "stage": {
+                  "const": "P3"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "B"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "$ref": "#/$defs/action"
+                },
+                "stage": {
+                  "const": "B"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "id": {
+                  "enum": [
+                    "M"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "answer": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "minItems": 3,
+                    "maxItems": 3
+                  },
+                  "minItems": 2,
+                  "maxItems": 6
+                },
+                "stage": {
+                  "const": "M"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "minItems": 31,
+      "maxItems": 31
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "to": {
+            "$ref": "#/$defs/nodeId"
+          },
+          "layer": {
+            "enum": [
+              "task",
+              "object"
+            ]
+          }
+        },
+        "required": [
+          "from",
+          "to",
+          "layer"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 100
+    },
+    "modes": {
+      "const": [
+        "None",
+        "Chain",
+        "Graph"
+      ]
+    },
+    "objective": {
+      "type": "number"
+    },
+    "ties": {
+      "type": "object",
+      "properties": {
+        "new_objective": {
+          "type": "number"
+        },
+        "opposite_flags": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "load_ranges": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "emission_range": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "other_action": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "new_objective",
+        "opposite_flags",
+        "load_ranges",
+        "emission_range",
+        "other_action"
+      ],
+      "additionalProperties": false
+    },
+    "hindsight": {
+      "type": "object",
+      "properties": {
+        "prediction": {
+          "type": "object",
+          "properties": {
+            "P2.sum.0": {
+              "type": "number"
+            },
+            "P2.sum.1": {
+              "type": "number"
+            },
+            "P2.sum.2": {
+              "type": "number"
+            },
+            "P2.first.0": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "P2.first.1": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "P2.first.2": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "P2.peak.0": {
+              "type": "number"
+            },
+            "P2.peak.1": {
+              "type": "number"
+            },
+            "P2.peak.2": {
+              "type": "number"
+            },
+            "P2.capacity": {
+              "type": "boolean"
+            },
+            "P2.carbon": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "P2.sum.0",
+            "P2.sum.1",
+            "P2.sum.2",
+            "P2.first.0",
+            "P2.first.1",
+            "P2.first.2",
+            "P2.peak.0",
+            "P2.peak.1",
+            "P2.peak.2",
+            "P2.capacity",
+            "P2.carbon"
+          ],
+          "additionalProperties": false
+        },
+        "first_action_with_known_demand": {
+          "$ref": "#/$defs/action"
+        }
+      },
+      "required": [
+        "prediction",
+        "first_action_with_known_demand"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "split",
+    "profile",
+    "seed",
+    "policy",
+    "observation",
+    "state_text",
+    "nodes",
+    "edges",
+    "modes",
+    "objective",
+    "ties",
+    "hindsight"
+  ],
+  "additionalProperties": false
+}

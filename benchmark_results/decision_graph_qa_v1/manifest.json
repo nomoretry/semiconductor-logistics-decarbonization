@@ -1,0 +1,13 @@
+{
+  "algorithm": "SHA256",
+  "files": {
+    "attempts.jsonl": "ee3fbf5eb82244ef1894c86855f5ad8eeb101a29ba586a8637adcbaa35026605",
+    "config.json": "289a31e56509a6e8f67fb95b115e56bb1a38ae0d82528c394966b9c859f7b6e8",
+    "dev.jsonl": "b58eede70aa849d242110c019b0d0e27d1f0e830e6bccf1c942c3176e113b7d5",
+    "environment.json": "bfbf5655138a0453cbc46bb5beec5e1520320dbf1d9d7f06bc3fc3d814fdad5a",
+    "graph.schema.json": "6c1fea8d2cb20df8a0b9e14491e7d94720f7b3ded3b420aeaf66a5b6042ca7ee",
+    "summary.json": "f471b240e4cb5d851978f5a6eea1835170f8b80e943810829e73449c1f627960",
+    "test.jsonl": "e86cbbb00b109a105dd45bbd5e188d05bda17d7743448a1f3ccdf5b4aeea999c",
+    "train.jsonl": "40ae4c107b24470ad7cf946f6ade798b43b83a153919d25e32e80a54484d54f1"
+  }
+}

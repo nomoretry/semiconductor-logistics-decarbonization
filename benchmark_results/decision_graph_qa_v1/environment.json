@@ -1,0 +1,27 @@
+{
+  "extended_planner_presolve": false,
+  "packages": {
+    "jsonschema": "4.26.0",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "platform": "Windows-10-10.0.19045-SP0",
+  "processor": "Intel64 Family 6 Model 165 Stepping 2, GenuineIntel",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "reference_planner_presolve": true,
+  "sha256_amendment": "2acefb1433ba23e0f132cdb822f438aecd02c686fc07d698e2280bbff0234c91",
+  "sha256_config": "d671a7cd6cabf1b1a6962e886874b4ae377857581d52cd750c0ac07319c66b8c",
+  "sha256_protocol": "115582ca316d42deddda061ae80081263c7ab750ba4ee4eab30f9c64b14b098b",
+  "source_sha256": {
+    "decision_graph_qa/__init__.py": "288d444a90455c5c4969b2463f15f38fcd3ec235681ecde7a9a9242a5386aaf7",
+    "decision_graph_qa/__main__.py": "e6c2f78622993aca9cf0fddfa71c711fa6020e3f2f06a8561be81f28259e4acc",
+    "decision_graph_qa/dataset.py": "a7b35f71868a5ab9687cd06a51917f70094a82d1c57cfa081b3f0ceb5d3fd958",
+    "decision_graph_qa/graph.py": "3df4331ad9180e5969a7d06464b771bd83fe6ac50fb8bd6c3f213a6faa0bb526",
+    "decision_graph_qa/planner.py": "3c7b35754b09cf5387726989bd8f030344ba3ab64dd0281372a72219a4d178eb",
+    "decision_graph_qa/replay.py": "5b0e0576eb9012bcdf330ea74d47559e28bb880b3b3ef5246cf72318d8be554b",
+    "decision_graph_qa/schema/graph.json": "6c1fea8d2cb20df8a0b9e14491e7d94720f7b3ded3b420aeaf66a5b6042ca7ee",
+    "decision_graph_qa/scoring.py": "fd5679501f392ee634d17d575ab95bc7cd32b3fdbd69ff1dafc48c04819cb2e3",
+    "rolling_inventory/environment.py": "3a08327ef704eff16be7b44fca006fa8d5c252a90027e3c5cff990b388e851f4",
+    "rolling_inventory/planning.py": "0dd0123f21908c1702980cbcf6bd58235bb29a1a66280d7ac6d35c3e80a8f8f3"
+  }
+}
