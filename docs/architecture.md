@@ -14,7 +14,7 @@ This document is available in Chinese and English; English follows Chinese.
 | 研究线 | 实际连接 | 代码 | 证据范围 |
 |---|---|---|---|
 | 公告与计划 | 文本/上下文→抽取→校验→允许列表编译→MILP→物理审计 | `notice_benchmark/`、`shared/` | 400条独立合成测试；固定LLM/规则对照；事务工具流程 |
-| 真实材料 | 官方摘录→澄清或数量事实→助手参考评分 | `real_notice_eval/`、`notice_facts/` | 16条澄清、8条数量案例；未验证内部路线更新 |
+| 真实材料 | 官方摘录→澄清或数量事实→大模型参考评分 | `real_notice_eval/`、`notice_facts/` | 16条澄清、8条数量案例；未验证内部路线更新 |
 | 信息获取 | 已知订单/公开延误先验→付费观测→信念更新→运输求解 | `decision_benchmark/`、`coupled_decision/`、`budgeted_decision/` | 多SKU、共享容量、查询预算、强搜索和等计算预算 |
 | 查询学习 | 公开特征/候选→BC/PPO查询或提交→最终MILP | `query_policy/`、`query_ppo/`、`query_study/`、`query_components/` | 5种子、冻结1,000情境、27,000评估；无稳定PPO收益 |
 | 滚动库存 | 历史需求/库存/积压/在途/碳→预测→规划首期动作→需求实现→下一状态 | `rolling_inventory/`、`rolling_sensitivity/`、`rolling_forecast/` | 基线、敏感性和均值预测比较；未训练滚动BC/PPO |
@@ -64,7 +64,7 @@ Architecture follows [this project's research questions](research_design.md); lo
 | Research line | Implemented connection | Code | Evidence scope |
 |---|---|---|---|
 | Notices/plans | Text/context → extraction → validation → allowlisted compilation → MILP → physical audit | `notice_benchmark/`, `shared/` | 400 distinct synthetic tests; fixed LLM/rules; transactional workflow |
-| Real excerpts | Official excerpt → clarification/quantities → assistant-reference scoring | `real_notice_eval/`, `notice_facts/` | 16 clarification and 8 quantity cases; no validated internal-route updates |
+| Real excerpts | Official excerpt → clarification/quantities → model-reference scoring | `real_notice_eval/`, `notice_facts/` | 16 clarification and 8 quantity cases; no validated internal-route updates |
 | Information acquisition | Known orders/public priors → paid observation → belief update → transport optimization | `decision_benchmark/`, `coupled_decision/`, `budgeted_decision/` | Multiple SKUs, shared capacity, query budgets, strong search and matched compute budgets |
 | Query learning | Public features/candidates → BC/PPO query or commit → final MILP | `query_policy/`, `query_ppo/`, `query_study/`, `query_components/` | Five seeds, 1,000 frozen contexts, 27,000 evaluations; no stable PPO benefit |
 | Rolling inventory | History/stock/backlog/pipeline/carbon → forecast → first action → realized demand → next state | `rolling_inventory/`, `rolling_sensitivity/`, `rolling_forecast/` | Baselines, sensitivity and mean-forecast comparison; no rolling BC/PPO |
