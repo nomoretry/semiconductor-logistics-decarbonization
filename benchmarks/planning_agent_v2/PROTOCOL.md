@@ -27,7 +27,7 @@ This document provides Chinese first and English second. Tasks, scorer and confi
 |---|---|---|---|
 | A | 8 | 7 条可执行的公告或假设（中英文、数字写法、单位换算、两条扰动、需求变化、未说明字段）；1 条缺关键信息 | 每个字段的值；引擎算出的数字 |
 | B | 6 | 查网络、预设场景、碳前沿、对冲、解释加备忘录、无关请求 | 必须成功调用的工具和关键参数；引擎算出的数字 |
-| C | 6 | 真实船公司公告摘录，只给原文，并追问成本和排放 | 公告本身不能给出可执行参数。参考答案是助手标注，**未经人工复核** |
+| C | 6 | 真实船公司公告摘录，只给原文，并追问成本和排放 | 公告本身不能给出可执行参数。参考答案为暂定标注，**未经人工复核** |
 
 C 组抽取规则：`real_notices_v1` 的 16 条按参考答案是否含数量分层，用 `random.Random(20261104)` 打乱，每层取 3 条，事件组不重复。结果：R009、R015、R016（含数量），R011、R003、R008（不含数量）。
 
@@ -88,7 +88,7 @@ Twenty tasks are twenty questions; sixty runs are not sixty independent question
 |---|---|---|---|
 | A | 8 | Seven executable notices or what-ifs (Chinese and English, numbers in words, unit conversion, two disruptions, demand change, unstated fields); one with key information missing | Value of each field; engine numbers |
 | B | 6 | Network lookup, preset scenario, carbon frontier, hedge, explanation with memo, an unrelated request | Tools that must succeed and key arguments; engine numbers |
-| C | 6 | Real carrier notice excerpts, text only, with a question about cost and emissions | The notice alone gives no executable parameters. Assistant-written references, **not reviewed by a person** |
+| C | 6 | Real carrier notice excerpts, text only, with a question about cost and emissions | The notice alone gives no executable parameters. Provisional references, **not reviewed by a person** |
 
 Group C selection: the 16 `real_notices_v1` items were split by whether the reference lists a quantity, shuffled with `random.Random(20261104)`, and three were taken from each stratum without repeating an event group: R009, R015, R016 (quantity); R011, R003, R008 (none).
 
