@@ -132,6 +132,7 @@ class ConfigurationTests(Base):
         os.environ.update(LLM_INPUT_USD_PER_M="0.1", LLM_OUTPUT_USD_PER_M="0.5")
         self.assertEqual(limits_from_env().max_usd, 0.5)
 
+    @unittest.skipUnless(PLANNING, "requires the planning extra")
     def test_the_check_command_reports_problems_and_never_prints_the_key(self):
         from planning_agent.__main__ import main
         os.environ.update(LLM_API_KEY=KEY)
@@ -143,6 +144,7 @@ class ConfigurationTests(Base):
         self.assertTrue(any("LLM_MODEL_ID" in p for p in report["problems"]))
         self.assertNotIn(KEY, out.getvalue())
 
+    @unittest.skipUnless(PLANNING, "requires the planning extra")
     def test_a_key_alone_never_starts_a_paid_call_from_the_command_line(self):
         from planning_agent.__main__ import _agent, main
         os.environ.update(LLM_API_KEY=KEY, LLM_MODEL_ID="m")
@@ -250,12 +252,11 @@ class LimitTests(Base):
             client.chat(HI)
         self.assertEqual(client.spending()["tokens"], 120)  # what it did use is still counted
 
+    @unittest.skipUnless(PLANNING, "requires the planning extra")
     def test_the_input_bound_covers_the_recorded_single_request_usage(self):
         """Recorded one-call cases, gpt-6.1-sol: 1,348 to 1,359 input tokens. The bound must not be below them."""
         from planning_agent.agent import SYSTEM_PROMPT
         from planning_agent.tools import Session
-        if not PLANNING:
-            self.skipTest("requires the planning extra")
         rows = [json.loads(line) for line in (ROOT / "benchmark_results/planning_agent/llm_cases.jsonl")
                 .read_text(encoding="utf-8").splitlines() if line.strip()]
         checked = 0
