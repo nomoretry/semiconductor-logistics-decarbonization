@@ -200,6 +200,7 @@ fleet 拥堵情景中，两条启发式搜索走了不同的排班序列。B\* �
 - 电网只建模接入容量（站点容量、变电站余量、扩容），没有交流潮流；没有拓扑数据，不对电压或线路载荷下结论。
 - 情景在季节开始时一次揭示，季中不逐周学习；代表周要求每周一满电在车场（结果六量化其代价）。
 - 六种情景的概率是研究假设。两阶段分析仅覆盖 base；未在时限内证明最优的设定，报告可行成本并用上下界表达不确定范围。
+- 对于时限内未证明最优的两阶段和连续周期求解，成本区间的下端取自开启预处理时的对偶界，VSS、EVPI 和连续 16 周限制代价的区间都依赖这些未经关闭预处理复核的下界。
 - fleet 规模的整数规划在时间限制内没有收敛，那里的 C 与 B\* 之差只给出界（结果七）。
 - 每个设定执行一次；同一作者设计情景，未独立验证。
 
@@ -431,6 +432,7 @@ Both replays passed independent accounting. The first reproduced the cost and bo
 - The grid is modelled as connection capacity (site capacity, substation headroom, expansion), not AC power flow; without topology data nothing is claimed about voltages or line loading.
 - A scenario is revealed once at the start of the season, with no week-by-week learning; representative weeks require every truck full at the depot every Monday (result 6 measures what that costs).
 - The six scenario probabilities are assumptions. The two-stage analysis covers only the base instance. Where the time limit leaves optimality open, feasible costs and bounds describe the remaining uncertainty.
+- For the two-stage and continuous-horizon solves that reached the time limit without proving optimality, the cost intervals use dual bounds obtained with presolve enabled as their lower endpoints, and the intervals for VSS, EVPI and the 16-week restriction cost all depend on these bounds, which were not checked with presolve disabled.
 - At fleet scale the integer program does not converge within the time limit, so the difference between C and B\* there is only bounded (result 7).
 - Each setting solved once; scenarios designed by the same author; not independently verified.
 
