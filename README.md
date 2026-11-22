@@ -106,7 +106,7 @@ No default check calls a model API. Without Make, run the Python commands in the
 
 - All operational data are synthetic. Results compare policies under stated assumptions; they are not measurements of company operations or emission reductions.
 - Research lines are evaluated separately; there is no end-to-end validation across them.
-- Evaluation tasks were written by one author, and real-notice references are model-written and not reviewed by a person. Nothing here has been independently verified.
+- Evaluation tasks were written by one author, and real-notice references are provisional and not reviewed by a person. Nothing here has been independently verified.
 - The workflow's `live` mode has not been fully run against a real model (the evaluation calls the LangGraph agent directly). The Streamlit app is built and pending deployment.
 - Task completion is not logistics decision benefit, which is not measured.
 - CI runs on Ubuntu with Python 3.12 only. On Windows the full test suite has 17 known failures in frozen modules; macOS is not verified. There is no tagged release, and some earlier documents exist in Chinese only.

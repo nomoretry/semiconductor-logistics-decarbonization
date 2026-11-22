@@ -1,6 +1,6 @@
 # 真实事实抽取与内部更新分开评测
 
-16条真实摘录的窄任务审核已经完成：固定模型、冻结规则和始终澄清基线均16/16与大模型参考一致。原始API响应见[归档](../benchmark_results/real_notice_api/)，复算：
+16条真实摘录的窄任务审核已经完成：固定模型、冻结规则和始终澄清基线均16/16与暂定参考一致。原始API响应见[归档](../benchmark_results/real_notice_api/)，复算：
 
 ```bash
 python -m scripts.verify_real_notice_archive
