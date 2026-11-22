@@ -66,7 +66,7 @@ python -m streamlit run planning_agent/app.py            # 网页，步骤相同
 | 规划 Agent，24 个计划员问题（开发 14、鲁棒性 10，同一作者编写） | 规则 Agent 14/14、4/10。gpt-6.1-sol（xhigh，运行一次，修复护栏后离线重评）9/14、9/10，数字忠实度 100%。用 LangGraph Agent 回放录制运行，每题评分都与录制一致（成功 18/24）；这不是新的模型运行 | [Agent](docs/planning_agent.md) |
 | 公告检索，19 个事件分组的 38 个问题 | 37/38 的第一条结果属于正确事件（不用术语表时中文问题 4/19）。问题由同一作者在读过语料后编写，是开发检查，不是独立测试 | [检索](docs/notice_retrieval.md) |
 | 400 条合成留出公告的抽取 | 固定模型 400/400（同一 400 条重复运行也是 400/400）；冻结规则 204/400 | [结果](docs/results/api_test.md) |
-| 真实船公司公告 | 16 条摘录全部需要澄清；模型和“始终澄清”都与参考 16/16 一致，因此不能说明抽取能力。8 条数量抽取：模型 7/8，规则 6/8。参考标签由大模型生成，未经人工复核 | [语料](docs/data/real_notices.md)、[数量](docs/results/notice_facts_api.md) |
+| 真实船公司公告 | 16 条摘录全部需要澄清；模型和“始终澄清”都与参考 16/16 一致，因此不能说明抽取能力。8 条数量抽取：模型 7/8，规则 6/8。参考标签为暂定标注，未经人工复核 | [语料](docs/data/real_notices.md)、[数量](docs/results/notice_facts_api.md) |
 | 查询策略，冻结千题，5 个训练种子 | 平均遗憾 BC 3.1179%、PPO 3.1477%；PPO−BC +0.0298 个百分点，95% 区间 [−0.1817, +0.2540]。两步搜索 0.6309%、迭代 DP 0.0528% 仍然更好。PPO 没有稳定收益 | [结果](docs/query_final_results.md) |
 | 未知需求下的滚动库存 | 32 条开发路径上情景 MPC 成本 282.2406，base-stock 330.6219，排放更高。更快的预测使成本上升（+7.19%、+8.48%）；负二项需求模型成本 +2.06%，区间跨零。没有训练滚动 BC/PPO | [基线](docs/rolling_inventory_results.md)、[预测](docs/rolling_forecast_results.md)、[分布](docs/rolling_distribution_results.md) |
 
