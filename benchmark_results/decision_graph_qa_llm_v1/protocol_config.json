@@ -23,7 +23,8 @@
         "input": null,
         "reasoning": {"effort": "max", "mode": "standard"},
         "max_output_tokens": 64000,
-        "store": false
+        "store": false,
+        "service_tier": "default"
       }
     },
     "A": {
@@ -34,7 +35,8 @@
         "input": null,
         "reasoning": {"effort": "high", "mode": "standard"},
         "max_output_tokens": 64000,
-        "store": false
+        "store": false,
+        "service_tier": "default"
       }
     }
   },

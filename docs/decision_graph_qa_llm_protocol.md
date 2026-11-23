@@ -2,7 +2,7 @@
 
 本文先中文、后英文。The Chinese protocol precedes its English version.
 
-Protocol config SHA256: 835f08352d1d34c5eeabb4e1ae7f0fc1f047637b5968eac1a44cfaaf396bd179
+Protocol config SHA256: ec4f3a4ed681cc646195195a1f7bf11f1b540263517e9dc73cbe3efaaf83c09a
 
 [协议配置 / Protocol configuration](../benchmark_results/decision_graph_qa_llm_v1/protocol_config.json)
 
@@ -19,7 +19,7 @@ Protocol config SHA256: 835f08352d1d34c5eeabb4e1ae7f0fc1f047637b5968eac1a44cfaaf
 | S | `gpt-6.2-sol` | `max` | `standard` | B 主评测、P3 扩展和冒烟 |
 | A | `gpt-6.2-astra` | `high` | `standard` | B，仅登记，真实运行需另行批准 |
 
-两配置均使用 `max_output_tokens=64000`、`store=false` 和默认服务档。请求体只有 `model`、`instructions`、`input`、`reasoning`、`max_output_tokens`、`store`。启动时核对协议配置哈希，按键名排序、无多余空白的 UTF-8 JSON 计算请求体 SHA256。记录返回的模型快照和推理参数，报告标出同一配置内的快照变化。S 与 A 的比较针对整体配置。
+两配置均使用 `max_output_tokens=64000`、`store=false` 和默认服务档（`service_tier="default"`，见修订 1）。请求体只有 `model`、`instructions`、`input`、`reasoning`、`max_output_tokens`、`store`、`service_tier`。启动时核对协议配置哈希，按键名排序、无多余空白的 UTF-8 JSON 计算请求体 SHA256。记录返回的模型快照、推理参数和服务档，报告标出同一配置内的快照变化。S 与 A 的比较针对整体配置。
 
 ### 作答和状态
 
@@ -75,6 +75,10 @@ Batch 可用于主评测和 P3 扩展，预演单价为逐条的一半。导出�
 
 当前验收是离线预演、预算和续跑测试、判分等价验证。真实评测在这些验收后另行运行，先验证七条冒烟请求的接口和记账，再执行试点。所有数据和离线参照来自单个合成环境。
 
+### 修订 1：请求写明默认服务档
+
+本修订在任何真实请求之前做出。原配置的请求体没有 `service_tier`。按 OpenAI 文档，不写这个参数的请求按项目设置的服务档处理；项目设为 Fast 时按 Fast 计价，是标准价的 2 倍，而账本和 `--max-usd` 按标准价计算。修订后两个配置的请求体都写明 `service_tier="default"`，即标准价，配置哈希随之更新。逐条运行记录响应返回的 `service_tier`。返回值与请求不同时停止派发新请求，这次调用按标准价算出的费用乘 6 记账（价目表所列的最高倍数），作为上界。Batch 结果按 Batch 单价结算，不适用这条停止规则；Batch 沿用同一请求体，如果 Batch 接口不接受这个字段，先记录新的修订再提交。题目、抽样、判分和比较都不变。
+
 ## English
 
 ### Question and evidence
@@ -88,7 +92,7 @@ Read the three frozen English prompt files for the DQ-2 test split and `gold` so
 | S | `gpt-6.2-sol` | `max` | `standard` | B main evaluation, P3 extension, and smoke run |
 | A | `gpt-6.2-astra` | `high` | `standard` | B upon separate approval for a live run |
 
-Both configurations use `max_output_tokens=64000`, `store=false`, and the default service tier. The request body contains `model`, `instructions`, `input`, `reasoning`, `max_output_tokens`, and `store`. Verify the configuration hash on startup. Hash each request body as compact, key-sorted UTF-8 JSON. Record returned model snapshots and reasoning parameters, and flag snapshot changes within each configuration. Compare S and A as entire configurations.
+Both configurations use `max_output_tokens=64000`, `store=false`, and the default service tier (`service_tier="default"`, Amendment 1). The request body contains `model`, `instructions`, `input`, `reasoning`, `max_output_tokens`, `store`, and `service_tier`. Verify the configuration hash on startup. Hash each request body as compact, key-sorted UTF-8 JSON. Record returned model snapshots, reasoning parameters, and service tiers, and flag snapshot changes within each configuration. Compare S and A as entire configurations.
 
 ### Responses and states
 
@@ -143,3 +147,7 @@ Cost is (uncached input × input rate + cache reads × cache read rate + cache w
 Batch supports main and the P3 extension. Dry-run Batch prices are half of synchronous prices. Export the same request bodies and hashes and estimate cost using mean pilot output. Before submitting a chunk, reprice pilot usage at the provided Batch rates and reserve the pilot p95 per-call cost times the chunk size. The p95 reservation is a budget estimate and final charges may exceed it. Settle Batch results from actual usage and support idempotent offline imports. Append ledger and reply records and reuse terminal records for unchanged requests on resume. Analysis writes answers, per-graph results, summaries, bilingual tables, and a SHA256 manifest.
 
 Current acceptance covers offline dry runs, budget and resume tests, and grading equivalence checks. A separate live evaluation starts with seven smoke requests to verify the interface and ledger, followed by pilot. All data and offline baselines come from one synthetic environment.
+
+### Amendment 1: request the default service tier explicitly
+
+This amendment was made before any live request. The original request body omitted `service_tier`. According to the OpenAI documentation, a request without this parameter uses the service tier set for the project, and a project set to Fast is billed at Fast rates, twice the Standard rate, while the ledger and `--max-usd` use Standard rates. Both configurations now send `service_tier="default"`, the Standard tier, and the configuration hash changes accordingly. Synchronous runs record the returned `service_tier`. If it differs from the request, dispatch stops and that call is booked at six times its Standard cost, the highest multiplier in the price list, as an upper bound. Batch results are settled at Batch rates and are not subject to this stop rule. Batch uses the same request body; if the Batch endpoint rejects this field, a further amendment is recorded before submission. Questions, sampling, scoring, and comparisons are unchanged.
