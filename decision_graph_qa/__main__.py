@@ -46,7 +46,17 @@ def main() -> None:
     phase.add_argument("--pilot-evidence", type=Path)
     ve = sub.add_parser("verify-eval")
     ve.add_argument("--out", type=Path, required=True)
+    from . import llm_eval
+    from .llm.data import LlmError
+
+    llm_eval.register(sub)
     args = parser.parse_args()
+    if args.command in ("llm-run", "llm-batch", "llm-score"):
+        try:
+            llm_eval.dispatch(args)
+        except LlmError as error:
+            parser.error(str(error))
+        return
     if args.command == "build":
         if (args.pilot is None) != (args.out is not None):
             parser.error("use --pilot DIR or --pilot-evidence DIR --out DATA")
