@@ -33,6 +33,9 @@ from .transport import (
 )
 
 MAX_ATTEMPTS = 3
+# Prices assume the Standard tier. A call served on another tier is booked at this multiple of its
+# Standard cost, the highest multiplier in the price list, and dispatch stops (protocol amendment 1).
+TIER_BOUND = 6
 
 
 def run(root: Path, tasks: list[Task], prices: Prices, *, max_usd: Decimal, max_calls: int | None = None,
@@ -110,15 +113,22 @@ def _run(root: Path, tasks: list[Task], prices: Prices, max_usd: Decimal, max_ca
             charge = Decimal(actual) if actual is not None else Decimal(0)
             if actual is None and (error is None or error.unknown_charge or (raw is not None and not error.stop)):
                 charge = reserved
+            tier = result["service_tier"]
+            tier_mismatch = tier is not None and tier != task.body.get("service_tier", "default")
+            if tier_mismatch:
+                charge *= TIER_BOUND
+                result.update(service_tier_mismatch=True)
             charged += charge
             if error is not None:
                 result.update(http_status=error.status_code, error_code=error.code)
             with ledger.lock:
                 if error is not None and error.stop:
                     stop(error.code or f"http_{error.status_code}")
+                if tier_mismatch:
+                    stop("service_tier")
                 ledger.settle(attempt_id, charge, {**metadata, "outcome": result["status"], "actual_usd": actual,
                                                    "error": result["error"], "http_status": result.get("http_status"),
-                                                   "error_code": result.get("error_code")})
+                                                   "error_code": result.get("error_code"), "service_tier": tier})
             if error is None or not error.retryable or index == MAX_ATTEMPTS:
                 break
             delay = error.retry_after if error.retry_after is not None else 2 ** (index - 1)

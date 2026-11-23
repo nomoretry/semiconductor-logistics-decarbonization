@@ -487,6 +487,8 @@ def score(root: Path, phase: str, arm: str, size: str = "full") -> Record:
                                              graphs[0]["observation"]["public"]["periods"]),
         "model_snapshots": {name: dict(Counter(row["model"] for row in _responses(
             [item for by_context in evidence[name].values() for item in by_context]) if row["model"])) for name in jobs},
+        "service_tiers": {name: dict(Counter(str(row.get("service_tier")) for row in _responses(
+            [item for by_context in evidence[name].values() for item in by_context]))) for name in jobs},
     }
     with root_lock(root):
         _write_artifacts(response_path(root, phase, arm).parent, phase, arm, selected, result, all_rows)

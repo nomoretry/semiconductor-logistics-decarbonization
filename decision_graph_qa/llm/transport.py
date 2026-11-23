@@ -286,6 +286,7 @@ def decode_response(task: Task, raw: Record | None, prices: Prices, *, transport
             "question": task.question, "context": task.context, "custom_id": task.custom_id,
             "request_hash": task.request_hash, "status": status, "text": text, "parsed": parsed,
             "model": raw.get("model"), "reasoning": raw.get("reasoning"), "requested_reasoning": task.body["reasoning"],
+            "service_tier": raw.get("service_tier"),
             "usage": usage, "actual_usd": actual, "charged_usd": actual, "seconds": seconds, "attempts": attempts,
             "started_at": started_at, "finished_at": finished_at, "error": detail}
 

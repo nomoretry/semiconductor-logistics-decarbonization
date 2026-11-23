@@ -169,7 +169,7 @@ class BatchTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             export_batches(self.config, root, phase="p3", arm="S", size="full", pilot_root=root,
-                           chunk_size=600, prices=self.prices)
+                           chunk_size=250, prices=self.prices)
             path = root / "unrelated.jsonl"
             append_jsonl(path, {"id": "batch_req_unrelated", "custom_id": "outside_the_export",
                                 "response": None, "error": {"code": "batch_expired", "message": "Expired"}})

@@ -14,8 +14,15 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
-from decision_graph_qa.llm.data import LlmError, Task, read_jsonl, response_path
-from decision_graph_qa.llm.live import run
+from decision_graph_qa.llm.data import (
+    LlmError,
+    Task,
+    load_config,
+    plan,
+    read_jsonl,
+    response_path,
+)
+from decision_graph_qa.llm.live import TIER_BOUND, run
 from decision_graph_qa.llm.transport import (
     ApiError,
     Client,
@@ -216,3 +223,26 @@ class LiveRunnerTest(unittest.TestCase):
         override = {"DQ3_API_BASE": "https://example.invalid/v1", "OPENAI_API_KEY": KEY}
         with patch.dict(os.environ, override), self.assertRaisesRegex(LlmError, "loopback"):
             Client.from_env()
+
+    def test_protocol_requests_default_service_tier(self):
+        config = load_config()
+        self.assertEqual({arm["request"]["service_tier"] for arm in config["arms"].values()}, {"default"})
+        self.assertEqual({case.body["service_tier"] for case in plan(config, "smoke", "S")}, {"default"})
+
+    def test_service_tier_mismatch_stops_dispatch_and_books_upper_bound(self):
+        def respond(index, _body):
+            payload = reply()
+            payload["service_tier"] = "default" if index == 0 else "priority"
+            return 200, payload, None, 0
+
+        with TemporaryDirectory() as tmp, fake_server(respond) as arrivals:
+            root = Path(tmp)
+            result = run(root, [task(index) for index in range(3)], PRICES, workers=1, max_usd=Decimal(100))
+            self.assertEqual((result["stop_reason"], result["attempted"], len(arrivals)), ("service_tier", 2, 2))
+            saved = list(read_jsonl(response_path(root, "smoke", "S")))
+            self.assertEqual([row["service_tier"] for row in saved], ["default", "priority"])
+            self.assertEqual([row["status"] for row in saved], ["ok", "ok"])
+            self.assertEqual(Decimal(saved[0]["charged_usd"]), Decimal("0.003177"))
+            self.assertEqual(Decimal(saved[1]["charged_usd"]), Decimal("0.003177") * TIER_BOUND)
+            self.assertEqual(TIER_BOUND, 6)
+            self.assertEqual(Ledger(root).committed_total(), Decimal("0.003177") * (1 + TIER_BOUND))
