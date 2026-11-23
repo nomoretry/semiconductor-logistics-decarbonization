@@ -2,9 +2,11 @@
 from __future__ import annotations
 
 import contextlib
+import inspect
 import io
 import json
 import os
+import socket
 import threading
 import time
 import unittest
@@ -29,6 +31,7 @@ from decision_graph_qa.llm.transport import (
     Ledger,
     Prices,
     decode_response,
+    keep_alive,
 )
 
 KEY = "sk-" + "local-dq3-test-sentinel"
@@ -168,6 +171,41 @@ class LiveRunnerTest(unittest.TestCase):
             result = run(root, [case], PRICES, max_usd=exact * 2, workers=1)
             self.assertEqual(result["attempted"], 0)
             self.assertEqual(result["stop_reason"], "max_usd")
+
+    def test_response_timeout_is_booked_once_and_resent_only_on_resume(self):
+        def respond(index, _body):
+            return 200, reply(), None, (0.3 if index == 0 else 0)
+
+        with TemporaryDirectory() as tmp, fake_server(respond) as arrivals:
+            root = Path(tmp)
+            case = task(0)
+            result = run(root, [case], PRICES, max_usd=Decimal(10), workers=1, timeout=0.05)
+            self.assertEqual((result["statuses"], result["attempted"], len(arrivals)), ({"error": 1}, 1, 1))
+            saved = list(read_jsonl(response_path(root, "smoke", "S")))
+            self.assertTrue(saved[0]["error"].startswith("Transport timeout"))
+            self.assertEqual(saved[0]["attempts"], 1)
+            self.assertEqual(Ledger(root).committed_total(), PRICES.worst(case))
+            result = run(root, [case], PRICES, max_usd=Decimal(10), workers=1, timeout=5)
+            self.assertEqual((result["statuses"], result["attempted"], len(arrivals)), ({"ok": 1}, 1, 2))
+        timeout = ApiError("waited", network=True, timed_out=True)
+        self.assertEqual((timeout.retryable, timeout.unknown_charge), (False, True))
+        self.assertTrue(ApiError("reset", network=True).retryable)
+
+    def test_default_wait_is_one_hour_and_connections_keep_alive(self):
+        self.assertEqual(inspect.signature(run).parameters["timeout"].default, 3600)
+        self.assertEqual(inspect.signature(Client.from_env).parameters["timeout"].default, 3600)
+        with socket.socket() as sock:
+            keep_alive(sock)
+            self.assertTrue(sock.getsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE))
+        with fake_server(lambda _index, _body: (200, reply(), None, 0)), patch(
+            "decision_graph_qa.llm.transport.keep_alive", wraps=keep_alive,
+        ) as spy:
+            Client.from_env().json("POST", "/responses", task(0).body)
+        self.assertEqual(spy.call_count, 1)
+
+    def test_protocol_instructions_do_not_offer_null(self):
+        for arm in load_config()["arms"].values():
+            self.assertNotIn("null", arm["request"]["instructions"])
 
     def test_resume_skips_terminal_records_and_retries_errors(self):
         truncated = {**reply(), "status": "incomplete", "incomplete_details": {"reason": "max_output_tokens"}}

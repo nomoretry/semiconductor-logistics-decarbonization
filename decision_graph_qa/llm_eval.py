@@ -95,7 +95,7 @@ def register(subparsers: argparse._SubParsersAction) -> None:
     run.add_argument("--max-usd", type=_dollars)
     run.add_argument("--max-calls", type=_call_limit)
     run.add_argument("--workers", type=_workers, default=8)
-    run.add_argument("--timeout", type=_timeout, default=1800)
+    run.add_argument("--timeout", type=_timeout, default=3600)
     run.add_argument("--dry-run", action="store_true")
 
     batch = subparsers.add_parser("llm-batch", help="export, submit, fetch or import Batch evaluation")

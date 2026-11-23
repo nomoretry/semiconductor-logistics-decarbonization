@@ -7,6 +7,9 @@ import json
 import math
 import os
 import re
+import socket
+import ssl
+import sys
 import threading
 import urllib.error
 import urllib.parse
@@ -92,14 +95,17 @@ def _retry_delay(value: str | None) -> float | None:
 
 class ApiError(LlmError):
     def __init__(self, message: str, *, status_code: int | None = None, code: str | None = None,
-                 retry_after: float | None = None, network: bool = False, unknown_charge: bool = False):
+                 retry_after: float | None = None, network: bool = False, unknown_charge: bool = False,
+                 timed_out: bool = False):
         super().__init__(redact(message))
         self.status_code = status_code
         self.code = redact(code)
         self.retry_after = retry_after
+        self.timed_out = timed_out
         self.stop = status_code in (401, 403) or code in STOP_CODES
         is_server_error = status_code is not None and 500 <= status_code < 600
-        self.retryable = not self.stop and (network or status_code == 429 or is_server_error)
+        # A response timeout is booked at its reservation but not resent in the same invocation (amendment 2).
+        self.retryable = not self.stop and not timed_out and (network or status_code == 429 or is_server_error)
         self.unknown_charge = unknown_charge or network or (is_server_error and not self.stop)
 
 
@@ -112,6 +118,50 @@ def api_error(payload: Any, *, secret: str | None = None, status_code: int | Non
     return ApiError(f"{prefix}: {redact(message or 'no error message supplied', secret)}",
                     status_code=status_code, code=redact(code, secret) if isinstance(code, str) else None,
                     retry_after=retry_after)
+
+
+KEEPALIVE_IDLE_SECONDS = 60
+KEEPALIVE_INTERVAL_SECONDS = 10
+
+
+def keep_alive(sock: socket.socket) -> None:
+    """Probe idle connections so network devices keep a long wait for a reply open (amendment 2)."""
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+    if sys.platform == "win32":
+        sock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, KEEPALIVE_IDLE_SECONDS * 1000, KEEPALIVE_INTERVAL_SECONDS * 1000))
+        return
+    for name, value in (("TCP_KEEPIDLE", KEEPALIVE_IDLE_SECONDS), ("TCP_KEEPALIVE", KEEPALIVE_IDLE_SECONDS),
+                        ("TCP_KEEPINTVL", KEEPALIVE_INTERVAL_SECONDS), ("TCP_KEEPCNT", 6)):
+        option = getattr(socket, name, None)
+        if option is not None:
+            sock.setsockopt(socket.IPPROTO_TCP, option, value)
+
+
+class _KeepAliveHTTPConnection(http.client.HTTPConnection):
+    def connect(self) -> None:
+        super().connect()
+        keep_alive(self.sock)
+
+
+class _KeepAliveHTTPSConnection(http.client.HTTPSConnection):
+    def connect(self) -> None:
+        super().connect()
+        keep_alive(self.sock)
+
+
+class _KeepAliveHTTPHandler(urllib.request.HTTPHandler):
+    def http_open(self, req: urllib.request.Request) -> http.client.HTTPResponse:
+        return self.do_open(_KeepAliveHTTPConnection, req)
+
+
+class _KeepAliveHTTPSHandler(urllib.request.HTTPSHandler):
+    def __init__(self) -> None:
+        self._tls = ssl.create_default_context()
+        self._tls.set_alpn_protocols(["http/1.1"])
+        super().__init__(context=self._tls)
+
+    def https_open(self, req: urllib.request.Request) -> http.client.HTTPResponse:
+        return self.do_open(_KeepAliveHTTPSConnection, req, context=self._tls)
 
 
 class _NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -138,13 +188,13 @@ class Client:
         self._key = key
         self._base = base
         self._timeout = timeout
-        handlers = [_NoRedirect()]
+        handlers: list[urllib.request.BaseHandler] = [_NoRedirect(), _KeepAliveHTTPHandler(), _KeepAliveHTTPSHandler()]
         if loopback:
             handlers.append(urllib.request.ProxyHandler({}))
         self._opener = urllib.request.build_opener(*handlers)
 
     @classmethod
-    def from_env(cls, timeout: float = 1800) -> Client:
+    def from_env(cls, timeout: float = 3600) -> Client:
         key = os.getenv("OPENAI_API_KEY")
         if not key:
             raise LlmError("OPENAI_API_KEY is not set")
@@ -184,6 +234,11 @@ class Client:
                     payload = None
             retry_after = _retry_delay(error.headers.get("Retry-After") if error.headers else None)
             raise api_error(payload, secret=self._key, status_code=error.code, retry_after=retry_after) from None
+        except (TimeoutError, urllib.error.URLError) as error:
+            reason = error.reason if isinstance(error, urllib.error.URLError) else error
+            if isinstance(reason, TimeoutError):
+                raise ApiError(self.redact(f"Transport timeout: {reason}"), network=True, timed_out=True) from None
+            raise ApiError(self.redact(f"Transport error: {error}"), network=True) from None
         except (OSError, http.client.HTTPException) as error:
             raise ApiError(self.redact(f"Transport error: {error}"), network=True) from None
 

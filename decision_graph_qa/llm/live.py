@@ -39,7 +39,7 @@ TIER_BOUND = 6
 
 
 def run(root: Path, tasks: list[Task], prices: Prices, *, max_usd: Decimal, max_calls: int | None = None,
-        workers: int = 8, timeout: float = 1800, config: Record | None = None) -> Record:
+        workers: int = 8, timeout: float = 3600, config: Record | None = None) -> Record:
     if not 1 <= workers <= 32:
         raise LlmError("Workers must be between 1 and 32")
     if max_calls is not None and max_calls < 0:

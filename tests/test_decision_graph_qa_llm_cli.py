@@ -1,6 +1,7 @@
 """Check the public entry point and offline evaluation scope."""
 from __future__ import annotations
 
+import argparse
 import io
 import json
 import tempfile
@@ -11,6 +12,7 @@ from unittest.mock import patch
 
 from decision_graph_qa.__main__ import main
 from decision_graph_qa.llm import data
+from decision_graph_qa.llm_eval import register
 
 RATES = ["--input-usd-per-m", "2.00", "--cached-input-usd-per-m", "0.10",
          "--cache-write-usd-per-m", "2.50", "--output-usd-per-m", "10.00"]
@@ -26,6 +28,11 @@ class LlmCliTests(unittest.TestCase):
             except SystemExit as error:
                 status = error.code
         return status, stdout.getvalue(), stderr.getvalue()
+
+    def test_run_waits_one_hour_by_default(self):
+        parser = argparse.ArgumentParser()
+        register(parser.add_subparsers(dest="command"))
+        self.assertEqual(parser.parse_args(["llm-run", "--check", "--arm", "S"]).timeout, 3600)
 
     def test_dry_run_uses_protocol_and_shows_projected_pilot_reuse(self):
         with tempfile.TemporaryDirectory() as directory, patch(
