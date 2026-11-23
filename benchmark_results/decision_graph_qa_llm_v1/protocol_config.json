@@ -19,7 +19,7 @@
       "record_only": false,
       "request": {
         "model": "gpt-6.2-sol",
-        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes). Use null when the question permits no answer.",
+        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).",
         "input": null,
         "reasoning": {"effort": "max", "mode": "standard"},
         "max_output_tokens": 64000,
@@ -31,7 +31,7 @@
       "record_only": true,
       "request": {
         "model": "gpt-6.2-astra",
-        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes). Use null when the question permits no answer.",
+        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).",
         "input": null,
         "reasoning": {"effort": "high", "mode": "standard"},
         "max_output_tokens": 64000,

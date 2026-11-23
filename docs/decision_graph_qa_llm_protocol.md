@@ -2,7 +2,7 @@
 
 本文先中文、后英文。The Chinese protocol precedes its English version.
 
-Protocol config SHA256: b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215a8badf01
+Protocol config SHA256: 47c848ad5e22b942d76716dd4bdeaf9aa502e8d2d2e40f303219873ff7f0254b
 
 [协议配置 / Protocol configuration](../benchmark_results/decision_graph_qa_llm_v1/protocol_config.json)
 
@@ -23,9 +23,9 @@ Protocol config SHA256: b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215
 
 ### 作答和状态
 
-固定系统提示如下。输入仅提供题目和相应上下文。
+固定系统提示如下（修订 2 删去了原来的最后一句）。输入仅提供题目和相应上下文。
 
-> Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes). Use null when the question permits no answer.
+> Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).
 
 合并 Responses 消息中的 `output_text`，去掉首尾空白。如果整段恰好是一个带或不带 `json` 标记的 Markdown 反引号代码块，取其内容。用 `json.loads` 解析单个 JSON 值，拒绝非 JSON 数值，包括 `NaN` 与 `Infinity`。DQ-1 判分器核对类型、取值和约束。
 
@@ -69,7 +69,7 @@ Protocol config SHA256: b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215
 | S | 2.00 | 0.10 | 2.50 | 10.00 |
 | A | 8.00 | 0.40 | 10.00 | 40.00 |
 
-费用为（未缓存输入 × 输入单价 + 缓存读 × 缓存读单价 + 缓存写 × 缓存写单价 + 输出 × 输出单价）÷ 1,000,000。推理 token 包含在输出中。逐条发送前用提示和系统说明字符数 ÷ 3 估算输入，加上最大输出按单价预留。已结算、进行中预留和新预留之和必须在额度内。每次发送含重试计入调用上限，每请求至多 3 次尝试。401、403、花费上限和额度错误停止派发。其他 429、5xx 和网络错误按 `Retry-After` 或指数退避重试。无法判断实际消耗的请求按预留金额计费。费用预留基于字符估算与给定单价。
+费用为（未缓存输入 × 输入单价 + 缓存读 × 缓存读单价 + 缓存写 × 缓存写单价 + 输出 × 输出单价）÷ 1,000,000。推理 token 包含在输出中。逐条发送前用提示和系统说明字符数 ÷ 3 估算输入，加上最大输出按单价预留。已结算、进行中预留和新预留之和必须在额度内。每次发送含重试计入调用上限，每请求至多 3 次尝试。401、403、花费上限和额度错误停止派发。其他 429、5xx 和网络错误按 `Retry-After` 或指数退避重试；等待响应超时当次不重发（见修订 2）。无法判断实际消耗的请求按预留金额计费。费用预留基于字符估算与给定单价。
 
 Batch 可用于主评测和 P3 扩展，预演单价为逐条的一半。导出记录相同请求体和哈希，并用试点平均输出估计费用。提交前用试点用量按 Batch 单价重算单次费用 p95，并按块内请求数预留。p95 预留是预算估计，可能低于最终费用。Batch 结果使用实际用量结算，可离线重复导入。账本和回答逐条追加，续跑优先使用相同请求的终态。分析输出写入答案、逐图结果、汇总、双语表和 SHA256 清单。
 
@@ -78,6 +78,16 @@ Batch 可用于主评测和 P3 扩展，预演单价为逐条的一半。导出�
 ### 修订 1：请求写明默认服务档
 
 本修订在任何真实请求之前做出。原配置的请求体没有 `service_tier`。按 OpenAI 文档，不写这个参数的请求按项目设置的服务档处理；项目设为 Fast 时按 Fast 计价，是标准价的 2 倍，而账本和 `--max-usd` 按标准价计算。修订后两个配置的请求体都写明 `service_tier="default"`，即标准价，配置哈希随之更新。逐条运行记录响应返回的 `service_tier`。返回值与请求不同时停止派发新请求，这次调用按标准价算出的费用乘 6 记账（价目表所列的最高倍数），作为上界。Batch 结果按 Batch 单价结算，不适用这条停止规则；Batch 沿用同一请求体，如果 Batch 接口不接受这个字段，先记录新的修订再提交。配置里没有被程序使用的 `budget_context_usd_per_month` 字段一并删去。题目、抽样、判分和比较都不变。
+
+### 修订 2：试点前删去 null 说明，等待超时不再当次重发
+
+本修订在冒烟之后、试点的任何请求之前做出。冒烟按修订 2 之前的配置运行（SHA256 `b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215a8badf01`），记录保持原样：[账本](../benchmark_results/decision_graph_qa_llm_v1/ledger.jsonl)、[逐题记录](../benchmark_results/decision_graph_qa_llm_v1/smoke_S/responses.jsonl)。7 题共 10 次尝试，返回的服务档都是 `default`，没有截断和解析失败。P3 的三个发货标志和慢线装载 4 题答对；P3.emission 和 B 答 `null`，判为违约；P3.load.1 三次尝试都在 1,800 秒读超时，没有答案；P3.emission 第一次超时，第二次 256 秒答出。答完的 6 题用时 64–256 秒，输出 3,254–12,796 token。账本 3.090482 美元，其中 4 次超时各按预留 0.641 美元记，合计 2.565454 美元，是上界。
+
+1. 系统提示删去最后一句 “Use null when the question permits no answer.”。DQ-3 只考 P3 和 B；DQ-1 全部 880 张图里，这两类题的标准答案没有一个是 `null`（`null` 只出现在不考的 P2.first），这句话只提供了放弃作答的出口。已解析的 `null` 仍按原规则判分，B 记违约。
+2. 同步请求的单次等待上限由 1,800 秒改为 3,600 秒。等待响应超时（读超时或连接超时）记为错误，按预留金额记账，当次不再重发；429、5xx 和其他网络错误仍按原规则最多尝试 3 次。续跑时，出错的题按原规则再发。客户端连接开启 TCP keepalive，空闲 60 秒后开始探测，减少长时间等待时网络设备回收空闲连接的可能。
+3. 试点可以用 `--max-calls` 分次运行：先发一部分核对，再续跑其余。分次不改变试点的题目、顺序和请求体。
+
+题目、抽样、判分和比较都不变。配置哈希随之更新。
 
 ## English
 
@@ -96,9 +106,9 @@ Both configurations use `max_output_tokens=64000`, `store=false`, and the defaul
 
 ### Responses and states
 
-Use the fixed system prompt below. The input supplies the question and its context.
+Use the fixed system prompt below (Amendment 2 removed its original last sentence). The input supplies the question and its context.
 
-> Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes). Use null when the question permits no answer.
+> Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).
 
 Concatenate Responses message `output_text` parts and trim outer whitespace. If the entire reply is a Markdown backtick block with an optional `json` tag, take the block contents. Parse one JSON value with `json.loads` and reject non-JSON numbers including `NaN` and `Infinity`. The DQ-1 scorer checks types, values, and constraints.
 
@@ -142,7 +152,7 @@ The following are the USD per million token prices for the dry run. Cache writes
 | S | 2.00 | 0.10 | 2.50 | 10.00 |
 | A | 8.00 | 0.40 | 10.00 | 40.00 |
 
-Cost is (uncached input × input rate + cache reads × cache read rate + cache writes × cache write rate + output × output rate) ÷ 1,000,000. Reasoning tokens are included in output. Before each synchronous send, estimate input from the prompt and instruction characters divided by 3 and reserve the cost of that input and the maximum output. Settled costs, open reservations, and the new reservation must fit the budget. Each send including retries counts toward the call limit, up to three attempts per request. Stop dispatch on 401, 403, spend limits, and quota errors. Retry other 429, 5xx, and network errors with `Retry-After` or exponential backoff. An attempt with unknown consumption is charged at its reserved amount. Reservations depend on character estimates and provided prices.
+Cost is (uncached input × input rate + cache reads × cache read rate + cache writes × cache write rate + output × output rate) ÷ 1,000,000. Reasoning tokens are included in output. Before each synchronous send, estimate input from the prompt and instruction characters divided by 3 and reserve the cost of that input and the maximum output. Settled costs, open reservations, and the new reservation must fit the budget. Each send including retries counts toward the call limit, up to three attempts per request. Stop dispatch on 401, 403, spend limits, and quota errors. Retry other 429, 5xx, and network errors with `Retry-After` or exponential backoff; a response timeout is not resent in the same invocation (Amendment 2). An attempt with unknown consumption is charged at its reserved amount. Reservations depend on character estimates and provided prices.
 
 Batch supports main and the P3 extension. Dry-run Batch prices are half of synchronous prices. Export the same request bodies and hashes and estimate cost using mean pilot output. Before submitting a chunk, reprice pilot usage at the provided Batch rates and reserve the pilot p95 per-call cost times the chunk size. The p95 reservation is a budget estimate and final charges may exceed it. Settle Batch results from actual usage and support idempotent offline imports. Append ledger and reply records and reuse terminal records for unchanged requests on resume. Analysis writes answers, per-graph results, summaries, bilingual tables, and a SHA256 manifest.
 
@@ -151,3 +161,13 @@ Current acceptance covers offline dry runs, budget and resume tests, and grading
 ### Amendment 1: request the default service tier explicitly
 
 This amendment was made before any live request. The original request body omitted `service_tier`. According to the OpenAI documentation, a request without this parameter uses the service tier set for the project, and a project set to Fast is billed at Fast rates, twice the Standard rate, while the ledger and `--max-usd` use Standard rates. Both configurations now send `service_tier="default"`, the Standard tier, and the configuration hash changes accordingly. Synchronous runs record the returned `service_tier`. If it differs from the request, dispatch stops and that call is booked at six times its Standard cost, the highest multiplier in the price list, as an upper bound. Batch results are settled at Batch rates and are not subject to this stop rule. Batch uses the same request body; if the Batch endpoint rejects this field, a further amendment is recorded before submission. The unused `budget_context_usd_per_month` configuration field is also removed. Questions, sampling, scoring, and comparisons are unchanged.
+
+### Amendment 2: drop the null instruction and stop resending timed-out requests before the pilot
+
+This amendment was made after the smoke run and before any pilot request. The smoke run used the configuration before this amendment (SHA256 `b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215a8badf01`), and its records are kept unchanged: [ledger](../benchmark_results/decision_graph_qa_llm_v1/ledger.jsonl) and [per-question records](../benchmark_results/decision_graph_qa_llm_v1/smoke_S/responses.jsonl). Its seven questions took ten attempts, every returned service tier was `default`, and nothing was truncated or failed to parse. The three P3 shipping flags and the slow-route load were answered correctly. P3.emission and B were answered with `null` and graded as violations. All three attempts at P3.load.1 hit the 1,800-second read timeout without an answer. The first attempt at P3.emission timed out and the second answered in 256 seconds. The six answered calls took 64–256 seconds and produced 3,254–12,796 output tokens. The ledger shows US$3.090482, including four timeouts booked at their US$0.641 reservations, US$2.565454 in total, which is an upper bound.
+
+1. The system prompt drops its last sentence, "Use null when the question permits no answer." DQ-3 asks only P3 and B questions. Across all 880 DQ-1 graphs, no reference answer to these questions is `null`; `null` occurs only in P2.first, which DQ-3 does not ask. The sentence only offered a way to decline. A parsed `null` is still scored under the original rules, and a `null` B is a violation.
+2. The wait limit for a synchronous request rises from 1,800 to 3,600 seconds. A response timeout (read or connection timeout) is an error booked at the reserved amount and is not resent in the same invocation. 429, 5xx, and other network errors keep the original rule of up to three attempts. A resumed run resends errors under the original rule. Client connections enable TCP keepalive, probing after 60 idle seconds, to reduce the chance that network devices drop an idle connection during a long wait.
+3. The pilot may run in parts with `--max-calls`, checking a first part before resuming the rest. Running in parts does not change the pilot questions, their order, or the request bodies.
+
+Questions, sampling, scoring, and comparisons are unchanged. The configuration hash changes accordingly.
