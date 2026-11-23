@@ -2,7 +2,7 @@
 
 本文先中文、后英文。The Chinese protocol precedes its English version.
 
-Protocol config SHA256: ec4f3a4ed681cc646195195a1f7bf11f1b540263517e9dc73cbe3efaaf83c09a
+Protocol config SHA256: b9617f288978615f4d5b5961d46cc9bf59d9b50401dee40d006b0215a8badf01
 
 [协议配置 / Protocol configuration](../benchmark_results/decision_graph_qa_llm_v1/protocol_config.json)
 
@@ -77,7 +77,7 @@ Batch 可用于主评测和 P3 扩展，预演单价为逐条的一半。导出�
 
 ### 修订 1：请求写明默认服务档
 
-本修订在任何真实请求之前做出。原配置的请求体没有 `service_tier`。按 OpenAI 文档，不写这个参数的请求按项目设置的服务档处理；项目设为 Fast 时按 Fast 计价，是标准价的 2 倍，而账本和 `--max-usd` 按标准价计算。修订后两个配置的请求体都写明 `service_tier="default"`，即标准价，配置哈希随之更新。逐条运行记录响应返回的 `service_tier`。返回值与请求不同时停止派发新请求，这次调用按标准价算出的费用乘 6 记账（价目表所列的最高倍数），作为上界。Batch 结果按 Batch 单价结算，不适用这条停止规则；Batch 沿用同一请求体，如果 Batch 接口不接受这个字段，先记录新的修订再提交。题目、抽样、判分和比较都不变。
+本修订在任何真实请求之前做出。原配置的请求体没有 `service_tier`。按 OpenAI 文档，不写这个参数的请求按项目设置的服务档处理；项目设为 Fast 时按 Fast 计价，是标准价的 2 倍，而账本和 `--max-usd` 按标准价计算。修订后两个配置的请求体都写明 `service_tier="default"`，即标准价，配置哈希随之更新。逐条运行记录响应返回的 `service_tier`。返回值与请求不同时停止派发新请求，这次调用按标准价算出的费用乘 6 记账（价目表所列的最高倍数），作为上界。Batch 结果按 Batch 单价结算，不适用这条停止规则；Batch 沿用同一请求体，如果 Batch 接口不接受这个字段，先记录新的修订再提交。配置里没有被程序使用的 `budget_context_usd_per_month` 字段一并删去。题目、抽样、判分和比较都不变。
 
 ## English
 
@@ -150,4 +150,4 @@ Current acceptance covers offline dry runs, budget and resume tests, and grading
 
 ### Amendment 1: request the default service tier explicitly
 
-This amendment was made before any live request. The original request body omitted `service_tier`. According to the OpenAI documentation, a request without this parameter uses the service tier set for the project, and a project set to Fast is billed at Fast rates, twice the Standard rate, while the ledger and `--max-usd` use Standard rates. Both configurations now send `service_tier="default"`, the Standard tier, and the configuration hash changes accordingly. Synchronous runs record the returned `service_tier`. If it differs from the request, dispatch stops and that call is booked at six times its Standard cost, the highest multiplier in the price list, as an upper bound. Batch results are settled at Batch rates and are not subject to this stop rule. Batch uses the same request body; if the Batch endpoint rejects this field, a further amendment is recorded before submission. Questions, sampling, scoring, and comparisons are unchanged.
+This amendment was made before any live request. The original request body omitted `service_tier`. According to the OpenAI documentation, a request without this parameter uses the service tier set for the project, and a project set to Fast is billed at Fast rates, twice the Standard rate, while the ledger and `--max-usd` use Standard rates. Both configurations now send `service_tier="default"`, the Standard tier, and the configuration hash changes accordingly. Synchronous runs record the returned `service_tier`. If it differs from the request, dispatch stops and that call is booked at six times its Standard cost, the highest multiplier in the price list, as an upper bound. Batch results are settled at Batch rates and are not subject to this stop rule. Batch uses the same request body; if the Batch endpoint rejects this field, a further amendment is recorded before submission. The unused `budget_context_usd_per_month` configuration field is also removed. Questions, sampling, scoring, and comparisons are unchanged.

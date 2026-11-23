@@ -47,6 +47,5 @@
   "batch_price_multiplier": "0.50",
   "gates": {"truncation_rate": 0.05, "parse_failure_rate": 0.10},
   "bootstrap_replicates": 10000,
-  "dry_output_tokens": [3000, 10000, 30000],
-  "budget_context_usd_per_month": "100.00"
+  "dry_output_tokens": [3000, 10000, 30000]
 }
