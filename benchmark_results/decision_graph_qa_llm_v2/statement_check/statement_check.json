@@ -1,0 +1,168 @@
+{
+  "accepted": true,
+  "assembly_from_p3_answers": {
+    "all_candidates_correct_graphs": 146,
+    "mean_candidates": 25.22159090909091,
+    "random_candidate_correct_rate": 0.5065259891274562,
+    "random_candidate_relative_excess_pct_mean": 4.685592956536088,
+    "single_candidate_graphs": 146
+  },
+  "graphs": 352,
+  "machine": "Windows-10-10.0.19045-SP0",
+  "misreadings": {
+    "average of the scenarios used as one path": {
+      "correct": 99,
+      "correct_rate": 0.28125,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 8.109125088144722,
+      "relative_excess_pct_median": 6.030900987237407,
+      "violations": 0
+    },
+    "emissions limit not paced over the remaining periods": {
+      "correct": 346,
+      "correct_rate": 0.9829545454545454,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.03109831405178077,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "first scenario only": {
+      "correct": 73,
+      "correct_rate": 0.20738636363636365,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 12.604123037195121,
+      "relative_excess_pct_median": 8.015553311861757,
+      "violations": 0
+    },
+    "freight charged per unit instead of per kilogram": {
+      "correct": 280,
+      "correct_rate": 0.7954545454545454,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.3020621347217818,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "mean forecast used instead of the scenarios": {
+      "correct": 90,
+      "correct_rate": 0.2556818181818182,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 9.96268885534294,
+      "relative_excess_pct_median": 7.754780231710956,
+      "violations": 0
+    },
+    "no emissions charge in the cost": {
+      "correct": 304,
+      "correct_rate": 0.8636363636363636,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.09843673020508585,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "no extra cost for backlog at the end of the episode": {
+      "correct": 303,
+      "correct_rate": 0.8607954545454546,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 1.9368371764788934,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "outstanding backlog ignored": {
+      "correct": 326,
+      "correct_rate": 0.9261363636363636,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.1306280453113553,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "receipts arrive one offset later": {
+      "correct": 108,
+      "correct_rate": 0.3068181818181818,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 7.735963721423601,
+      "relative_excess_pct_median": 1.8106404911032539,
+      "violations": 0
+    },
+    "scheduled receipts ignored": {
+      "correct": 110,
+      "correct_rate": 0.3125,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 5.741937031901583,
+      "relative_excess_pct_median": 1.942777755090384,
+      "violations": 0
+    }
+  },
+  "prompts": {
+    "parsed": 7392,
+    "v1_prompts_rejected": 7392,
+    "v1_text_kept": 7392
+  },
+  "prompts_manifest": "8a8a544d2b8c2144d6dff28cb30fa1615abab9a3b4459548288b2f03c602de53",
+  "python": "3.12.10",
+  "solves": 14142,
+  "text_only_program": {
+    "correct": {
+      "B": 352,
+      "M": 352,
+      "P3.emission": 352,
+      "P3.load.0": 352,
+      "P3.load.1": 352,
+      "P3.ship.0": 352,
+      "P3.ship.1": 352,
+      "P3.ship.2": 352
+    },
+    "exact_cost_equal": 352,
+    "max_abs_objective_difference": 7.105427357601002e-13,
+    "max_seconds": 0.28483459999915794,
+    "median_seconds": 0.011248250000789994,
+    "objective_equal": 352,
+    "violations": 0
+  },
+  "v1_ceilings": {
+    "own draws + P3 answers, seed 20261125": {
+      "correct": 256,
+      "correct_rate": 0.7272727272727273,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.6998859567036674,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "own draws + P3 answers, seed 7": {
+      "correct": 251,
+      "correct_rate": 0.7130681818181818,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 0.6960497172668908,
+      "relative_excess_pct_median": 0.0,
+      "violations": 0
+    },
+    "own draws, seed 20261125": {
+      "correct": 128,
+      "correct_rate": 0.36363636363636365,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 2.580555559946755,
+      "relative_excess_pct_median": 1.0166563545946619,
+      "violations": 0
+    },
+    "own draws, seed 7": {
+      "correct": 134,
+      "correct_rate": 0.3806818181818182,
+      "graphs": 352,
+      "relative_excess_n": 352,
+      "relative_excess_pct_mean": 2.3469717008780586,
+      "relative_excess_pct_median": 0.9100415279614,
+      "violations": 0
+    }
+  }
+}

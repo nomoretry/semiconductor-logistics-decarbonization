@@ -39,11 +39,11 @@ class Protocol:
 
 PROTOCOLS = {protocol.version: protocol for protocol in (
     Protocol("v1", ROOT / "benchmark_results" / "decision_graph_qa_llm_v1",
-             ROOT / "docs" / "decision_graph_qa_llm_protocol.md", 1, True),
+             ROOT / "docs" / "decision_graph_qa_llm_protocol.md", 1, False),
     Protocol("v2", ROOT / "benchmark_results" / "decision_graph_qa_llm_v2",
              ROOT / "docs" / "decision_graph_qa_llm_protocol_v2.md", 2, True),
 )}
-CURRENT = "v1"
+CURRENT = "v2"
 
 
 def canonical(value: Any) -> bytes:

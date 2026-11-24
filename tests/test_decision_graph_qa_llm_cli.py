@@ -70,6 +70,23 @@ class LlmCliTests(unittest.TestCase):
                 self.assertEqual(code, 2)
                 self.assertIn("Protocol config SHA256 mismatch", stderr)
 
+    def test_closed_protocol_and_foreign_root_stop_before_credentials(self):
+        live = ["--phase", "pilot", "--arm", "S", *RATES, "--max-usd", "1"]
+        closed = str(data.PROTOCOLS["v1"].root)
+        with patch("decision_graph_qa.llm.transport.Client.from_env", side_effect=AssertionError("request")):
+            for args, message in (
+                (["llm-run", "--protocol", "v1", *live], "closed to new requests"),
+                (["llm-batch", "export", "--protocol", "v1", "--phase", "main", "--arm", "S",
+                  "--pilot-root", closed, *RATES], "closed to new requests"),
+                (["llm-run", "--root", closed, *live], "another protocol version"),
+            ):
+                code, _, stderr = self.invoke(args)
+                self.assertEqual(code, 2)
+                self.assertIn(message, stderr)
+            code, stdout, _ = self.invoke(["llm-run", "--protocol", "v1", "--phase", "pilot", "--arm", "S", *RATES,
+                                           "--dry-run"])
+        self.assertEqual((code, json.loads(stdout)["completed_here"], json.loads(stdout)["new_calls"]), (0, 12, 84))
+
 
 if __name__ == "__main__":
     unittest.main()

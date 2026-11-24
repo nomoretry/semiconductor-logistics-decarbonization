@@ -2,6 +2,10 @@
 
 本文先中文、后英文。The Chinese protocol precedes its English version.
 
+Protocol config SHA256: f3fe6a36b377ebf5c685b3a871ddd5019db55ff35a7c6923b47ae593da53f60f
+
+[协议配置 / Protocol configuration](../benchmark_results/decision_graph_qa_llm_v2/protocol_config.json)
+
 ## 中文
 
 ### 问题

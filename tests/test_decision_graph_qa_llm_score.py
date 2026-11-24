@@ -108,12 +108,21 @@ class LlmScoreTest(unittest.TestCase):
             self.assertEqual(billing["decisions_with_settlements"], 3)
             self.assertEqual(len(result["reference_timing"]["cases"]), 32)
             self.assertEqual(result["dq2_baselines"]["gold"]["graphs"], 32)
+            references = result["statement_references"]
+            self.assertEqual(references["graphs"], 32)
+            self.assertEqual(references["text_only_program"]["correct"]["B"], 32)
+            report = (output / "summary_pilot_S.md").read_text(encoding="utf-8")
+            self.assertIn("| 只读题目文字的程序 | 1 | — |", report)
+            self.assertIn("| Text-only program | 1 | — |", report)
             missing = result["contexts"]["None"]
             self.assertEqual(missing["statuses"], {"parse_failure": 1, "unattempted": 31})
             self.assertEqual(missing["primary"]["metrics"]["accuracy"]["mean"], 0)
             self.assertEqual(missing["primary"]["metrics"]["violation"]["n"], 0)
             self.assertEqual(missing["fallback_count"], 1)
             self.assertEqual(missing["fallback"]["metrics"]["cost_delta"]["n"], 1)
+            self.assertEqual(missing["fallback"]["metrics"]["relative_plan_excess_pct"]["n"], 1)
+            self.assertAlmostEqual(result["contexts"]["Chain"]["primary"]["metrics"]["relative_plan_excess_pct"]["mean"],
+                                   0, places=6)
             self.assertEqual(result["contexts"]["Graph"]["violations"], 1)
             self.assertEqual(result["contexts"]["Graph"]["fallback_count"], 0)
             paired = result["paired"]["Chain − None"]["primary"]["metrics"]

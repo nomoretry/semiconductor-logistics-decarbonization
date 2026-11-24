@@ -16,7 +16,12 @@ from decision_graph_qa.llm.data import (
     PROTOCOLS,
     LlmError,
     load_config,
+    plan,
     prompts_by_graph,
+    read_jsonl,
+    require_open,
+    response_path,
+    results_root,
 )
 from decision_graph_qa.llm.rules import ANSWERED, RULES, SCENARIO_LABEL
 from decision_graph_qa.planner import physical_cost, scenarios, tolerance
@@ -202,6 +207,51 @@ class CheckTests(unittest.TestCase):
         for changed in ({"objective_equal": 2}, {"exact_cost_equal": 2}, {"violations": 1},
                         {"correct": {**text["correct"], "B": 2}}):
             self.assertFalse(statement_check.accepted({**summary, "text_only_program": {**text, **changed}}))
+
+
+class ProtocolVersionTests(unittest.TestCase):
+    def test_closed_version_and_foreign_root_are_refused(self):
+        with self.assertRaisesRegex(LlmError, "closed to new requests"):
+            require_open("v1")
+        require_open("v2")
+        self.assertEqual(results_root("v2", None), PROTOCOLS["v2"].root)
+        for version, other in (("v1", "v2"), ("v2", "v1")):
+            with self.assertRaisesRegex(LlmError, "another protocol version"):
+                results_root(version, PROTOCOLS[other].root)
+        with tempfile.TemporaryDirectory() as directory:
+            self.assertEqual(results_root("v2", Path(directory)), Path(directory))
+
+    def test_v1_requests_are_reproduced_and_v2_changes_only_the_input(self):
+        v1, v2 = load_config("v1"), load_config("v2")
+        for key in v1.keys() - {"schema_version", "sources"}:
+            self.assertEqual(v1[key], v2[key])
+        for key in ("dataset_manifest", "dataset_sha256", "evaluation_manifest", "evaluation_sha256"):
+            self.assertEqual(v1["sources"][key], v2["sources"][key])
+        old, new = plan(v1, "pilot", "S"), plan(v2, "pilot", "S")
+        recorded = {row["custom_id"]: row["request_hash"]
+                    for row in read_jsonl(response_path(PROTOCOLS["v1"].root, "pilot", "S"))}
+        self.assertEqual(len(recorded), 12)
+        self.assertEqual({task.custom_id: task.request_hash for task in old if task.custom_id in recorded}, recorded)
+        self.assertEqual([task.custom_id for task in old], [task.custom_id for task in new])
+        self.assertEqual({task.custom_id for task in new[:12]}, set(recorded))
+        for before, after in zip(old, new, strict=True):
+            self.assertEqual({**after.body, "input": before.body["input"]}, before.body)
+            self.assertEqual(statement_check.without_additions(after.body["input"]), before.body["input"])
+
+
+class FrozenStatementTests(unittest.TestCase):
+    def test_stored_prompts_match_a_fresh_rendering(self):
+        config = load_config("v2")
+        directory = PROTOCOLS["v2"].root / "prompts"
+        manifest = json.loads((directory / "manifest.json").read_bytes())
+        self.assertEqual(manifest["dataset"]["sha256"], config["sources"]["dataset_sha256"])
+        self.assertEqual(statement.verify(statement_check.load_graphs(config), directory, manifest),
+                         {"prompts": 7392, "files": 3})
+
+    def test_saved_check_is_accepted_and_follows_from_its_evidence(self):
+        root = PROTOCOLS["v2"].root
+        self.assertEqual(statement_check.replay(root / "prompts", root / "statement_check"),
+                         {"graphs": 352, "accepted": True, "solves": 0})
 
 
 if __name__ == "__main__":

@@ -92,7 +92,9 @@ B 的计划超额是固定动作后七情景求解的目标值减参照最优值
 
 这些量化结果来自一个合成滚动库存与运输环境，以及事前指定的一组信息代替值。I5 的效果包括固定分配和将每条路线的 SKU 配额向下取整造成的运力损失。DQ-1 的 215/880 张图存在容差内的其它最优首期动作。动作变化率、实际后果也受到所存参照动作与消融方案择优方式的影响。H 是同一窗口内已知需求的单情景事后参照，H 的优化目标只覆盖已知需求窗口。固定滚动续行的实际成本差采用单独的模拟比较。[DQ-1 并列解审计](../benchmark_results/decision_graph_qa_v1/summary.json)
 
-下一项验收是按已导出的题目、既定三种上下文和两种上游答案来源运行真实大模型评测，检查上下文是否改变回答、违约和 B 的实际后果。真实大模型评测需单独批准预算。用 `export-prompts` 生成题目后，将结果以 `id` 和 `answers` 写入 JSONL 交给 `evaluate --answers`，沿用同一评分和后果定义。
+已导出的题目只有状态、前面的问答和问题，没有写规划规则，也没有列出标准答案依赖的 7 组需求情景，B 和 P3 的标准答案不能由这些文字推出。离线答题方不读题目文字，本文结果不受影响；这些文件不适合用来比较大模型的正确率。写全规则和情景的题目见[真实模型评测协议 v2](decision_graph_qa_llm_protocol_v2.md)。
+
+下一项验收是按 v2 题目和既定三种上下文运行真实大模型评测，检查上下文是否改变回答、违约和 B 的实际后果。真实大模型评测需单独批准预算。将结果以 `id` 和 `answers` 写入 JSONL 交给 `evaluate --answers`，沿用同一评分和后果定义。
 
 ## English
 
@@ -184,7 +186,9 @@ Among I1–I5, I5 had the largest mean planning excess and the largest realized 
 
 These estimates come from one synthetic rolling inventory and transport environment and one prespecified set of substitutions. I5 includes the effects of fixed allocation and capacity lost by rounding down each SKU's route allocation. DQ-1 found other first actions within the optimum tolerance in 215 of 880 graphs. Action changes and realized effects depend on the stored reference action and the way the ablated model selects among optima. H uses one known demand path over the same window as a hindsight reference. Its optimization scope is the known-demand window. The realized cost difference comes from the separate simulation under the fixed rolling continuation. [DQ-1 tie audit](../benchmark_results/decision_graph_qa_v1/summary.json)
 
-The next acceptance condition is to evaluate live LLMs with the exported questions, three context modes and two upstream answer sources, then check whether context changes answers, violations and realized B consequences. Live evaluation requires separate budget approval. Use `export-prompts` for the questions, write responses to JSONL with `id` and `answers`, and pass them to `evaluate --answers` to reuse the scoring and consequence definitions.
+The exported prompts contain only the state, earlier questions and answers, and the question. They do not state the planning rules or list the seven demand scenarios behind the reference answers, so the reference answers to B and P3 do not follow from these texts. The offline responders do not read the prompt text, and the results in this report are unaffected. The files are not suitable for comparing the accuracy of language models. Prompts that state the rules and the scenarios are described in the [model evaluation protocol v2](decision_graph_qa_llm_protocol_v2.md).
+
+The next acceptance condition is to evaluate live LLMs with the v2 questions and the three context modes, then check whether context changes answers, violations and realized B consequences. Live evaluation requires separate budget approval. Write responses to JSONL with `id` and `answers`, and pass them to `evaluate --answers` to reuse the scoring and consequence definitions.
 
 ## 复算命令 / Replay commands
 
