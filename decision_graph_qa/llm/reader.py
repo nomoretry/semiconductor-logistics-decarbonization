@@ -30,6 +30,10 @@ class StatementError(ValueError):
     """The text does not state the planning problem."""
 
 
+class InfeasibleDispatch(ValueError):
+    """No plan that satisfies the constraints starts with the given dispatch."""
+
+
 @dataclass(frozen=True)
 class Problem:
     state: dict[str, Any]
@@ -47,7 +51,7 @@ class Problem:
 
 @dataclass(frozen=True)
 class Reading:
-    """How the rules are read. The defaults are the stated rules; each change is one misreading."""
+    """How the rules are read. The defaults are the stated rules; each change is one other reading."""
 
     demand: str = "scenarios"
     paced_emissions: bool = True
@@ -57,6 +61,10 @@ class Reading:
     scheduled_receipts: bool = True
     freight_per_kilogram: bool = True
     receipt_delay: int = 0
+    capacity: str = "dispatch"
+    arrivals_added_again: bool = False
+    earlier_dispatches_emit: bool = False
+    terminal_replaces_backlog: bool = False
 
 
 MEAN_FORECAST = "mean forecast used instead of the scenarios"
@@ -71,6 +79,14 @@ MISREADINGS = {
     MEAN_FORECAST: Reading(demand="forecast"),
     "average of the scenarios used as one path": Reading(demand="average"),
     "first scenario only": Reading(demand="first"),
+}
+# Wordings that the independent reading of the questions found open to another reading; other sentences exclude it.
+ALTERNATIVES = {
+    "earlier dispatches still under way use route capacity": Reading(capacity="under way"),
+    "pipeline arrivals use slow-route capacity as well": Reading(capacity="under way and pipeline"),
+    "current arrivals are added once more": Reading(arrivals_added_again=True),
+    "earlier dispatches that arrive in the window count as emissions": Reading(earlier_dispatches_emit=True),
+    "terminal cost replaces the backlog cost": Reading(terminal_replaces_backlog=True),
 }
 
 
@@ -104,10 +120,15 @@ def _demand(problem: Problem, reading: Reading) -> list[list[list[float]]]:
     return [problem.state["forecast"][:problem.window]]
 
 
-def optimize(problem: Problem, reading: Reading | None = None) -> tuple[Plan, float]:
-    """Solve the stated integer program with one stock and one shortage variable per scenario, offset and SKU."""
+def optimize(problem: Problem, reading: Reading | None = None,
+             first: list[list[int]] | None = None) -> tuple[Plan, float]:
+    """Solve the stated integer program with one stock and one shortage variable per scenario, offset and SKU.
+
+    With ``first`` the current dispatch is fixed; an infeasible dispatch raises InfeasibleDispatch.
+    """
     reading = reading or Reading()
     p, t, h = problem.public, problem.state["t"], problem.window
+    pipeline = problem.state["pipeline"]
     demand = _demand(problem, reading)
     n, r, s = len(p["mass"]), len(p["lead"]), len(demand)
     nq, cells = h * n * r, s * h * n
@@ -140,19 +161,35 @@ def optimize(problem: Problem, reading: Reading | None = None) -> tuple[Plan, fl
                 emissions.append((q, float(p["mass"][i] * p["emissions"][j])))
                 if u + p["lead"][j] >= h:
                     upper[q] = 0
-            add([(ship(u, i, j), float(p["mass"][i])) for i in range(n)], -np.inf, p["capacity"][j])
+            earliest = u if reading.capacity == "dispatch" else max(0, u - p["lead"][j] + 1)
+            room = p["capacity"][j]
+            if reading.capacity == "under way and pipeline" and j == 0:
+                room -= sum(p["mass"][i] * pipeline[t + w][i] for w in range(u + 1, p["lead"][0])
+                            if t + w < p["periods"] for i in range(n))
+            add([(ship(v, i, j), float(p["mass"][i])) for v in range(earliest, u + 1) for i in range(n)],
+                -np.inf, max(0, room))
     limit = problem.state["carbon_remaining"]
-    add(emissions, -np.inf, limit * h / (p["periods"] - t) if reading.paced_emissions else limit)
+    if reading.paced_emissions:
+        limit = limit * h / (p["periods"] - t)
+    if reading.earlier_dispatches_emit:
+        limit = max(0, limit - sum(p["mass"][i] * p["emissions"][0] * pipeline[t + w][i]
+                                   for w in range(1, h) for i in range(n)))
+    add(emissions, -np.inf, limit)
+    if first is not None:
+        for i in range(n):
+            for j in range(r):
+                add([(ship(0, i, j), 1.0)], first[i][j], first[i][j])
     for i in range(n):
         start = problem.state["stock"][i] - (problem.state["backlog"][i] if reading.starting_backlog else 0)
+        start += problem.state["arrivals"][i] if reading.arrivals_added_again else 0
         for u in range(h):
             due = range(u + 1) if reading.scheduled_receipts else range(0)
-            received = sum(problem.state["pipeline"][t + v][i] for v in due)
+            received = sum(pipeline[t + v][i] for v in due)
             delivered = [(ship(v, i, j), -1.0) for v in range(h) for j in range(r)
                          if v + p["lead"][j] + reading.receipt_delay <= u]
             shortage_rate = p["backlog"][i]
             if reading.terminal_backlog and t + u == p["periods"] - 1:
-                shortage_rate += p["terminal_backlog"][i]
+                shortage_rate = p["terminal_backlog"][i] + (0 if reading.terminal_replaces_backlog else shortage_rate)
             for k in range(s):
                 over = surplus(k, u, i)
                 cost[over] = p["holding"][i] / s
@@ -164,6 +201,8 @@ def optimize(problem: Problem, reading: Reading | None = None) -> tuple[Plan, fl
     result = milp(cost, integrality=np.r_[np.ones(nq), np.zeros(2 * cells)], bounds=Bounds(np.zeros(len(cost)), upper),
                   constraints=LinearConstraint(matrix, low, high),
                   options={"presolve": False, "mip_rel_gap": 0.0, "time_limit": 60.0})
+    if result.status == 2 and first is not None:
+        raise InfeasibleDispatch("the current dispatch has no feasible plan")
     if result.status != 0 or result.x is None:
         raise StatementError(f"no optimal plan: {result.status} {result.message}")
     rounded = np.rint(result.x[:nq])
@@ -171,6 +210,15 @@ def optimize(problem: Problem, reading: Reading | None = None) -> tuple[Plan, fl
         raise StatementError("noninteger dispatch")
     plan: Plan = rounded.astype(int).reshape(h, n, r).tolist()
     return plan, float(result.fun)
+
+
+def optimal_under(problem: Problem, reading: Reading, dispatch: list[list[int]], best: float) -> bool:
+    """Whether a current dispatch is optimal under a reading whose optimum is ``best``."""
+    try:
+        value = optimize(problem, reading, dispatch)[1]
+    except InfeasibleDispatch:
+        return False
+    return value - best <= 1e-6 * max(1.0, abs(best))
 
 
 def _exact(value: float) -> Fraction:

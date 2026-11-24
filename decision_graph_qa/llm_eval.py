@@ -153,6 +153,8 @@ def register(subparsers: argparse._SubParsersAction) -> None:
     reading.add_argument("--dir", type=Path, default=home / "independent_reading")
     reading.add_argument("--limit", type=_positive_int, help="repeat the first N graphs only")
     reading.add_argument("--write", action="store_true", help="write the evidence instead of comparing with it")
+    reading.add_argument("--alternatives", action="store_true",
+                         help="count the answers that contradict each alternative reading of the rules")
 
 
 def _projection(tasks: list[Task], prices: Prices, output_scenarios: list[int]) -> dict:
@@ -291,6 +293,8 @@ def _statements(args: argparse.Namespace) -> dict:
     if args.prompts_command == "independent":
         from .llm import independent_reading
 
+        if args.alternatives:
+            return independent_reading.alternatives(args.prompts, args.dir)
         if args.write:
             return independent_reading.check(args.prompts, args.dir)
         return independent_reading.replay(args.prompts, args.dir, args.limit)

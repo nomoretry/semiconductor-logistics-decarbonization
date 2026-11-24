@@ -14,7 +14,17 @@ from types import ModuleType
 
 from ..planner import Record, tolerance
 from ..scoring import answer_map, grade_graph
-from .data import LlmError, canonical, digest, load_config, read_jsonl
+from .data import (
+    PROTOCOLS,
+    LlmError,
+    canonical,
+    digest,
+    load_config,
+    plan,
+    read_jsonl,
+    response_path,
+)
+from .reader import ALTERNATIVES, optimal_under, optimize, parse
 from .statement import STAGES, prompt_file, write_gzip
 from .statement_check import load_graphs
 
@@ -103,6 +113,32 @@ def check(prompts_dir: Path, directory: Path) -> Record:
     (directory / "manifest.json").write_bytes(canonical({"algorithm": "SHA256", "files": {
         name: digest(directory / name) for name in FILES}}) + b"\n")
     return summary
+
+
+def alternatives(prompts_dir: Path, directory: Path, root: Path | None = None) -> Record:
+    """Count the answers that contradict each alternative reading: the program's B and the recorded pilot answers."""
+    config = load_config("v2")
+    texts = {row["id"]: row["prompt"] for row in read_jsonl(prompts_dir / prompt_file("None")) if row["node_id"] == "B"}
+    own = {row["id"]: row["answers"]["B"] for row in read_jsonl(directory / EVIDENCE)}
+    tasks = {task.custom_id: task for task in plan(config, "pilot", "S")}
+    recorded = [row for row in read_jsonl(response_path(root or PROTOCOLS["v2"].root, "pilot", "S"))
+                if row["status"] == "ok" and row["custom_id"] in tasks
+                and row["request_hash"] == tasks[row["custom_id"]].request_hash]
+    pilot = {task.graph for task in tasks.values()}
+    result: Record = {name: {"graphs": len(own), "graphs_contradicted": 0, "pilot_graphs_contradicted": 0,
+                             "recorded_answers": len(recorded), "recorded_answers_contradicting": 0}
+                      for name in ALTERNATIVES}
+    for graph, dispatch in own.items():
+        problem = parse(texts[graph])
+        answers = [row["parsed"] for row in recorded if row["graph"] == graph]
+        for name, reading in ALTERNATIVES.items():
+            best = optimize(problem, reading)[1]
+            contradicted = not optimal_under(problem, reading, dispatch, best)
+            result[name]["graphs_contradicted"] += contradicted
+            result[name]["pilot_graphs_contradicted"] += contradicted and graph in pilot
+            result[name]["recorded_answers_contradicting"] += sum(
+                not optimal_under(problem, reading, answer, best) for answer in answers)
+    return result
 
 
 def replay(prompts_dir: Path, directory: Path, limit: int | None = None) -> Record:

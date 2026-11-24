@@ -1,4 +1,4 @@
-# 决策图问答真实模型评测：题目 v2 的验收和阶段 1 / Decision graph QA model evaluation: acceptance of the v2 questions and stage 1
+# 决策图问答真实模型评测：题目 v2 的验收和试点结果 / Decision graph QA model evaluation: acceptance of the v2 questions and pilot results
 
 本文先中文、后英文。The Chinese report precedes its English version.
 
@@ -6,7 +6,7 @@
 
 ### 问题
 
-用大模型回答发运题之前，题目本身必须能推出标准答案。v1 的题目没有写规划规则，也没有给出标准答案依赖的 7 组需求情景，所以停用。v2 把两者写进题目，其它都不变。本文报告 v2 的离线验收、独立阅读核对和阶段 1 的 12 次调用。[协议 v2](decision_graph_qa_llm_protocol_v2.md) · [v1 协议和停止说明](decision_graph_qa_llm_protocol.md)
+用大模型回答发运题之前，题目本身必须能推出标准答案。v1 的题目没有写规划规则，也没有给出标准答案依赖的 7 组需求情景，所以停用。v2 把两者写进题目，其它都不变。本文报告 v2 的离线验收、独立阅读核对和试点的 96 次调用。[协议 v2](decision_graph_qa_llm_protocol_v2.md) · [v1 协议和停止说明](decision_graph_qa_llm_protocol.md)
 
 ### 实现
 
@@ -72,17 +72,17 @@ v1 的离线上限与登记时一致：自己抽 200 组需求判对 128 张和 
 
 90 张图有多个最优本期发运。352 张图里有 336 个不同局面，t = 0 的 16 个局面各出现两次，因为两种历史策略的起点相同。32 张试点图互不相同。
 
-它还列出题目里能换一种读法的措辞。下表是会影响 B 的几处，数字是原答案在另一种读法下不再最优的图数，用第二个程序复测相同。这些读法都被题目的其它句子排除。
+它还列出题目里能换一种读法的措辞。下表是会影响 B 的几处。前两列数字是它的 B 在另一种读法下不再最优的图数，用第一个程序复测得到；最后一列是试点 96 个真实回答里在另一种读法下不再最优的个数。[数据](../benchmark_results/decision_graph_qa_llm_v2/alternative_readings.json)
 
-| 措辞 | 另一种读法 | 352 张图 | 32 张试点图 | 阶段 1 的答案能否排除 |
-|---|---|---:|---:|---|
-| “The kilograms on route j at offset u” | 前一偏移发出、还在路上的发运也占运力 | 120 | 12 | 不能 |
-| 同上 | 连状态里的在途到货也占慢线运力 | 286 | 25 | 能 |
-| 规则没有再提 “Current arrivals (arrivals)” | 本期到货还要再加一次 | 196 | 17 | 能 |
-| “The emissions of all dispatches in the window” | 以前发出、窗口内到货的发运也算排放 | 28 | 3 | 不能 |
-| “add public.terminal_backlog” | 代替而不是追加 | 11 | 1 | 不能 |
+| 措辞 | 另一种读法 | 352 张图 | 32 张试点图 | 96 个真实回答 |
+|---|---|---:|---:|---:|
+| “The kilograms on route j at offset u” | 前一偏移发出、还在路上的发运也占运力 | 120 | 12 | 32 |
+| 同上 | 连状态里的在途到货也占慢线运力 | 286 | 25 | 73 |
+| 规则没有再提 “Current arrivals (arrivals)” | 本期到货还要再加一次 | 196 | 17 | 50 |
+| “The emissions of all dispatches in the window” | 以前发出、窗口内到货的发运也算排放 | 28 | 3 | 7 |
+| “add public.terminal_backlog” | 代替而不是追加 | 11 | 1 | 3 |
 
-题目文字不因此改动。以后没判对的答案先与这些读法和上面十种误读的最优动作比较，再决定是否另立版本。
+这些读法都被题目的其它句子排除，试点的回答也与每一种都矛盾，所以题目文字不改。
 
 ### 阶段 1
 
@@ -90,15 +90,44 @@ v1 的离线上限与登记时一致：自己抽 200 组需求判对 128 张和 
 
 4 张图都是 stable 需求，数量太少，不用于得出结论。同样 4 张图、同一模型和请求参数，v1 题目 12 次判对 5 次，花费 2.319912 美元。v1 的标准答案不能由题目推出，所以这个差别来自题目。
 
+### 阶段 2：试点全部 96 次
+
+配置 S 为 `gpt-6.2-sol`，推理强度 `max`，每题一次，试点 32 张图（四种需求过程各 8 张，互不相同的局面）× 3 种上下文。96 次都有可解析的回答，各尝试一次，返回的服务档都是 `default`，没有截断、违约和超时，合计 4.618881 美元。[汇总](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/summary_pilot_S.md) · [逐图判分](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/scores_pilot_S.jsonl.gz) · [清单](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/manifest_pilot_S.json)
+
+![试点结果](results/decision_graph_qa_llm_pilot.png)
+
+图中左侧为 32 张试点图上本期发运最优的比例，灰色是离线参照；中、右为每个决定的平均费用和用时，按 P3 标准答案是否只剩一种发运矩阵分组。[矢量图](results/decision_graph_qa_llm_pilot.svg) · [作图程序](../scripts/plot_decision_graph_llm.py)
+
+| 上下文 | B 最优 | 每个决定费用（美元，均值 / 中位） | 用时（秒，均值 / 中位 / 最长） | 输出 token 均值 |
+|---|---:|---:|---:|---:|
+| `None` | 32 / 32 | 0.0581 / 0.0589 | 87 / 84 / 225 | 5,419 |
+| `Chain` | 32 / 32 | 0.0409 / 0.0370 | 63 / 59 / 201 | 3,671 |
+| `Graph` | 32 / 32 | 0.0453 / 0.0312 | 69 / 40 / 213 | 4,002 |
+
+- 判对率没有差别，三项配对差都是 0，整群 bootstrap 区间退化。按 32 张图独立计，32/32 的精确二项 95% 下界是 89.1%；按 16 条需求路径计是 79.4%。
+- 96 个答案都在独立程序列出的最优发运里。82 个与保存的参照 B 相同，14 个是并列最优；7 张图里三种上下文选了不同的并列最优。实际成本、满足率和排放之差全部来自并列最优的不同选择，例如 `Graph` − `None` 的实际成本差 0.641 [0.089, 1.431]，不反映规划好坏。
+- 同样 32 张图上的参照：只读题目文字的程序 32/32；DQ-2 补货规则 12.5%；只用均值预测的规划 31.3%；与 P3 标准答案一致的矩阵中随机取一个 50.1%。参照规划器每图用时中位数 0.016 秒，没有调用费。
+- `Chain` 比 `None` 平均便宜 0.0171 美元、快 24.5 秒，`Graph` 比 `None` 便宜 0.0128 美元、快 18.3 秒。差别全部来自 P3 标准答案只剩一种发运矩阵的 13 张图：`None` 0.0450 美元、68 秒，`Chain` 和 `Graph` 约 0.005–0.006 美元、3 秒。其余 19 张图三种上下文分别为 0.0671、0.0655、0.0722 美元和 101、104、114 秒，没有节省。
+
+### 怎样解读
+
+- 题目写全规则和情景时，这个模型在这批小规模题上每次都给出最优发运，中间答案不影响对错。因为三种上下文都到了上限，这次试点不能回答哪种中间信息更有用。
+- 中间答案省下的费用只出现在它们已经决定了答案的图上，而给出这些答案的优化程序同时给出 B，所以不构成省钱的理由。
+- 每个决定 0.04–0.06 美元、约 1–1.5 分钟，参照规划器 0.016 秒。在这个规模上没有理由用大模型代替优化程序。
+- 主评测（1,056 或 576 次）用同样的题目只会重复这个上限，没有必要按原计划进行。要比较信息的作用，需要另立协议，例如从题目里去掉一类信息，或扩大规模到模型开始出错。
+
 ### 复算
 
-`replay` 不求解，从保存的证据重算汇总。`independent` 重跑归档的程序并与保存的答案比较，约 2.5 分钟，`--limit` 只跑前几张图。`check` 和 `export` 写到新目录。
+`replay` 不求解，从保存的证据重算汇总。`independent` 重跑归档的程序并与保存的答案比较，约 2.5 分钟，`--limit` 只跑前几张图。`check` 和 `export` 写到新目录。`llm-score` 会重写结果目录里的判分文件，其中本机用时会变，复算时先把结果目录复制一份，用 `--root` 指到副本。
 
 ```text
 python -m decision_graph_qa llm-prompts replay
 python -m decision_graph_qa llm-prompts independent
+python -m decision_graph_qa llm-prompts independent --alternatives
 python -m decision_graph_qa llm-prompts check --out dq3-check-replay
 python -m decision_graph_qa llm-prompts export --out dq3-prompts-replay
+python -m decision_graph_qa llm-score --protocol v2 --phase pilot --arm S --root dq3-results-copy
+python -m scripts.plot_decision_graph_llm
 python -m decision_graph_qa llm-run --phase pilot --arm S --dry-run --input-usd-per-m 2.00 --cached-input-usd-per-m 0.10 --cache-write-usd-per-m 2.50 --output-usd-per-m 10.00
 ```
 
@@ -106,13 +135,15 @@ python -m decision_graph_qa llm-run --phase pilot --arm S --dry-run --input-usd-
 
 - 题目文字待人工复核。两个只读题目文字的程序得到同样的答案，这不是人工复核。
 - 一个合成环境，规模很小，优化程序在毫秒级得到答案，因此大模型即使全对也不说明应代替优化程序。
-- 阶段 1 只有 4 张 stable 需求的图。下一项验收是协议 v2 的阶段 2：另行批准上限后跑完试点其余 84 次，其中 volatile、upshift、downshift 各 8 张图，报告三种上下文的判对率、相对超额、费用和用时。
+- 一个模型、一种推理强度、英文题目、每题一次，没有重复抽样；模型快照变化时结果可能不同。
+- 判对率到了上限，32 张图的样本不能区分 89% 以上的判对率，也不能比较三种上下文。
+- 下一项验收是决定是否另立协议（去掉一类信息，或扩大规模），并事先写明样本、比较和上限。在此之前不再发送请求。
 
 ## English
 
 ### Question
 
-Before a language model answers the dispatch questions, the questions themselves must determine the reference answers. The v1 prompts stated neither the planning rules nor the seven demand scenarios behind the reference answers, so v1 was closed. v2 states both and changes nothing else. This report covers the offline acceptance of v2, an independent reading of the questions and the 12 calls of stage 1. [Protocol v2](decision_graph_qa_llm_protocol_v2.md) · [v1 protocol and closing amendment](decision_graph_qa_llm_protocol.md)
+Before a language model answers the dispatch questions, the questions themselves must determine the reference answers. The v1 prompts stated neither the planning rules nor the seven demand scenarios behind the reference answers, so v1 was closed. v2 states both and changes nothing else. This report covers the offline acceptance of v2, an independent reading of the questions and the 96 pilot calls. [Protocol v2](decision_graph_qa_llm_protocol_v2.md) · [v1 protocol and closing amendment](decision_graph_qa_llm_protocol.md)
 
 ### Implementation
 
@@ -178,17 +209,17 @@ A second program checks whether the questions can be understood on their own. It
 
 Ninety graphs have several optimal current dispatches. The 352 graphs contain 336 different situations. The 16 situations at t = 0 appear twice because both historical policies start from the same state. The 32 pilot graphs are all different.
 
-The reading also lists wordings that could be read differently. The table shows those that affect B. The numbers count graphs whose answer would no longer be optimal under the other reading, and a second program measured the same numbers. Other sentences of the question exclude each of these readings.
+The reading also lists wordings that could be read differently. The table shows those that affect B. The first two numbers count graphs whose B from that program would no longer be optimal under the other reading, measured again with the first program. The last column counts recorded answers among the 96 pilot calls that would not be optimal under the other reading. [Data](../benchmark_results/decision_graph_qa_llm_v2/alternative_readings.json)
 
-| Wording | Other reading | 352 graphs | 32 pilot graphs | Excluded by the stage 1 answers |
-|---|---|---:|---:|---|
-| "The kilograms on route j at offset u" | Dispatches of the previous offset that are still under way also use capacity | 120 | 12 | No |
-| Same | Pipeline arrivals of the state also use slow-route capacity | 286 | 25 | Yes |
-| The rules do not mention "Current arrivals (arrivals)" again | Current arrivals are added once more | 196 | 17 | Yes |
-| "The emissions of all dispatches in the window" | Earlier dispatches that arrive in the window count as well | 28 | 3 | No |
-| "add public.terminal_backlog" | Instead of, not on top of, the backlog cost | 11 | 1 | No |
+| Wording | Other reading | 352 graphs | 32 pilot graphs | 96 recorded answers |
+|---|---|---:|---:|---:|
+| "The kilograms on route j at offset u" | Dispatches of the previous offset that are still under way also use capacity | 120 | 12 | 32 |
+| Same | Pipeline arrivals of the state also use slow-route capacity | 286 | 25 | 73 |
+| The rules do not mention "Current arrivals (arrivals)" again | Current arrivals are added once more | 196 | 17 | 50 |
+| "The emissions of all dispatches in the window" | Earlier dispatches that arrive in the window count as well | 28 | 3 | 7 |
+| "add public.terminal_backlog" | Instead of, not on top of, the backlog cost | 11 | 1 | 3 |
 
-The text is not changed for these points. Answers that are not correct will first be compared with the optimal dispatch under these readings and under the ten misreadings above before a new version is considered.
+Other sentences of the question exclude each of these readings, and the pilot answers contradict every one of them, so the text is not changed.
 
 ### Stage 1
 
@@ -196,15 +227,42 @@ All of the first 12 pilot calls (four graphs × three contexts) returned a parse
 
 The four graphs all have stable demand. They are too few to support conclusions. On the same four graphs with the same model and request parameters, the v1 prompts gave 5 of 12 correct answers and cost US$2.319912. The v1 reference answers do not follow from the v1 prompts, so this difference comes from the prompts.
 
+### Stage 2: all 96 pilot calls
+
+Configuration S is `gpt-6.2-sol` with reasoning effort `max`, one run per question, on 32 pilot graphs (eight per demand process, all different situations) × 3 contexts. All 96 calls returned a parsed answer in one attempt with service tier `default`, without truncations, violations or timeouts, for US$4.618881 in total. [Summary](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/summary_pilot_S.md) · [Per-graph scores](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/scores_pilot_S.jsonl.gz) · [Manifest](../benchmark_results/decision_graph_qa_llm_v2/pilot_S/manifest_pilot_S.json)
+
+The figure above shows the share of optimal current dispatches on the 32 pilot graphs (offline references in grey) and the mean cost and time per decision, split by whether the P3 reference answers leave a single dispatch matrix. [Vector figure](results/decision_graph_qa_llm_pilot.svg) · [Plot script](../scripts/plot_decision_graph_llm.py)
+
+| Context | B optimal | Cost per decision (US$, mean / median) | Time (s, mean / median / longest) | Mean output tokens |
+|---|---:|---:|---:|---:|
+| `None` | 32 / 32 | 0.0581 / 0.0589 | 87 / 84 / 225 | 5,419 |
+| `Chain` | 32 / 32 | 0.0409 / 0.0370 | 63 / 59 / 201 | 3,671 |
+| `Graph` | 32 / 32 | 0.0453 / 0.0312 | 69 / 40 / 213 | 4,002 |
+
+- Accuracy does not differ. All paired differences are zero and the cluster bootstrap intervals are degenerate. Treating the 32 graphs as independent, the exact binomial 95% lower bound for 32 of 32 is 89.1%. Treating the 16 demand paths as units, it is 79.4%.
+- All 96 answers are among the optimal dispatches listed by the independent program. Of these, 82 equal the stored reference B and 14 are tied optima. In seven graphs the three contexts chose different tied optima. All differences in realized cost, fulfillment and emissions come from these choices, for example the realized cost difference `Graph` − `None` of 0.641 [0.089, 1.431], and say nothing about planning quality.
+- References on the same 32 graphs: text-only program 32 of 32, DQ-2 replenishment rule 12.5%, plan on the mean forecast 31.3%, random dispatch that agrees with the P3 reference answers 50.1%. The reference planner takes a median of 0.016 seconds per graph without a fee.
+- `Chain` is on average US$0.0171 cheaper and 24.5 seconds faster than `None`, and `Graph` US$0.0128 cheaper and 18.3 seconds faster. The difference comes entirely from the 13 graphs in which the P3 reference answers leave a single dispatch matrix: US$0.0450 and 68 seconds for `None`, about US$0.005–0.006 and 3 seconds for `Chain` and `Graph`. In the other 19 graphs the three contexts cost US$0.0671, 0.0655 and 0.0722 and take 101, 104 and 114 seconds, without any saving.
+
+### Interpretation
+
+- When the question states the rules and the scenarios, this model returns an optimal dispatch every time on this set of small problems, and upstream answers do not affect correctness. Because all three contexts reach the ceiling, the pilot cannot say which upstream information helps more.
+- The cost saved by upstream answers appears only on graphs where they already determine the answer. The optimizer that supplies them also supplies B, so this is no reason to buy them.
+- A decision costs US$0.04–0.06 and takes about 1–1.5 minutes, compared with 0.016 seconds for the reference planner. At this scale there is no reason to replace the optimizer with a language model.
+- A main evaluation (1,056 or 576 calls) with the same questions would only repeat this ceiling and is not needed as planned. Comparing the role of information needs a new protocol, for example removing one kind of information from the question or enlarging the problems until the model starts to fail.
+
 ### Replay
 
-`replay` recomputes the summary from the saved evidence without solving. `independent` repeats the archived program and compares it with the saved answers in about 2.5 minutes, and `--limit` repeats the first graphs only. `check` and `export` write to new directories.
+`replay` recomputes the summary from the saved evidence without solving. `independent` repeats the archived program and compares it with the saved answers in about 2.5 minutes, and `--limit` repeats the first graphs only. `check` and `export` write to new directories. `llm-score` rewrites the score files in the results root, including times measured on the machine, so copy the results directory first and point `--root` to the copy.
 
 ```text
 python -m decision_graph_qa llm-prompts replay
 python -m decision_graph_qa llm-prompts independent
+python -m decision_graph_qa llm-prompts independent --alternatives
 python -m decision_graph_qa llm-prompts check --out dq3-check-replay
 python -m decision_graph_qa llm-prompts export --out dq3-prompts-replay
+python -m decision_graph_qa llm-score --protocol v2 --phase pilot --arm S --root dq3-results-copy
+python -m scripts.plot_decision_graph_llm
 python -m decision_graph_qa llm-run --phase pilot --arm S --dry-run --input-usd-per-m 2.00 --cached-input-usd-per-m 0.10 --cache-write-usd-per-m 2.50 --output-usd-per-m 10.00
 ```
 
@@ -212,4 +270,6 @@ python -m decision_graph_qa llm-run --phase pilot --arm S --dry-run --input-usd-
 
 - The wording awaits human review. Two programs that read only the question texts give the same answers, which is not a human review.
 - One synthetic environment of small scale. The optimizer answers within milliseconds, so a language model that answers everything correctly would still be no reason to replace it.
-- Stage 1 covers four graphs with stable demand only. The next acceptance condition is stage 2 of protocol v2: after a cap is approved, run the remaining 84 pilot calls, which include eight graphs each with volatile, upshift and downshift demand, and report accuracy, relative excess, cost and time in the three contexts.
+- One model, one reasoning effort, English questions and one run per question, without repeated sampling. Results may change with the model snapshot.
+- Accuracy is at the ceiling. With 32 graphs the sample cannot distinguish accuracies above 89%, nor compare the three contexts.
+- The next acceptance condition is a decision on a new protocol (removing one kind of information, or a larger scale) that fixes the sample, the comparisons and the cap in advance. No further requests are sent before that.

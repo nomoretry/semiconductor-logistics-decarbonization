@@ -1,0 +1,37 @@
+{
+  "current arrivals are added once more": {
+    "graphs": 352,
+    "graphs_contradicted": 196,
+    "pilot_graphs_contradicted": 17,
+    "recorded_answers": 96,
+    "recorded_answers_contradicting": 50
+  },
+  "earlier dispatches still under way use route capacity": {
+    "graphs": 352,
+    "graphs_contradicted": 120,
+    "pilot_graphs_contradicted": 12,
+    "recorded_answers": 96,
+    "recorded_answers_contradicting": 32
+  },
+  "earlier dispatches that arrive in the window count as emissions": {
+    "graphs": 352,
+    "graphs_contradicted": 28,
+    "pilot_graphs_contradicted": 3,
+    "recorded_answers": 96,
+    "recorded_answers_contradicting": 7
+  },
+  "pipeline arrivals use slow-route capacity as well": {
+    "graphs": 352,
+    "graphs_contradicted": 286,
+    "pilot_graphs_contradicted": 25,
+    "recorded_answers": 96,
+    "recorded_answers_contradicting": 73
+  },
+  "terminal cost replaces the backlog cost": {
+    "graphs": 352,
+    "graphs_contradicted": 11,
+    "pilot_graphs_contradicted": 1,
+    "recorded_answers": 96,
+    "recorded_answers_contradicting": 3
+  }
+}

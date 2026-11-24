@@ -20,6 +20,7 @@ from decision_graph_qa.llm import (
 from decision_graph_qa.llm.data import (
     PROTOCOLS,
     LlmError,
+    digest,
     load_config,
     plan,
     prompts_by_graph,
@@ -182,6 +183,23 @@ class ReaderTests(unittest.TestCase):
                     self.assertGreaterEqual(graded["excess"], -tolerance(graph["objective"]))
         self.assertEqual(reader.optimize(problem), reader.optimize(problem, reader.Reading()))
 
+    def test_fixed_dispatches_and_alternative_readings(self):
+        graph = self.graphs[3]
+        problem = reader.parse(statement.statement(graph, "B", "None"))
+        plan, best = reader.optimize(problem)
+        self.assertTrue(reader.optimal_under(problem, reader.Reading(), plan[0], best))
+        self.assertFalse(reader.optimal_under(problem, reader.Reading(), [[9, 0], [0, 0], [0, 0]], best))
+        with self.assertRaises(reader.InfeasibleDispatch):
+            reader.optimize(problem, first=[[9, 0], [0, 0], [0, 0]])
+        self.assertEqual(reader.optimize(problem, first=plan[0])[1], best)
+        self.assertEqual(len(reader.ALTERNATIVES), 5)
+        for name, reading in reader.ALTERNATIVES.items():
+            with self.subTest(reading=name):
+                changed = [field for field, value in vars(reading).items() if value != vars(reader.Reading())[field]]
+                self.assertEqual(len(changed), 1)
+                self.assertNotIn(reading, reader.MISREADINGS.values())
+                self.assertIsInstance(reader.optimize(problem, reading)[1], float)
+
 
 class CheckTests(unittest.TestCase):
     def test_check_rows_lead_to_the_summary_and_the_acceptance(self):
@@ -273,12 +291,27 @@ class FrozenStatementTests(unittest.TestCase):
         self.assertEqual((stored["graphs"], stored["questions"], stored["violations"]), (352, 2464, 0))
         self.assertEqual(set(stored["correct"].values()) | set(stored["agreement_with_dataset"].values()), {352})
 
-    def test_recorded_stage_one_answers_are_among_the_optimal_dispatches(self):
+    def test_recorded_pilot_is_complete_and_its_scores_match_their_manifest(self):
         root = PROTOCOLS["v2"].root
         listed = {row["id"]: row["dispatches"]
                   for row in read_jsonl(root / "independent_reading" / independent_reading.EVIDENCE)}
-        rows = list(islice(read_jsonl(response_path(root, "pilot", "S")), 12))
-        self.assertEqual([row["parsed"] in listed[row["graph"]] for row in rows], [True] * 12)
+        rows = list(read_jsonl(response_path(root, "pilot", "S")))
+        tasks = {task.custom_id: task.request_hash for task in plan(load_config("v2"), "pilot", "S")}
+        self.assertEqual({row["custom_id"]: row["request_hash"] for row in rows}, tasks)
+        self.assertEqual(Counter(row["status"] for row in rows), {"ok": 96})
+        self.assertTrue(all(row["parsed"] in listed[row["graph"]] for row in rows))
+        directory = root / "pilot_S"
+        files = json.loads((directory / "manifest_pilot_S.json").read_bytes())["files"]
+        self.assertEqual({name: digest(directory / name) for name in files}, files)
+        summary = json.loads((directory / "summary_pilot_S.json").read_text(encoding="utf-8"))
+        self.assertEqual((summary["status"], summary["terminal_requests"]), ("complete", 96))
+        self.assertEqual([summary["contexts"][mode]["primary"]["metrics"]["accuracy"]["mean"]
+                          for mode in statement.MODES], [1, 1, 1])
+        alternatives = json.loads((root / "alternative_readings.json").read_text(encoding="utf-8"))
+        self.assertEqual(set(alternatives), set(reader.ALTERNATIVES))
+        for row in alternatives.values():
+            self.assertEqual((row["graphs"], row["recorded_answers"]), (352, 96))
+            self.assertGreater(row["recorded_answers_contradicting"], 0)
 
 
 if __name__ == "__main__":
