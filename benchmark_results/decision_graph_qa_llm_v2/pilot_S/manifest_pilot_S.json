@@ -1,0 +1,11 @@
+{
+  "algorithm": "SHA256",
+  "files": {
+    "answers_pilot_S_Chain.jsonl": "8e8d3efc982ae662cd29ea33670e2fa363fbb6d59b858fcc162de7ddd81c4a7b",
+    "answers_pilot_S_Graph.jsonl": "d31b3c6aa1c09cb97d9c9df012a650aa4a84ed311bce549f562bc0d5740398ac",
+    "answers_pilot_S_None.jsonl": "bb827091d4bc21ced37631838a69b10017950d2d6f84879decc1691c0e95876c",
+    "scores_pilot_S.jsonl.gz": "ae2e1b2cb5d565b48ef6a888fffddc2e5dbce5c541364f1476372e8a8380808c",
+    "summary_pilot_S.json": "ec6d1775cefb4db0b2c751a13a7bb742f3f79da3d33731b42ac5efe6957c77e5",
+    "summary_pilot_S.md": "fff5b1dac32eae958c41b8b317707f7b44d3fe360772d994d5a61a9558988d71"
+  }
+}

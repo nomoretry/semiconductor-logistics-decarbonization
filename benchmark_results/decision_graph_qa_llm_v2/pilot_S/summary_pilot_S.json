@@ -1,0 +1,1238 @@
+{
+  "A_minus_S": {},
+  "arm": "S",
+  "batch_usage_checks": [],
+  "compute": {
+    "attempts": 96,
+    "charged_responses": 96,
+    "costed_attempts": 96,
+    "known_usage_responses": 96,
+    "mean_seconds": 73.04227878541678,
+    "mean_tokens": {
+      "cache_write_tokens": 1742.7291666666667,
+      "cached_tokens": 0,
+      "input_tokens": 1800.7291666666667,
+      "output_tokens": 4364.052083333333,
+      "reasoning_tokens": 4345.052083333333
+    },
+    "mean_usd_per_b_decision": 0.04811334375,
+    "mean_usd_per_call": 0.04811334375,
+    "p95_seconds": 173.36754722500064,
+    "responses": 96,
+    "timed_responses": 96,
+    "total_above_reported_usage_usd": 0.0,
+    "total_charged_usd": 4.618881,
+    "total_reported_usage_usd": 4.618881
+  },
+  "compute_by_transport": {
+    "sync": {
+      "attempts": 96,
+      "charged_responses": 96,
+      "costed_attempts": 96,
+      "known_usage_responses": 96,
+      "mean_seconds": 73.04227878541678,
+      "mean_tokens": {
+        "cache_write_tokens": 1742.7291666666667,
+        "cached_tokens": 0,
+        "input_tokens": 1800.7291666666667,
+        "output_tokens": 4364.052083333333,
+        "reasoning_tokens": 4345.052083333333
+      },
+      "mean_usd_per_b_decision": 0.04811334375,
+      "mean_usd_per_call": 0.04811334375,
+      "p95_seconds": 173.36754722500064,
+      "responses": 96,
+      "timed_responses": 96,
+      "total_above_reported_usage_usd": 0.0,
+      "total_charged_usd": 4.618881,
+      "total_reported_usage_usd": 4.618881
+    }
+  },
+  "contexts": {
+    "Chain": {
+      "compute": {
+        "attempts": 32,
+        "charged_responses": 32,
+        "costed_attempts": 32,
+        "known_usage_responses": 32,
+        "mean_seconds": 62.82346044999974,
+        "mean_tokens": {
+          "cache_write_tokens": 1647.25,
+          "cached_tokens": 0,
+          "input_tokens": 1705.25,
+          "output_tokens": 3670.71875,
+          "reasoning_tokens": 3651.71875
+        },
+        "mean_usd_per_b_decision": 0.0409413125,
+        "mean_usd_per_call": 0.0409413125,
+        "p95_seconds": 160.25712055000002,
+        "responses": 32,
+        "timed_responses": 32,
+        "total_above_reported_usage_usd": 0.0,
+        "total_charged_usd": 1.310122,
+        "total_reported_usage_usd": 1.310122
+      },
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": -1.168750000000001,
+            "mean": -0.42343750000000036,
+            "n": 32,
+            "upper": 0.0546875
+          },
+          "emissions_delta": {
+            "lower": -0.125,
+            "mean": 0.03125,
+            "n": 32,
+            "upper": 0.25
+          },
+          "fill_rate_delta_pp": {
+            "lower": 0.0,
+            "mean": 0.10080645161290314,
+            "n": 32,
+            "upper": 0.3024193548387094
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "fallback_count": 0,
+      "fallback_errors": 0,
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 1.0,
+            "mean": 1.0,
+            "n": 32,
+            "upper": 1.0
+          },
+          "cost_delta": {
+            "lower": -1.168750000000001,
+            "mean": -0.42343750000000036,
+            "n": 32,
+            "upper": 0.0546875
+          },
+          "emissions_delta": {
+            "lower": -0.125,
+            "mean": 0.03125,
+            "n": 32,
+            "upper": 0.25
+          },
+          "fill_rate_delta_pp": {
+            "lower": 0.0,
+            "mean": 0.10080645161290314,
+            "n": 32,
+            "upper": 0.3024193548387094
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "scoring_errors": 0,
+      "statuses": {
+        "ok": 32
+      },
+      "violations": 0,
+      "without_consequence": 0
+    },
+    "Graph": {
+      "compute": {
+        "attempts": 32,
+        "charged_responses": 32,
+        "costed_attempts": 32,
+        "known_usage_responses": 32,
+        "mean_seconds": 68.98297866875055,
+        "mean_tokens": {
+          "cache_write_tokens": 2070.6875,
+          "cached_tokens": 0,
+          "input_tokens": 2128.6875,
+          "output_tokens": 4002.28125,
+          "reasoning_tokens": 3983.28125
+        },
+        "mean_usd_per_b_decision": 0.04531553125,
+        "mean_usd_per_call": 0.04531553125,
+        "p95_seconds": 185.34859288000024,
+        "responses": 32,
+        "timed_responses": 32,
+        "total_above_reported_usage_usd": 0.0,
+        "total_charged_usd": 1.450097,
+        "total_reported_usage_usd": 1.450097
+      },
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": -0.0859375,
+            "mean": 0.6437499999999998,
+            "n": 32,
+            "upper": 1.6374999999999993
+          },
+          "emissions_delta": {
+            "lower": -0.09375,
+            "mean": 0.0625,
+            "n": 32,
+            "upper": 0.28125
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.23437500000000022,
+            "mean": -0.07812500000000007,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          }
+        },
+        "paths": 16
+      },
+      "fallback_count": 0,
+      "fallback_errors": 0,
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 1.0,
+            "mean": 1.0,
+            "n": 32,
+            "upper": 1.0
+          },
+          "cost_delta": {
+            "lower": -0.0859375,
+            "mean": 0.6437499999999998,
+            "n": 32,
+            "upper": 1.6374999999999993
+          },
+          "emissions_delta": {
+            "lower": -0.09375,
+            "mean": 0.0625,
+            "n": 32,
+            "upper": 0.28125
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.23437500000000022,
+            "mean": -0.07812500000000007,
+            "n": 32,
+            "upper": 0.0
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "scoring_errors": 0,
+      "statuses": {
+        "ok": 32
+      },
+      "violations": 0,
+      "without_consequence": 0
+    },
+    "None": {
+      "compute": {
+        "attempts": 32,
+        "charged_responses": 32,
+        "costed_attempts": 32,
+        "known_usage_responses": 32,
+        "mean_seconds": 87.32039723750006,
+        "mean_tokens": {
+          "cache_write_tokens": 1510.25,
+          "cached_tokens": 0,
+          "input_tokens": 1568.25,
+          "output_tokens": 5419.15625,
+          "reasoning_tokens": 5400.15625
+        },
+        "mean_usd_per_b_decision": 0.0580831875,
+        "mean_usd_per_call": 0.0580831875,
+        "p95_seconds": 169.19562254999946,
+        "responses": 32,
+        "timed_responses": 32,
+        "total_above_reported_usage_usd": 0.0,
+        "total_charged_usd": 1.858662,
+        "total_reported_usage_usd": 1.858662
+      },
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": -0.6656249999999977,
+            "mean": 0.0031250000000007105,
+            "n": 32,
+            "upper": 0.8531249999999995
+          },
+          "emissions_delta": {
+            "lower": -0.15625,
+            "mean": -0.0625,
+            "n": 32,
+            "upper": 0.0
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.23437500000000022,
+            "mean": -0.026041666666666574,
+            "n": 32,
+            "upper": 0.1562500000000005
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "fallback_count": 0,
+      "fallback_errors": 0,
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 1.0,
+            "mean": 1.0,
+            "n": 32,
+            "upper": 1.0
+          },
+          "cost_delta": {
+            "lower": -0.6656249999999977,
+            "mean": 0.0031250000000007105,
+            "n": 32,
+            "upper": 0.8531249999999995
+          },
+          "emissions_delta": {
+            "lower": -0.15625,
+            "mean": -0.0625,
+            "n": 32,
+            "upper": 0.0
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.23437500000000022,
+            "mean": -0.026041666666666574,
+            "n": 32,
+            "upper": 0.1562500000000005
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "scoring_errors": 0,
+      "statuses": {
+        "ok": 32
+      },
+      "violations": 0,
+      "without_consequence": 0
+    }
+  },
+  "cumulative_selected_task_ledger": {
+    "decisions_with_settlements": 96,
+    "mean_settled_usd_per_b_decision": 0.04811334375,
+    "mean_settled_usd_per_call": 0.04811334375,
+    "open_reservations": 0,
+    "open_reserved_usd": 0.0,
+    "settled_attempts": 96,
+    "settled_usage_usd": 4.618881,
+    "settled_usd": 4.618881
+  },
+  "dq2_baselines": {
+    "gold": {
+      "B": {
+        "metrics": {
+          "cost_delta": {
+            "mean": 0.0,
+            "n": 32
+          },
+          "emissions_delta": {
+            "mean": 0.0,
+            "n": 32
+          },
+          "fill_rate_delta_pp": {
+            "mean": 0.0,
+            "n": 32
+          },
+          "plan_excess": {
+            "mean": 0.0,
+            "n": 32
+          },
+          "relative_plan_excess_pct": {
+            "mean": 0.0,
+            "n": 32
+          }
+        },
+        "provided": 32,
+        "violation_n": 32,
+        "violation_rate": 0.0,
+        "violations": 0
+      },
+      "graphs": 32,
+      "scored_graphs": 32,
+      "stages": {
+        "B": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "expected": 32,
+          "provided": 32,
+          "violations": 0
+        },
+        "M": {
+          "accuracy": 1.0,
+          "correct": 32,
+          "expected": 32,
+          "provided": 32,
+          "violations": 0
+        },
+        "P1": {
+          "accuracy": 1.0,
+          "correct": 384,
+          "expected": 384,
+          "provided": 384,
+          "violations": 0
+        },
+        "P2": {
+          "accuracy": 1.0,
+          "correct": 352,
+          "expected": 352,
+          "provided": 352,
+          "violations": 0
+        },
+        "P3": {
+          "accuracy": 1.0,
+          "correct": 192,
+          "expected": 192,
+          "provided": 192,
+          "violations": 0
+        }
+      },
+      "violation_denominator": 256,
+      "violation_rate": 0.0,
+      "violations": 0
+    },
+    "rule": {
+      "B": {
+        "metrics": {
+          "cost_delta": {
+            "mean": 5.2703125,
+            "n": 32
+          },
+          "emissions_delta": {
+            "mean": -1.40625,
+            "n": 32
+          },
+          "fill_rate_delta_pp": {
+            "mean": -2.5708516163031003,
+            "n": 32
+          },
+          "plan_excess": {
+            "mean": 12.644866071428567,
+            "n": 32
+          },
+          "relative_plan_excess_pct": {
+            "mean": 10.889300289086059,
+            "n": 32
+          }
+        },
+        "provided": 32,
+        "violation_n": 32,
+        "violation_rate": 0.0,
+        "violations": 0
+      },
+      "graphs": 32,
+      "scored_graphs": 32,
+      "stages": {
+        "B": {
+          "accuracy": 0.125,
+          "correct": 4,
+          "expected": 32,
+          "provided": 32,
+          "violations": 0
+        },
+        "M": {
+          "accuracy": 0.125,
+          "correct": 4,
+          "expected": 32,
+          "provided": 32,
+          "violations": 0
+        },
+        "P1": {
+          "accuracy": 1.0,
+          "correct": 384,
+          "expected": 384,
+          "provided": 384,
+          "violations": 0
+        },
+        "P2": {
+          "accuracy": 1.0,
+          "correct": 352,
+          "expected": 352,
+          "provided": 352,
+          "violations": 0
+        },
+        "P3": {
+          "accuracy": 0.6302083333333334,
+          "correct": 121,
+          "expected": 192,
+          "provided": 192,
+          "violations": 0
+        }
+      },
+      "violation_denominator": 256,
+      "violation_rate": 0.0,
+      "violations": 0
+    }
+  },
+  "expected_requests": 96,
+  "interpretation": "operational",
+  "model_snapshots": {
+    "S": {
+      "gpt-6.2-sol": 96
+    }
+  },
+  "offline_errors": 0,
+  "paired": {
+    "Chain − None": {
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": -1.4687500000000009,
+            "mean": -0.42656250000000107,
+            "n": 32,
+            "upper": 0.40468749999999787
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.09375,
+            "n": 32,
+            "upper": 0.28125
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.10416666666666699,
+            "mean": 0.1268481182795697,
+            "n": 32,
+            "upper": 0.40658602150537604
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      },
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "cost_delta": {
+            "lower": -1.4687500000000009,
+            "mean": -0.42656250000000107,
+            "n": 32,
+            "upper": 0.40468749999999787
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.09375,
+            "n": 32,
+            "upper": 0.28125
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.10416666666666699,
+            "mean": 0.1268481182795697,
+            "n": 32,
+            "upper": 0.40658602150537604
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      }
+    },
+    "Graph − Chain": {
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": 0.16562500000000036,
+            "mean": 1.0671875000000002,
+            "n": 32,
+            "upper": 2.125000000000001
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.03125,
+            "n": 32,
+            "upper": 0.09375
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.4586693548387095,
+            "mean": -0.1789314516129032,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          }
+        },
+        "paths": 16
+      },
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "cost_delta": {
+            "lower": 0.16562500000000036,
+            "mean": 1.0671875000000002,
+            "n": 32,
+            "upper": 2.125000000000001
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.03125,
+            "n": 32,
+            "upper": 0.09375
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.4586693548387095,
+            "mean": -0.1789314516129032,
+            "n": 32,
+            "upper": 0.0
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      }
+    },
+    "Graph − None": {
+      "fallback": {
+        "graphs": 32,
+        "metrics": {
+          "cost_delta": {
+            "lower": 0.08906249999999982,
+            "mean": 0.6406249999999991,
+            "n": 32,
+            "upper": 1.4312499999999986
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.125,
+            "n": 32,
+            "upper": 0.34375
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.1562500000000005,
+            "mean": -0.052083333333333495,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          }
+        },
+        "paths": 16
+      },
+      "primary": {
+        "graphs": 32,
+        "metrics": {
+          "accuracy": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "cost_delta": {
+            "lower": 0.08906249999999982,
+            "mean": 0.6406249999999991,
+            "n": 32,
+            "upper": 1.4312499999999986
+          },
+          "emissions_delta": {
+            "lower": 0.0,
+            "mean": 0.125,
+            "n": 32,
+            "upper": 0.34375
+          },
+          "fill_rate_delta_pp": {
+            "lower": -0.1562500000000005,
+            "mean": -0.052083333333333495,
+            "n": 32,
+            "upper": 0.0
+          },
+          "parse_failure": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "plan_excess": {
+            "lower": 0.0,
+            "mean": 1.7763568394002505e-15,
+            "n": 32,
+            "upper": 5.329070518200751e-15
+          },
+          "relative_plan_excess_pct": {
+            "lower": 0.0,
+            "mean": 6.251318624403878e-16,
+            "n": 32,
+            "upper": 1.8753955873211633e-15
+          },
+          "truncated": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          },
+          "violation": {
+            "lower": 0.0,
+            "mean": 0.0,
+            "n": 32,
+            "upper": 0.0
+          }
+        },
+        "paths": 16
+      }
+    }
+  },
+  "phase": "pilot",
+  "pilot_reused_requests": 0,
+  "reference_timing": {
+    "cases": [
+      {
+        "id": "test-stable-5171/mpc_scenarios/0",
+        "reference_seconds": 0.009711599999718601,
+        "rule_seconds": 0.0005803999993077014
+      },
+      {
+        "id": "test-stable-5171/base_stock/4",
+        "reference_seconds": 0.010740599998825928,
+        "rule_seconds": 0.0005703999995603226
+      },
+      {
+        "id": "test-stable-5179/mpc_scenarios/5",
+        "reference_seconds": 0.020584300000336953,
+        "rule_seconds": 0.0004014999976789113
+      },
+      {
+        "id": "test-stable-5179/base_stock/8",
+        "reference_seconds": 0.01150920000145561,
+        "rule_seconds": 0.000599899998633191
+      },
+      {
+        "id": "test-stable-5189/mpc_scenarios/10",
+        "reference_seconds": 0.005619199997454416,
+        "rule_seconds": 0.00030499999775202014
+      },
+      {
+        "id": "test-stable-5189/base_stock/9",
+        "reference_seconds": 0.00827969999954803,
+        "rule_seconds": 0.00041599999894970097
+      },
+      {
+        "id": "test-stable-5227/mpc_scenarios/3",
+        "reference_seconds": 0.045603300000948366,
+        "rule_seconds": 0.0009577999990142416
+      },
+      {
+        "id": "test-stable-5227/base_stock/2",
+        "reference_seconds": 0.044069799998396775,
+        "rule_seconds": 0.0009059000003617257
+      },
+      {
+        "id": "test-volatile-5171/mpc_scenarios/10",
+        "reference_seconds": 0.0065590000012889504,
+        "rule_seconds": 0.0004474000015761703
+      },
+      {
+        "id": "test-volatile-5171/base_stock/5",
+        "reference_seconds": 0.018837499999790452,
+        "rule_seconds": 0.0005266000007395633
+      },
+      {
+        "id": "test-volatile-5179/mpc_scenarios/4",
+        "reference_seconds": 0.01324910000039381,
+        "rule_seconds": 0.0007473000005120412
+      },
+      {
+        "id": "test-volatile-5179/base_stock/9",
+        "reference_seconds": 0.006249299996852642,
+        "rule_seconds": 0.0009907999992719851
+      },
+      {
+        "id": "test-volatile-5189/mpc_scenarios/8",
+        "reference_seconds": 0.01957869999750983,
+        "rule_seconds": 0.00022610000087297522
+      },
+      {
+        "id": "test-volatile-5189/base_stock/4",
+        "reference_seconds": 0.016956500003288966,
+        "rule_seconds": 0.0008472999979858287
+      },
+      {
+        "id": "test-volatile-5227/mpc_scenarios/4",
+        "reference_seconds": 0.024004799997783266,
+        "rule_seconds": 0.0008382999985769857
+      },
+      {
+        "id": "test-volatile-5227/base_stock/8",
+        "reference_seconds": 0.12144360000093002,
+        "rule_seconds": 0.0015473999992536847
+      },
+      {
+        "id": "test-upshift-5171/mpc_scenarios/4",
+        "reference_seconds": 0.0168322999998054,
+        "rule_seconds": 0.0007062999975460116
+      },
+      {
+        "id": "test-upshift-5171/base_stock/9",
+        "reference_seconds": 0.009325899998657405,
+        "rule_seconds": 0.0011550999988685362
+      },
+      {
+        "id": "test-upshift-5179/mpc_scenarios/2",
+        "reference_seconds": 0.013353700000152458,
+        "rule_seconds": 0.0001878000002761837
+      },
+      {
+        "id": "test-upshift-5179/base_stock/3",
+        "reference_seconds": 0.032390799999120645,
+        "rule_seconds": 0.0010053999976662453
+      },
+      {
+        "id": "test-upshift-5189/mpc_scenarios/10",
+        "reference_seconds": 0.005152400000952184,
+        "rule_seconds": 0.00019780000002356246
+      },
+      {
+        "id": "test-upshift-5189/base_stock/7",
+        "reference_seconds": 0.016816499999549706,
+        "rule_seconds": 0.0008532000028935727
+      },
+      {
+        "id": "test-upshift-5227/mpc_scenarios/7",
+        "reference_seconds": 0.011399700000765733,
+        "rule_seconds": 0.0007757999992463738
+      },
+      {
+        "id": "test-upshift-5227/base_stock/4",
+        "reference_seconds": 0.015258199997333577,
+        "rule_seconds": 0.0011875999989570118
+      },
+      {
+        "id": "test-downshift-5171/mpc_scenarios/6",
+        "reference_seconds": 0.02511659999800031,
+        "rule_seconds": 0.0007502000007661991
+      },
+      {
+        "id": "test-downshift-5171/base_stock/8",
+        "reference_seconds": 0.012016399999993155,
+        "rule_seconds": 0.0003591999993659556
+      },
+      {
+        "id": "test-downshift-5179/mpc_scenarios/6",
+        "reference_seconds": 0.023929700000735465,
+        "rule_seconds": 0.00037230000089039095
+      },
+      {
+        "id": "test-downshift-5179/base_stock/0",
+        "reference_seconds": 0.03002089999790769,
+        "rule_seconds": 0.001189499998872634
+      },
+      {
+        "id": "test-downshift-5189/mpc_scenarios/4",
+        "reference_seconds": 0.017309999999270076,
+        "rule_seconds": 0.0006350000003294554
+      },
+      {
+        "id": "test-downshift-5189/base_stock/5",
+        "reference_seconds": 0.026497099999687634,
+        "rule_seconds": 0.0008476000002701767
+      },
+      {
+        "id": "test-downshift-5227/mpc_scenarios/10",
+        "reference_seconds": 0.007066100002703024,
+        "rule_seconds": 0.00014910000027157366
+      },
+      {
+        "id": "test-downshift-5227/base_stock/6",
+        "reference_seconds": 0.0150612999968871,
+        "rule_seconds": 0.001085899999452522
+      }
+    ],
+    "machine": "Windows-10-10.0.19045-SP0",
+    "python": "3.12.10",
+    "reference_median_seconds": 0.01603734999844164,
+    "rule_median_seconds": 0.0007267999990290264
+  },
+  "service_tiers": {
+    "S": {
+      "default": 96
+    }
+  },
+  "size": "full",
+  "statement_references": {
+    "assembly_from_p3_answers": {
+      "all_candidates_correct_graphs": 13,
+      "mean_candidates": 27.625,
+      "random_candidate_correct_rate": 0.5008048102682486,
+      "random_candidate_relative_excess_pct_mean": 6.086034541845472,
+      "single_candidate_graphs": 13
+    },
+    "graphs": 32,
+    "misreadings": {
+      "average of the scenarios used as one path": {
+        "correct": 9,
+        "correct_rate": 0.28125,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 12.764039719698696,
+        "relative_excess_pct_median": 10.30784821445231,
+        "violations": 0
+      },
+      "emissions limit not paced over the remaining periods": {
+        "correct": 31,
+        "correct_rate": 0.96875,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 0.04775692625609789,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "first scenario only": {
+        "correct": 8,
+        "correct_rate": 0.25,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 17.03058376367661,
+        "relative_excess_pct_median": 13.764339719060203,
+        "violations": 0
+      },
+      "freight charged per unit instead of per kilogram": {
+        "correct": 24,
+        "correct_rate": 0.75,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 1.1918729152913956,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "mean forecast used instead of the scenarios": {
+        "correct": 10,
+        "correct_rate": 0.3125,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 14.124558711806667,
+        "relative_excess_pct_median": 9.520335276115581,
+        "violations": 0
+      },
+      "no emissions charge in the cost": {
+        "correct": 27,
+        "correct_rate": 0.84375,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 0.11399587082585307,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "no extra cost for backlog at the end of the episode": {
+        "correct": 26,
+        "correct_rate": 0.8125,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 2.786160824330893,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "outstanding backlog ignored": {
+        "correct": 28,
+        "correct_rate": 0.875,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 0.2576738301187245,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "receipts arrive one offset later": {
+        "correct": 12,
+        "correct_rate": 0.375,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 8.04585558561453,
+        "relative_excess_pct_median": 1.5257692234891045,
+        "violations": 0
+      },
+      "scheduled receipts ignored": {
+        "correct": 10,
+        "correct_rate": 0.3125,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 5.209290632877342,
+        "relative_excess_pct_median": 0.7829319468302334,
+        "violations": 0
+      }
+    },
+    "prompts": {
+      "parsed": 672,
+      "v1_prompts_rejected": 672,
+      "v1_text_kept": 672
+    },
+    "text_only_program": {
+      "correct": {
+        "B": 32,
+        "M": 32,
+        "P3.emission": 32,
+        "P3.load.0": 32,
+        "P3.load.1": 32,
+        "P3.ship.0": 32,
+        "P3.ship.1": 32,
+        "P3.ship.2": 32
+      },
+      "exact_cost_equal": 32,
+      "max_abs_objective_difference": 5.684341886080802e-14,
+      "max_seconds": 0.041173499999786145,
+      "median_seconds": 0.010818400000061956,
+      "objective_equal": 32,
+      "violations": 0
+    },
+    "v1_ceilings": {
+      "own draws + P3 answers, seed 20261125": {
+        "correct": 23,
+        "correct_rate": 0.71875,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 1.4454514568522683,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "own draws + P3 answers, seed 7": {
+        "correct": 21,
+        "correct_rate": 0.65625,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 1.4211296882166007,
+        "relative_excess_pct_median": 0.0,
+        "violations": 0
+      },
+      "own draws, seed 20261125": {
+        "correct": 11,
+        "correct_rate": 0.34375,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 4.04678692447569,
+        "relative_excess_pct_median": 1.077590235871355,
+        "violations": 0
+      },
+      "own draws, seed 7": {
+        "correct": 13,
+        "correct_rate": 0.40625,
+        "graphs": 32,
+        "relative_excess_n": 32,
+        "relative_excess_pct_mean": 3.540371988756248,
+        "relative_excess_pct_median": 0.878459242747488,
+        "violations": 0
+      }
+    }
+  },
+  "status": "complete",
+  "terminal_requests": 96
+}
