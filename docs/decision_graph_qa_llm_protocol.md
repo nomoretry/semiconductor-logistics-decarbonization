@@ -89,6 +89,10 @@ Batch 可用于主评测和 P3 扩展，预演单价为逐条的一半。导出�
 
 题目、抽样、判分和比较都不变。配置哈希随之更新。
 
+### 修订 3：v1 停止发送新请求
+
+试点前 12 次之后发现，题目没有写明规则，也没有给出标准答案依赖的 7 组需求情景，B 和 P3 的标准答案不能由题目推出。原因和离线核算见 [v2 协议](decision_graph_qa_llm_protocol_v2.md)。v1 不再发送新请求，余下 84 次试点、主评测和 P3 扩展取消。已有记录保持原样：冒烟 7 题共 10 次尝试，试点 12 次，账本合计 5.410394 美元，其中 4 次超时按预留记的 2.565454 美元是上界。试点 12 次都有可解析的回答，没有违约、截断或超时，用时 3–657 秒，输出 103–28,695 token，费用 2.319912 美元；4 张图上 B 判对 `None` 1、`Chain` 2、`Graph` 2。这些结果只作探索性记录，不与 v2 合并。配置和配置哈希不变。
+
 ## English
 
 ### Question and evidence
@@ -171,3 +175,7 @@ This amendment was made after the smoke run and before any pilot request. The sm
 3. The pilot may run in parts with `--max-calls`, checking a first part before resuming the rest. Running in parts does not change the pilot questions, their order, or the request bodies.
 
 Questions, sampling, scoring, and comparisons are unchanged. The configuration hash changes accordingly.
+
+### Amendment 3: v1 sends no further requests
+
+After the first 12 pilot calls it was found that the prompts do not state the rules and do not give the seven demand scenarios behind the reference answers, so the reference answers to B and P3 do not follow from the prompts. The reasons and the offline results are in the [v2 protocol](decision_graph_qa_llm_protocol_v2.md). v1 sends no further requests. The remaining 84 pilot calls, the main evaluation and the P3 extension are cancelled. Existing records stay unchanged: seven smoke questions with ten attempts and 12 pilot calls, with US$5.410394 in the ledger, of which US$2.565454 for four timeouts booked at their reservations is an upper bound. All 12 pilot calls returned a parsed answer without violations, truncations or timeouts. They took 3–657 seconds and 103–28,695 output tokens and cost US$2.319912. On the four graphs, B was correct for `None` 1, `Chain` 2 and `Graph` 2. These results are exploratory records only and are not merged with v2. The configuration and its hash are unchanged.
