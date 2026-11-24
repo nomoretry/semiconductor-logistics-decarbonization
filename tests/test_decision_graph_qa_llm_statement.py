@@ -11,7 +11,12 @@ from itertools import islice
 from pathlib import Path
 
 from decision_graph_qa.dataset import records
-from decision_graph_qa.llm import reader, statement, statement_check
+from decision_graph_qa.llm import (
+    independent_reading,
+    reader,
+    statement,
+    statement_check,
+)
 from decision_graph_qa.llm.data import (
     PROTOCOLS,
     LlmError,
@@ -252,6 +257,28 @@ class FrozenStatementTests(unittest.TestCase):
         root = PROTOCOLS["v2"].root
         self.assertEqual(statement_check.replay(root / "prompts", root / "statement_check"),
                          {"graphs": 352, "accepted": True, "solves": 0})
+
+    def test_archived_independent_program_repeats_its_answers(self):
+        root = PROTOCOLS["v2"].root
+        directory = root / "independent_reading"
+        program = directory / independent_reading.PROGRAM
+        imported = {name for node in ast.walk(ast.parse(program.read_text(encoding="utf-8")))
+                    for name in ([alias.name for alias in node.names] if isinstance(node, ast.Import)
+                                 else [node.module] if isinstance(node, ast.ImportFrom) else [])}
+        self.assertLessEqual(imported, {"itertools", "json", "re", "sys", "time", "fractions", "math", "numpy"})
+        repeated = independent_reading.replay(root / "prompts", directory, limit=4)
+        self.assertEqual((repeated["graphs"], repeated["questions"], repeated["violations"]), (4, 28, 0))
+        self.assertEqual(set(repeated["correct"].values()) | set(repeated["agreement_with_dataset"].values()), {4})
+        stored = json.loads((directory / independent_reading.SUMMARY).read_text(encoding="utf-8"))
+        self.assertEqual((stored["graphs"], stored["questions"], stored["violations"]), (352, 2464, 0))
+        self.assertEqual(set(stored["correct"].values()) | set(stored["agreement_with_dataset"].values()), {352})
+
+    def test_recorded_stage_one_answers_are_among_the_optimal_dispatches(self):
+        root = PROTOCOLS["v2"].root
+        listed = {row["id"]: row["dispatches"]
+                  for row in read_jsonl(root / "independent_reading" / independent_reading.EVIDENCE)}
+        rows = list(islice(read_jsonl(response_path(root, "pilot", "S")), 12))
+        self.assertEqual([row["parsed"] in listed[row["graph"]] for row in rows], [True] * 12)
 
 
 if __name__ == "__main__":

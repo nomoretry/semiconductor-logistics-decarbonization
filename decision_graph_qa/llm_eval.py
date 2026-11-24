@@ -148,6 +148,11 @@ def register(subparsers: argparse._SubParsersAction) -> None:
         command = statements.add_parser(name)
         command.add_argument("--prompts", type=Path, default=home / "prompts")
         command.add_argument("--out" if name == "check" else "--check", type=Path, default=home / "statement_check")
+    reading = statements.add_parser("independent", help="repeat the program written from the question texts alone")
+    reading.add_argument("--prompts", type=Path, default=home / "prompts")
+    reading.add_argument("--dir", type=Path, default=home / "independent_reading")
+    reading.add_argument("--limit", type=_positive_int, help="repeat the first N graphs only")
+    reading.add_argument("--write", action="store_true", help="write the evidence instead of comparing with it")
 
 
 def _projection(tasks: list[Task], prices: Prices, output_scenarios: list[int]) -> dict:
@@ -283,6 +288,12 @@ def _statements(args: argparse.Namespace) -> dict:
         return statement_check.check(args.prompts, args.out)
     if args.prompts_command == "replay":
         return statement_check.replay(args.prompts, args.check)
+    if args.prompts_command == "independent":
+        from .llm import independent_reading
+
+        if args.write:
+            return independent_reading.check(args.prompts, args.dir)
+        return independent_reading.replay(args.prompts, args.dir, args.limit)
     sources = load_config("v1")["sources"]
     return statement.export(statement_check.load_graphs({"sources": sources}), args.out,
                             {"manifest": sources["dataset_manifest"], "sha256": sources["dataset_sha256"]})

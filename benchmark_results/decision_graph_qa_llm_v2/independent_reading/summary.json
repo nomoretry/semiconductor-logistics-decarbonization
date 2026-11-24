@@ -1,0 +1,27 @@
+{
+  "agreement_with_dataset": {
+    "dispatch flags with both values": 352,
+    "objective": 352,
+    "other optimal dispatch exists": 352,
+    "reference dispatch is listed": 352,
+    "route load ranges": 352
+  },
+  "contexts": [
+    "None"
+  ],
+  "correct": {
+    "B": 352,
+    "P3.emission": 352,
+    "P3.load.0": 352,
+    "P3.load.1": 352,
+    "P3.ship.0": 352,
+    "P3.ship.1": 352,
+    "P3.ship.2": 352
+  },
+  "different_states": 336,
+  "graphs": 352,
+  "graphs_with_several_optimal_dispatches": 90,
+  "prompts_manifest": "8a8a544d2b8c2144d6dff28cb30fa1615abab9a3b4459548288b2f03c602de53",
+  "questions": 2464,
+  "violations": 0
+}
