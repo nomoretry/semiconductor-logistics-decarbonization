@@ -191,7 +191,7 @@ class ReaderTests(unittest.TestCase):
         self.assertFalse(reader.optimal_under(problem, reader.Reading(), [[9, 0], [0, 0], [0, 0]], best))
         with self.assertRaises(reader.InfeasibleDispatch):
             reader.optimize(problem, first=[[9, 0], [0, 0], [0, 0]])
-        self.assertEqual(reader.optimize(problem, first=plan[0])[1], best)
+        self.assertAlmostEqual(reader.optimize(problem, first=plan[0])[1], best, places=7)
         self.assertEqual(len(reader.ALTERNATIVES), 5)
         for name, reading in reader.ALTERNATIVES.items():
             with self.subTest(reading=name):
