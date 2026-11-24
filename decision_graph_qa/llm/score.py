@@ -24,6 +24,7 @@ from ..eval_statistics import (
 from ..evaluation import rule_answers
 from ..planner import AuditFailure, Record, SolveFailure, original, scenarios, tolerance
 from ..scoring import grade_graph
+from . import statement_check
 from .data import (
     TERMINAL,
     LlmError,
@@ -41,7 +42,7 @@ from .data import (
 )
 
 RATES = ("accuracy", "violation", "truncated", "parse_failure")
-OUTCOMES = ("plan_excess", "cost_delta", "fill_rate_delta_pp", "emissions_delta")
+OUTCOMES = ("plan_excess", "relative_plan_excess_pct", "cost_delta", "fill_rate_delta_pp", "emissions_delta")
 PAIRINGS = (("Chain", "None"), ("Graph", "None"), ("Graph", "Chain"))
 IDENTITY = ("id", "split", "profile", "seed", "policy", "objective")
 USAGE = ("input_tokens", "cached_tokens", "cache_write_tokens", "output_tokens", "reasoning_tokens")
@@ -105,11 +106,13 @@ def _question_metrics(response: Record | None, grade: Record | None) -> Record:
     }
 
 
-def _outcomes(judgment: Record) -> Record:
+def _outcomes(judgment: Record, objective: float) -> Record:
     delta = (judgment["consequence"] or {}).get("delta") or {}
     fill = delta.get("fill_rate")
+    excess = judgment["nodes"].get("B", {}).get("excess")
     return {
-        "plan_excess": judgment["nodes"].get("B", {}).get("excess"),
+        "plan_excess": excess,
+        "relative_plan_excess_pct": 100 * excess / objective if excess is not None and objective else None,
         "cost_delta": delta.get("cost"),
         "fill_rate_delta_pp": 100 * fill if fill is not None else None,
         "emissions_delta": delta.get("emissions"),
@@ -130,8 +133,8 @@ def _row(graph: Record, context: str, responses: dict[str, Record | None], judgm
         **{key: graph[key] for key in IDENTITY}, "context": context,
         "responses": responses, "questions": questions, **judgment, "fallback": fallback,
         "metrics": {metric: _mean(question[metric] for question in questions.values()) for metric in RATES}
-        | _outcomes(judgment),
-        "fallback_metrics": _outcomes(fallback if fallback is not None else judgment),
+        | _outcomes(judgment, graph["objective"]),
+        "fallback_metrics": _outcomes(fallback if fallback is not None else judgment, graph["objective"]),
     }
 
 
@@ -311,11 +314,24 @@ def _baseline_summaries(config: Record, graph_ids: set[str], periods: int) -> Re
         raise LlmError("DQ-2 evidence does not cover the registered graph scope")
     result = {name: modes["None"]["gold"] for name, modes in summarize_baselines(rows).items()}
     for entry in result.values():
-        fill = entry["B"]["metrics"].pop("fill_rate_delta")
-        if fill["mean"] is not None:
-            fill["mean"] *= 100
-        entry["B"]["metrics"]["fill_rate_delta_pp"] = fill
+        for metric, name in (("fill_rate_delta", "fill_rate_delta_pp"),
+                             ("relative_plan_excess", "relative_plan_excess_pct")):
+            share = entry["B"]["metrics"].pop(metric)
+            if share["mean"] is not None:
+                share["mean"] *= 100
+            entry["B"]["metrics"][name] = share
     return result
+
+
+def _statement_references(config: Record, graph_ids: set[str]) -> Record | None:
+    """Offline references of protocol v2 on the same graphs: text-only program, mean forecast, P3 assembly."""
+    if "statement_check_manifest" not in config["sources"]:
+        return None
+    rows = [row for row in read_jsonl(_source(config, "statement_check", statement_check.EVIDENCE))
+            if row["id"] in graph_ids]
+    if len(rows) != len(graph_ids):
+        raise LlmError("The statement check does not cover the registered graph scope")
+    return statement_check.summarize(rows)
 
 
 def _timings(config: Record, graphs: list[Record], arm: str) -> Record:
@@ -361,6 +377,24 @@ def _number(value: float | None) -> str:
 def _metric_table(metrics: Record) -> list[str]:
     return [f"| {metric} | {result['n']} | {_number(result['mean'])} | {_number(result['lower'])} | "
             f"{_number(result['upper'])} |" for metric, result in metrics.items()]
+
+
+def _reference_lines(references: Record | None, chinese: bool) -> list[str]:
+    if references is None:
+        return []
+    n, text = references["graphs"], references["text_only_program"]
+    mean, pick = references["misreadings"][statement_check.MEAN_FORECAST], references["assembly_from_p3_answers"]
+    table = [("只读题目文字的程序" if chinese else "Text-only program", text["correct"]["B"] / n, None),
+             ("只用均值预测的规划" if chinese else "Plan on the mean forecast", mean["correct_rate"],
+              mean["relative_excess_pct_mean"]),
+             ("与 P3 标准答案一致的矩阵中随机取一个" if chinese else
+              "Random dispatch that agrees with the P3 reference answers", pick["random_candidate_correct_rate"],
+              pick["random_candidate_relative_excess_pct_mean"])]
+    return ["### 同范围离线参照" if chinese else "### Offline references over the same graph scope", "",
+            ("| 参照 | B 正确率 | 相对超额均值（%） |" if chinese else
+             "| Reference | B accuracy | Mean relative excess (%) |"),
+            "|---|---:|---:|",
+            *(f"| {label} | {_number(rate)} | {_number(excess)} |" for label, rate, excess in table), ""]
 
 
 def _report(result: Record) -> str:
@@ -422,15 +456,16 @@ def _report(result: Record) -> str:
                   + f"{_number(timing['reference_median_seconds'])} / "
                   f"{_number(timing['rule_median_seconds'])}.", "",
                   "### 同范围 DQ-2 基线" if chinese else "### DQ-2 baselines over the same graph scope", "",
-                  ("| 答题方 | B 正确率 | B 违约率 | P3 正确率 | 计划超额 | 实际成本差 | 即时满足率差（百分点） | 排放差 |"
+                  ("| 答题方 | B 正确率 | B 违约率 | P3 正确率 | 计划超额 | 相对超额（%） | 实际成本差 | "
+                   "即时满足率差（百分点） | 排放差 |"
                    if chinese else "| Responder | B accuracy | B violation | P3 accuracy | Planned excess | "
-                   "Cost delta | Immediate fulfillment delta (pp) | Emissions delta |"),
-                  "|---|---:|---:|---:|---:|---:|---:|---:|"]
+                   "Relative excess (%) | Cost delta | Immediate fulfillment delta (pp) | Emissions delta |"),
+                  "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
         for name, base in result["dq2_baselines"].items():
             values = [base["stages"]["B"]["accuracy"], base["B"]["violation_rate"], base["stages"]["P3"]["accuracy"]]
             values += [base["B"]["metrics"][metric]["mean"] for metric in OUTCOMES]
             lines.append(f"| `{name}` | " + " | ".join(_number(value) for value in values) + " |")
-        lines.append("")
+        lines += ["", *_reference_lines(result["statement_references"], chinese)]
         snapshots = result["model_snapshots"]
         if snapshots:
             lines += ["### 返回模型" if chinese else "### Returned models", ""]
@@ -444,8 +479,8 @@ def _report(result: Record) -> str:
     return "\n".join(lines)
 
 
-def score(root: Path, phase: str, arm: str, size: str = "full") -> Record:
-    config = load_config()
+def score(root: Path, phase: str, arm: str, size: str = "full", *, config: Record | None = None) -> Record:
+    config = load_config() if config is None else config
     if (config["seeds"]["bootstrap"], config["bootstrap_replicates"]) != (BOOTSTRAP_SEED, BOOTSTRAP_REPLICATES):
         raise LlmError("bootstrap configuration differs from the frozen evaluator")
     tasks = plan(config, phase, arm, size)
@@ -485,6 +520,7 @@ def score(root: Path, phase: str, arm: str, size: str = "full") -> Record:
         "reference_timing": _timings(config, graphs, arm),
         "dq2_baselines": _baseline_summaries(config, {task.graph for task in tasks},
                                              graphs[0]["observation"]["public"]["periods"]),
+        "statement_references": _statement_references(config, {task.graph for task in tasks}),
         "model_snapshots": {name: dict(Counter(row["model"] for row in _responses(
             [item for by_context in evidence[name].values() for item in by_context]) if row["model"])) for name in jobs},
         "service_tiers": {name: dict(Counter(str(row.get("service_tier")) for row in _responses(

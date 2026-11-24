@@ -7,6 +7,7 @@ import json
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -63,7 +64,8 @@ class LlmCliTests(unittest.TestCase):
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 (root / "protocol_config.json").write_bytes(b"{}\n")
-                with patch.object(data, "DEFAULT_ROOT", root):
+                moved = replace(data.PROTOCOLS[data.CURRENT], root=root)
+                with patch.dict(data.PROTOCOLS, {data.CURRENT: moved}):
                     code, _, stderr = self.invoke([*base, *RATES, "--max-usd", "1"])
                 self.assertEqual(code, 2)
                 self.assertIn("Protocol config SHA256 mismatch", stderr)

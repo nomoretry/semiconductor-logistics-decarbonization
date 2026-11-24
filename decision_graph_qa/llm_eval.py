@@ -6,7 +6,17 @@ import json
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
-from .llm.data import DEFAULT_ROOT, LlmError, Task, load_config, plan, terminal_records
+from .llm.data import (
+    CURRENT,
+    PROTOCOLS,
+    LlmError,
+    Task,
+    load_config,
+    plan,
+    require_open,
+    results_root,
+    terminal_records,
+)
 from .llm.transport import Client, Prices
 
 RATE_NAMES = ("input", "cached-input", "cache-write", "output")
@@ -80,7 +90,9 @@ def _add_scope(parser: argparse.ArgumentParser, phases: tuple[str, ...] | None) 
 
 
 def _add_root(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--root", type=Path, default=DEFAULT_ROOT)
+    parser.add_argument("--protocol", choices=sorted(PROTOCOLS), default=CURRENT,
+                        help="protocol version of the questions, configuration and results root")
+    parser.add_argument("--root", type=Path, help="results root, by default the one of the protocol version")
 
 
 def register(subparsers: argparse._SubParsersAction) -> None:
@@ -126,6 +138,16 @@ def register(subparsers: argparse._SubParsersAction) -> None:
     score = subparsers.add_parser("llm-score", help="grade and summarize recorded model replies")
     _add_root(score)
     _add_scope(score, ("pilot", "main", "p3"))
+
+    prompts = subparsers.add_parser("llm-prompts", help="export and check the self-contained v2 questions offline")
+    statements = prompts.add_subparsers(dest="prompts_command", required=True)
+    home = PROTOCOLS["v2"].root
+    write = statements.add_parser("export")
+    write.add_argument("--out", type=Path, default=home / "prompts")
+    for name in ("check", "replay"):
+        command = statements.add_parser(name)
+        command.add_argument("--prompts", type=Path, default=home / "prompts")
+        command.add_argument("--out" if name == "check" else "--check", type=Path, default=home / "statement_check")
 
 
 def _projection(tasks: list[Task], prices: Prices, output_scenarios: list[int]) -> dict:
@@ -214,6 +236,8 @@ def _run(config: dict, args: argparse.Namespace) -> dict:
     size = _size(args)
     prices = _prices(args)
     assert prices is not None
+    if not args.dry_run:
+        require_open(args.protocol)
     if not args.dry_run and args.max_usd is None:
         raise LlmError("--max-usd is required for live execution")
     batch_prices = _prices(args, "batch_", required=False)
@@ -240,6 +264,8 @@ def _batch(config: dict, args: argparse.Namespace) -> dict:
         return batch.fetch_batches(args.root, batch_id=args.batch_id, wait_seconds=args.wait_seconds)
     prices = _prices(args)
     assert prices is not None
+    if args.batch_command in ("export", "submit"):
+        require_open(args.protocol)
     if args.batch_command == "export":
         return batch.export_batches(
             config, args.root, phase=args.phase, arm=args.arm, size=_size(args),
@@ -250,14 +276,30 @@ def _batch(config: dict, args: argparse.Namespace) -> dict:
     return batch.import_batches(config, args.root, files=args.files, prices=prices)
 
 
-def dispatch(args: argparse.Namespace) -> None:
-    config = load_config()
-    if args.command == "llm-run":
-        result = _run(config, args)
-    elif args.command == "llm-batch":
-        result = _batch(config, args)
-    else:
-        from .llm.score import score
+def _statements(args: argparse.Namespace) -> dict:
+    from .llm import statement, statement_check
 
-        result = score(args.root, args.phase, args.arm, _size(args))
+    if args.prompts_command == "check":
+        return statement_check.check(args.prompts, args.out)
+    if args.prompts_command == "replay":
+        return statement_check.replay(args.prompts, args.check)
+    sources = load_config("v1")["sources"]
+    return statement.export(statement_check.load_graphs({"sources": sources}), args.out,
+                            {"manifest": sources["dataset_manifest"], "sha256": sources["dataset_sha256"]})
+
+
+def dispatch(args: argparse.Namespace) -> None:
+    if args.command == "llm-prompts":
+        result = _statements(args)
+    else:
+        config = load_config(args.protocol)
+        args.root = results_root(args.protocol, args.root)
+        if args.command == "llm-run":
+            result = _run(config, args)
+        elif args.command == "llm-batch":
+            result = _batch(config, args)
+        else:
+            from .llm.score import score
+
+            result = score(args.root, args.phase, args.arm, _size(args), config=config)
     print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2, default=str), flush=True)

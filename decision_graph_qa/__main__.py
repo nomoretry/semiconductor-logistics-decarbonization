@@ -51,7 +51,7 @@ def main() -> None:
 
     llm_eval.register(sub)
     args = parser.parse_args()
-    if args.command in ("llm-run", "llm-batch", "llm-score"):
+    if args.command in ("llm-run", "llm-batch", "llm-score", "llm-prompts"):
         try:
             llm_eval.dispatch(args)
         except LlmError as error:

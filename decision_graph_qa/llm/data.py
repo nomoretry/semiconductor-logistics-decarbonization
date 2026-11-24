@@ -1,6 +1,7 @@
 """Load the frozen protocol and prompts, and plan reproducible requests."""
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import os
@@ -16,8 +17,6 @@ from pathlib import Path
 from typing import Any, BinaryIO
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_ROOT = ROOT / "benchmark_results" / "decision_graph_qa_llm_v1"
-PROTOCOL = ROOT / "docs" / "decision_graph_qa_llm_protocol.md"
 TERMINAL = frozenset(("ok", "parse_failure", "truncated"))
 
 Record = dict[str, Any]
@@ -25,6 +24,26 @@ Record = dict[str, Any]
 
 class LlmError(RuntimeError):
     """A runner precondition or evidence check failed."""
+
+
+@dataclass(frozen=True)
+class Protocol:
+    """A registered protocol version with its results root and protocol document."""
+
+    version: str
+    root: Path
+    document: Path
+    schema_version: int
+    accepts_requests: bool
+
+
+PROTOCOLS = {protocol.version: protocol for protocol in (
+    Protocol("v1", ROOT / "benchmark_results" / "decision_graph_qa_llm_v1",
+             ROOT / "docs" / "decision_graph_qa_llm_protocol.md", 1, True),
+    Protocol("v2", ROOT / "benchmark_results" / "decision_graph_qa_llm_v2",
+             ROOT / "docs" / "decision_graph_qa_llm_protocol_v2.md", 2, True),
+)}
+CURRENT = "v1"
 
 
 def canonical(value: Any) -> bytes:
@@ -47,7 +66,7 @@ def utc_now() -> str:
 def read_jsonl(path: Path) -> Iterator[Record]:
     if not path.exists():
         return
-    with path.open(encoding="utf-8") as file:
+    with gzip.open(path, "rt", encoding="utf-8") if path.suffix == ".gz" else path.open(encoding="utf-8") as file:
         for line_number, line in enumerate(file, 1):
             try:
                 row = json.loads(line)
@@ -90,17 +109,31 @@ def root_lock(root: Path) -> Iterator[None]:
         yield
 
 
-def load_config() -> Record:
-    path = DEFAULT_ROOT / "protocol_config.json"
-    payload = path.read_bytes()
-    found = re.findall(r"^Protocol config SHA256: ([a-f0-9]{64})$", PROTOCOL.read_text(encoding="utf-8"),
+def load_config(version: str = CURRENT) -> Record:
+    protocol = PROTOCOLS[version]
+    payload = (protocol.root / "protocol_config.json").read_bytes()
+    found = re.findall(r"^Protocol config SHA256: ([a-f0-9]{64})$", protocol.document.read_text(encoding="utf-8"),
                        re.MULTILINE)
     if len(found) != 1 or found[0] != hashlib.sha256(payload).hexdigest():
         raise LlmError("Protocol config SHA256 mismatch")
     config = json.loads(payload)
-    if config["schema_version"] != 1:
+    if config["schema_version"] != protocol.schema_version:
         raise LlmError("Unsupported protocol config version")
     return config
+
+
+def results_root(version: str, root: Path | None) -> Path:
+    """Use the version's own results root and never another version's."""
+    if root is None:
+        return PROTOCOLS[version].root
+    if any(root.resolve() == other.root.resolve() for other in PROTOCOLS.values() if other.version != version):
+        raise LlmError(f"The results root belongs to another protocol version than {version}")
+    return root
+
+
+def require_open(version: str) -> None:
+    if not PROTOCOLS[version].accepts_requests:
+        raise LlmError(f"Protocol {version} is closed to new requests; see its closing amendment")
 
 
 def verified_manifest(config: Record, source: str) -> tuple[Path, Record]:
@@ -151,8 +184,10 @@ class Task:
         return int((chars / Decimal(str(divisor))).to_integral_value(rounding=ROUND_CEILING))
 
 
-def _prompts(config: Record, contexts: list[str]) -> dict[str, dict[str, dict[str, str]]]:
-    directory, manifest_files = verified_manifest(config, "evaluation")
+def prompts_by_graph(config: Record, contexts: list[str]) -> dict[str, dict[str, dict[str, str]]]:
+    """Read the P3 and B prompts: the DQ-2 export in v1, the self-contained statements in v2."""
+    directory, manifest_files = verified_manifest(config, "prompts" if "prompts_manifest" in config["sources"]
+                                                  else "evaluation")
     scope = config["scope"]
     paths = {mode: verify_file(directory, manifest_files, config["sources"]["prompt_files"][mode])
              for mode in contexts}
@@ -214,7 +249,7 @@ def plan(config: Record, phase: str, arm: str, size: str = "full") -> list[Task]
     contexts = config["scope"]["contexts"]
     if phase == "smoke":
         contexts = ["None"]
-    prompts = _prompts(config, contexts)
+    prompts = prompts_by_graph(config, contexts)
     anchor = prompts["None"]
     for mode, by_graph in prompts.items():
         if anchor.keys() != by_graph.keys() or any(anchor[g].keys() != by_graph[g].keys() for g in anchor):
