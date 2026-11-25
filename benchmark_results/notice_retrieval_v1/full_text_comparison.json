@@ -1,0 +1,65 @@
+{
+  "status": "development selection on the same questions; the selected mode's numbers are optimistic",
+  "rule": "Fixed before the comparison: with the glossary, over all questions, a passage mode qualifies only if its recall@3 and hit@1 are at least those of the excerpts alone. Among qualifying modes the highest recall@3 wins, then the highest MRR, then the order all, lead5, page. If no mode qualifies, search keeps the excerpts only.",
+  "modes": {
+    "all": "every passage of a downloaded page is its own document; a notice scores by its best match",
+    "lead5": "only the first five passages of each page, each its own document",
+    "page": "all passages of a page form one document, so BM25 length normalisation applies to the whole page"
+  },
+  "excerpts_only": {
+    "recall@1": 0.8772,
+    "hit@1": 0.9737,
+    "recall@3": 0.9561,
+    "hit@3": 1.0,
+    "recall@5": 0.9561,
+    "hit@5": 1.0,
+    "mrr": 0.9868
+  },
+  "with_full_text": {
+    "all": {
+      "recall@1": 0.886,
+      "hit@1": 1.0,
+      "recall@3": 0.943,
+      "hit@3": 1.0,
+      "recall@5": 0.9825,
+      "hit@5": 1.0,
+      "mrr": 1.0
+    },
+    "lead5": {
+      "recall@1": 0.886,
+      "hit@1": 1.0,
+      "recall@3": 0.9561,
+      "hit@3": 1.0,
+      "recall@5": 0.9825,
+      "hit@5": 1.0,
+      "mrr": 1.0
+    },
+    "page": {
+      "recall@1": 0.886,
+      "hit@1": 1.0,
+      "recall@3": 0.9474,
+      "hit@3": 1.0,
+      "recall@5": 0.9693,
+      "hit@5": 1.0,
+      "mrr": 1.0
+    }
+  },
+  "selected": "lead5",
+  "page_sha256": {
+    "R001": "94db92d6bb498fe3083ab3afcac1e1b18a69d8c1910415e74060859bfffa6996",
+    "R002": "13b020ccb01128e42afdf1a7f4b6b53d719f076d882613656113d813ae727006",
+    "R003": "7fe4ba6b4b63750299fe96a26086d78b66a668f2a4a6e7acf2ff4215078869bd",
+    "R004": "0cf5eb2bba057b15fd9bad2490e520dfe0e52f150c12214c5407753369034e11",
+    "R005": "f5100ae22eeda65aada891cd1e7d22900744e0dad667367eecf53d3ac72fe145",
+    "R006": "b5da646ef389a66229e64f7815c507e12780159b043154f558bd57c54da04e31",
+    "R007": "176c31342c0544d9350d702598971e1f89672017c27982dcb2a8bf35030c59f7",
+    "R009": "e83384809c2a79223dd9c4b72efdfdb4035b05ad0b388fa1fe29876a4e65888a",
+    "R010": "8fc5181b3229f5553fde8694cc4cb955e20d1b375bf39060733a566d04fcbe01",
+    "R013": "09a242ee1726f9d8169f7495eb1eb0c2fad6eca9023af2a66c4a986b09c57f26",
+    "R015": "12e03e99e6b67260541edbc8d589f18c11f07d0b66dd1dde966551e749e18567",
+    "R016": "b07380fa956e81bf2e197fcb40eb5fcbaafea5f0598896e01f994844e1b1a93f",
+    "E01": "652e16798ec441cdacc912dd8caca6568135f50e555b1f2b117fa1da8c2931c9",
+    "E03": "43a95ff8161153d81c0fa234ba9a0299d891cc7cac40583b967cd6d8a87e5c3b",
+    "E06": "2146f120a63195a7985d0bfe7ccd095d917ad71b9ed9c4547ebe2af493e298e7"
+  }
+}

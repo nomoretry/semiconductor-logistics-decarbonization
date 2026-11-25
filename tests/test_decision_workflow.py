@@ -91,6 +91,102 @@ class DecisionWorkflowTests(unittest.TestCase):
         with self.assertRaises(KeyError):
             workflow.propose_from_recording("D01")  # no custom scenario was built in that run
 
+    def test_notice_mode_cites_notices_and_states_the_basis_of_each_parameter(self):
+        from planning_agent import workflow
+        proposal = workflow.propose_from_notices(workflow.NOTICE_QUESTION)
+        self.assertEqual(proposal.mode, "notice")
+        self.assertEqual(proposal.references[0]["id"], "R014")
+        self.assertTrue(proposal.references[0]["url"].startswith("https://www.hapag-lloyd.com/"))
+        # numbers come from the planner's words only; the notice's 7-14 day range is shown, not used
+        self.assertEqual(proposal.disruptions, workflow.propose_from_rules(workflow.NOTICE_QUESTION).disruptions)
+        sources = {(e["parameter"], e["source"]) for e in proposal.evidence}
+        self.assertIn(("周次", workflow.PLANNER), sources)
+        self.assertIn(("场景：red_sea", "公告 R014"), sources)
+        quantities = [e["text"] for e in proposal.evidence if e["parameter"] == workflow.NOTICE_QUANTITY]
+        self.assertIn("additional_journey_duration: 7–14 day (range)", quantities)
+        self.assertEqual(len(proposal.missing), 3)
+        basis = {b["参数"]: b["依据"] for b in workflow.parameter_basis(proposal)}
+        self.assertEqual(basis["start_week"], "计划员输入：“第4到12周”")
+        self.assertEqual(basis["extra_lead_weeks"], "计划员输入：“延误2周”")
+        self.assertIn("数据审计", basis["distance_factor"])
+
+    def test_notice_without_numbers_lists_what_is_missing_and_borrows_no_unrelated_preset(self):
+        from planning_agent import workflow
+        proposal = workflow.propose_from_notices("鹿特丹码头罢工，对 ASML 备件有什么影响？")
+        self.assertEqual(proposal.references[0]["id"], "R006")
+        self.assertEqual((proposal.disruptions, proposal.preset), ([], None))  # "congestion" in R012 is not a border
+        self.assertTrue(any("请在参数表里填写" in n for n in proposal.notes))
+        self.assertIn("受影响的是计划期里哪几周的发运", proposal.missing)
+        self.assertEqual(workflow.preview(proposal, self.session())["error"], "没有可用的扰动参数")
+
+    def test_a_notice_may_select_a_preset_for_the_same_event_and_says_which(self):
+        from planning_agent import retrieval, workflow
+        notices = {n.id: n for n in retrieval.load_notices()}
+
+        class OnlyRedSea:
+            def search(self, query, k=3):
+                return [retrieval.Hit(notices["R014"], 1.0, 1, notices["R014"].text, ("cape",))]
+
+        proposal = workflow.propose_from_notices("这次绕行对备件有什么影响？", index=OnlyRedSea())
+        self.assertEqual((proposal.preset, proposal.network), ("red_sea", "asml"))
+        self.assertTrue(any("公告 R014" in n for n in proposal.notes))
+        basis = workflow.parameter_basis(proposal)
+        self.assertEqual(basis[0]["依据"], "公告 R014：“Red Sea、Cape of Good Hope”")
+        elsewhere = workflow.propose_from_notices("这次绕行对芯片有什么影响？", "marvell", index=OnlyRedSea())
+        self.assertIsNone(elsewhere.preset)  # red_sea is not a scenario of the Marvell network
+
+    def test_confirmed_notice_run_cites_notices_and_marks_edits_in_the_memo(self):
+        from planning_agent import workflow
+        proposal = workflow.propose_from_notices(workflow.NOTICE_QUESTION)
+        edited = proposal.with_changes(disruptions=[dict(proposal.disruptions[0], capacity_change_pct=-40)])
+        outcome = workflow.run(edited, self.session(), confirmed=True, original=proposal)
+        self.assertIn("## 参考公告", outcome.memo_text)
+        self.assertIn(proposal.references[0]["url"], outcome.memo_text)
+        self.assertIn("capacity_change_pct = -40：计划员在确认时修改", outcome.memo_text)
+        self.assertIn("start_week = 4：计划员输入", outcome.memo_text)
+        self.assertEqual(Path(outcome.memo_path).read_text(encoding="utf-8"), outcome.memo_text)
+        plain = workflow.run(workflow.propose_from_rules(workflow.DEMO_NOTICE), self.session(), confirmed=True)
+        self.assertNotIn("## 参考公告", plain.memo_text)
+
+    def test_command_line_corpus_checks_and_fetch_needs_consent(self):
+        from planning_agent import retrieval
+        from planning_agent.__main__ import main
+        self.assertEqual(main(["corpus", "build", "--check"]), 0)
+        self.assertEqual(main(["corpus", "evaluate", "--check"]), 0)
+        self.assertEqual(main(["corpus", "search", "红海绕行", "-k", "2"]), 0)
+        with mock.patch.object(retrieval, "_http_get", side_effect=AssertionError("went online")) as online:
+            self.assertEqual(main(["corpus", "fetch", "--ids", "R014"]), 2)
+        online.assert_not_called()
+        with tempfile.TemporaryDirectory() as folder:  # no numbers in the question: stop before solving
+            self.assertEqual(main(["flow", "--mode", "notice", "--yes", "--output", folder,
+                                   "--notice", "鹿特丹码头罢工，对 ASML 备件有什么影响？"]), 1)
+            self.assertFalse(list(Path(folder).glob("memo-*.md")))
+
+    @unittest.skipUnless(GRAPH, "requires the agent extra")
+    def test_live_mode_quotes_retrieved_notices_in_the_prompt(self):
+        from planning_agent import retrieval, workflow
+        seen = []
+
+        class Scripted:
+            model = "scripted"
+
+            def __init__(self):
+                self.usage = {"prompt_tokens": 900, "completion_tokens": 60}
+
+            def chat(self, messages, tools=None):
+                seen.append(messages)
+                return {"content": "", "tool_calls": [call(1, "create_scenario", {
+                    "network": "asml", "name": "x", "disruptions": [{"mode": "ocean", "start_week": 4, "end_week": 12}]})]}
+
+        references = [retrieval.reference(h) for h in retrieval.default_index().search("红海绕行好望角", k=2)]
+        proposal = workflow.propose_from_model("红海绕行，对备件有什么影响？", Scripted(), max_tokens=5000,
+                                               references=references)
+        prompt = json.dumps(seen[0], ensure_ascii=False)
+        self.assertIn("[R014]", prompt)
+        self.assertIn("Cape of Good Hope adds between 7 to 14 days", prompt)
+        self.assertEqual([r["id"] for r in proposal.references], [r["id"] for r in references])
+        self.assertEqual(len(proposal.missing), 3)
+
     @unittest.skipUnless(GRAPH, "requires the agent extra")
     def test_live_mode_needs_a_token_cap_and_runs_no_scenario_tool(self):
         from planning_agent import workflow
@@ -145,6 +241,25 @@ class DecisionPageTests(unittest.TestCase):
             labels = [m.label for m in page.metric]
             self.assertIn("服务水平", labels)
             self.assertTrue(any("备忘录" in s.value for s in page.subheader))
+
+    def test_notice_mode_on_the_page_shows_sources_basis_and_cited_memo(self):
+        from streamlit.testing.v1 import AppTest
+        with mock.patch.dict(os.environ, {"PLANNING_FLOW_SETTINGS": json.dumps(SETTINGS)}):
+            page = AppTest.from_file(str(ROOT / "planning_agent" / "app.py"), default_timeout=180)
+            page.run()
+            page.radio(key="mode").set_value("notice").run()
+            page.button(key="retrieve").click().run()
+            self.assertFalse(page.exception)
+            self.assertEqual(len(page.metric), 0)  # retrieved and parsed, nothing solved yet
+            text = " ".join(m.value for m in page.markdown)
+            self.assertIn("R014", text)
+            self.assertIn("hapag-lloyd.com", text)
+            self.assertTrue(any("公告没有给出" in w.value for w in page.warning))
+            tables = [t.value for t in page.table]
+            self.assertTrue(any("依据" in table.columns for table in tables))
+            page.button(key="confirm").click().run()
+            self.assertFalse(page.exception)
+            self.assertTrue(any("## 参考公告" in m.value for m in page.markdown))
 
 
 if __name__ == "__main__":

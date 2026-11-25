@@ -1,0 +1,113 @@
+{
+  "benchmark": "notice_retrieval_v1",
+  "status": "development check: one author wrote the questions and the glossary after reading the corpus",
+  "corpus_documents": 24,
+  "event_groups": 19,
+  "queries": {
+    "en": 19,
+    "zh": 19
+  },
+  "independent_cases": 19,
+  "method": {
+    "bm25_k1": 1.5,
+    "bm25_b": 0.75,
+    "fields": "publisher, title, excerpt",
+    "tokens": "English words with plural s removed; Chinese character bigrams",
+    "ties": "corpus order",
+    "unscored_documents": "not retrieved (rank none)"
+  },
+  "inputs": {
+    "queries_sha256": "3e805ff001ffc7a2b738fcb088daa49edb3a40e79dae496f4efe413cdbdc8f2c",
+    "glossary_sha256": "2f9bab8d15f079438211752ccd59ee7e0d0ca2411bbf7faeeb2132cf83adeb4b",
+    "manifest_sha256": "4298e8146929f4a02625aba804d1254ac9722ade9e2743808263bb4e2f0875f7"
+  },
+  "results": {
+    "bm25_glossary": {
+      "en": {
+        "recall@1": 0.8684,
+        "hit@1": 0.9474,
+        "recall@3": 0.9386,
+        "hit@3": 1.0,
+        "recall@5": 0.9386,
+        "hit@5": 1.0,
+        "mrr": 0.9737
+      },
+      "zh": {
+        "recall@1": 0.886,
+        "hit@1": 1.0,
+        "recall@3": 0.9737,
+        "hit@3": 1.0,
+        "recall@5": 0.9737,
+        "hit@5": 1.0,
+        "mrr": 1.0
+      },
+      "all": {
+        "recall@1": 0.8772,
+        "hit@1": 0.9737,
+        "recall@3": 0.9561,
+        "hit@3": 1.0,
+        "recall@5": 0.9561,
+        "hit@5": 1.0,
+        "mrr": 0.9868
+      }
+    },
+    "bm25_plain": {
+      "en": {
+        "recall@1": 0.8684,
+        "hit@1": 0.9474,
+        "recall@3": 0.9386,
+        "hit@3": 1.0,
+        "recall@5": 0.9386,
+        "hit@5": 1.0,
+        "mrr": 0.9737
+      },
+      "zh": {
+        "recall@1": 0.1842,
+        "hit@1": 0.2105,
+        "recall@3": 0.1842,
+        "hit@3": 0.2105,
+        "recall@5": 0.1842,
+        "hit@5": 0.2105,
+        "mrr": 0.2105
+      },
+      "all": {
+        "recall@1": 0.5263,
+        "hit@1": 0.5789,
+        "recall@3": 0.5614,
+        "hit@3": 0.6053,
+        "recall@5": 0.5614,
+        "hit@5": 0.6053,
+        "mrr": 0.5921
+      }
+    },
+    "random": {
+      "en": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      },
+      "zh": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      },
+      "all": {
+        "recall@1": 0.0417,
+        "hit@1": 0.0526,
+        "recall@3": 0.125,
+        "hit@3": 0.1545,
+        "recall@5": 0.2083,
+        "hit@5": 0.252,
+        "mrr": 0.1787
+      }
+    }
+  }
+}
