@@ -171,7 +171,13 @@ def evaluate(agent: str, *, split: str = "all", ids=None, output: Path | None = 
             break
         before = dict(getattr(client, "usage", None) or {})
         session = Session(**settings)
-        result = run_rules(case["question"], session) if agent == "rule" else run_llm(case["question"], session, client)
+        if agent == "rule":
+            result = run_rules(case["question"], session)
+        elif agent == "graph":
+            from .graph import run_graph
+            result = run_graph(case["question"], session, client)
+        else:
+            result = run_llm(case["question"], session, client)
         row = score(case, result, gold)
         after = dict(getattr(client, "usage", None) or {})
         row.update(answer=result.answer, model=getattr(client, "model", None),

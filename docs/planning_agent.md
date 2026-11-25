@@ -25,7 +25,42 @@ flowchart LR
     R --> T
 ```
 
-代码：[`planning_agent/`](../planning_agent)。`agent.py` 是工具调用循环，`tools.py` 是工具层，`guardrails.py` 是数字护栏，`rules.py` 是规则 Agent，`evaluate.py` 是评测。
+代码：[`planning_agent/`](../planning_agent)。`agent.py` 是工具调用循环，`graph.py` 是同一 Agent 的 LangGraph 版本，`tools.py` 是工具层，`guardrails.py` 是数字护栏，`rules.py` 是规则 Agent，`evaluate.py` 是评测。
+
+### LangGraph 编排
+
+`planning_agent/graph.py` 用 LangGraph 状态图实现同一个 Agent。模型客户端、工具、提示词和数字护栏都与 `agent.py` 的循环相同，只有控制流改成图：
+
+```mermaid
+flowchart LR
+    S([开始]) --> M["model：选择工具或给出回答"]
+    M -->|工具调用| T["tools：执行带校验的工具"]
+    T -->|未到步数上限| M
+    T -->|到达步数上限| X["stop"]
+    M -->|回答| R["review：数字护栏"]
+    R -->|数字都可追溯，或改写次数已用完| E([结束])
+    R -->|有无法追溯的数字，要求改写一次| M
+    M -->|模型调用失败| E
+    X --> E
+```
+
+在循环的基础上，图多了三项能力：
+
+- **会话记忆**：检查点按会话保存全部消息，追问时能直接引用上一轮的工具结果，不用重新求解。目前用的是进程内检查点（InMemorySaver），程序退出后不保留；跨进程的持久记忆需要换成数据库检查点，尚未实现。
+- **人工审批**：可以在工具执行前暂停，由计划员批准或拒绝；被拒绝时，模型收到说明，改为提出澄清问题。
+- **逐步输出**：按节点流式返回进度，命令行或网页可以实时显示。
+
+验证情况：
+
+- 7 项单元测试覆盖：
+  - 调用工具后据结果回答；
+  - 与原循环逐步一致，包括一次改写，模型在每一步看到的消息完全相同；
+  - 步数上限和模型报错；
+  - 追问时能看到上一轮工具结果；
+  - 审批时拒绝工具调用；
+  - 图结构。
+- **离线回放**：把真实模型（gpt-6.1-sol）24 题评测里录下的工具调用和最终回答逐题经图回放，再用当前护栏和引擎金标准重新评分。结果：24 题的评分与录制逐题一致（成功与否、工具序列、命中的金标准数字、数字忠实度都相同），其中成功 18/24，与原循环的重评分结果相同。这验证的是编排与评分链路，不是一次新的模型问答，也不是 24 题全对。 不调用模型，不产生费用；证据在 [`graph_replay_summary.json`](../benchmark_results/planning_agent/graph_replay_summary.json) 和 [`graph_replay_cases.jsonl`](../benchmark_results/planning_agent/graph_replay_cases.jsonl)。
+- **尚未做**：用真实模型经图重新跑 24 题。这是付费运行。
 
 ### 工具
 
@@ -87,6 +122,15 @@ python -m planning_agent --agent rule eval --output benchmark_results/planning_a
 python -m planning_agent chat
 ```
 
+LangGraph 版本需要可选依赖 `agent`。回放不需要 key；问答和评测需要 key：
+
+```bash
+python -m pip install -c constraints.txt -e ".[planning,agent]"
+python -m planning_agent replay --output benchmark_results/planning_agent
+python -m planning_agent --agent graph ask "如果红海航线中断，ASML 备件的物流成本和排放会怎样变化？" --show-tools
+python -m planning_agent --agent graph eval --output benchmark_results/planning_agent_graph
+```
+
 接入大模型（任意 OpenAI 兼容、支持 function calling 的服务），PowerShell 示例：
 
 ```powershell
@@ -115,7 +159,7 @@ python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output
 - 评测集小（24 条）且同一作者编写；下一步扩充到 100 条，并请业务同事独立出题。
 - 护栏只检查数字能否追溯，不检查推理是否正确；推理质量靠事实准确率和人工抽查。
 - 还没有 Web 界面；计划用 Streamlit 做“对话 + KPI 卡片 + 前沿图”。
-- 工具层与框架无关，可以直接包装成 LangGraph / AgentScope 节点，或作为 MCP 工具暴露。
+- LangGraph 版本已实现（见上），真实模型经图的 24 题评测待运行；工具层仍与框架无关，也可以作为 MCP 工具暴露。
 
 ## English
 
@@ -123,10 +167,27 @@ python -m planning_agent --agent llm eval --max-tokens 1500000 --resume --output
 
 **Architecture.** A ReAct-style loop over OpenAI-compatible function calling (`agent.py`), eight validated tools that keep full plans in the session and return compact results with ids (`tools.py`), a numeric guardrail (`guardrails.py`) and a deterministic rule agent used offline and as the evaluation baseline (`rules.py`).
 
+**LangGraph orchestration.** `planning_agent/graph.py` expresses the same agent as a LangGraph state graph: model, tools, review (the numeric guardrail) and a step-cap stop node, with the same client, prompt, tools and guardrail as the loop. On top of the loop it adds three things:
+
+- per-conversation memory through an in-process checkpointer (InMemorySaver), so follow-ups reuse earlier tool results; it does not persist after the process exits;
+- an optional approval pause before tools run, so a planner can approve or decline;
+- node-by-node streaming.
+
+Seven unit tests cover:
+
+- answering from tool results;
+- step-by-step equality with the loop, including one rewrite and identical messages seen by the model;
+- the step cap and model errors;
+- follow-up memory;
+- declined approvals;
+- the graph structure.
+
+Replaying the 24 recorded gpt-6.1-sol runs through the graph (recorded tool calls one per model turn, then the recorded answer, scored with the current guardrail and engine gold numbers) matches the recording on all 24 cases (success, tool sequence, gold numbers found and numeric faithfulness), with 18/24 successes, the same as the loop's rescored run. This checks orchestration and scoring, not a new model run, and it does not mean 24 correct answers; no model was called. Install with `pip install -c constraints.txt -e ".[planning,agent]"`; run `python -m planning_agent replay` (no key needed) or `--agent graph ask|eval` (needs a key). A live 24-case graph run is still to do; it is a paid run.
+
 **Design choices.** Tools do all arithmetic (`compare_plans` computes differences); validation errors are actionable feedback; every number in an answer must trace to a tool result or the user's words at the precision shown, otherwise one rewrite is requested and remaining issues are flagged; omitted scenario parameters become explicit assumptions; plans are referenced by id; one agent with tools rather than several agents; offline fallback without an API key.
 
 **Evaluation.** 24 planner questions: 14 development cases written with the rule agent and 10 later robustness cases (English, paraphrases, numbers in words, multi-intent, clarification). Both were written by the same author, so the robustness set is a probe, not an independent test. Gold numbers are recomputed by the engine. The rule agent solves 14/14 development cases and 4/10 robustness cases with 100% numeric faithfulness, failing on wording outside its patterns. The 24-case run (gpt-6.1-sol, Responses API, xhigh, at most 16 model calls) solves 18/24 after the guardrail fix (9/14 development, 9/10 robustness) versus the rule baseline's 14/14 and 4/10, using 102 model calls, 314,075 input and 42,058 output tokens (22,475 reasoning), about 1.05 USD at published rates. The as-run scores were 16/24: a guardrail bug truncated numbers written directly after Chinese characters, flagging D13 and H10; `eval --rescore` replays the recorded tool calls (0 of 102 replayed calls, 17 of them rejected by validation, differ in success) and rechecks the answers offline, keeping both files. The six remaining failures ask for clarification instead of using a preset (D04, D05, H06), assume a week-4 reveal where the gold uses the week-3 default (D10, D11), or omit the gold number (D09). Tool descriptions now state defaults; the prompt is unchanged, and any later prompt revision must be reported as tuned after seeing these 24 questions. A three-case LLM pilot (gpt-6.1-sol, Responses API, xhigh reasoning, at most 8 model calls) solved D03 and D13 with fully traceable numbers and exhausted the step cap on H05; it used 73,898 input and 8,582 output tokens (3,733 reasoning) at about 52 seconds per case. The cap is now 16, evaluation rows keep tool arguments and errors, and validation errors name the failing field and value; the prompt was not changed.
 
 **Reasoning models and paid runs.** When a model such as gpt-6.1-sol refuses function tools on `/v1/chat/completions` (and rejects reasoning effort `none`), the client switches to `/v1/responses` and replays reasoning items with their function calls; `LLM_API_STYLE=responses` forces it. `LLM_REASONING_EFFORT` sets low/medium/high/xhigh and `LLM_TIMEOUT` the per-request timeout (600 s by default). The evaluation saves each case as soon as it is scored, `--resume` skips saved cases so an interrupted paid run is never repeated, `--max-tokens` stops between cases at a token budget, and `--ids` runs a pilot subset. Summaries record the model, API style, reasoning effort and token usage, including reasoning tokens.
 
-**Limitations and next steps.** Small single-author test set (expand to 100 independent questions); the guardrail checks traceability, not reasoning; no web UI yet; the framework-neutral tools can be wrapped as LangGraph or AgentScope nodes or exposed as MCP tools.
+**Limitations and next steps.** Small single-author test set (expand to 100 independent questions); the guardrail checks traceability, not reasoning; no web UI yet; the LangGraph version exists (above) but has not been run live; the framework-neutral tools could also be exposed as MCP tools.
