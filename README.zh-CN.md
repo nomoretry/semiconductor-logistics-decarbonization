@@ -225,3 +225,7 @@ semiconductor-logistics api --dataset benchmarks/notices_v1/dataset.json --split
 运行 `make verify-forecast` 可重新选参、求解和核对全部证据；本轮不调用LLM API。
 
 本轮73份预测证据已获明确授权并按原SHA256归档，见[文件身份与验收](docs/rolling_forecast_publication.md)。合并前检查当前提交的全部六项CI。
+
+## 许可证
+
+项目原创的代码和文档采用 [MIT 许可证](LICENSE)。第三方数据集、船公司公告的逐字摘录、外部大模型的存档输出，以及一个与参考代码相同的辅助函数，按各自条款使用，见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。引用信息见 [CITATION.cff](CITATION.cff)。
