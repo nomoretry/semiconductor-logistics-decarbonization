@@ -118,7 +118,7 @@ v1 的离线上限与登记时一致：自己抽 200 组需求判对 128 张和 
 
 ### 复算
 
-`replay` 不求解，从保存的证据重算汇总。`independent` 重跑归档的程序并与保存的答案比较，约 2.5 分钟，`--limit` 只跑前几张图。`check` 和 `export` 写到新目录。`llm-score` 会重写结果目录里的判分文件，其中本机用时会变，复算时先把结果目录复制一份，用 `--root` 指到副本。
+`replay` 不求解，从保存的证据重算汇总。`independent` 重跑归档的程序并与保存的答案比较，约 2.5 分钟，`--limit` 只跑前几张图。`check` 和 `export` 写到新目录。`llm-score` 会重写结果目录里的判分文件，其中本机用时会变，复算时先把结果目录复制一份，用 `--root` 指到副本。浮点数的末位随平台变化（例如点积是否使用乘加融合），比较数值要留容差：测试对成本用 1e-9，对计划超额用判分容差。
 
 ```text
 python -m decision_graph_qa llm-prompts replay
@@ -253,7 +253,7 @@ The figure above shows the share of optimal current dispatches on the 32 pilot g
 
 ### Replay
 
-`replay` recomputes the summary from the saved evidence without solving. `independent` repeats the archived program and compares it with the saved answers in about 2.5 minutes, and `--limit` repeats the first graphs only. `check` and `export` write to new directories. `llm-score` rewrites the score files in the results root, including times measured on the machine, so copy the results directory first and point `--root` to the copy.
+`replay` recomputes the summary from the saved evidence without solving. `independent` repeats the archived program and compares it with the saved answers in about 2.5 minutes, and `--limit` repeats the first graphs only. `check` and `export` write to new directories. `llm-score` rewrites the score files in the results root, including times measured on the machine, so copy the results directory first and point `--root` to the copy. The last digits of floating-point values depend on the platform, for example on whether a dot product uses fused multiply-add, so compare numbers with a tolerance: the tests use 1e-9 for costs and the grading tolerance for the plan excess.
 
 ```text
 python -m decision_graph_qa llm-prompts replay

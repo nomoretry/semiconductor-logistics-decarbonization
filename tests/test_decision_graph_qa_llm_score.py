@@ -40,6 +40,21 @@ class LlmScoreTest(unittest.TestCase):
         cls.config = load_config()
         cls.graphs = _load_graphs(cls.config)
 
+    def assert_close(self, actual, expected, delta):
+        """Require equal structure, actions and verdicts; the last digits of a float differ between platforms."""
+        if isinstance(expected, dict):
+            self.assertEqual(actual.keys(), expected.keys())
+            for key, value in expected.items():
+                self.assert_close(actual[key], value, delta)
+        elif isinstance(expected, list):
+            self.assertEqual(len(actual), len(expected))
+            for left, right in zip(actual, expected, strict=True):
+                self.assert_close(left, right, delta)
+        elif isinstance(expected, float):
+            self.assertAlmostEqual(actual, expected, delta=delta)
+        else:
+            self.assertEqual(actual, expected)
+
     def test_gold_and_rule_match_frozen_scores_and_consequences(self):
         graph_ids = {graph["id"] for graph in self.graphs[:10]}
         path = _source(self.config, "evaluation", "attempts.jsonl.gz")
@@ -67,9 +82,9 @@ class LlmScoreTest(unittest.TestCase):
                 self.assertEqual(replies, {key: expected["answers"][key] for key in questions})
                 actual = score_answers(graph, replies, compare, counts)
                 self.assertIsNone(actual["error"])
-                self.assertEqual(actual["nodes"], {node["id"]: node for node in expected["nodes"]
-                                                   if node["id"] in questions})
-                self.assertEqual(actual["consequence"], expected["consequence"])
+                self.assert_close(actual["nodes"], {node["id"]: node for node in expected["nodes"]
+                                                    if node["id"] in questions}, tolerance(graph["objective"]))
+                self.assert_close(actual["consequence"], expected["consequence"], 1e-9)
         self.assertEqual(checked, graph_ids)
 
     def test_pilot_artifacts_distinguish_parse_failure_violation_and_missing(self):
