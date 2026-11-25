@@ -9,3 +9,4 @@ data_sources/raw/
 build/
 dist/
 artifacts/
+benchmark_results/*/.lock

@@ -1,0 +1,55 @@
+{
+  "schema_version": 2,
+  "sources": {
+    "dataset_manifest": "benchmark_results/decision_graph_qa_v1/manifest.json",
+    "dataset_sha256": "811d50ef61636b36bd2411f284c6ef9b69ab7e0e6696d141355315a529bc69e0",
+    "evaluation_manifest": "benchmark_results/decision_graph_qa_eval_v1/manifest.json",
+    "evaluation_sha256": "85eea72bd4a562ec792445236c0b722e8ae4fcb0c3359ee79475309988639fec",
+    "prompts_manifest": "benchmark_results/decision_graph_qa_llm_v2/prompts/manifest.json",
+    "prompts_sha256": "8a8a544d2b8c2144d6dff28cb30fa1615abab9a3b4459548288b2f03c602de53",
+    "statement_check_manifest": "benchmark_results/decision_graph_qa_llm_v2/statement_check/manifest.json",
+    "statement_check_sha256": "c64ef31261d4773f6d596c073203b2aff645b037cacb2c9405b99bb84134e100",
+    "prompt_files": {
+      "None": "prompts_test_None_en.jsonl.gz",
+      "Chain": "prompts_test_Chain_en.jsonl.gz",
+      "Graph": "prompts_test_Graph_en.jsonl.gz"
+    }
+  },
+  "scope": {"split": "test", "source": "gold", "language": "en", "contexts": ["None", "Chain", "Graph"]},
+  "seeds": {"pilot": 984311, "within_graph": 984312, "main": 984313, "half": 984314, "bootstrap": 984301},
+  "sampling": {"pilot_per_group": 1, "half_additional_per_group": 5, "pilot_graphs": 32, "half_graphs": 192, "full_graphs": 352},
+  "arms": {
+    "S": {
+      "record_only": false,
+      "request": {
+        "model": "gpt-6.2-sol",
+        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).",
+        "input": null,
+        "reasoning": {"effort": "max", "mode": "standard"},
+        "max_output_tokens": 64000,
+        "store": false,
+        "service_tier": "default"
+      }
+    },
+    "A": {
+      "record_only": true,
+      "request": {
+        "model": "gpt-6.2-astra",
+        "instructions": "Answer only the question at the end of the message. Output exactly one JSON value without explanation. Use true or false for yes-or-no questions, numbers for quantities, and two-dimensional arrays of integers for matrices (rows are SKUs and columns are routes).",
+        "input": null,
+        "reasoning": {"effort": "high", "mode": "standard"},
+        "max_output_tokens": 64000,
+        "store": false,
+        "service_tier": "default"
+      }
+    }
+  },
+  "prices": {
+    "S": {"input": "2.00", "cached_input": "0.10", "cache_write": "2.50", "output": "10.00"},
+    "A": {"input": "8.00", "cached_input": "0.40", "cache_write": "10.00", "output": "40.00"}
+  },
+  "batch_price_multiplier": "0.50",
+  "gates": {"truncation_rate": 0.05, "parse_failure_rate": 0.10},
+  "bootstrap_replicates": 10000,
+  "dry_output_tokens": [3000, 10000, 30000]
+}
