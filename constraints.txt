@@ -9,6 +9,7 @@ highspy==1.15.1
 # Quality gates (dev extra).
 ruff==0.17.1
 mypy==2.4.0
+uv==0.13.6
 # Optional agent extra (LangGraph orchestration of planning_agent).
 langgraph==1.2.16
 # Optional ui extra (decision workflow web page).

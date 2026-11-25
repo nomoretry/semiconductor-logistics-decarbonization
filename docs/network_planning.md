@@ -126,7 +126,8 @@ MIP 只能求到一定 gap，所以同时用 HiGHS 的对偶界给出区间：VS
 ### 复现
 
 ```bash
-python -m pip install -c constraints.txt -e ".[planning]"
+python -m pip install --require-hashes -r requirements/planning.txt
+python -m pip install --no-deps --no-build-isolation -e .
 python -m network_planning solve --network asml --scenario red_sea --explain
 python -m network_planning frontier --network marvell
 python -m network_planning stochastic --network asml --reveal-week 3

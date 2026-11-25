@@ -41,7 +41,8 @@ This document provides Chinese first and English second.
 ### 启动方式
 
 ```bash
-python -m pip install -c constraints.txt -e ".[planning,agent,ui]"
+python -m pip install --require-hashes -r requirements/planning.txt
+python -m pip install --no-deps --no-build-isolation -e .
 python -m planning_agent flow                                   # 命令行，规则模式，默认公告
 python -m planning_agent flow --mode replay --case D13          # 命令行，录制回放
 python -m planning_agent flow --notice "第5到8周海运延误1周，舱位减少20%，对 ASML 影响多大？"
@@ -86,7 +87,8 @@ In every mode the optimization is solved live after confirmation (MILP, HiGHS); 
 ### How to run
 
 ```bash
-python -m pip install -c constraints.txt -e ".[planning,agent,ui]"
+python -m pip install --require-hashes -r requirements/planning.txt
+python -m pip install --no-deps --no-build-isolation -e .
 python -m planning_agent flow
 python -m planning_agent flow --mode replay --case D13
 python -m planning_agent flow --notice "Weeks 5-8 ocean delayed 1 week, capacity cut 20%: impact on ASML?"

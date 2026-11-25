@@ -1,10 +1,29 @@
 PYTHON ?= python
 CLI = $(PYTHON) -m semiconductor_logistics
 
-.PHONY: sync test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit planning-sync planning-test planning-report planning-eval planning-ci lint typecheck quality
+.PHONY: sync lock lock-check test smoke benchmark verify report ci ci-core ci-foundation verify-core verify-final verify-components verify-rolling verify-sensitivity verify-strict-training package-check download-data real-notices decision-audit planning-sync planning-test planning-report planning-eval planning-ci lint typecheck quality
+
+# Installs come from hash-locked files. uv resolves them for every platform (Python 3.12) from pyproject.toml
+# and the tested versions in constraints.txt, using only releases published before LOCK_DATE, so the same
+# command gives the same files; `make lock-check` fails when they are out of date.
+LOCK_DATE = 2026-11-02T00:00:00Z
+UV_COMPILE = $(PYTHON) -m uv pip compile pyproject.toml -c constraints.txt --universal --python-version 3.12 \
+	--generate-hashes --exclude-newer $(LOCK_DATE) --no-header --quiet
+DEV_EXTRAS = --extra dev
+PLANNING_EXTRAS = --extra dev --extra planning --extra agent --extra ui
 
 sync:
-	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
+	$(PYTHON) -m pip install --require-hashes -r requirements/dev.txt
+	$(PYTHON) -m pip install --no-deps --no-build-isolation -e .
+
+lock:
+	$(UV_COMPILE) $(DEV_EXTRAS) -o requirements/dev.txt
+	$(UV_COMPILE) $(PLANNING_EXTRAS) -o requirements/planning.txt
+
+lock-check:
+	tmp=$$(mktemp -d) && $(UV_COMPILE) $(DEV_EXTRAS) -o $$tmp/dev.txt && \
+	$(UV_COMPILE) $(PLANNING_EXTRAS) -o $$tmp/planning.txt && \
+	diff -u requirements/dev.txt $$tmp/dev.txt && diff -u requirements/planning.txt $$tmp/planning.txt
 
 # Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
 LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py tests/test_notice_retrieval.py
@@ -120,7 +139,8 @@ ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast 
 
 # Optional OR planning engine and planning agent (PuLP + HiGHS); runs offline without an LLM key.
 planning-sync:
-	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning,agent,ui]'
+	$(PYTHON) -m pip install --require-hashes -r requirements/planning.txt
+	$(PYTHON) -m pip install --no-deps --no-build-isolation -e .
 
 planning-test:
 	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow tests.test_notice_retrieval -v
