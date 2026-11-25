@@ -11,3 +11,5 @@ ruff==0.17.1
 mypy==2.4.0
 # Optional agent extra (LangGraph orchestration of planning_agent).
 langgraph==1.2.16
+# Optional ui extra (decision workflow web page).
+streamlit==1.66.0

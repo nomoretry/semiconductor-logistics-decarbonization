@@ -5,6 +5,7 @@ python -m planning_agent chat
 python -m planning_agent demo --output artifacts/planning_agent/demo
 python -m planning_agent eval --agent rule --output benchmark_results/planning_agent
 python -m planning_agent replay --output benchmark_results/planning_agent
+python -m planning_agent flow                       # notice -> parameters -> confirm -> plans -> memo
 
 --agent auto uses the LLM agent when LLM_API_KEY is set, otherwise the offline rule agent.
 --agent graph runs the same model, tools and guardrail as a LangGraph state graph (needs the agent extra).
@@ -55,6 +56,55 @@ def _answer(kind, client, question, session, history, conversation=None):
     return result
 
 
+def _flow(args) -> int:
+    from . import workflow
+    notice = args.notice or workflow.DEMO_NOTICE
+    if args.mode == "rule":
+        proposal = workflow.propose_from_rules(notice, args.network)
+    elif args.mode == "replay":
+        proposal = workflow.propose_from_recording(args.case)
+    else:
+        if not llm.configured():
+            print("实时模式需要 LLM_API_KEY；本命令不会在没有 key 时调用模型。")
+            return 2
+        proposal = workflow.propose_from_model(notice, llm.OpenAICompatibleClient(), max_tokens=args.max_tokens,
+                                               network=args.network)
+    changes = {k: v for k, v in (("carbon_cap_pct", args.carbon_cap), ("hedge_probability_pct", args.probability))
+               if v is not None}
+    proposal = proposal.with_changes(**changes)
+    args.output.mkdir(parents=True, exist_ok=True)
+    session = Session(memo_dir=args.output)
+    print(f"【{workflow.MODE_LABELS[proposal.mode]}】")
+    print(f"公告：{proposal.notice}")
+    while True:
+        print()
+        print("\n".join(workflow.describe(proposal)))
+        checked = workflow.preview(proposal, session)
+        if checked["error"]:
+            print(f"参数不可用：{checked['error']}")
+        for item in checked["assumptions"]:
+            print(f"默认假设：{item}")
+        if args.yes:
+            break
+        answer = input("按以上参数求解？[y] 确认  [e] 修改第一个扰动  [n] 取消：").strip().lower()
+        if answer == "y":
+            break
+        if answer == "e" and proposal.disruptions:
+            proposal = workflow.edit_disruption(proposal, 0, lambda key, now: input(f"  {key} [{now}]："))
+            continue
+        print("已取消，没有求解。")
+        return 1
+    outcome = workflow.run(proposal, session, confirmed=True)
+    print()
+    print("方案对比（确认后实时求解）：")
+    for row in workflow.summary_rows(outcome):
+        print("  " + "  ".join(f"{k}：{v}" for k, v in row.items()))
+    if outcome.hedge and "error" not in outcome.hedge:
+        print(f"对冲：VSS {outcome.hedge['VSS_usd']:,} 美元（{outcome.hedge['VSS_pct']}%）")
+    print(f"备忘录：{outcome.memo_path}（用时 {outcome.seconds} 秒，工具调用 {len(outcome.tool_calls)} 次）")
+    return 0
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(prog="planning_agent", description=__doc__.splitlines()[0])
     parser.add_argument("--agent", choices=("auto", "rule", "llm", "graph"), default="auto")
@@ -73,6 +123,17 @@ def main(argv=None) -> int:
     p.add_argument("--max-tokens", type=int, help="stop between cases once billable tokens reach this budget")
     p.add_argument("--rescore", action="store_true",
                    help="re-check saved answers with the current guardrail by replaying their tool calls (no API calls)")
+    p = sub.add_parser("flow", help="notice -> parameters and assumptions -> confirmation -> plans -> memo")
+    p.add_argument("--mode", choices=("rule", "replay", "live"), default="rule",
+                   help="rule: offline parser; replay: recorded model output (no call); live: paid model call")
+    p.add_argument("--notice", help="carrier notice or disruption text (rule and live modes)")
+    p.add_argument("--case", default="D13", help="recorded case for replay mode")
+    p.add_argument("--network", choices=("asml", "marvell"))
+    p.add_argument("--carbon-cap", type=float, help="emission cap, %% of the uncapped plan")
+    p.add_argument("--probability", type=float, help="disruption probability %% for a hedge")
+    p.add_argument("--max-tokens", type=int, help="live mode: approved token cap")
+    p.add_argument("--yes", action="store_true", help="confirm without asking (scripts)")
+    p.add_argument("--output", type=Path, default=Path("artifacts/planning_agent/flow"))
     p = sub.add_parser("replay", help="replay recorded model runs through the LangGraph agent (no API calls)")
     p.add_argument("--source", type=Path, default=Path("benchmark_results/planning_agent"))
     p.add_argument("--output", type=Path)
@@ -81,6 +142,8 @@ def main(argv=None) -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
 
+    if args.command == "flow":
+        return _flow(args)
     if args.command == "replay":
         from .graph import replay
         ids = [i.strip() for i in args.ids.split(",") if i.strip()] if args.ids else None

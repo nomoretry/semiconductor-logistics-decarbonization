@@ -7,7 +7,7 @@ sync:
 	$(PYTHON) -m pip install -c constraints.txt -e '.[dev]'
 
 # Ruff and strict mypy on the maintained planning modules; hash-bound study packages keep their archived bytes.
-LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py
+LINT_PATHS = network_planning planning_agent tests/test_network_planning.py tests/test_planning_agent.py tests/test_planning_graph.py tests/test_decision_workflow.py
 
 lint:
 	$(PYTHON) -m ruff check $(LINT_PATHS)
@@ -120,10 +120,10 @@ ci: ci-core verify-components verify-rolling verify-sensitivity verify-forecast 
 
 # Optional OR planning engine and planning agent (PuLP + HiGHS); runs offline without an LLM key.
 planning-sync:
-	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning,agent]'
+	$(PYTHON) -m pip install -c constraints.txt -e '.[dev,planning,agent,ui]'
 
 planning-test:
-	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph -v
+	$(PYTHON) -m unittest tests.test_network_planning tests.test_planning_agent tests.test_planning_graph tests.test_decision_workflow -v
 
 planning-report:
 	$(PYTHON) -m network_planning report --output benchmark_results/network_planning
@@ -136,3 +136,4 @@ planning-ci: planning-test
 	$(PYTHON) -m planning_agent --agent rule demo --output artifacts/planning/demo
 	$(PYTHON) -m planning_agent --agent rule eval --split dev --output artifacts/planning/eval
 	$(PYTHON) -m planning_agent replay --output artifacts/planning/replay
+	$(PYTHON) -m planning_agent flow --yes --output artifacts/planning/flow
