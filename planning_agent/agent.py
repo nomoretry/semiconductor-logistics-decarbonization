@@ -11,9 +11,13 @@ import json
 import os
 import time
 from dataclasses import dataclass, field
+from typing import TYPE_CHECKING, Any
 
 from .guardrails import check_answer
 from .llm import LLMError
+
+if TYPE_CHECKING:
+    from .tools import Session
 
 SYSTEM_PROMPT = """你是“半导体物流计划副驾驶”，服务对象是供应链计划员和供应链产品经理。
 你可以调用工具：查看网络、把运输公告或假设建模为扰动场景、求解库存—运输优化计划（MILP）、比较方案、
@@ -36,19 +40,19 @@ class AgentResult:
     question: str
     answer: str
     mode: str
-    tool_calls: list
+    tool_calls: list[dict[str, Any]]
     steps: int
-    guardrail: dict
+    guardrail: dict[str, Any]
     seconds: float
-    usage: dict = field(default_factory=dict)
+    usage: dict[str, Any] = field(default_factory=dict)
     error: str | None = None
 
     def tool_names(self) -> list[str]:
         return [call["name"] for call in self.tool_calls]
 
 
-def run_llm(question: str, session, client, *, history: list | None = None, max_steps: int | None = None,
-            max_revisions: int = 1) -> AgentResult:
+def run_llm(question: str, session: Session, client: Any, *, history: list[dict[str, Any]] | None = None,
+            max_steps: int | None = None, max_revisions: int = 1) -> AgentResult:
     # One step = one model call. High-effort reasoning models explore more (the gpt-6.1-sol xhigh pilot used
     # up to 8 calls per question), so the default cap is 16; LLM_MAX_STEPS overrides it.
     max_steps = max_steps or int(os.getenv("LLM_MAX_STEPS") or 16)
@@ -56,7 +60,7 @@ def run_llm(question: str, session, client, *, history: list | None = None, max_
     messages = [{"role": "system", "content": SYSTEM_PROMPT}, *(history or []), {"role": "user", "content": question}]
     tools, revisions = session.schemas(), 0
 
-    def finish(answer, steps, check, error=None):
+    def finish(answer: str, steps: int, check: dict[str, Any], error: str | None = None) -> AgentResult:
         return AgentResult(question, answer, "llm", session.calls[first:], steps, check,
                            round(time.perf_counter() - started, 2), dict(getattr(client, "usage", {})), error)
 

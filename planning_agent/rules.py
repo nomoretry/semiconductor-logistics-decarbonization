@@ -10,9 +10,13 @@ from __future__ import annotations
 
 import re
 import time
+from typing import TYPE_CHECKING, Any
 
 from .agent import AgentResult
 from .guardrails import check_answer
+
+if TYPE_CHECKING:
+    from .tools import Session
 
 FLAGS = re.IGNORECASE
 SCENARIO_PATTERNS = (
@@ -41,20 +45,21 @@ DESCRIBE = r"网络概况|介绍.{0,8}网络|有哪些.{0,6}(?:线路|航线|运
 MEMO = r"备忘录|memo|汇报|写.{0,4}(?:总结|报告)"
 FOLLOW_UP = r"这种情况|此情况|在此基础上|同样的情况|这个场景|this scenario|same scenario"
 PROBABILITY = r"(\d{1,2})\s*%\s*(?:的)?(?:概率|可能)|(?:概率|可能性?)\D{0,4}(\d{1,2})\s*%"
-MODES = (("air", r"空运|航空|air"), ("road", r"公路|陆运|卡车|road|truck"), ("ocean", r"海运|海路|船|航运|ocean|sea|vessel"))
+MODES = (("air", r"空运|航空|air"), ("road", r"公路|陆运|卡车|road|truck"),
+         ("ocean", r"海运|海路|船|航运|ocean|sea|vessel"))
 OUT_OF_SCOPE = ("这个问题超出了我的范围。我能做的是：查看物流网络，评估运输中断（如红海绕行、台风、边境拥堵）"
                 "对成本和排放的影响，计算减排的成本与边际减排成本，做中断风险对冲（两阶段随机规划），以及生成决策备忘录。")
 NOTE = "说明：SKU、需求、容量、费率和扰动幅度为合成情景假设；距离与排放因子来自公开来源。"
 
 
-def _first(pattern, text):
+def _first(pattern: str, text: str) -> str | None:
     match = re.search(pattern, text, FLAGS)
     if not match:
         return None
     return next((g for g in match.groups() if g is not None), match.group(0))
 
 
-def parse(question: str, context: dict | None = None) -> dict:
+def parse(question: str, context: dict[str, Any] | None = None) -> dict[str, Any]:
     context = context or {}
     scenario = next((name for name, pattern in SCENARIO_PATTERNS if re.search(pattern, question, FLAGS)), None)
     if re.search(MARVELL, question, FLAGS):
@@ -62,16 +67,16 @@ def parse(question: str, context: dict | None = None) -> dict:
     elif re.search(ASML, question, FLAGS):
         network = "asml"
     else:
-        network = NETWORK_OF.get(scenario) or context.get("network", "asml")
+        network = NETWORK_OF.get(scenario or "") or context.get("network", "asml")
     if scenario in NETWORK_OF and NETWORK_OF[scenario] != network:
         network = NETWORK_OF[scenario]
     weeks = re.search(WEEKS, question, FLAGS)
     delay, capacity = _first(DELAY, question), _first(CAPACITY, question)
-    custom = None
+    custom: dict[str, Any] | None = None
     if weeks and (delay or capacity):
         start, end = [int(g) for g in weeks.groups() if g is not None][:2]
         mode = next((m for m, pattern in MODES if re.search(pattern, question, FLAGS)), "ocean")
-        disruption = {"mode": mode, "start_week": start, "end_week": end}
+        disruption: dict[str, Any] = {"mode": mode, "start_week": start, "end_week": end}
         if delay:
             disruption["extra_lead_weeks"] = int(delay)
         if capacity:
@@ -99,17 +104,18 @@ def parse(question: str, context: dict | None = None) -> dict:
     return request
 
 
-def run_rules(question: str, session) -> AgentResult:
+def run_rules(question: str, session: Session) -> AgentResult:
     started, first = time.perf_counter(), len(session.calls)
     req = parse(question, session.context)
-    lines = []
+    lines: list[str] = []
     if not req["in_scope"]:
         return _result(question, OUT_OF_SCOPE, session, first, started)
     net = req["network"]
     session.context["network"] = net
     if req["describe"]:
         info = session.call("describe_network", {"network": net})
-        lines.append(f"{net} 网络：{info['skus']} 个 SKU，{info['weeks']} 周承诺需求 {info['demand_units']:,} 件。线路：")
+        lines.append(f"{net} 网络：{info['skus']} 个 SKU，"
+                     f"{info['weeks']} 周承诺需求 {info['demand_units']:,} 件。线路：")
         for lane in info["lanes"]:
             lines.append(f"- {lane['id']}（{lane['mode']}）：提前期 {lane['lead_weeks']} 周，运费 "
                          f"{lane['freight_usd_per_kg']} 美元/kg，周运力 {lane['weekly_capacity_kg']:,} kg，"
@@ -125,7 +131,7 @@ def run_rules(question: str, session) -> AgentResult:
                 lines.append("建模假设：" + "；".join(created["assumptions"]))
     if scenario:
         session.context["scenario"] = scenario
-    plan_ids = []
+    plan_ids: list[str] = []
     needs_plan = scenario or req["cap_pct"] or req["price"] or (req["explain"] and not req["hedge"]) or (
         req["memo"] and not session.plans)
     if needs_plan:
@@ -148,7 +154,8 @@ def run_rules(question: str, session) -> AgentResult:
                 change = "增加" if row["cost_change_usd"] >= 0 else "减少"
                 lines.append(f"方案 {plan['plan_id']}（{plan['label']}）：总物流成本 {row['total_cost_usd']:,} 美元，"
                              f"比正常方案 {base['plan_id']} {change} {abs(row['cost_change_usd']):,} 美元"
-                             f"（{row['cost_change_pct']:+.2f}%）；排放 {row['emissions_t']} 吨（{row['emissions_change_pct']:+.2f}%）；"
+                             f"（{row['cost_change_pct']:+.2f}%）；"
+                             f"排放 {row['emissions_t']} 吨（{row['emissions_change_pct']:+.2f}%）；"
                              f"空运占比 {row['air_share_pct']}%；服务水平 {row['service_level_pct']}%。")
                 if "carbon_shadow_price_usd_per_t" in plan:
                     lines.append(f"碳约束的影子价格约 {plan['carbon_shadow_price_usd_per_t']:,} 美元/吨，"
@@ -175,21 +182,23 @@ def run_rules(question: str, session) -> AgentResult:
             if p["cost_increase_pct"] is None:
                 lines.append(f"- 排放上限 {p['emission_cap_pct']}%：{p['status']}")
             else:
-                lines.append(f"- 排放上限 {p['emission_cap_pct']}%：成本 {p['cost_increase_pct']:+.2f}%，平均边际减排成本 "
+                lines.append(f"- 排放上限 {p['emission_cap_pct']}%："
+                             f"成本 {p['cost_increase_pct']:+.2f}%，平均边际减排成本 "
                              f"{p['mac_avg_usd_per_t']:,} 美元/吨，影子价格 {p['shadow_price_usd_per_t']} 美元/吨")
         lines.append(f"在该服务水平下最多可减排 {fr['max_reduction_pct']}%（最低 {fr['min_emissions_t']} 吨）。")
     if req["hedge"]:
-        args = {"network": net}
-        target = req["scenario"] if req["scenario"] and req["scenario"] != "normal" else None
-        if req["probability_pct"] and target:
-            args.update(scenarios=["normal", target],
+        args: dict[str, Any] = {"network": net}
+        hedge_target = req["scenario"] if req["scenario"] and req["scenario"] != "normal" else None
+        if req["probability_pct"] and hedge_target:
+            args.update(scenarios=["normal", hedge_target],
                         probabilities=[100 - req["probability_pct"], req["probability_pct"]])
         hedge = session.call("hedge_disruption_risk", args)
         if "error" in hedge:
             lines.append(f"对冲分析失败：{hedge['error']}")
         else:
             e = hedge["expected_cost_usd"]
-            lines.append(f"两阶段随机方案（第 {hedge['reveal_week']} 周才知道是否中断）：期望成本 {e['stochastic_RP']:,} 美元；"
+            lines.append(f"两阶段随机方案（第 {hedge['reveal_week']} 周才知道是否中断）："
+                         f"期望成本 {e['stochastic_RP']:,} 美元；"
                          f"按正常预测计划、事后再应变为 {e['nominal_EEV']:,} 美元；VSS = {hedge['VSS_usd']:,} 美元"
                          f"（{hedge['VSS_pct']}%），EVPI = {hedge['EVPI_usd']:,} 美元（{hedge['EVPI_pct']}%）。")
             for row in hedge["per_scenario"]:
@@ -210,7 +219,7 @@ def run_rules(question: str, session) -> AgentResult:
     return _result(question, "\n".join(lines), session, first, started)
 
 
-def _result(question, answer, session, first, started) -> AgentResult:
+def _result(question: str, answer: str, session: Session, first: int, started: float) -> AgentResult:
     calls = session.calls[first:]
     check = check_answer(answer, [c["result"] for c in calls], question)
     return AgentResult(question, answer, "rule", calls, len(calls), check, round(time.perf_counter() - started, 2))
