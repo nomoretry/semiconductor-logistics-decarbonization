@@ -1,8 +1,8 @@
 import importlib.util
 import json
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 
 PLANNING = all(importlib.util.find_spec(name) for name in ("pulp", "highspy"))
 SETTINGS = {"n_skus": 6, "seed": 3}
@@ -35,6 +35,7 @@ class LLMClientTests(unittest.TestCase):
         import io
         import urllib.error
         from unittest import mock
+
         from planning_agent.llm import OpenAICompatibleClient
         bodies = []
 
@@ -62,6 +63,7 @@ class LLMClientTests(unittest.TestCase):
         import io
         import urllib.error
         from unittest import mock
+
         from planning_agent.llm import OpenAICompatibleClient
         sent = []
         replies = [
@@ -142,16 +144,16 @@ class PlanningAgentTests(unittest.TestCase):
         from planning_agent.agent import run_llm
 
         class ScriptedClient:
-            usage = {}
-
             def __init__(self):
-                self.turn, self.seen = 0, []
+                self.turn, self.seen, self.usage = 0, [], {}
 
             def chat(self, messages, tools=None):
                 self.turn += 1
                 self.seen.append(messages[-1])
-                call = lambda i, name, args: {"id": f"c{i}", "type": "function",
-                                              "function": {"name": name, "arguments": json.dumps(args)}}
+                def call(i, name, args):
+                    return {"id": f"c{i}", "type": "function",
+                            "function": {"name": name, "arguments": json.dumps(args)}}
+
                 if self.turn == 1:
                     return {"content": "", "tool_calls": [call(1, "solve_plan", {"network": "asml"}),
                                                           call(2, "solve_plan", {"network": "asml", "scenario": "red_sea"})]}
@@ -214,7 +216,7 @@ class PlanningAgentTests(unittest.TestCase):
         from planning_agent.evaluate import rescore
         out = Path(self.session().memo_dir) / "rescore"
         out.mkdir()
-        lanes = {l["id"]: l for l in self.session().call("describe_network", {"network": "asml"})["lanes"]}
+        lanes = {lane["id"]: lane for lane in self.session().call("describe_network", {"network": "asml"})["lanes"]}
         ocean, air = lanes["NL_ocean"]["weekly_capacity_kg"], lanes["NL_air"]["weekly_capacity_kg"]
         row = {"id": "D01", "split": "dev", "question": "介绍一下 ASML 备件网络有哪些运输线路，各自运力多少？",
                "tools": ["describe_network"], "steps": 1, "seconds": 1.0, "faithful": False,

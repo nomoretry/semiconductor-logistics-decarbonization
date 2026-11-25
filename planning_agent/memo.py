@@ -63,7 +63,7 @@ def write_memo(session, stored_plans: list, question: str, title: str | None = N
         info = explain_plan(session.network(p.network), p.plan)
         drivers = "，".join(f"{d['item']} {100 * d['share']:.1f}%" for d in info["cost_drivers"][:3])
         binding = "，".join(f"{b['lane']} 第 {b['week']} 周" for b in info["binding_capacity"][:3]) or "无"
-        reserve = "，".join(f"{l} {kg:g} kg/周" for l, kg in info["air_reservation_kg_per_week"].items()) or "无"
+        reserve = "，".join(f"{lane} {kg:g} kg/周" for lane, kg in info["air_reservation_kg_per_week"].items()) or "无"
         lines.append(f"- **{p.id}**（{info['scenario']} 场景）：成本构成 {drivers}；接近满载 {binding}；空运舱位预留 {reserve}。")
     lines += ["", "## 假设与局限", "",
               "- SKU、承诺需求、运力、费率和扰动幅度为合成情景假设；距离与排放因子来自公开来源（见 data_sources/）。",

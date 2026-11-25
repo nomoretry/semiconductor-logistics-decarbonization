@@ -34,7 +34,7 @@ class Gold:
         s, kind = self.session, fact["kind"]
         if kind == "lane":
             lanes = s.call("describe_network", {"network": fact["network"]})["lanes"]
-            return next(l[fact["field"]] for l in lanes if l["id"] == fact["lane"])
+            return next(lane[fact["field"]] for lane in lanes if lane["id"] == fact["lane"])
         if kind == "frontier":
             return s.call("carbon_frontier", {"network": fact["network"]})[fact["field"]]
         if kind == "hedge":

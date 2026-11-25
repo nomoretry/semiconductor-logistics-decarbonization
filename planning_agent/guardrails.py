@@ -55,7 +55,7 @@ def supported(value: float, precision: float, grounded: list[float]) -> bool:
 
 
 def check_answer(answer: str, tool_results, user_text: str = "") -> dict:
-    grounded = grounded_values(list(tool_results) + [user_text])
+    grounded = grounded_values([*tool_results, user_text])
     numbers = numbers_in(answer)
     unsupported = [raw for raw, value, precision in numbers if not supported(value, precision, grounded)]
     return {"ok": not unsupported, "unsupported": unsupported, "checked": len(numbers)}

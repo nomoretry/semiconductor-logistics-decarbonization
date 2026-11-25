@@ -59,8 +59,10 @@ class Plan:
     def first_stage(self, reveal_week: int) -> dict:
         """Decisions departing before ``reveal_week`` (scenario 0) plus the air reservation."""
         cut = reveal_week - 1
-        early = lambda part: {key[1:]: v for key, v in self.solution.get(part, {}).items()
-                              if key[0] == 0 and key[-1] < cut}
+
+        def early(part):
+            return {key[1:]: v for key, v in self.solution.get(part, {}).items() if key[0] == 0 and key[-1] < cut}
+
         return {"ship": early("ship"), "act": early("act"), "air_res": early("air_res"),
                 "air_spot": early("air_spot"), "order": early("order"),
                 "reserve": dict(self.solution.get("reserve", {}))}
@@ -201,7 +203,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
     total_cost = net.reservation_usd_per_kg_week * T * pulp.lpSum(reserve.values()) + pulp.lpSum(expected_cost)
     total_emissions = pulp.lpSum(expected_emissions)
     if service_level is not None:
-        allowed = (1 - service_level) * sum(sc.probability * float(d.sum()) for sc, d in zip(scenarios, demands))
+        allowed = (1 - service_level) * sum(sc.probability * float(d.sum()) for sc, d in zip(scenarios, demands, strict=True))
         model += (pulp.lpSum(sc.probability * pulp.lpSum(back[k, s, t] for s in range(S) for t in range(T))
                              for k, sc in enumerate(scenarios)) <= allowed, "service")
     if carbon_cap_kg is not None:
@@ -242,7 +244,7 @@ def solve(net: Network, scenarios=None, *, reveal_week: int = 1, carbon_cap_kg: 
         for key, var in variables.items():
             v = value(var)
             if abs(v) > 1e-9:
-                out[key] = int(round(v)) if integer else v
+                out[key] = round(v) if integer else v
         return out
 
     solution = {"ship": keep(ship, integer_shipments), "act": keep(act, True), "air_res": keep(air_res),

@@ -8,8 +8,15 @@ import platform
 from importlib import metadata
 from pathlib import Path
 
-from .analysis import (SCALE_VARIANTS, carbon_frontier, carbon_price_sweep, explain_plan, scenario_impact,
-                       scale_benchmark, stochastic_value)
+from .analysis import (
+    SCALE_VARIANTS,
+    carbon_frontier,
+    carbon_price_sweep,
+    explain_plan,
+    scale_benchmark,
+    scenario_impact,
+    stochastic_value,
+)
 from .data import CONFIG, NETWORKS, ROOT, build_network
 from .model import solve
 
@@ -96,7 +103,7 @@ def _figures(output: Path, results: dict) -> None:
     import matplotlib.pyplot as plt
 
     fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-    for ax, (name, block) in zip(axes, results["networks"].items()):
+    for ax, (name, block) in zip(axes, results["networks"].items(), strict=False):
         frontier = block["frontier"]
         e0, c0 = frontier["baseline_emissions_t"], frontier["baseline_cost_usd"]
         pts = [p for p in frontier["points"] if p.get("total_cost_usd") is not None]
